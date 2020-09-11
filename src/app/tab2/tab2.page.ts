@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NfcService } from '../services/nfc.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+
+   constructor(public nfcService: NfcService ) {}
+
+  async readNFC() {
+    console.log("Called");
+    await this.nfcService.readNFC();
+  }
 
 }
