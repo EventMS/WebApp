@@ -12,4 +12,11 @@
   </ion-header>
 
   <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error">Error :(</div>
+  <div *ngIf="rates">
+    <div *ngFor="let rate of rates">
+      <p>{{rate.currency}}: {{rate.rate}}</p>
+    </div>
+  </div>
 </ion-content>

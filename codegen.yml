@@ -1,0 +1,15 @@
+overwrite: true
+schema: "const uri = 'https://48p1r2roz4.sse.codesandbox.io'; //our test Graphql Server which returns rates"
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-apollo-angular"
+      - "typescript-graphql-files-modules"
+      - "typescript-document-nodes"
+      - "fragment-matcher"
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
