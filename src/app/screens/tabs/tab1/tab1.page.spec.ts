@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 import { Tab1Page } from './tab1.page';
+import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 describe('Tab1Page', () => {
   let component: Tab1Page;
