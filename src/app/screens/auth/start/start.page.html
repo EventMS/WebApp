@@ -5,7 +5,7 @@
         <h1>EMS</h1>
       </ion-label>
       <div>
-        <ion-button>Sign up</ion-button>
+        <ion-button [routerLink]="['/signup']">Sign up</ion-button>
         <ion-button>Login</ion-button>
       </div>
     </ion-row>
@@ -13,7 +13,7 @@
       <img src="{{yourGifURL}}" />
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-button>Sign up now!</ion-button>
+      <ion-button [routerLink]="['/signup']">Sign up now!</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

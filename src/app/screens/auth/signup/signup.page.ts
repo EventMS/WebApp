@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { type } from 'os';
 
 @Component({
   selector: 'app-signup',
@@ -8,7 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class SignupPage implements OnInit {
   constructor() {}
 
-  ngOnInit() {
-    console.log('init');
-  }
+  register = (formdata: loginFormData) => {};
+
+  ngOnInit() {}
+}
+
+interface loginFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
