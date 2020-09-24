@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./screens/tabs/tabs.module').then((m) => m.TabsPageModule),
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./screens/auth/login/login.module').then( m => m.LoginPageModule)
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
