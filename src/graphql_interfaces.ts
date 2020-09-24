@@ -4,20 +4,16 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: IRatesQuery
+// GraphQL query operation: IClubsQuery
 // ====================================================
 
-export interface IRatesQuery_rates {
-  rate: string | null;
-  currency: string | null;
+export interface IClubsQuery_clubs {
+  id: any;
+  name: string | null;
 }
 
-export interface IRatesQuery {
-  rates: (IRatesQuery_rates | null)[] | null;
-}
-
-export interface IRatesQueryVariables {
-  currency: string;
+export interface IClubsQuery {
+  clubs: (IClubsQuery_clubs | null)[] | null;
 }
 
 /* tslint:disable */

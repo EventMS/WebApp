@@ -12,9 +12,9 @@
   </ion-header>
 
   <div *ngIf="loading">Loading...</div>
-  <div *ngIf="rates">
-    <div *ngFor="let rate of rates">
-      <p>{{rate.currency}}: {{rate.rate}}</p>
+  <div *ngIf="clubs">
+    <div *ngFor="let club of clubs">
+      <p>{{club.name}}: {{club.id}}</p>
     </div>
   </div>
 </ion-content>
