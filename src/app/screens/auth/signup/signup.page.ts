@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { type } from 'os';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   selector: 'app-signup',
@@ -7,7 +8,7 @@ import { type } from 'os';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  constructor() {}
+  constructor(private apollo: Apollo) {}
 
   register = (formdata: loginFormData) => {};
 
