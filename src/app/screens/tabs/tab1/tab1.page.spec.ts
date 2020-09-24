@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 import { Tab1Page } from './tab1.page';
-import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 describe('Tab1Page', () => {
   let component: Tab1Page;
@@ -12,7 +11,7 @@ describe('Tab1Page', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [Tab1Page],
-      imports: [IonicModule.forRoot(), ExploreContainerComponentModule, ApolloTestingModule],
+      imports: [IonicModule.forRoot(), ApolloTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Tab1Page);
