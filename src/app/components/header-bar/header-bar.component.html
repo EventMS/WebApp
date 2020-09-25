@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-title>Event Management System</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-button class="regular" (click)="tappedFindClubs()">Find Clubs</ion-button>
+        <ion-button class="regular" (click)="tappedFindEvents()">Find Events</ion-button>
+        <ion-button class="regular" (click)="tappedMyEvents()">My Events</ion-button>
+        <ion-button class="regular" (click)="tappedMyClubs()">My Clubs</ion-button>
+        <ion-button class="profile" ion-item (click)="tappedProfile($event)">
+          <ion-avatar>
+            <img src="https://www.iconfinder.com/data/icons/mixed-communication-and-ui-pack-1/48/general_pack_NEW_glyph_profile-512.png"/>
+          </ion-avatar>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
