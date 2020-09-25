@@ -1,6 +1,7 @@
-.signup ion-grid,
-.signup ion-row {
+.signup ion-grid {
   height: 100%;
+}
+.signup ion-row {
   justify-content: center;
 }
 
@@ -8,7 +9,16 @@ ion-content.background {
   --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
 
+.signup ion-col {
+  padding: 20px;
+  margin: 50px;
+}
+
 .rcorners {
   border-radius: 25px;
-  background: #73ad21;
+  background: whitesmoke;
+}
+
+.signup ion-icon {
+  margin: 20px;
 }
