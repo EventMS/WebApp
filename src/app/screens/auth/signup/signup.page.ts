@@ -19,6 +19,22 @@ export class SignupPage {
     password: new FormControl('', Validators.compose([Validators.required, Validators.pattern(strongRegex)])),
   });
 
+  get name() {
+    return this.signupForm.get('name');
+  }
+
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  get mobile() {
+    return this.signupForm.get('mobile');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
+
   onSubmit = (formdata: any) => {
     const { email, name, password, phoneNumber } = formdata.form.value;
     this.apollo

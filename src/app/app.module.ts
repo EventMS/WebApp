@@ -11,11 +11,21 @@ import { AppComponent } from './app.component';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, GraphQLModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    FormsModule,
+    AppRoutingModule,
+    GraphQLModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+  ],
   providers: [StatusBar, SplashScreen, NFC, Ndef, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
