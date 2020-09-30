@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
 })
+
 export class TabsPage {
-  constructor() {}
+  //private platform: Platform
+
+  constructor(public platform: Platform) {
+    console.log(this.platform.is("mobile"));
+  }
+
+  
 }

@@ -5,21 +5,26 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./screens/auth/start/start.module').then((m) => m.StartPageModule),
+    loadChildren: () => import('./pages/auth/start/start.module').then((m) => m.StartPageModule),
   },
   {
     path: 'signup',
-    loadChildren: () => import('./screens/auth/signup/signup.module').then((m) => m.SignupPageModule),
+    loadChildren: () => import('./pages/auth/signup/signup.module').then((m) => m.SignupPageModule),
   },
   {
     path: 'login',
-    loadChildren: () => import('./screens/auth/login/login.module').then((m) => m.LoginPageModule),
+    loadChildren: () => import('./pages/auth/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./screens/tabs/tabs.module').then((m) => m.TabsPageModule),
+    loadChildren: () => import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'club-create',
+    loadChildren: () => import('./pages/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
+    canActivate: [AuthGuard]
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
