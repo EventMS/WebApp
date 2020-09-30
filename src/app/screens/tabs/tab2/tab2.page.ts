@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NfcService } from 'src/app/services/nfc.service';
+import { NfcService } from 'src/app/services/NFC/nfc.service';
 
 @Component({
   selector: 'app-tab2',

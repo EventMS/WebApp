@@ -1,0 +1,24 @@
+.login ion-grid {
+  height: 100%;
+}
+.login ion-row {
+  justify-content: center;
+}
+
+ion-content.background {
+  --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
+}
+
+.login ion-col {
+  padding: 20px;
+  margin: 50px;
+}
+
+.rcorners {
+  border-radius: 25px;
+  background: whitesmoke;
+}
+
+.login ion-icon {
+  margin: 20px;
+}
