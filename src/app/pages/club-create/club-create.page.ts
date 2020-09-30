@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClubCreatePage implements OnInit {
 
+  placeholderValue: String = "whatupdude"
   constructor() { }
 
   ngOnInit() {
