@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Apollo } from 'apollo-angular';
-import { ICreateUser, ICreateUserVariables } from 'src/graphql_interfaces';
-import { CREATE_USER_MUTATION } from './mutations';
+import { CreateUserMutationService } from 'src/app/services/GRAPHQL/createUserMutation.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,12 +8,12 @@ import { CREATE_USER_MUTATION } from './mutations';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage {
-  constructor(private apollo: Apollo, private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private createUserMutationService: CreateUserMutationService) {}
 
   signupForm = this.formBuilder.group({
     name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    mobile: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^\\d{8}$')])),
+    birthday: new FormControl('', Validators.required),
     password: new FormControl('', Validators.compose([Validators.required, Validators.pattern(strongRegex)])),
   });
 
@@ -27,37 +25,28 @@ export class SignupPage {
     return this.signupForm.get('email');
   }
 
-  get mobile() {
-    return this.signupForm.get('mobile');
+  get birthday() {
+    return this.signupForm.get('birthday');
   }
 
   get password() {
     return this.signupForm.get('password');
   }
 
-  onSubmit = (formdata: any) => {
-    const { email, name, password, phoneNumber } = formdata.form.value;
-    this.apollo
-      .mutate<ICreateUser, ICreateUserVariables>({
-        mutation: CREATE_USER_MUTATION,
-        variables: {
-          request: {
-            email: email,
-            name: name,
-            password: password,
-            phoneNumber: phoneNumber,
-          },
-        },
+  onSubmit = async () => {
+    const { name, email, birthday, password }: FormData = this.signupForm.value;
+
+    this.createUserMutationService
+      .mutate({
+        request: { email: email, name: name, password: password, phoneNumber: '71782781' },
       })
-      .subscribe(
-        ({ data }) => {
-          console.log('got data', data);
-        },
-        (error) => {
-          console.log('there was an error sending the query', error);
-        }
-      );
+      .subscribe(({ data, errors }) => {
+        if (errors) console.log(errors);
+        console.log('got data', data?.createUser);
+      });
   };
 }
+
+type FormData = { name: string; email: string; birthday: string; password: string };
 
 const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');

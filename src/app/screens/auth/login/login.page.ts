@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -7,18 +9,34 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
 
-  signupForm = this.formBuilder.group({
-    name: new FormControl('', Validators.required),
+  loginForm = this.formBuilder.group({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    mobile: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^\\d{8}$')])),
     password: new FormControl('', Validators.compose([Validators.required, Validators.pattern(strongRegex)])),
   });
 
-  onSubmit(values) {}
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  onSubmit = async () => {
+    console.log('called');
+    const { email, password }: FormData = this.loginForm.value;
+    this.authenticationService.login(email, password);
+    this.router.navigate(['/tabs']);
+  };
 
   ngOnInit() {}
 }
 
+type FormData = { email: string; password: string };
 const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');

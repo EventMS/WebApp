@@ -12,7 +12,7 @@
             <h3>Or</h3>
           </ion-row>
 
-          <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
             <ion-item>
               <ion-input id="name" formControlName="name" type="text" placeholder="Name"></ion-input>
               <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
@@ -26,32 +26,34 @@
               </div>
             </ion-item>
             <ion-item>
-              <ion-input id="mobile" formControlName="mobile" type="tel" placeholder="Mobile"></ion-input>
-              <div *ngIf="mobile.invalid && (mobile.touched)" class="alert alert-danger">
-                <div *ngIf="mobile.errors">Mobile is required and should conatin 8 digits</div>
-              </div>
-            </ion-item>
-            <ion-item>
-              <!-- #docregion toggle -->
-              <input matInput [matDatepicker]="picker" placeholder="Beginning Date" />
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Birthday"
+                id="birthday"
+                readonly
+                formControlName="birthday"
+              />
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-              <!-- #enddocregion toggle -->
             </ion-item>
+            <div *ngIf="birthday.invalid && (birthday.touched)" class="alert alert-danger">
+              <div *ngIf="birthday.errors">birthday is required</div>
+            </div>
             <ion-item>
               <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-              <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
-                <div *ngIf="password.errors">
-                  Password is required and needs 1 uppercase letter and a special character
-                </div>
-              </div>
             </ion-item>
+            <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
+              <div *ngIf="password.errors">
+                Password is required and needs 1 uppercase letter and a special character
+              </div>
+            </div>
+            <div>
+              <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="signupForm.invalid"
+                >Submit</ion-button
+              >
+            </div>
           </form>
-          <div>
-            <ion-button size="large" type="submit" color="warning" [disabled]="signupForm.invalid" expand="block"
-              >Submit</ion-button
-            >
-          </div>
           <ion-row class="ion-justify-content-end">
             <p>Already have an account?</p>
           </ion-row>

@@ -1,38 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="signup">
-  <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
-    <ion-grid>
-      <ion-row align-self-center>
-        <ion-col size-md="6" size-lg="5" size-xs="12">
-          <div text-center>
-            <h3>Create your account!</h3>
-          </div>
-          <div>
-            <ion-item>
-              <ion-input formControlName="name" type="text" placeholder="Name"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input formControlName="email" type="email" placeholder="your@email.com"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input formControlName="mobile" type="tel" placeholder="Mobile"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-            </ion-item>
-          </div>
-          <div>
-            <ion-button size="large" type="submit" [disabled]="signupForm.invalid" expand="block">Register</ion-button>
-          </div>
+<ion-content class="login background no-scroll">
+  <ion-grid>
+    <ion-col class="ion-padding-top ion-align-self-end">
+      <ion-row class="ion-justify-items-center ion-align-items-end">
+        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+            <div text-center>
+              <h3>Login</h3>
+            </div>
+            <div>
+              <ion-item>
+                <ion-input formControlName="email" type="email" placeholder="your@email.com"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+              </ion-item>
+            </div>
+            <div>
+              <ion-button size="large" type="submit" [disabled]="loginForm.invalid" expand="block">Login</ion-button>
+            </div>
+          </form>
         </ion-col>
       </ion-row>
-    </ion-grid>
-  </form>
+    </ion-col>
+  </ion-grid>
 </ion-content>

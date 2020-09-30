@@ -1,45 +1,51 @@
-
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ICreateUser
+// GraphQL mutation operation: ICreateUserMutation
 // ====================================================
 
-export interface ICreateUser_createUser_user {
+export interface ICreateUserMutation_createUser_user {
   email: string | null;
   id: string | null;
 }
 
-export interface ICreateUser_createUser {
+export interface ICreateUserMutation_createUser {
   token: string | null;
-  user: ICreateUser_createUser_user | null;
+  user: ICreateUserMutation_createUser_user | null;
 }
 
-export interface ICreateUser {
-  createUser: ICreateUser_createUser | null;
+export interface ICreateUserMutation {
+  createUser: ICreateUserMutation_createUser | null;
 }
 
-export interface ICreateUserVariables {
+export interface ICreateUserMutationVariables {
   request?: CreateUserRequestInput | null;
 }
-
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: IClubsQuery
+// GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 
-export interface IClubsQuery_clubs {
-  id: any;
-  name: string | null;
+export interface ILoginUserMutation_loginUser_user {
+  email: string | null;
+  id: string | null;
 }
 
-export interface IClubsQuery {
-  clubs: (IClubsQuery_clubs | null)[] | null;
+export interface ILoginUserMutation_loginUser {
+  token: string | null;
+  user: ILoginUserMutation_loginUser_user | null;
+}
+
+export interface ILoginUserMutation {
+  loginUser: ILoginUserMutation_loginUser;
+}
+
+export interface ILoginUserMutationVariables {
+  request?: LoginUserRequestInput | null;
 }
 
 /* tslint:disable */
@@ -51,10 +57,16 @@ export interface IClubsQuery {
 
 // null
 export interface CreateUserRequestInput {
+  email: string;
+  name: string;
+  password: string;
+  phoneNumber: string;
+}
+
+// null
+export interface LoginUserRequestInput {
   email?: string | null;
-  name?: string | null;
   password?: string | null;
-  phoneNumber?: string | null;
 }
 
 //==============================================================
