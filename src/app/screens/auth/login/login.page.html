@@ -4,14 +4,14 @@
       <ion-row class="ion-justify-items-center ion-align-items-end">
         <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
-            <div text-center>
+            <div class="ion-text-center">
               <h3>Login</h3>
             </div>
             <div>
-              <ion-item>
+              <ion-item color="transparent">
                 <ion-input formControlName="email" type="email" placeholder="your@email.com"></ion-input>
               </ion-item>
-              <ion-item>
+              <ion-item color="transparent">
                 <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
               </ion-item>
             </div>
