@@ -24,3 +24,17 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+.no-scroll {
+  --overflow: hidden;
+}
+
+ion-title {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.center {
+  text-align: center;
+}

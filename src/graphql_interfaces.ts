@@ -1,23 +1,51 @@
+/* tslint:disable */
+// This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: ICreateUserMutation
+// ====================================================
+
+export interface ICreateUserMutation_createUser_user {
+  email: string | null;
+  id: string | null;
+}
+
+export interface ICreateUserMutation_createUser {
+  token: string | null;
+  user: ICreateUserMutation_createUser_user | null;
+}
+
+export interface ICreateUserMutation {
+  createUser: ICreateUserMutation_createUser | null;
+}
+
+export interface ICreateUserMutationVariables {
+  request?: CreateUserRequestInput | null;
+}
 
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: IRatesQuery
+// GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 
-export interface IRatesQuery_rates {
-  rate: string | null;
-  currency: string | null;
+export interface ILoginUserMutation_loginUser_user {
+  email: string | null;
+  id: string | null;
 }
 
-export interface IRatesQuery {
-  rates: (IRatesQuery_rates | null)[] | null;
+export interface ILoginUserMutation_loginUser {
+  token: string | null;
+  user: ILoginUserMutation_loginUser_user | null;
 }
 
-export interface IRatesQueryVariables {
-  currency: string;
+export interface ILoginUserMutation {
+  loginUser: ILoginUserMutation_loginUser;
+}
+
+export interface ILoginUserMutationVariables {
+  request?: LoginUserRequestInput | null;
 }
 
 /* tslint:disable */
@@ -26,6 +54,20 @@ export interface IRatesQueryVariables {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+// null
+export interface CreateUserRequestInput {
+  email: string;
+  name: string;
+  password: string;
+  phoneNumber: string;
+}
+
+// null
+export interface LoginUserRequestInput {
+  email?: string | null;
+  password?: string | null;
+}
 
 //==============================================================
 // END Enums and Input Objects
