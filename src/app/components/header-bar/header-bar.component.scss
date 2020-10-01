@@ -29,21 +29,7 @@ ion-button {
   --box-shadow: 0;
 }
 
-ion-grid {
-  --ion-grid-padding: 0px;
-  ion-row {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-
-  ion-col {
-    padding: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
+ion-title {
+  text-align: left;
+  padding-left: 16px;
 }

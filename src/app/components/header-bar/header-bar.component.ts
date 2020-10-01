@@ -8,37 +8,35 @@ import { ProfileOptionsComponent } from '../profile-options/profile-options.comp
   styleUrls: ['./header-bar.component.scss'],
 })
 export class HeaderBarComponent implements OnInit {
+  title: string = this.platform.is('mobile') ? 'EMS' : 'Event Management System';
 
   ngOnInit() {}
 
-  constructor(public popoverController: PopoverController,
-              public platform: Platform) {
-
-  }
+  constructor(public popoverController: PopoverController, public platform: Platform) {}
 
   async tappedProfile(ev: any) {
-    console.log("Tapped profiled")
+    console.log('Tapped profiled');
     const popover = await this.popoverController.create({
       component: ProfileOptionsComponent,
       event: ev,
-      translucent: true
+      translucent: true,
     });
     await popover.present();
   }
 
   tappedFindClubs() {
-    console.log("Tapped find clubs")
+    console.log('Tapped find clubs');
   }
 
   tappedFindEvents() {
-    console.log("Tapped find events")
+    console.log('Tapped find events');
   }
 
   tappedMyEvents() {
-    console.log("Tapped my events")
+    console.log('Tapped my events');
   }
 
   tappedMyClubs() {
-    console.log("Tapped my clubs")
+    console.log('Tapped my clubs');
   }
 }
