@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Platform, PopoverController } from '@ionic/angular';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({
-  selector: 'app-header-bar',
+  selector: 'app-header-bar-component',
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.scss'],
 })
@@ -11,7 +11,8 @@ export class HeaderBarComponent implements OnInit {
 
   ngOnInit() {}
 
-  constructor(public popoverController: PopoverController) {
+  constructor(public popoverController: PopoverController,
+              public platform: Platform) {
 
   }
 

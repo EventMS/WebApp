@@ -1,49 +1,49 @@
 ion-avatar {
-    img {
-        width:70% !important;
-        height : 70% !important;
-        max-width: 100px !important;  //any size
-        max-height: 100px !important; //any size
-        margin: auto;
-    }
-    display: flex; 
-    justify-content: center;
+  img {
+    width: 70% !important;
+    height: 70% !important;
+    max-width: 100px !important; //any size
+    max-height: 100px !important; //any size
+    margin: auto;
+  }
+  display: flex;
+  justify-content: center;
 }
 
 ion-header {
-    background-color: darkorange;
+  background-color: darkorange;
 }
 
 ion-button {
-    padding-left: 8px;
-    padding-right: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .regular {
-    --background: black;
-    --color-hover: darkorange;
+  --background: black;
+  --color-hover: darkorange;
 }
 
 .profile {
-    --background: transparent;
-    --box-shadow: 0;
+  --background: transparent;
+  --box-shadow: 0;
 }
 
 ion-grid {
-    --ion-grid-padding: 0px;
-    ion-row {
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-    }
+  --ion-grid-padding: 0px;
+  ion-row {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 
-    ion-col {
-        padding: 0px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-    }
+  ion-col {
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 }

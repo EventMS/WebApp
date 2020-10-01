@@ -1,8 +1,16 @@
 <ion-content>
-  <div>
-    <app-text-input placeholderValue="Klubnavn"></app-text-input>
-    <app-text-input placeholderValue="Locations"></app-text-input>
-    <app-text-input placeholderValue="Description"></app-text-input>
-    <app-confirmation-button title="Create Club"></app-confirmation-button>
-  </div>
+  <ion-grid>
+    <ion-row>
+      <app-text-input placeholderValue="Klubnavn"></app-text-input>
+    </ion-row>
+    <ion-row>
+      <app-text-input placeholderValue="Locations"></app-text-input>
+    </ion-row>
+    <ion-row>
+      <app-text-input placeholderValue="Description"></app-text-input>
+    </ion-row>
+    <ion-row>
+      <app-confirmation-button title="Create Club" [delegate]="this"></app-confirmation-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

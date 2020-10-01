@@ -16,7 +16,7 @@ export class ProfileOptionsComponent implements OnInit {
 
   async createClubClicked() {
     console.log("Clicked create")
-    await this.popoverController.dismiss().then(() => this.router.navigate(['/club-create'])
+    await this.popoverController.dismiss().then(() => this.router.navigate(['tabs/club-create'])
     );
   }
 

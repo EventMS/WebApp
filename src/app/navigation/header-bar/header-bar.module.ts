@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { HeaderBarPageRoutingModule } from './header-bar-routing.module';
 
 import { HeaderBarPage } from './header-bar.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HeaderBarPageRoutingModule
+    HeaderBarPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [HeaderBarPage]
 })

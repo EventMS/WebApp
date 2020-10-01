@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private platform: Platform
   ) {}
 
   loginForm = this.formBuilder.group({
@@ -32,7 +34,10 @@ export class LoginPage implements OnInit {
     console.log('called');
     const { email, password }: FormData = this.loginForm.value;
     this.authenticationService.login(email, password);
-    this.router.navigate(['/tabs']);
+/*     this.router.navigate(
+    this.platform.is("mobile") ?
+    ['tabs'] : ["header"]); */
+    this.router.navigate(["/header"])
   };
 
   ngOnInit() {}

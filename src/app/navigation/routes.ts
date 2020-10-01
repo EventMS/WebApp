@@ -13,7 +13,10 @@ const navigationRoutes = [{
     path: 'tab3',
     loadChildren: () => import("src/app/pages/tab3/tab3.module").then((m) => m.Tab3PageModule),
   },
-
+  {
+    path: 'club-create',
+    loadChildren: () => import('src/app/pages/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
+  },
 ]
 
 export default navigationRoutes

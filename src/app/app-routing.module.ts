@@ -20,9 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./navigation/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
+
   {
-    path: 'club-create',
-    loadChildren: () => import('./pages/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
+    path: 'header',
+    loadChildren: () => import('./navigation/header-bar/header-bar.module').then((m) => m.HeaderBarPageModule),
   }
 ];
 @NgModule({
