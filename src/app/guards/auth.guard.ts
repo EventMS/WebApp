@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
-    return true;
+
     if (currentUser) {
       // check if route is restricted by role
       // if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
@@ -16,15 +16,16 @@ export class AuthGuard implements CanActivate {
       //   this.router.navigate(['/']);
       //   return false;
       // }
-      console.log('Checkek with guard');
-      console.log(currentUser);
-
       // authorised so return true
       return true;
     }
 
+    console.log(route);
+
+    if (state.url == '/tabs') alert('Wrong username or password');
+    else alert('please log in again.');
     // not logged in so redirect to login page with the return url
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/login']);
     return false;
   }
 }

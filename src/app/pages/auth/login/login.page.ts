@@ -31,13 +31,8 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit = async () => {
-    console.log('called');
     const { email, password }: FormData = this.loginForm.value;
     this.authenticationService.login(email, password);
-/*     this.router.navigate(
-    this.platform.is("mobile") ?
-    ['tabs'] : ["header"]); */
-    this.router.navigate(["/header"])
   };
 
   ngOnInit() {}

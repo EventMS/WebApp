@@ -1,67 +1,66 @@
 <ion-content class="signup background no-scroll">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref=""></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-grid>
-    <ion-col class="ion-padding-top ion-align-self-end">
-      <ion-row class="ion-justify-items-center ion-align-items-end">
-        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h3>Sign up with</h3>
-          </div>
-          <ion-button color="primary" expand="block">Facebook</ion-button>
-          <ion-button color="danger" expand="block">Google</ion-button>
-          <ion-row class="ion-align-items-stretch" style="margin-top: 1em">
-            <h3>Or</h3>
-          </ion-row>
-
-          <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
-            <ion-item>
-              <ion-input id="name" formControlName="name" type="text" placeholder="Name"></ion-input>
-              <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                <div *ngIf="name.errors.required">Name is required.</div>
-              </div>
-            </ion-item>
-            <ion-item>
-              <ion-input id="email" formControlName="email" type="email" placeholder="your@email.com"></ion-input>
-              <div *ngIf="email.invalid && (email.touched)" class="alert alert-danger">
-                <div *ngIf="email.errors">Email is required</div>
-              </div>
-            </ion-item>
-            <ion-item>
-              <input
-                matInput
-                [matDatepicker]="picker"
-                placeholder="Birthday"
-                id="birthday"
-                readonly
-                formControlName="birthday"
-              />
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </ion-item>
+    <ion-row class="ion-justify-items-center ion-align-items-end">
+      <ion-col size-md="6" size-lg="5" size-xs="12">
+        <ion-button color="primary" expand="block">Sign up with Facebook</ion-button>
+        <ion-button color="danger" expand="block">Sign up with Google</ion-button>
+        <ion-row class="ion-align-items-stretch" style="margin-top: 1em">
+          <h4>Or create a user</h4>
+        </ion-row>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
+          <ion-item>
+            <ion-input id="name" formControlName="name" type="text" placeholder="Name"></ion-input>
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+              <div *ngIf="name.errors.required">Name is required.</div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <ion-input id="email" formControlName="email" type="email" placeholder="your@email.com"></ion-input>
+            <div *ngIf="email.invalid && (email.touched)" class="alert alert-danger">
+              <div *ngIf="email.errors">Email is required</div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="Birthday"
+              id="birthday"
+              readonly
+              formControlName="birthday"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
             <div *ngIf="birthday.invalid && (birthday.touched)" class="alert alert-danger">
               <div *ngIf="birthday.errors">birthday is required</div>
             </div>
-            <ion-item>
-              <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-            </ion-item>
-            <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
-              <div *ngIf="password.errors">
-                Password is required and needs 1 uppercase letter and a special character
-              </div>
-            </div>
-            <div>
-              <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="signupForm.invalid"
-                >Submit</ion-button
-              >
-            </div>
-          </form>
-          <ion-row class="ion-justify-content-end">
-            <p>Already have an account?</p>
-          </ion-row>
-          <ion-row class="ion-justify-content-end">
-            <a href="/login">Log in</a>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-col>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+          </ion-item>
+          <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors">Password is required and needs 1 uppercase letter and a special character</div>
+          </div>
+          <div>
+            <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="signupForm.invalid"
+              >Submit</ion-button
+            >
+          </div>
+        </form>
+        <ion-row class="ion-justify-content-end">
+          <p>Already have an account?</p>
+        </ion-row>
+        <ion-row class="ion-justify-content-end">
+          <a routerLink="/login">Log in</a>
+        </ion-row>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
