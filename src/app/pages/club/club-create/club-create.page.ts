@@ -73,7 +73,7 @@ export class ClubCreatePage implements OnInit {
   }
 
   didAddLocationItem() {
-    let input = this.currentLocationInput
+    let input = this.currentLocationInput!
 
     if(this.locations.includes(input.value)){
       this.presentAlert(ErrorMessages.duplicate)

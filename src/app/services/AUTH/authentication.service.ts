@@ -21,20 +21,14 @@ export class AuthenticationService {
     this.loginMutationService
       .mutate({ request: { email: email, password: password } })
       .subscribe(({ data, errors }) => {
-        console.log('subscribe has been called');
-        if (errors || !data) {
-          console.log(errors);
-          this.logout();
-        } else {
+        if (errors || !data) console.log(errors);
+        else {
           const { loginUser } = data;
           localStorage.setItem('currentUser', JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
+
           return loginUser;
         }
-      },(error) => {
-        console.log('error called')
-        console.log(error)
-        this.logout()
       });
   }
 
