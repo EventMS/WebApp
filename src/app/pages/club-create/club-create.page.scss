@@ -1,7 +1,37 @@
-ion-grid.centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+ion-button {
+    --color: clear;
+}
+
+ion-list {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+ion-label {
+    max-width: 80%;
+}
+
+div {
+    display: flex;
+}
+
+form {
+    margin:auto;
+}
+
+div[scrollx=true], div[scrolly=true] {
+    position: relative;
+    overflow: hidden;
+  
+    ::-webkit-scrollbar {
+      display: none;
+    }
+}
+
+div[scrollx=true] {
+overflow-x: auto;
+}
+  
+div[scrolly=true] {
+overflow-y: auto;
 }

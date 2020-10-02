@@ -18,8 +18,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return true
-    /* this.loginMutationService
+    this.loginMutationService
       .mutate({ request: { email: email, password: password } })
       .subscribe(({ data, errors }) => {
         console.log('subscribe has been called')
@@ -33,7 +32,11 @@ export class AuthenticationService {
           this.currentUserSubject.next(loginUser);
           return loginUser;
         }
-      }); */
+      },(error) => {
+        console.log('error called')
+        console.log(error)
+        this.logout()
+      });
   }
 
   logout() {

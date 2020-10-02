@@ -1,16 +1,30 @@
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <app-text-input placeholderValue="Klubnavn"></app-text-input>
-    </ion-row>
-    <ion-row>
-      <app-text-input placeholderValue="Locations"></app-text-input>
-    </ion-row>
-    <ion-row>
-      <app-text-input placeholderValue="Description"></app-text-input>
-    </ion-row>
-    <ion-row>
-      <app-confirmation-button title="Create Club" [delegate]="this"></app-confirmation-button>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+<div scrolly=true>
+    <form [formGroup]="clubform" (ngSubmit)="onSubmit(clubform)">
+        <ion-item>
+            <ion-input id="name" formControlName="name" type="text" placeholder="Club Name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input formControlName="currentLocationInput" id="locationInput" type="text" placeholder="Input club location" (keyup.enter)="didAddLocationItem()"></ion-input>
+            <ion-buttons end>
+                <ion-button (click)="didAddLocationItem()">
+                  <ion-icon name="add-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+        </ion-item>
+        <ion-list [hidden]="locations.length == 0">
+            <ion-item *ngFor="let location of locations">
+                <ion-label>{{ location }}</ion-label>
+                <ion-buttons>
+                    <ion-button (click)="didRemoveLocationItem(location)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>  
+        </ion-list>
+        <ion-item>
+            <ion-textarea id="description" formControlName="description" type='text' placeholder="Description"></ion-textarea>
+        </ion-item>
+        <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="clubform.invalid">Create Club
+        </ion-button>
+    </form>
+</div>
