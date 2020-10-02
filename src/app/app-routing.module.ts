@@ -5,20 +5,25 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./screens/auth/start/start.module').then((m) => m.StartPageModule),
+    loadChildren: () => import('./pages/auth/start/start.module').then((m) => m.StartPageModule),
   },
   {
     path: 'signup',
-    loadChildren: () => import('../app/screens/auth/signup/signup.module').then((m) => m.SignupPageModule),
+    loadChildren: () => import('./pages/auth/signup/signup.module').then((m) => m.SignupPageModule),
   },
   {
     path: 'login',
-    loadChildren: () => import('../app/screens/auth/login/login.module').then((m) => m.LoginPageModule),
+    loadChildren: () => import('./pages/auth/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./screens/tabs/tabs.module').then((m) => m.TabsPageModule),
+    loadChildren: () => import('./navigation/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'header',
+    loadChildren: () => import('./navigation/header-bar/header-bar.module').then((m) => m.HeaderBarPageModule),
   },
 ];
 @NgModule({

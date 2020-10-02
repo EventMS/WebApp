@@ -1,0 +1,35 @@
+ion-avatar {
+  img {
+    width: 70% !important;
+    height: 70% !important;
+    max-width: 100px !important; //any size
+    max-height: 100px !important; //any size
+    margin: auto;
+  }
+  display: flex;
+  justify-content: center;
+}
+
+ion-header {
+  background-color: darkorange;
+}
+
+ion-button {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.regular {
+  --background: black;
+  --color-hover: darkorange;
+}
+
+.profile {
+  --background: transparent;
+  --box-shadow: 0;
+}
+
+ion-title {
+  text-align: left;
+  padding-left: 16px;
+}
