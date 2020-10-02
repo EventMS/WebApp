@@ -88,12 +88,13 @@ export interface ILoginUserMutationVariables {
 //==============================================================
 
 export interface CreateClubRequestInput {
-  accountNumber?: string | null;
-  address?: string | null;
+  accountNumber: string;
+  address: string;
   description?: string | null;
-  name?: string | null;
-  phoneNumber?: string | null;
-  registrationNumber?: string | null;
+  locations?: (string | null)[] | null;
+  name: string;
+  phoneNumber: string;
+  registrationNumber: string;
 }
 
 export interface CreateUserRequestInput {

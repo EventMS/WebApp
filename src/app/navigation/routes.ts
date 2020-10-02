@@ -15,8 +15,12 @@ const navigationRoutes = [{
   },
   {
     path: 'club-create',
-    loadChildren: () => import('src/app/pages/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
+    loadChildren: () => import('src/app/pages/club/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
   },
+  {
+    path: 'club-details',
+    loadChildren: () => import('src/app/pages/club/club-details/club-details.module').then((m) => m.ClubDetailsPageModule)
+  }
 ]
 
 export default navigationRoutes

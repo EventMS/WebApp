@@ -17,12 +17,12 @@ export class CreateClubMutationService extends Mutation<ICreateClubMutation, ICr
   createClub(request: CreateClubRequestInput) {
     return this.mutate({
       request: {
-        accountNumber: '12345678',
-        registrationNumber: '1234',
-        name: 'name',
-        description: 'Something',
-        phoneNumber: '12345678',
-        address: 'Somewhere',
+        accountNumber: request.accountNumber.toString(),
+        registrationNumber: request.registrationNumber.toString(),
+        name: request.name,
+        description: request.description,
+        phoneNumber: request.phoneNumber.toString(),
+        address: request.address,
       },
     });
   }

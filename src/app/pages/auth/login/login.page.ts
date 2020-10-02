@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
 /*     this.router.navigate(
     this.platform.is("mobile") ?
     ['tabs'] : ["header"]); */
-    this.router.navigate(["/header"])
+    this.router.navigate(["/tabs"])
   };
 
   ngOnInit() {}

@@ -1,0 +1,73 @@
+<ion-content class="signup background">
+    <ion-grid>
+      <ion-col class="ion-padding-top ion-align-self-end">
+        <ion-row class="ion-justify-items-center ion-align-items-end">
+          <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
+            <div class="ion-text-center">
+              <h1>Create Club</h1>
+            </div>
+
+            <div scrolly=true>
+                <form [formGroup]="clubform" (ngSubmit)="onSubmit(clubform)">
+                    <ion-item>
+                        <ion-input id="name" formControlName="name" type="text" placeholder="Club Name"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-input id="phone" formControlName="phone" type="number" placeholder="Phonenumber"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-input id="address" formControlName="address" type="text" placeholder="Address"></ion-input>
+                    </ion-item>
+                    <ion-item-group>
+                        <ion-item-divider>
+                            <ion-label>Locations</ion-label>
+                        </ion-item-divider>
+                        <ion-item>
+                            <ion-input formControlName="currentLocationInput" id="locationInput" type="text" placeholder="Input club location" (keyup.enter)="didAddLocationItem()"></ion-input>
+                            <ion-buttons end>
+                                <ion-button (click)="didAddLocationItem()">
+                                  <ion-icon name="add-outline"></ion-icon>
+                                </ion-button>
+                              </ion-buttons>
+                        </ion-item>
+                        <ion-list [hidden]="locations.length == 0">
+                            <ion-item *ngFor="let location of locations">
+                                <ion-label>{{ location }}</ion-label>
+                                <ion-buttons>
+                                    <ion-button (click)="didRemoveLocationItem(location)">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </ion-button>
+                                </ion-buttons>
+                            </ion-item>  
+                        </ion-list>
+                    </ion-item-group>
+                    <ion-item-group>
+                        <ion-item-divider>
+                            <ion-label>Club Description</ion-label>
+                        </ion-item-divider>
+                        <ion-item>
+                            <ion-textarea id="description" formControlName="description" type='text' placeholder="Description"></ion-textarea>
+                        </ion-item>
+                    </ion-item-group>
+                    <ion-item-group>
+                        <ion-item-divider>
+                            <ion-label>Account Information</ion-label>
+                        </ion-item-divider>
+                        <ion-item>
+                            <ion-input id="regNumber" type="number" formControlName="regNumber" placeholder="Registration number"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-input id="accountNumber" type="number" formControlName="accountNumber" placeholder="Account number"></ion-input>
+                        </ion-item>
+                    </ion-item-group>
+                    
+                    <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="clubform.invalid">Create Club
+                    </ion-button>
+                </form>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-grid>
+  </ion-content>
+  
