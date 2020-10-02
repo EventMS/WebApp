@@ -18,22 +18,20 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return true;
-    /* this.loginMutationService
+    this.loginMutationService
       .mutate({ request: { email: email, password: password } })
       .subscribe(({ data, errors }) => {
-        console.log('subscribe has been called')
+        console.log('subscribe has been called');
         if (errors || !data) {
-          console.log(errors)
+          console.log(errors);
           this.logout();
-        }
-        else {
+        } else {
           const { loginUser } = data;
           localStorage.setItem('currentUser', JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
           return loginUser;
         }
-      }); */
+      });
   }
 
   logout() {
