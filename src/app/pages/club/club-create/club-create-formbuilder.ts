@@ -19,4 +19,28 @@ export class CreateClubFormBuilder {
             currentLocationInput: new FormControl('', null)
         });
     }
+
+    get currentLocationInput() {
+        return this.form.get('currentLocationInput')
+    }
+
+    get name() {
+        return this.form.get('name');
+    }
+
+    get phone() {
+        return this.form.get('phone');
+    }
+
+    get address() {
+        return this.form.get('address');
+    }
+
+    get regNumber() {
+        return this.form.get('regNumber')
+    }
+
+    get accountNumber() {
+        return this.form.get('accountNumber')
+    }
 }

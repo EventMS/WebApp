@@ -17,16 +17,22 @@ ion-toolbar {
 ion-button {
   padding-left: 8px;
   padding-right: 8px;
-}
 
-.regular {
-  --background: black;
-  --color-hover: darkorange;
 }
 
 .profile {
   --background: transparent;
   --box-shadow: 0;
+}
+
+.regular {
+  --background: black;
+  --color: AliceBlue;
+}
+
+.regular:hover  {
+ --background: black;
+ --color: darkorange;
 }
 
 ion-title {

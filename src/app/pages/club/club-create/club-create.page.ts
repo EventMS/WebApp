@@ -1,10 +1,8 @@
-import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CreateClubMutationService } from 'src/app/services/GRAPHQL/create-club-mutation.service';
-import { CreateClubRequestInput } from 'src/graphql_interfaces';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 
 @Component({
@@ -15,9 +13,14 @@ import { CreateClubFormBuilder } from './club-create-formbuilder';
 
 export class ClubCreatePage implements OnInit {
 
+  // Private properties
   private createClubFormBuilder: CreateClubFormBuilder;
 
+  // Public properties
+
   locations: string[] = [];
+
+  // Lifecycle
 
   constructor(private formbuilder: FormBuilder,
               private alertCtrl: AlertController,
@@ -29,32 +32,44 @@ export class ClubCreatePage implements OnInit {
   ngOnInit() {
   }
 
+  // Getters
+
   get clubform() {
     return this.createClubFormBuilder.form;
   }
 
-  get currentLocationInput() {
-    return this.clubform.get('currentLocationInput')
+  get name() {
+    return this.createClubFormBuilder.name
   }
 
-  onSubmit = async () => {
-    const { name, phone, address, regNumber, accountNumber, description, locations }: FormData = this.clubform.value;
-    console.log( name, phone, address, regNumber, accountNumber, description, locations)
+  get phone() {
+    return this.createClubFormBuilder.phone
+  }
 
-    this.createClubService.createClub({ name: name, description: description, phoneNumber: phone, accountNumber: accountNumber, registrationNumber: regNumber, address: address, locations: locations }).subscribe(
+  get address() {
+    return this.createClubFormBuilder.address
+  }
+
+  get regNumber() {
+    return this.createClubFormBuilder.regNumber
+  }
+
+  get accountNumber() {
+    return this.createClubFormBuilder.accountNumber
+  }
+
+  get currentLocationInput() {
+    return this.createClubFormBuilder.currentLocationInput
+  }
+
+  // Public methods
+
+  onSubmit = async () => {
+    const formData: FormData = this.clubform.value;
+    this.createClubService.createClub({ name: formData.name, description: formData.description, phoneNumber: formData.phone, accountNumber: formData.accountNumber, registrationNumber: formData.regNumber, address: formData.address, locations: formData.locations }).subscribe(
       (data) => this.handleResponse(data),
       (error) => this.handleError(error)
     );
-  }
-
-  async presentAlert(msg: string) {
-    const alert = this.alertCtrl.create({
-      header: "Error",
-      message: msg,
-      buttons: ['OK']
-    });
-
-    (await alert).present()
   }
 
   didAddLocationItem() {
@@ -81,6 +96,18 @@ export class ClubCreatePage implements OnInit {
     this.locations = this.locations.filter( otherLocation => {
       return location != otherLocation;
     });
+  }
+
+  // Private methods
+
+  private async presentAlert(msg: string) {
+    const alert = this.alertCtrl.create({
+      header: "Error",
+      message: msg,
+      buttons: ['OK']
+    });
+
+    (await alert).present()
   }
 
   private handleResponse(data) {
