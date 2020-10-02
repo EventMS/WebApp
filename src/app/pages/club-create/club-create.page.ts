@@ -20,7 +20,7 @@ export class ClubCreatePage implements OnInit {
 
   constructor(private formbuilder: FormBuilder,
               private alertCtrl: AlertController,
-              private createClubMutationService: CreateClubMutationService) { 
+              private createClubService: CreateClubMutationService) { 
   }
 
   clubform = this.formbuilder.group({
@@ -91,6 +91,23 @@ export class ClubCreatePage implements OnInit {
     });
   }
 
+  didPressButton() {
+    console.log('Submit clicked');
+    this.createClubService.createClub({ name: 'Something' }).subscribe(
+      (data) => this.handleResponse(data),
+      (error) => this.handleError(error)
+    );
+  }
+
+  private handleResponse(data) {
+    console.log('Kunne oprette klub');
+    console.log(data);
+  }
+
+  private handleError(error) {
+    console.log('Kunne ikke oprette klub');
+    console.log(error);
+  }
 }
 
 type FormData = { name: string; description: string, locations: string[]};
