@@ -18,7 +18,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    return true
+    return true;
     /* this.loginMutationService
       .mutate({ request: { email: email, password: password } })
       .subscribe(({ data, errors }) => {
