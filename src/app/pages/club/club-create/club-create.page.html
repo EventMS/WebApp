@@ -40,7 +40,7 @@
                         <ion-item>
                             <ion-input formControlName="currentLocationInput" id="locationInput" type="text" placeholder="Input club location" (keyup.enter)="didAddLocationItem()"></ion-input>
                             <ion-buttons end>
-                                <ion-button (click)="didAddLocationItem()">
+                                <ion-button id="addLocation" (click)="didAddLocationItem()">
                                   <ion-icon name="add-outline"></ion-icon>
                                 </ion-button>
                               </ion-buttons>
@@ -83,7 +83,7 @@
                             </div>
                         </ion-item>
                     </ion-item-group>
-                    <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="clubform.invalid">Create Club
+                    <ion-button id="submit" size="large" type="submit" color="warning" expand="block" [disabled]="clubform.invalid">Create Club
                     </ion-button>
                 </form>
             </div>
