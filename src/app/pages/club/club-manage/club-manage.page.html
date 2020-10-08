@@ -1,1 +1,41 @@
-<app-club-manage-subcriptions></app-club-manage-subcriptions>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer opened="true" disableClose="true" #drawer class="example-sidenav" mode="side">
+    <ion-list>
+      <ion-item>
+        <ion-button (click)="sidebarContent = SidebarContent.club">
+          <ion-label>Manage Club</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="sidebarContent = SidebarContent.events">
+          <ion-label>Manage Events</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="sidebarContent = SidebarContent.members">
+          <ion-label>Manage Members</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="sidebarContent = SidebarContent.instructors">
+          <ion-label>Manage Instructors</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="sidebarContent = SidebarContent.subscriptions">
+          <ion-label>Manage Subscriptions</ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <!-- Erstat labels med komponenter, når vi har lavet dem -->
+    <ion-label *ngIf="sidebarContent==SidebarContent.club">CLUBS</ion-label>
+    <ion-label *ngIf="sidebarContent==SidebarContent.events">EVENTS</ion-label>
+    <ion-label *ngIf="sidebarContent==SidebarContent.members">MEMBERS</ion-label>
+    <ion-label *ngIf="sidebarContent==SidebarContent.instructors">INSTRUCTORS</ion-label>
+    <app-club-manage-subcriptions *ngIf="sidebarContent==SidebarContent.subscriptions">SUBSRIPTIONS</app-club-manage-subcriptions>
+  </div>
+
+</mat-drawer-container>

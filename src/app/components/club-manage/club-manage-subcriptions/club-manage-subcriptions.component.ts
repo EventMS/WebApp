@@ -15,12 +15,12 @@ export class ClubManageSubcriptionsComponent implements OnInit {
   constructor(private clubSubscriptionsService: ClubSubscriptionsQueryService) { }
 
   ngOnInit() {
-    this.clubSubscriptionsService.fetch().subscribe(
+/*     this.clubSubscriptionsService.fetch().subscribe(
       (data) => this.existingSubscriptions = data.data.subscriptionsForClub,
-    )
+    ) */
 
-   // this.existingSubscriptions.push({name: "yes" , price: 120, __typename: "ClubSubscription"})
-    ///this.existingSubscriptions.push({name: "Another one" , price: 150, __typename: "ClubSubscription"})
+    this.existingSubscriptions.push({name: "yes" , price: 120, __typename: "ClubSubscription"})
+    this.existingSubscriptions.push({name: "Another one" , price: 150, __typename: "ClubSubscription"})
   }
 
   onSubmit() {
