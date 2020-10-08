@@ -8,7 +8,7 @@ export class ClubServiceMockService {
 
   constructor() { }
 
-  createClub(): Observable<any> {
+  mutate(): Observable<any> {
     return new Observable(subscribe => {
       subscribe.next("Data")
     })

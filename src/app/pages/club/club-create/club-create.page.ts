@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { CreateClubMutationService } from 'src/app/services/GRAPHQL/create-club-mutation.service';
+import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/create-club-mutation.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 
 @Component({
@@ -66,10 +66,12 @@ export class ClubCreatePage implements OnInit {
 
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
-    this.createClubService.createClub({ name: formData.name, description: formData.description, phoneNumber: formData.phone, accountNumber: formData.accountNumber, registrationNumber: formData.regNumber, address: formData.address, locations: formData.locations }).subscribe(
+    this.createClubService
+    .mutate({ request: { name: formData.name, description: formData.description, phoneNumber: formData.phone, accountNumber: formData.accountNumber, registrationNumber: formData.regNumber, address: formData.address, locations: formData.locations } })
+    .subscribe(
       (data) => this.handleResponse(data),
-      (error) => this.handleError(error)
-    );
+      (error) => this.presentAlert(error)
+    )
   }
 
   didAddLocationItem() {
@@ -114,23 +116,11 @@ export class ClubCreatePage implements OnInit {
     //Navigate to page for new created club
     this.router.navigate(['/tabs/club-details'])
   }
-
-  private async handleError(error) {
-
-    console.log(error)
-    const alert = this.alertCtrl.create({
-      header: "Error",
-      message: error,
-      buttons: ['OK']
-    });
-
-    (await alert).present()
-  }
 }
 
 enum ErrorMessages {
   duplicate = "You can't input duplicate locations",
-  noName = "Location must have a name"
+  noName = "Location must have a name",
 }
 
 type FormData = { name: string,

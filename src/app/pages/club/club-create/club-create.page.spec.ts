@@ -5,11 +5,9 @@ import { ClubCreatePage } from './club-create.page';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CreateClubMutationService } from 'src/app/services/GRAPHQL/create-club-mutation.service';
+import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/create-club-mutation.service';
 import { Router } from '@angular/router';
-import { Observable, Observer } from 'rxjs';
-import { CreateClubRequestInput } from 'src/graphql_interfaces';
-import { subscribe } from 'graphql';
+import { Observable } from 'rxjs';
 import { ClubServiceMockService } from 'src/app/services/Mocks/club-service-mock.service';
 
 describe('ClubCreatePage', () => {
@@ -164,25 +162,25 @@ describe('ClubCreatePage', () => {
   
   it('should not navigate, if error is returned', fakeAsync(inject([Router], (router: Router) => {
     spyOn(router, 'navigate').and.stub();
-    spyOn(mockService, 'createClub').and.returnValue(new Observable(subscribe => {subscribe.next("data")}))
+    spyOn(mockService, 'mutate').and.returnValue(new Observable(subscribe => {subscribe.next("data")}))
 
     component.onSubmit()
 
     fixture.detectChanges();
 
-    expect(mockService.createClub).toHaveBeenCalledTimes(1);
+    expect(mockService.mutate).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalledTimes(1);
   })))
 
    it('should navigate, if success is returned', inject([Router], (router: Router) => {
     spyOn(router, 'navigate').and.stub();
-    spyOn(mockService, 'createClub').and.returnValue(new Observable(subscribe => {subscribe.error("error")}))
+    spyOn(mockService, 'mutate').and.returnValue(new Observable(subscribe => {subscribe.error("error")}))
 
     component.onSubmit()
 
     fixture.detectChanges();
 
-    expect(mockService.createClub).toHaveBeenCalledTimes(1);
+    expect(mockService.mutate).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalledTimes(0);
   }))
 
