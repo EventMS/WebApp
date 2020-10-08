@@ -14,7 +14,7 @@
     "start_ios": "ionic build && ionic cap copy && ionic cap sync && ionic cap run ios -l --external",
     "start_web": "ionic serve",
     "prettier": "prettier --write '**/*.{ts,scss,html}'",
-    "graphql": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
+    "update_graphql": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
   },
   "private": true,
   "dependencies": {

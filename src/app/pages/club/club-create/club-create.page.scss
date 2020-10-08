@@ -1,0 +1,38 @@
+.signup ion-grid {
+    height: 100%;
+}
+
+.signup ion-row {
+    justify-content: center;
+}
+  
+ion-content.background {
+--background: url(../../../../assets/img/start.png) 0 0/100% 100% no-repeat;
+}
+
+.signup ion-col {
+padding: 20px;
+margin: 50px;
+}
+
+.rcorners {
+border-radius: 25px;
+background: whitesmoke;
+}
+
+.signup ion-icon {
+margin: 20px;
+}
+
+ion-item-divider {
+    --background: clear;
+    --color: black;
+}
+
+ion-textarea {
+    --padding-top: 5px;
+}
+
+ion-list {
+    padding: 10px;
+}
