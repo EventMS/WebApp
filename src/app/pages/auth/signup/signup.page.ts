@@ -30,11 +30,16 @@ export class SignupPage {
     name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     birthday: new FormControl('', Validators.required),
+    phoneNumber: new FormControl('', Validators.compose([Validators.required, Validators.pattern(mobileRegex)])),
     password: new FormControl('', Validators.compose([Validators.required, Validators.pattern(strongRegex)])),
   });
 
   get name() {
     return this.signupForm.get('name');
+  }
+
+  get phoneNumber() {
+    return this.signupForm.get('phoneNumber');
   }
 
   get email() {
@@ -50,11 +55,11 @@ export class SignupPage {
   }
 
   onSubmit = async () => {
-    const { name, email, birthday, password }: FormData = this.signupForm.value;
+    const { name, email, birthday, phoneNumber, password }: FormData = this.signupForm.value;
 
     this.createUserMutationService
       .mutate({
-        request: { email: email, name: name, password: password, phoneNumber: '71782781' },
+        request: { email: email, name: name, password: password, phoneNumber: phoneNumber },
       })
       .subscribe(
         ({ data }) => {
@@ -69,6 +74,7 @@ export class SignupPage {
   };
 }
 
-type FormData = { name: string; email: string; birthday: string; password: string };
+type FormData = { name: string; email: string; phoneNumber: string; birthday: Date; password: string };
 
+const mobileRegex = new RegExp('[0-9]{8}');
 const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');

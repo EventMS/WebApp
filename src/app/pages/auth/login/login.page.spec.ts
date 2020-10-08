@@ -5,16 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login.page';
 import { By } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthenticationMockService } from 'src/app/services/MOCKS/authentication-service-mock.service';
 
 fdescribe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
   let de: DebugElement;
   let el: HTMLElement;
-  const mockService = new AuthenticationMockService();
   const emptyInput = '';
   const invalidEmail = 'test';
   const validEmail = 'test@test.dk';
@@ -25,7 +21,6 @@ fdescribe('LoginPage', () => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
       imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule, AppRoutingModule],
-      providers: [{ provide: AuthenticationMockService, useValue: mockService }],
     })
       .compileComponents()
       .then(() => {

@@ -28,6 +28,12 @@
             </div>
           </ion-item>
           <ion-item>
+            <ion-input id="phoneNumber" formControlName="phoneNumber" placeholder="88225566"></ion-input>
+            <div *ngIf="phoneNumber.invalid && (phoneNumber.touched)" class="alert alert-danger">
+              <div *ngIf="phoneNumber.errors">phoneNumber is required</div>
+            </div>
+          </ion-item>
+          <ion-item>
             <input
               matInput
               [matDatepicker]="picker"
@@ -49,7 +55,13 @@
             <div *ngIf="password.errors">Password is required and needs 1 uppercase letter and a special character</div>
           </div>
           <div>
-            <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="signupForm.invalid"
+            <ion-button
+              id="submit"
+              size="large"
+              type="submit"
+              color="warning"
+              expand="block"
+              [disabled]="signupForm.invalid"
               >Submit</ion-button
             >
           </div>

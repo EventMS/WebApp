@@ -21,13 +21,12 @@ export class AuthenticationService {
   }
 
   public get currentUserValue(): User | null {
-    console.log(jwt_decode(this.currentUserSubject.value.token));
     return this.currentUserSubject.value;
   }
 
   loginFromSignup(user: ICreateUserMutation['createUser']) {
-    localStorage.setItem(current_user, JSON.stringify(user));
-    localStorage.setItem(expires_at, JSON.stringify(jwt_decode(user.token)));
+    localStorage.setItem(current_user, JSON.stringify(user!));
+    localStorage.setItem(expires_at, JSON.stringify(jwt_decode(user!.token!)));
     this.currentUserSubject.next(user);
     this.router.navigate(['/tabs']);
   }
@@ -37,7 +36,7 @@ export class AuthenticationService {
       ({ data }) => {
         const { loginUser } = data!;
         localStorage.setItem(current_user, JSON.stringify(loginUser));
-        localStorage.setItem(expires_at, JSON.stringify(jwt_decode(loginUser.token)));
+        localStorage.setItem(expires_at, JSON.stringify(jwt_decode(loginUser!.token!)));
         this.currentUserSubject.next(loginUser);
         this.router.navigate(['/tabs']);
       },
@@ -61,6 +60,7 @@ export class AuthenticationService {
 
   private getExpiration() {
     const expiration = localStorage.getItem(expires_at);
+    if (!expiration) return dayjs();
     const expiresAt = JSON.parse(expiration);
     return dayjs(expiresAt);
   }
