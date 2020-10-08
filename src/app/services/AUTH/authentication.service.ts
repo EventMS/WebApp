@@ -55,7 +55,7 @@ export class AuthenticationService {
     this.router.navigate(['/']);
   }
 
-  public isTokenExpired() {
+  public isTokenValid() {
     return dayjs().isBefore(this.getExpiration());
   }
 
