@@ -26,17 +26,62 @@ export interface ICreateClubMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IClub
+// ====================================================
+
+export interface IClub_clubs {
+  __typename: "Club";
+  accountNumber: string | null;
+  address: string | null;
+  adminId: any;
+  clubId: any;
+  description: string | null;
+  instructorIds: any[] | null;
+  name: string | null;
+  phoneNumber: string | null;
+  registrationNumber: string | null;
+}
+
+export interface IClub {
+  clubs: (IClub_clubs | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IMyClubsQuery
+// ====================================================
+
+export interface IMyClubsQuery_myClubs {
+  __typename: "Club";
+  name: string | null;
+  clubId: any;
+}
+
+export interface IMyClubsQuery {
+  myClubs: (IMyClubsQuery_myClubs | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ICreateUserMutation
 // ====================================================
 
 export interface ICreateUserMutation_createUser_user {
-  __typename: "ApplicationUser";
+  __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
 }
 
 export interface ICreateUserMutation_createUser {
-  __typename: "Response";
+  __typename: "identity_Response";
   token: string | null;
   user: ICreateUserMutation_createUser_user | null;
 }
@@ -59,13 +104,13 @@ export interface ICreateUserMutationVariables {
 // ====================================================
 
 export interface ILoginUserMutation_loginUser_user {
-  __typename: "ApplicationUser";
+  __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
 }
 
 export interface ILoginUserMutation_loginUser {
-  __typename: "Response";
+  __typename: "identity_Response";
   token: string | null;
   user: ILoginUserMutation_loginUser_user | null;
 }
@@ -76,6 +121,25 @@ export interface ILoginUserMutation {
 
 export interface ILoginUserMutationVariables {
   request?: LoginUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ISubscriptionsForClubQuery
+// ====================================================
+
+export interface ISubscriptionsForClubQuery_subscriptionsForClub {
+  __typename: "ClubSubscription";
+  name: string | null;
+  price: number;
+}
+
+export interface ISubscriptionsForClubQuery {
+  subscriptionsForClub: (ISubscriptionsForClubQuery_subscriptionsForClub | null)[] | null;
 }
 
 /* tslint:disable */
