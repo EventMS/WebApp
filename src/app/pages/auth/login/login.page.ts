@@ -10,12 +10,7 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  constructor(
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private platform: Platform
-  ) {}
+  constructor(private formBuilder: FormBuilder, private authenticationService: AuthenticationService) {}
 
   loginForm = this.formBuilder.group({
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
