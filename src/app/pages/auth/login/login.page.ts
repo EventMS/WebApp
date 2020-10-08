@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 
 @Component({

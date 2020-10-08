@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPage } from './login.page';
 import { By } from '@angular/platform-browser';
 import { LoginServiceMock } from 'src/app/services/MOCKS/login-service-mock.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginPage', () => {
   let component: LoginPage;
@@ -18,7 +19,7 @@ describe('LoginPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPage],
-      imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule],
+      imports: [IonicModule.forRoot(), FormsModule, ReactiveFormsModule, RouterTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginPage);
