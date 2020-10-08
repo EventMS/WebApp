@@ -1,7 +1,7 @@
 ion-avatar {
   img {
-    width: 70% !important;
-    height: 70% !important;
+    width: 60% !important;
+    height: 60% !important;
     max-width: 100px !important; //any size
     max-height: 100px !important; //any size
     margin: auto;
@@ -10,18 +10,14 @@ ion-avatar {
   justify-content: center;
 }
 
-ion-header {
-  background-color: darkorange;
+ion-toolbar {
+  --background: darkorange;
 }
 
 ion-button {
   padding-left: 8px;
   padding-right: 8px;
-}
 
-.regular {
-  --background: black;
-  --color-hover: darkorange;
 }
 
 .profile {
@@ -29,7 +25,18 @@ ion-button {
   --box-shadow: 0;
 }
 
+.regular {
+  --background: black;
+  --color: AliceBlue;
+}
+
+.regular:hover  {
+ --background: black;
+ --color: darkorange;
+}
+
 ion-title {
   text-align: left;
   padding-left: 16px;
+  --color: black;
 }
