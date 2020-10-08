@@ -6,7 +6,7 @@ import { LoginPage } from './login.page';
 import { By } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 
-fdescribe('LoginPage', () => {
+describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
   let de: DebugElement;

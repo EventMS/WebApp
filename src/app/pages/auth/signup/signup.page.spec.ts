@@ -4,12 +4,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthenticationMockService } from 'src/app/services/MOCKS/authentication-service-mock.service';
 import { SignupPage } from './signup.page';
 
-fdescribe('SignupPage', () => {
+describe('SignupPage', () => {
   let component: SignupPage;
   let fixture: ComponentFixture<SignupPage>;
   let de: DebugElement;
