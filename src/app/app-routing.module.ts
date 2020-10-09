@@ -20,6 +20,10 @@ const routes: Routes = [
     loadChildren: () => import('./navigation/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'club-list',
+    loadChildren: () => import('./pages/club/club-list/club-list.module').then( m => m.ClubListPageModule)
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
