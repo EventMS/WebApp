@@ -4,6 +4,28 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateClubMutation
+// ====================================================
+
+export interface ICreateClubMutation_createClub {
+  __typename: "Club";
+  clubId: any;
+}
+
+export interface ICreateClubMutation {
+  createClub: ICreateClubMutation_createClub | null;
+}
+
+export interface ICreateClubMutationVariables {
+  request?: CreateClubRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ICreateUserMutation
 // ====================================================
 
@@ -64,6 +86,16 @@ export interface ILoginUserMutationVariables {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export interface CreateClubRequestInput {
+  accountNumber: string;
+  address: string;
+  description?: string | null;
+  locations?: (string | null)[] | null;
+  name: string;
+  phoneNumber: string;
+  registrationNumber: string;
+}
 
 export interface CreateUserRequestInput {
   birthDate: any;

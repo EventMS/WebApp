@@ -1,19 +1,21 @@
-<ion-content padding class="background no-scroll">
+<ion-content class="login background no-scroll">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Event Management </ion-title>
+      <ion-buttons slot="end">
+        <ion-button size="large" fill="solid" color="dark" routerLink="/signup">Sign up</ion-button>
+        <ion-button size="large" fill="solid" color="dark" routerLink="/login">Login</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
   <ion-grid class="ion-margin">
-    <ion-row class="ion-justify-content-between">
-      <ion-label>
-        <h1>EMS</h1>
-      </ion-label>
-      <div>
-        <ion-button routerLink="/signup">Sign up</ion-button>
-        <ion-button routerLink="/login">Login</ion-button>
-      </div>
-    </ion-row>
+    <ion-row class="ion-justify-content-between"> </ion-row>
     <ion-row class="ion-justify-content-center ion-margin">
       <img src="{{gifURL}}" />
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-button routerLink="/signup">Sign up now!</ion-button>
+      <ion-button routerLink="/signup" size="large" fill="solid" color="dark">Sign up now!</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

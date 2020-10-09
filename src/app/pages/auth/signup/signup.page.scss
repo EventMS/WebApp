@@ -9,16 +9,33 @@ ion-content.background {
   --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
 
-.signup ion-col {
-  padding: 20px;
-  margin: 50px;
+ion-item {
+  --background: transparent;
 }
 
-.rcorners {
-  border-radius: 25px;
-  background: whitesmoke;
+ion-col {
+  padding: 20px;
+  margin: 20px;
+}
+
+ion-button {
+  --padding: 8px;
+  margin-top: 12px;
+}
+
+.signup input {
+  background: transparent;
+  border-color: transparent;
 }
 
 .signup ion-icon {
   margin: 20px;
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+
+a {
+  color: black;
 }

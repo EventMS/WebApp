@@ -1,4 +1,11 @@
 <ion-content class="signup background no-scroll">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref=""></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-grid>
     <ion-row class="ion-justify-items-center ion-align-items-end">
       <ion-col size-md="6" size-lg="5" size-xs="12">
@@ -40,28 +47,32 @@
             <div *ngIf="birthDate.invalid && (birthDate.touched)" class="alert alert-danger">
               <div *ngIf="birthDate.errors">birthDate is required</div>
             </div>
-            <ion-item>
-              <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-            </ion-item>
-            <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
-              <div *ngIf="password.errors">
-                Password is required and needs 1 uppercase letter and a special character
-              </div>
-            </div>
-            <div>
-              <ion-button size="large" type="submit" color="warning" expand="block" [disabled]="signupForm.invalid"
-                >Submit</ion-button
-              >
-            </div>
-          </form>
-          <ion-row class="ion-justify-content-end">
-            <p>Already have an account?</p>
-          </ion-row>
-          <ion-row class="ion-justify-content-end">
-            <a href="/login">Log in</a>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-col>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+          </ion-item>
+          <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors">Password is required and needs 1 uppercase letter and a special character</div>
+          </div>
+          <div>
+            <ion-button
+              id="submit"
+              size="large"
+              type="submit"
+              color="warning"
+              expand="block"
+              [disabled]="signupForm.invalid"
+              >Submit</ion-button
+            >
+          </div>
+        </form>
+        <ion-row class="ion-justify-content-end">
+          <p>Already have an account?</p>
+        </ion-row>
+        <ion-row class="ion-justify-content-end">
+          <a routerLink="/login">Log in</a>
+        </ion-row>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

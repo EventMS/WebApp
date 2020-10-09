@@ -1,7 +1,8 @@
-.login ion-grid {
+ion-grid {
   height: 100%;
 }
-.login ion-row {
+
+ion-row {
   justify-content: center;
 }
 
@@ -9,16 +10,24 @@ ion-content.background {
   --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
 
-.login ion-col {
+ion-col {
   padding: 20px;
-  margin: 50px;
-}
-
-.rcorners {
-  border-radius: 25px;
-  background: whitesmoke;
-}
-
-.login ion-icon {
   margin: 20px;
+}
+
+ion-toolbar {
+  --background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+ion-button {
+  --padding: 8px;
+  margin-top: 12px;
+}
+
+a {
+  color: black;
 }

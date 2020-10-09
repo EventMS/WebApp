@@ -14,7 +14,7 @@
     "start_ios": "ionic build && ionic cap copy && ionic cap sync && ionic cap run ios -l --external",
     "start_web": "ionic serve",
     "prettier": "prettier --write '**/*.{ts,scss,html}'",
-    "graphql": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
+    "update_graphql": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
   },
   "private": true,
   "dependencies": {
@@ -39,8 +39,10 @@
     "@ionic/pwa-elements": "^3.0.1",
     "apollo-angular": "^2.0.4",
     "apollo-codegen": "^0.20.2",
+    "dayjs": "^1.9.1",
     "graphql": "^15.3.0",
     "ionic2-calendar": "^0.6.6",
+    "jwt-decode": "^3.0.0",
     "phonegap-nfc": "^1.2.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
@@ -58,6 +60,7 @@
     "@ionic/angular-toolkit": "^2.3.3",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "^12.11.1",
     "apollo": "^2.30.3",
     "codelyzer": "^6.0.0",
