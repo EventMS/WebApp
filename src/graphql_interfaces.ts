@@ -162,6 +162,7 @@ export interface CreateClubRequestInput {
 }
 
 export interface CreateUserRequestInput {
+  birthDate: any;
   email: string;
   name: string;
   password: string;

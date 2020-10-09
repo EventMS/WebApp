@@ -70,9 +70,9 @@ export class ClubCreatePage implements OnInit {
         request: {
           name: formData.name,
           description: formData.description,
-          phoneNumber: formData.phone.toString(),
-          accountNumber: formData.accountNumber.toString(),
-          registrationNumber: formData.regNumber.toString(),
+          phoneNumber: formData.phone,
+          accountNumber: formData.accountNumber,
+          registrationNumber: formData.regNumber,
           address: formData.address,
           locations: formData.locations,
         },
@@ -123,7 +123,7 @@ export class ClubCreatePage implements OnInit {
 
   private handleResponse(data) {
     //Navigate to page for new created club
-    this.router.navigate(['/tabs/club-details']);
+    this.router.navigate(['/club-details']);
   }
 }
 
@@ -135,9 +135,9 @@ enum ErrorMessages {
 type FormData = {
   name: string;
   description: string;
-  regNumber: Number;
-  accountNumber: Number;
+  regNumber: string;
+  accountNumber: string;
   address: string;
-  phone: Number;
+  phone: string;
   locations: string[];
 };
