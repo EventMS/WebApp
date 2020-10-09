@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class ProfileOptionsComponent implements OnInit {
 
   async createClubClicked() {
     console.log('Clicked create');
-    await this.popoverController.dismiss().then(() => this.router.navigate(['tabs/club-create']));
+    await this.popoverController.dismiss().then(() => this.router.navigate([Paths.club_create]));
   }
 
   profileClicked() {

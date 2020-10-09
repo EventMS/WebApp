@@ -1,18 +1,24 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+export const Paths = {
+  start: 'start',
+  signup: 'signup',
+  login: 'login',
+  club_create: 'club-create',
+  club_details: 'club-details',
+  club_list: 'club-list',
+};
 
 const navigationRoutes = [
   {
-    path: 'club-create',
+    path: Paths.club_create,
     loadChildren: () => import('src/app/pages/club/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
   },
   {
-    path: 'club-details',
+    path: Paths.club_details,
     loadChildren: () =>
       import('src/app/pages/club/club-details/club-details.module').then((m) => m.ClubDetailsPageModule),
   },
   {
-    path: 'club-list',
+    path: Paths.club_list,
     loadChildren: () => import('src/app/pages/club/club-list/club-list.module').then((m) => m.ClubListPageModule),
   },
 ];

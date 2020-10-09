@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform, PopoverController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({
@@ -26,7 +27,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedFindClubs() {
-    this.router.navigate(['club-list']);
+    this.router.navigate([Paths.club_list]);
   }
 
   tappedFindEvents() {

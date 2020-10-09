@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
 import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/create-club-mutation.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 
@@ -123,7 +124,7 @@ export class ClubCreatePage implements OnInit {
 
   private handleResponse(data) {
     //Navigate to page for new created club
-    this.router.navigate(['/club-details']);
+    this.router.navigate([Paths.club_details]);
   }
 }
 
