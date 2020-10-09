@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginMutationService } from '../GRAPHQL/loginMutation.service';
-import { ICreateUserMutation, ILoginUserMutation } from 'src/graphql_interfaces';
+import { ICreateUserMutation, ILoginUserMutation, ILoginUserMutationVariables } from 'src/graphql_interfaces';
 import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
@@ -31,20 +31,22 @@ export class AuthenticationService {
     this.router.navigate(['/tabs']);
   }
 
-  login(email: string, password: string) {
-    this.loginMutationService.mutate({ request: { email: email, password: password } }).subscribe(
-      ({ data }) => {
-        const { loginUser } = data!;
-        localStorage.setItem(current_user, JSON.stringify(loginUser));
-        localStorage.setItem(expires_at, JSON.stringify(jwt_decode(loginUser!.token!)));
-        this.currentUserSubject.next(loginUser);
-        this.router.navigate(['/tabs']);
-      },
-      (error: ApolloError) => {
-        if (error.message.includes('credentials')) alert('Wrong username or password');
-        else alert('something went wrong, please try again later');
-      }
-    );
+  login(data: ILoginUserMutationVariables['request']) {
+    if (data && data.email && data.password) {
+      this.loginMutationService.mutate({ request: { email: data.email, password: data.password } }).subscribe(
+        ({ data }) => {
+          const { loginUser } = data!;
+          localStorage.setItem(current_user, JSON.stringify(loginUser));
+          localStorage.setItem(expires_at, JSON.stringify(jwt_decode(loginUser!.token!)));
+          this.currentUserSubject.next(loginUser);
+          this.router.navigate(['/tabs']);
+        },
+        (error: ApolloError) => {
+          if (error.message.includes('credentials')) alert('Wrong username or password');
+          else alert('something went wrong, please try again later');
+        }
+      );
+    }
   }
 
   logout() {

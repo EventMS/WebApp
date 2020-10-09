@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { CreateUserMutationService } from 'src/app/services/GRAPHQL/createUserMutation.service';
+import { ICreateUserMutationVariables } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,7 @@ export class SignupPage {
   signupForm = this.formBuilder.group({
     name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    birthday: new FormControl('', Validators.required),
+    birthDate: new FormControl('', Validators.required),
     password: new FormControl('', Validators.compose([Validators.required, Validators.pattern(strongRegex)])),
   });
 
@@ -25,8 +26,8 @@ export class SignupPage {
     return this.signupForm.get('email');
   }
 
-  get birthday() {
-    return this.signupForm.get('birthday');
+  get birthDate() {
+    return this.signupForm.get('birthDate');
   }
 
   get password() {
@@ -34,11 +35,17 @@ export class SignupPage {
   }
 
   onSubmit = async () => {
-    const { name, email, birthday, password }: FormData = this.signupForm.value;
+    const {
+      name,
+      email,
+      birthDate,
+      password,
+      phoneNumber,
+    }: NonNullable<ICreateUserMutationVariables['request']> = this.signupForm.value;
 
     this.createUserMutationService
       .mutate({
-        request: { email: email, name: name, password: password, phoneNumber: '71782781' },
+        request: { email: email, name: name, birthDate: birthDate, password: password, phoneNumber: phoneNumber },
       })
       .subscribe(({ data, errors }) => {
         if (errors) console.log(errors);
@@ -46,7 +53,5 @@ export class SignupPage {
       });
   };
 }
-
-type FormData = { name: string; email: string; birthday: string; password: string };
 
 const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})');

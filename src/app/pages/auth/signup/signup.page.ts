@@ -62,7 +62,7 @@ export class SignupPage {
       birthDate,
       phoneNumber,
       password,
-    }: ICreateUserMutationVariables['request'] = this.signupForm.value;
+    }: NonNullable<ICreateUserMutationVariables['request']> = this.signupForm.value;
 
     this.createUserMutationService
       .mutate({

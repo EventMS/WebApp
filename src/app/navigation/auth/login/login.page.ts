@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
   onSubmit = async () => {
     console.log('called');
     const { email, password }: FormData = this.loginForm.value;
-    this.authenticationService.login(email, password);
+    this.authenticationService.login({ email: email, password: password });
     this.router.navigate(['/tabs']);
   };
 
