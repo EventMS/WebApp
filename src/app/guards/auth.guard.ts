@@ -10,6 +10,9 @@ export class AuthGuard implements CanActivate {
     const currentUser = this.authenticationService.currentUserValue;
     const isTokenValid = this.authenticationService.isTokenValid();
 
+    console.log(currentUser);
+    console.log(isTokenValid)
+
     if (currentUser && isTokenValid) {
       // check if route is restricted by role
       // if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
@@ -22,9 +25,12 @@ export class AuthGuard implements CanActivate {
     }
 
     if (state.url == '/tabs') alert('Wrong username or password');
-    else alert('please log in again.');
-    // not logged in so redirect to login page with the return url
+    else {
+      alert('please log in again.'); 
     this.router.navigate(['/login']);
+  };
+    // not logged in so redirect to login page with the return url
+    
     return false;
   }
 }

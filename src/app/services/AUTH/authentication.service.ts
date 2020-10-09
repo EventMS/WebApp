@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 
-const expires_at = 'expires_at';
 const current_user = 'current_user';
 
 @Injectable({ providedIn: 'root' })
@@ -26,7 +25,6 @@ export class AuthenticationService {
 
   loginFromSignup(user: ICreateUserMutation['createUser']) {
     localStorage.setItem(current_user, JSON.stringify(user!));
-    localStorage.setItem(expires_at, JSON.stringify(jwt_decode(user!.token!)));
     this.currentUserSubject.next(user);
     this.router.navigate(['/tabs']);
   }
@@ -37,7 +35,6 @@ export class AuthenticationService {
         ({ data }) => {
           const { loginUser } = data!;
           localStorage.setItem(current_user, JSON.stringify(loginUser));
-          localStorage.setItem(expires_at, JSON.stringify(jwt_decode(loginUser!.token!)));
           this.currentUserSubject.next(loginUser);
           this.router.navigate(['/tabs']);
         },
@@ -61,10 +58,10 @@ export class AuthenticationService {
   }
 
   private getExpiration() {
-    const expiration = localStorage.getItem(expires_at);
-    if (!expiration) return dayjs();
-    const expiresAt = JSON.parse(expiration);
-    return dayjs(expiresAt);
+    const decodedToken: { email: string; id: string; nbf: number; exp: number; iat: number } = jwt_decode(
+      localStorage.getItem(current_user)!
+    );
+    return dayjs.unix(decodedToken.exp);
   }
 }
 
