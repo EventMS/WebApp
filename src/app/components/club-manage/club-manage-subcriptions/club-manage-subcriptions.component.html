@@ -1,34 +1,34 @@
 <ion-grid>
   <ion-col class="ion-padding-top ion-align-self-end">
     <ion-row class="ion-justify-items-center ion-align-items-end">
-      <ion-col size-md="6" size-lg="12" size-xs="8">
-        <div class="rcorners" scrolly=true>
+      <ion-col size-md="5" size-lg="11" size-xs="7">
+        <div class="rcorners">
           <div class="ion-text-center subscription-header">
             <h2>Create New Subscription</h2>
           </div>
-          <form>
-              <ion-item>
-                <ion-input type="text" placeHolder="Subscription name">
-                </ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-input type="number" placeHolder="Price/month">
-                </ion-input>
-              </ion-item>
-              <ion-item-divider>
-                <ion-label>Upcoming events</ion-label>
-              </ion-item-divider>
-              <ion-list>
-                <ion-item *ngFor="let event of upcomingEvents">
-                  <ion-label slot="start">{{ event }}</ion-label>
-                  <ion-input class="ion-text-end" slot="end" type="number" placeHolder="Input price"></ion-input>
+          <div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+              <div class="form-content">
+                <ion-item>
+                  <ion-input formControlName="name" type="text" placeHolder="Subscription name"> </ion-input>
                 </ion-item>
-              </ion-list>
-              <ion-button id="submit" size="large" type="submit" color="success" expand="block">Create subscription
+                <ion-item>
+                  <ion-input formControlName="price" type="number" placeHolder="Price/month"> </ion-input>
+                </ion-item>
+                <div class="selecter">
+                  <ion-select placeholder="Choose existing subscription">
+                    <ion-select-option *ngFor="let sub of existingSubscriptions">
+                      {{ sub.name }}
+                    </ion-select-option>
+                  </ion-select>
+                </div>
+              </div>
+              <ion-button id="submit" size="large" type="submit" color="success" expand="block"
+                >Create subscription
               </ion-button>
-          </form>
+            </form>
+          </div>
         </div>
-
         <div>
           <div class="ion-text-center">
             <h1>Existing subscriptions</h1>
@@ -41,14 +41,14 @@
               <ion-card *ngFor="let subscription of existingSubscriptions">
                 <ion-grid>
                   <ion-row>
-                    <ion-col size="5">
+                    <ion-col size="3">
                       <ion-card-header>
                         <ion-card-title>{{ subscription.name }}</ion-card-title>
                       </ion-card-header>
                     </ion-col>
                     <ion-col>
                       <ion-card-header>
-                        <ion-card-subtitle>{{ subscription.price + "/month" }}</ion-card-subtitle>
+                        <ion-card-subtitle>{{ subscription.price + '/month' }}</ion-card-subtitle>
                       </ion-card-header>
                     </ion-col>
                     <ion-col class="ion-text-center">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Platform } from '@ionic/angular';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 
 enum SideBarContent {
@@ -7,7 +8,7 @@ enum SideBarContent {
   events,
   members,
   instructors,
-  subscriptions
+  subscriptions,
 }
 
 @Component({
@@ -16,18 +17,15 @@ enum SideBarContent {
   styleUrls: ['./club-manage.page.scss'],
 })
 export class ClubManagePage implements OnInit {
+  sidebarContent: SideBarContent = SideBarContent.subscriptions;
+  SidebarContent: typeof SideBarContent = SideBarContent;
+  clubName: string;
 
-  sidebarContent: SideBarContent = SideBarContent.subscriptions
-  SidebarContent: typeof SideBarContent = SideBarContent
-  clubName: string
-
-  constructor(private route: ActivatedRoute,
-              private clubQueryService: MyClubsQueryService) {
-    this.route.params.subscribe(params => { 
-      this.clubName = params['clubName']
-    }) 
-   }
-
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private clubQueryService: MyClubsQueryService, public platform: Platform) {
+    this.route.params.subscribe((params) => {
+      this.clubName = params['clubName'];
+    });
   }
+
+  ngOnInit() {}
 }

@@ -44,6 +44,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs));
+    //this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs));
   }
 }
