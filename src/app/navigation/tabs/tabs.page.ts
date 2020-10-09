@@ -6,13 +6,8 @@ import { Platform } from '@ionic/angular';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
 })
-
 export class TabsPage {
   //private platform: Platform
 
-  constructor(public platform: Platform) {
-    console.log(this.platform.is("mobile"));
-  }
-
-  
+  constructor(public platform: Platform) {}
 }

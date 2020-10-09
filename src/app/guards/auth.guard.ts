@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../services/AUTH/authentication.service';
@@ -7,11 +8,9 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const { url } = state;
     const currentUser = this.authenticationService.currentUserValue;
     const isTokenValid = this.authenticationService.isTokenValid();
-
-    console.log(currentUser);
-    console.log(isTokenValid)
 
     if (currentUser && isTokenValid) {
       // check if route is restricted by role
@@ -24,13 +23,11 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    if (state.url == '/tabs') alert('Wrong username or password');
-    else {
-      alert('please log in again.'); 
-    this.router.navigate(['/login']);
-  };
+    if (url === '/') this.router.navigate(['/start']);
+    else if (url === 'login') alert('Wrong credentials');
+
     // not logged in so redirect to login page with the return url
-    
+
     return false;
   }
 }

@@ -26,7 +26,7 @@ export class AuthenticationService {
   loginFromSignup(user: ICreateUserMutation['createUser']) {
     localStorage.setItem(current_user, JSON.stringify(user!));
     this.currentUserSubject.next(user);
-    this.router.navigate(['/tabs']);
+    this.router.navigate(['/']);
   }
 
   login(data: ILoginUserMutationVariables['request']) {
@@ -36,7 +36,7 @@ export class AuthenticationService {
           const { loginUser } = data!;
           localStorage.setItem(current_user, JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
-          this.router.navigate(['/tabs']);
+          this.router.navigate(['/']);
         },
         (error: ApolloError) => {
           if (error.message.includes('credentials')) alert('Wrong username or password');
@@ -50,7 +50,7 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem(current_user);
     this.currentUserSubject.next(null);
-    this.router.navigate(['/']);
+    this.router.navigate(['/start']);
   }
 
   public isTokenValid() {
@@ -58,10 +58,12 @@ export class AuthenticationService {
   }
 
   private getExpiration() {
-    const decodedToken: { email: string; id: string; nbf: number; exp: number; iat: number } = jwt_decode(
-      localStorage.getItem(current_user)!
-    );
-    return dayjs.unix(decodedToken.exp);
+    const token = localStorage.getItem(current_user);
+
+    if (token) {
+      const decodedToken: { email: string; id: string; nbf: number; exp: number; iat: number } = jwt_decode(token);
+      return dayjs.unix(decodedToken.exp);
+    } else return dayjs().add(-1, 'day');
   }
 }
 
