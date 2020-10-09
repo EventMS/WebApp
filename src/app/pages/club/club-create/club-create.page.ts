@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/mutations/create-club-mutation.service';
@@ -10,9 +10,7 @@ import { CreateClubFormBuilder } from './club-create-formbuilder';
   templateUrl: './club-create.page.html',
   styleUrls: ['./club-create.page.scss'],
 })
-
 export class ClubCreatePage implements OnInit {
-
   // Private properties
   private createClubFormBuilder: CreateClubFormBuilder;
 
@@ -22,15 +20,16 @@ export class ClubCreatePage implements OnInit {
 
   // Lifecycle
 
-  constructor(private formbuilder: FormBuilder,
-              private alertCtrl: AlertController,
-              private createClubService: CreateClubMutationService,
-              private router: Router) { 
-      this.createClubFormBuilder = new CreateClubFormBuilder(formbuilder)
+  constructor(
+    private formbuilder: FormBuilder,
+    private alertCtrl: AlertController,
+    private createClubService: CreateClubMutationService,
+    private router: Router
+  ) {
+    this.createClubFormBuilder = new CreateClubFormBuilder(formbuilder);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Getters
 
@@ -39,27 +38,27 @@ export class ClubCreatePage implements OnInit {
   }
 
   get name() {
-    return this.createClubFormBuilder.name
+    return this.createClubFormBuilder.name;
   }
 
   get phone() {
-    return this.createClubFormBuilder.phone
+    return this.createClubFormBuilder.phone;
   }
 
   get address() {
-    return this.createClubFormBuilder.address
+    return this.createClubFormBuilder.address;
   }
 
   get regNumber() {
-    return this.createClubFormBuilder.regNumber
+    return this.createClubFormBuilder.regNumber;
   }
 
   get accountNumber() {
-    return this.createClubFormBuilder.accountNumber
+    return this.createClubFormBuilder.accountNumber;
   }
 
   get currentLocationInput() {
-    return this.createClubFormBuilder.currentLocationInput
+    return this.createClubFormBuilder.currentLocationInput;
   }
 
   // Public methods
@@ -67,35 +66,45 @@ export class ClubCreatePage implements OnInit {
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
     this.createClubService
-    .mutate({ request: { name: formData.name, description: formData.description, phoneNumber: formData.phone.toString(), accountNumber: formData.accountNumber.toString(), registrationNumber: formData.regNumber.toString(), address: formData.address, locations: formData.locations } })
-    .subscribe(
-      (data) => this.handleResponse(data),
-      (error) => this.presentAlert(error)
-    )
-  }
+      .mutate({
+        request: {
+          name: formData.name,
+          description: formData.description,
+          phoneNumber: formData.phone.toString(),
+          accountNumber: formData.accountNumber.toString(),
+          registrationNumber: formData.regNumber.toString(),
+          address: formData.address,
+          locations: formData.locations,
+        },
+      })
+      .subscribe(
+        (data) => this.handleResponse(data),
+        (error) => this.presentAlert(error)
+      );
+  };
 
   didAddLocationItem() {
-    let input = this.currentLocationInput!
+    let input = this.currentLocationInput!;
 
-    if(this.locations.includes(input.value)){
-      this.presentAlert(ErrorMessages.duplicate)
-      return
-    } else if(input.value === "") {
-      this.presentAlert(ErrorMessages.noName)
-      return
+    if (this.locations.includes(input.value)) {
+      this.presentAlert(ErrorMessages.duplicate);
+      return;
+    } else if (input.value === '') {
+      this.presentAlert(ErrorMessages.noName);
+      return;
     }
 
-    this.locations.push(input.value)
+    this.locations.push(input.value);
     this.clubform.patchValue({
-      locations: this.locations
+      locations: this.locations,
     });
     this.clubform.patchValue({
-      currentLocationInput: ""
+      currentLocationInput: '',
     });
   }
 
   didRemoveLocationItem(location: string) {
-    this.locations = this.locations.filter( otherLocation => {
+    this.locations = this.locations.filter((otherLocation) => {
       return location != otherLocation;
     });
   }
@@ -104,31 +113,31 @@ export class ClubCreatePage implements OnInit {
 
   private async presentAlert(msg: string) {
     const alert = this.alertCtrl.create({
-      header: "Error",
+      header: 'Error',
       message: msg,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
-    (await alert).present()
+    (await alert).present();
   }
 
   private handleResponse(data) {
     //Navigate to page for new created club
-    this.router.navigate(['/tabs/club-details'])
+    this.router.navigate(['/tabs/club-details']);
   }
 }
 
 enum ErrorMessages {
   duplicate = "You can't input duplicate locations",
-  noName = "Location must have a name",
+  noName = 'Location must have a name',
 }
 
-type FormData = { name: string,
-                  description: string,
-                  regNumber: Number,
-                  accountNumber: Number,
-                  address: string,
-                  phone: Number,
-                  locations: string[]};
-
-                  
+type FormData = {
+  name: string;
+  description: string;
+  regNumber: Number;
+  accountNumber: Number;
+  address: string;
+  phone: Number;
+  locations: string[];
+};
