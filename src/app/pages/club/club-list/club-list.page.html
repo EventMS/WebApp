@@ -1,15 +1,15 @@
 <ion-row class="ion-justify-content-around ion-margin">
   <ion-col size="7">
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar inputmode="text" animated placeholder="Search" (ionInput)="search($event)"></ion-searchbar>
   </ion-col>
   <ion-col>
-    <ion-button class="searchButton" fill="solid">Find Local Clubs</ion-button>
+    <ion-button class="searchButton" fill="solid" (click)="onSearchPressed()">Find Local Clubs</ion-button>
   </ion-col>
 </ion-row>
 
 <ion-content>
   <ion-list>
-    <div *ngFor="let club of clubs | async">
+    <div *ngFor="let club of filteredClubs">
       <ion-card>
         <ion-row class="ion-justify-content-end ion-align-self-center">
           <ion-button class="goToClubButton">Go to club</ion-button>
