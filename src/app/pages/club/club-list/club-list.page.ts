@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class ClubListPage implements OnInit {
   constructor(private clubListQuery: ClubListQueryService) {}
 
-  clubs: Observable<IGetClubsQuery['clubs']>;
+  public clubs: Observable<IGetClubsQuery['clubs']>;
 
   ngOnInit() {
     this.clubs = this.clubListQuery.watch().valueChanges.pipe(map((result) => result.data.clubs));
