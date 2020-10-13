@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>club-list</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-around">
+      <ion-col size="8">
+      <ion-searchbar></ion-searchbar>
+      </ion-col>
+      <ion-col>
+      <ion-button class="searchButton" style="width: 100%">Find Local Clubs</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <div *ngFor="let club of clubs | async">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{club.name}}</ion-card-title>
+      <ion-card-subtitle>{{club.address}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      {{club.description}}
+     </ion-card-content>
+  </ion-card>
+</div>
 </ion-content>

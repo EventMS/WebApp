@@ -4,6 +4,31 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IGetClubsQuery
+// ====================================================
+
+export interface IGetClubsQuery_clubs {
+  __typename: "Club";
+  clubId: any;
+  accountNumber: string | null;
+  address: string | null;
+  adminId: any;
+  description: string | null;
+  name: string | null;
+  phoneNumber: string | null;
+  registrationNumber: string | null;
+}
+
+export interface IGetClubsQuery {
+  clubs: (IGetClubsQuery_clubs | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ICreateClubMutation
 // ====================================================
 
