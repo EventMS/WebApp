@@ -11,14 +11,16 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  clubs: IMyClubsQuery_myClubs[] = [];
+  clubs: (IMyClubsQuery_myClubs | null)[] = [];
 
   constructor(
     private router: Router,
     private popoverController: PopoverController,
     private clubQueryService: MyClubsQueryService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
     console.log('Init called');
@@ -44,6 +46,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs));
+    this.clubQueryService.fetch().subscribe((data) => (this.clubs = (data.data.myClubs ?? [])));
   }
 }

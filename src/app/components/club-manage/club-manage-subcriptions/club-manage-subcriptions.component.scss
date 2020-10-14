@@ -18,12 +18,12 @@ ion-list {
 
 .rcorners {
   border-radius: 25px;
-  background: #3880ff;
+  background: whitesmoke;
   padding: 20px;
 }
 
 h2 {
-  color: white;
+  color: black;
 }
 
 h1 {
@@ -75,4 +75,15 @@ ion-item-divider {
 ion-row {
   display: flex;
   justify-content: center;
+}
+
+.clear-background {
+  background-color: transparent;
+}
+
+.edit-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  z-index: 1;
 }

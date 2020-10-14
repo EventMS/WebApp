@@ -11,6 +11,7 @@ export class ClubSubscriptionsQueryService extends Query<ISubscriptionsForClubQu
       subscriptionsForClub(clubId: $clubId){
         name
         price
+        clubSubscriptionId
       }
     }
   `;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CreateSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/create-subscription-mutation.service';
@@ -19,14 +18,13 @@ export class ClubManageSubcriptionsComponent implements OnInit {
   private subscriptionForm: CreateSubscriptionFormBuilder;
   private clubId: string;
   
-  public subscriptions$: Observable<ISubscriptionsForClubQuery["subscriptionsForClub"]>;
-  public existingSubscriptions: ISubscriptionsForClubQuery["subscriptionsForClub"] = [];
+  clubSubscriptions$: Observable<ISubscriptionsForClubQuery["subscriptionsForClub"]>;
+  clubSubscriptions: ISubscriptionsForClubQuery["subscriptionsForClub"] = [];
 
   constructor(private clubSubscriptionsService: ClubSubscriptionsQueryService,
               formBuilder: FormBuilder,
               private createSubscriptionService: CreateSubscriptionMutationService,
               private route: ActivatedRoute,
-              private apollo: Apollo,
               private alertCtrl: AlertController) {
     this.subscriptionForm = new CreateSubscriptionFormBuilder(formBuilder);
     this.route.params.subscribe((params) => {
@@ -35,10 +33,10 @@ export class ClubManageSubcriptionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptions$ = this.clubSubscriptionsService.watch({clubId: this.clubId}).valueChanges.pipe(map(result => result.data.subscriptionsForClub))
-    this.subscriptions$.subscribe(
+    this.clubSubscriptions$ = this.clubSubscriptionsService.watch({clubId: this.clubId}).valueChanges.pipe(map(result => result.data.subscriptionsForClub))
+    this.clubSubscriptions$.subscribe(
       (data) => {
-      this.existingSubscriptions = data;
+      this.clubSubscriptions = data;
       this.form.reset()
     })
   }
@@ -61,24 +59,24 @@ export class ClubManageSubcriptionsComponent implements OnInit {
 
   onSubmit() {
     const formData: FormData = this.form.value
- 
-    this.apollo.mutate({
-      mutation: this.createSubscriptionService.document,
+
+    this.createSubscriptionService.mutate({
+      request: {
+        clubId: this.clubId,
+        name: formData.name,
+        price: formData.price,
+        referenceId: formData.subscriptionReference
+      }
+    },{
       refetchQueries: [{
         query: this.clubSubscriptionsService.document,
         variables: { clubId: this.clubId }
       }],
-      variables: { 
-        request: { 
-          clubId: this.clubId,
-          name: formData.name,
-          price: formData.price,
-          referenceId: null
-        },
-      }
+      awaitRefetchQueries: true,
     }).subscribe( 
       () => {},
-      () => {
+      (error) => {
+        console.log(error)
         this.presentAlert()
     })
   }

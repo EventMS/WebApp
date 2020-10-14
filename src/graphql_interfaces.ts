@@ -65,6 +65,10 @@ export interface IMyClubsQuery {
   myClubs: (IMyClubsQuery_myClubs | null)[] | null;
 }
 
+export interface IMyClubsQueryVariables {
+  userId: any;
+}
+
 /* tslint:disable */
 /* eslint-disable */
 // @generated
@@ -159,6 +163,7 @@ export interface ISubscriptionsForClubQuery_subscriptionsForClub {
   __typename: "ClubSubscription";
   name: string | null;
   price: number;
+  clubSubscriptionId: any;
 }
 
 export interface ISubscriptionsForClubQuery {
