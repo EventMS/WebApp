@@ -2,17 +2,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-
 import { ClubListPage } from './club-list.page';
 
-describe('ClubListPage', () => {
+fdescribe('ClubListPage', () => {
   let component: ClubListPage;
   let fixture: ComponentFixture<ClubListPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ClubListPage],
-      imports: [IonicModule.forRoot(), FormsModule, ApolloTestingModule],
+      imports: [IonicModule.forRoot(), FormsModule, ApolloTestingModule.withClients([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ClubListPage);
