@@ -66,7 +66,6 @@ export class ClubCreatePage implements OnInit {
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
 
-    console.log(formData)
     this.createClubService
       .mutate({
         request: {

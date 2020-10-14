@@ -27,12 +27,20 @@ export class ClubManageSubcriptionsComponent implements OnInit {
               private route: ActivatedRoute,
               private alertCtrl: AlertController) {
     this.subscriptionForm = new CreateSubscriptionFormBuilder(formBuilder);
-    this.route.params.subscribe((params) => {
-      this.clubId = params['clubId'];
-    });
   }
 
   ngOnInit() {
+    this.initData()
+  }
+  
+  private initData() {
+    this.route.params.subscribe((params) => {
+      this.clubId = params['clubId'];
+      this.getSubscriptions()
+    });
+  }
+
+  private getSubscriptions() {
     this.clubSubscriptions$ = this.clubSubscriptionsService.watch({clubId: this.clubId}).valueChanges.pipe(map(result => result.data.subscriptionsForClub))
     this.clubSubscriptions$.subscribe(
       (data) => {
@@ -40,7 +48,7 @@ export class ClubManageSubcriptionsComponent implements OnInit {
       this.form.reset()
     })
   }
-  
+
   get form() {
     return this.subscriptionForm.form;
   }

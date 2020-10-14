@@ -19,14 +19,14 @@ enum SideBarContent {
 export class ClubManagePage implements OnInit {
   sidebarContent: SideBarContent = SideBarContent.subscriptions;
   SidebarContent: typeof SideBarContent = SideBarContent;
-  clubName: string;
+  clubId: string;
 
   constructor(private route: ActivatedRoute, private clubQueryService: MyClubsQueryService, public platform: Platform) {
-    this.route.params.subscribe((params) => {
-      this.clubName = params['clubId'];
-      console.log(this.clubName)
-    });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.clubId = params['clubId'];
+    });
+  }
 }
