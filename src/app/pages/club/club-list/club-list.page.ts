@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/club-list-query.service';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
-import { Observable } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-club-list',
@@ -14,32 +14,23 @@ export class ClubListPage implements OnInit {
 
   public clubs$: Observable<IGetClubsQuery['clubs']>;
   public filteredClubs: IGetClubsQuery['clubs'];
-  private searchTerm: string;
 
-  public search = (event: EventData) => {
-    const { value } = event.target;
-    this.searchTerm = value;
-  };
-
-  public onSearchPressed = () => {
-    requestAnimationFrame(() =>
-      this.clubs$.subscribe(
-        (clubs) =>
-          (this.filteredClubs = clubs!.filter((club) => {
-            if (club && club.name) return club.name.toLowerCase().includes(this.searchTerm.toLowerCase());
-          }))
-      )
-    );
-  };
+  private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
 
   ngOnInit() {
     this.clubs$ = this.clubListQuery.watch().valueChanges.pipe(map((result) => result.data.clubs));
+
     this.clubs$.subscribe((clubs) => (this.filteredClubs = clubs));
+
+    this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
+      requestAnimationFrame(() =>
+        this.clubs$.subscribe(
+          (clubs) =>
+            (this.filteredClubs = clubs!.filter((club) => {
+              if (club && club.name) return club.name.toLowerCase().includes(searchTerm.target.value.toLowerCase());
+            }))
+        )
+      );
+    });
   }
 }
-
-type EventData = {
-  target: {
-    value: string;
-  };
-};
