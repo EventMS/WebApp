@@ -3,6 +3,8 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/club-list-query.service';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
 import { fromEvent, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Paths } from 'src/app/navigation/routes';
 
 @Component({
   selector: 'app-club-list',
@@ -10,7 +12,7 @@ import { fromEvent, Observable } from 'rxjs';
   styleUrls: ['./club-list.page.scss'],
 })
 export class ClubListPage implements OnInit {
-  constructor(private clubListQuery: ClubListQueryService) {}
+  constructor(private clubListQuery: ClubListQueryService, private router: Router) {}
 
   private clubs$: Observable<IGetClubsQuery['clubs']>;
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');

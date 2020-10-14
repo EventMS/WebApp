@@ -51,6 +51,34 @@ export interface ICreateClubMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IShowClubQuery
+// ====================================================
+
+export interface IShowClubQuery_club {
+  __typename: "Club";
+  name: string | null;
+  clubId: any;
+  accountNumber: string | null;
+  phoneNumber: string | null;
+  registrationNumber: string | null;
+  address: string | null;
+  description: string | null;
+}
+
+export interface IShowClubQuery {
+  club: IShowClubQuery_club | null;
+}
+
+export interface IShowClubQueryVariables {
+  name: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ICreateUserMutation
 // ====================================================
 

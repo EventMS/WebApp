@@ -5,6 +5,7 @@ export const Paths = {
   club_create: 'club-create',
   club_details: 'club-details',
   club_list: 'club-list',
+  show_club: 'show-club/:name',
 };
 
 const navigationRoutes = [
@@ -20,6 +21,10 @@ const navigationRoutes = [
   {
     path: Paths.club_list,
     loadChildren: () => import('src/app/pages/club/club-list/club-list.module').then((m) => m.ClubListPageModule),
+  },
+  {
+    path: Paths.show_club,
+    loadChildren: () => import('src/app/pages/club/show-club/show-club.module').then((m) => m.ShowClubPageModule),
   },
 ];
 

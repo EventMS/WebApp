@@ -15,7 +15,9 @@
         <ion-card-subtitle>
           <ion-row class="ion-justify-content-between">
             <ion-text style="margin-top: 1rem"> {{club.address}} </ion-text>
-            <ion-button class="goToClubButton">Go to club</ion-button>
+            <ion-button class="goToClubButton" [routerLink]="['/show-club/', club.name.split(' ').join('_')]"
+              >Go to club</ion-button
+            >
           </ion-row>
         </ion-card-subtitle>
       </ion-card-header>

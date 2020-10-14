@@ -1,9 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ShowClub</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content fullscreen>
+  <ion-grid *ngIf="(club$ | async) as club">
+    <ion-row class="ion-justify-content-center ion-margin">
+      <ion-text> <h1>{{club.name}}</h1> </ion-text>
+    </ion-row>
+  </ion-grid>
 </ion-content>
