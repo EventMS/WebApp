@@ -1,0 +1,89 @@
+
+ion-item-divider {
+  --background: clear;
+  --color: black;
+}
+
+ion-textarea {
+  --padding-top: 5px;
+}
+
+ion-list {
+  padding: 10px;
+}
+
+.subscription-header {
+  border-radius: 15px;
+}
+
+.rcorners {
+  border-radius: 25px;
+  background: whitesmoke;
+  padding: 20px;
+}
+
+h2 {
+  color: black;
+}
+
+h1 {
+  margin-top: 40px;
+}
+
+ion-card {
+  border-radius: 15px;
+  --background: #3880ff;
+}
+
+ion-card-title {
+  --color: white;
+}
+
+ion-card-subtitle {
+  --color: white;
+}
+
+ion-item-divider {
+  margin-top: 50px;
+}
+
+.selecter {
+  background-color: white;
+}
+
+#submit {
+  padding-top: 15px;
+}
+
+.form-content {
+  border-radius: 15px;
+  background-color: white;
+  padding: 5px;
+}
+
+.right-side-align {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.center-align {
+  display: flex;
+  align-items: center;
+}
+
+ion-row {
+  display: flex;
+  justify-content: center;
+}
+
+.clear-background {
+  background-color: transparent;
+}
+
+.edit-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  z-index: 1;
+}

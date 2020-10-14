@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
+import { IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 
 @Component({
@@ -9,17 +11,29 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
+  clubs: (IMyClubsQuery_myClubs | null)[] = [];
+
   constructor(
     private router: Router,
     private popoverController: PopoverController,
+    private clubQueryService: MyClubsQueryService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('Init called');
+    this.getClubs();
+  }
 
   async createClubClicked() {
     console.log('Clicked create');
-    await this.popoverController.dismiss().then(() => this.router.navigate(['tabs/club-create']));
+    await this.popoverController.dismiss().then(() => this.router.navigate(['club-create/']));
+  }
+
+  async manageClubClicked(clubId: string) {
+    await this.popoverController.dismiss().then(() => this.router.navigate(['club-manage/', clubId]));
   }
 
   profileClicked() {
@@ -29,5 +43,9 @@ export class ProfileOptionsComponent implements OnInit {
   async logOutClicked() {
     console.log('Log out clicked');
     await this.popoverController.dismiss().then(() => this.authenticationService.logout());
+  }
+
+  private getClubs() {
+    this.clubQueryService.fetch().subscribe((data) => (this.clubs = (data.data.myClubs ?? [])));
   }
 }

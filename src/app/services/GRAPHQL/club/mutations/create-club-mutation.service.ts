@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { gql, Mutation } from 'apollo-angular';
-import { CreateClubRequestInput, ICreateClubMutation, ICreateClubMutationVariables } from 'src/graphql_interfaces';
+import { ICreateClubMutation, ICreateClubMutationVariables } from 'src/graphql_interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -12,9 +12,10 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
     GraphQLModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,

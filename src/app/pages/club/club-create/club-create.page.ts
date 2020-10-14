@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/create-club-mutation.service';
+import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/mutations/create-club-mutation.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 
 @Component({
@@ -65,16 +65,17 @@ export class ClubCreatePage implements OnInit {
 
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
+
     this.createClubService
       .mutate({
         request: {
           name: formData.name,
           description: formData.description,
-          phoneNumber: formData.phone,
-          accountNumber: formData.accountNumber,
-          registrationNumber: formData.regNumber,
+          phoneNumber: formData.phone.toString(),
+          accountNumber: formData.accountNumber.toString(),
+          registrationNumber: formData.regNumber.toString(),
           address: formData.address,
-          locations: formData.locations,
+          locations: this.locations,
         },
       })
       .subscribe(
@@ -107,6 +108,10 @@ export class ClubCreatePage implements OnInit {
     this.locations = this.locations.filter((otherLocation) => {
       return location != otherLocation;
     });
+    
+    this.clubform.patchValue({
+      locations: this.locations
+    })
   }
 
   // Private methods
@@ -122,6 +127,7 @@ export class ClubCreatePage implements OnInit {
   }
 
   private handleResponse(data) {
+    this.clubform.reset();
     //Navigate to page for new created club
     this.router.navigate(['/club-details']);
   }
@@ -135,9 +141,9 @@ enum ErrorMessages {
 type FormData = {
   name: string;
   description: string;
-  regNumber: string;
-  accountNumber: string;
+  regNumber: Number;
+  accountNumber: Number;
   address: string;
-  phone: string;
+  phone: Number;
   locations: string[];
 };
