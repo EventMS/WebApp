@@ -13,7 +13,7 @@ const navigationRoutes: Routes = [
       import('src/app/pages/club/club-details/club-details.module').then((m) => m.ClubDetailsPageModule),
   },
   {
-    path: 'club-manage/:clubName',
+    path: 'club-manage/:clubId',
     loadChildren: () => import('src/app/pages/club/club-manage/club-manage.module').then((m) => m.ClubManagePageModule),
   },
 ];

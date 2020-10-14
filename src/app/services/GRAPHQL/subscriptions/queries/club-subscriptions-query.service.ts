@@ -7,8 +7,8 @@ import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 })
 export class ClubSubscriptionsQueryService extends Query<ISubscriptionsForClubQuery> {
   document = gql`
-    query ISubscriptionsForClubQuery {
-      subscriptionsForClub(clubId: "3720e232-5af8-484b-3fa9-08d86b6d8e06"){
+    query ISubscriptionsForClubQuery($clubId: Uuid!) {
+      subscriptionsForClub(clubId: $clubId){
         name
         price
       }

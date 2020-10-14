@@ -1,5 +1,5 @@
-<mat-drawer-container *ngIf="platform.is('desktop')" class="example-container" autosize>
-  <mat-drawer opened="true" disableClose="true" #drawer class="example-sidenav" mode="side">
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer *ngIf="platform.is('desktop')" opened="true" disableClose="true" #drawer class="example-sidenav" mode="side">
     <ion-list>
       <ion-item>
         <ion-button fill="clear" (click)="sidebarContent = SidebarContent.club">
@@ -40,3 +40,5 @@
     >
   </div>
 </mat-drawer-container>
+
+

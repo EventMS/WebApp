@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-col class="ion-padding-top ion-align-self-end">
     <ion-row class="ion-justify-items-center ion-align-items-end">
-      <ion-col size-md="5" size-lg="11" size-xs="7">
+      <ion-col size-xs="11">
         <div class="rcorners">
           <div class="ion-text-center subscription-header">
             <h2>Create New Subscription</h2>
@@ -15,20 +15,24 @@
                 <ion-item>
                   <ion-input formControlName="price" type="number" placeHolder="Price/month"> </ion-input>
                 </ion-item>
-                <div class="selecter">
-                  <ion-select placeholder="Choose existing subscription">
+                <div class="selecter" *ngIf="existingSubscriptions.length > 0">
+                  <ion-select formControlName="subscriptionReference" placeholder="Choose existing subscription">
                     <ion-select-option *ngFor="let sub of existingSubscriptions">
                       {{ sub.name }}
                     </ion-select-option>
                   </ion-select>
                 </div>
               </div>
-              <ion-button id="submit" size="large" type="submit" color="success" expand="block"
+              <ion-button [disabled]="form.invalid" id="submit" size="large" type="submit" color="success" expand="block"
                 >Create subscription
               </ion-button>
             </form>
           </div>
         </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-items-center ion-align-items-end">
+      <ion-col size-lg="14">
         <div>
           <div class="ion-text-center">
             <h1>Existing subscriptions</h1>
@@ -41,17 +45,17 @@
               <ion-card *ngFor="let subscription of existingSubscriptions">
                 <ion-grid>
                   <ion-row>
-                    <ion-col size="3">
+                    <ion-col>
                       <ion-card-header>
                         <ion-card-title>{{ subscription.name }}</ion-card-title>
                       </ion-card-header>
                     </ion-col>
-                    <ion-col>
+                    <ion-col size="3" class="center-align">
                       <ion-card-header>
                         <ion-card-subtitle>{{ subscription.price + '/month' }}</ion-card-subtitle>
                       </ion-card-header>
                     </ion-col>
-                    <ion-col class="ion-text-center">
+                    <ion-col class="ion-text-center right-side-align">
                       <ion-button color="success">Edit</ion-button>
                     </ion-col>
                   </ion-row>

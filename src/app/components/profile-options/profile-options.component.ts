@@ -27,11 +27,11 @@ export class ProfileOptionsComponent implements OnInit {
 
   async createClubClicked() {
     console.log('Clicked create');
-    await this.popoverController.dismiss().then(() => this.router.navigate(['tabs/club-create/']));
+    await this.popoverController.dismiss().then(() => this.router.navigate(['club-create/']));
   }
 
-  async manageClubClicked(clubName: string) {
-    await this.popoverController.dismiss().then(() => this.router.navigate(['tabs/club-manage/', clubName]));
+  async manageClubClicked(clubId: string) {
+    await this.popoverController.dismiss().then(() => this.router.navigate(['club-manage/', clubId]));
   }
 
   profileClicked() {
@@ -44,6 +44,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    //this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs));
+    this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs));
   }
 }

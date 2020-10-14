@@ -23,7 +23,8 @@ export class ClubManagePage implements OnInit {
 
   constructor(private route: ActivatedRoute, private clubQueryService: MyClubsQueryService, public platform: Platform) {
     this.route.params.subscribe((params) => {
-      this.clubName = params['clubName'];
+      this.clubName = params['clubId'];
+      console.log(this.clubName)
     });
   }
 

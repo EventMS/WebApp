@@ -129,6 +129,29 @@ export interface ILoginUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateSubscriptionMutation
+// ====================================================
+
+export interface ICreateSubscriptionMutation_createClubSubscription {
+  __typename: "ClubSubscription";
+  price: number;
+  name: string | null;
+}
+
+export interface ICreateSubscriptionMutation {
+  createClubSubscription: ICreateSubscriptionMutation_createClubSubscription | null;
+}
+
+export interface ICreateSubscriptionMutationVariables {
+  request?: CreateClubSubscriptionRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: ISubscriptionsForClubQuery
 // ====================================================
 
@@ -140,6 +163,10 @@ export interface ISubscriptionsForClubQuery_subscriptionsForClub {
 
 export interface ISubscriptionsForClubQuery {
   subscriptionsForClub: (ISubscriptionsForClubQuery_subscriptionsForClub | null)[] | null;
+}
+
+export interface ISubscriptionsForClubQueryVariables {
+  clubId: any;
 }
 
 /* tslint:disable */
@@ -159,6 +186,13 @@ export interface CreateClubRequestInput {
   name: string;
   phoneNumber: string;
   registrationNumber: string;
+}
+
+export interface CreateClubSubscriptionRequestInput {
+  clubId: any;
+  name: string;
+  price: number;
+  referenceId?: any | null;
 }
 
 export interface CreateUserRequestInput {
