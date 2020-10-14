@@ -30,13 +30,13 @@ export interface ICreateClubMutationVariables {
 // ====================================================
 
 export interface ICreateUserMutation_createUser_user {
-  __typename: "ApplicationUser";
+  __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
 }
 
 export interface ICreateUserMutation_createUser {
-  __typename: "Response";
+  __typename: "identity_Response";
   token: string | null;
   user: ICreateUserMutation_createUser_user | null;
 }
@@ -59,13 +59,13 @@ export interface ICreateUserMutationVariables {
 // ====================================================
 
 export interface ILoginUserMutation_loginUser_user {
-  __typename: "ApplicationUser";
+  __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
 }
 
 export interface ILoginUserMutation_loginUser {
-  __typename: "Response";
+  __typename: "identity_Response";
   token: string | null;
   user: ILoginUserMutation_loginUser_user | null;
 }
@@ -98,6 +98,7 @@ export interface CreateClubRequestInput {
 }
 
 export interface CreateUserRequestInput {
+  birthDate: any;
   email: string;
   name: string;
   password: string;
