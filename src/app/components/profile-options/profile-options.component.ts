@@ -32,7 +32,7 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   async manageClubClicked(clubId: string) {
-    await this.popoverController.dismiss().then(() => this.router.navigate(['club-manage/', clubId]));
+    await this.popoverController.dismiss().then(() => this.router.navigate(Paths.club_manage.route(clubId)));
   }
 
   profileClicked() {
