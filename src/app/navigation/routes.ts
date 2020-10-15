@@ -13,7 +13,7 @@ export const Paths = {
   },
   club_manage: {
     path: 'club-manage/:clubId',
-    route: (param: string) => ['show-club/', param],
+    route: (param: string) => ['club-manage/', param],
   },
 };
 
