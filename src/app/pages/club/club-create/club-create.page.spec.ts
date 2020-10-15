@@ -5,7 +5,7 @@ import { ClubCreatePage } from './club-create.page';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/create-club-mutation.service';
+import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/mutations/create-club-mutation.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ClubServiceMockService } from 'src/app/services/Mocks/club-service-mock.service';

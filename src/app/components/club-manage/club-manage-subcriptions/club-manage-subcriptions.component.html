@@ -1,0 +1,62 @@
+<ion-grid class="background">
+  <ion-col class="ion-padding-top ion-align-self-end">
+    <ion-row class="ion-justify-items-center ion-align-items-end">
+      <ion-col size-xs="11">
+        <div class="rcorners">
+          <div class="ion-text-center subscription-header">
+            <h2>Create New Subscription</h2>
+          </div>
+          <div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+              <div class="form-content">
+                <ion-item>
+                  <ion-input formControlName="name" type="text" placeHolder="Subscription name"> </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input formControlName="price" type="number" placeHolder="Price/month"> </ion-input>
+                </ion-item>
+                <div class="selecter" *ngIf="clubSubscriptions.length > 0">
+                  <ion-select formControlName="subscriptionReference" placeholder="Choose existing subscription">
+                    <ion-select-option *ngFor="let sub of clubSubscriptions" [value]="sub.clubSubscriptionId">
+                      {{sub.name}}
+                    </ion-select-option>
+                  </ion-select>
+                </div>
+              </div>
+              <ion-button [disabled]="form.invalid" id="submit" size="large" type="submit" color="success" expand="block"
+                >Create subscription
+              </ion-button>
+            </form>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-items-center ion-align-items-end">
+      <ion-col size-lg="14">
+        <div>
+          <div class="ion-text-center">
+            <h1>Existing subscriptions</h1>
+          </div>
+          <div> 
+            <div class="ion-text-center" *ngIf="clubSubscriptions.length == 0">
+              <h3>No existing subscriptions</h3>
+            </div>
+            <ion-list class="clear-background" *ngIf="clubSubscriptions.length > 0">
+              <ion-card *ngFor="let subscription of clubSubscriptions">
+                <ion-row>
+                  <ion-button class="edit-button" color="success">Edit</ion-button>
+                </ion-row>
+                <ion-card-header>
+                  <ion-card-title>{{ subscription.name }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-card-subtitle>{{ subscription.price + '/month' }}</ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
+            </ion-list>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-grid>

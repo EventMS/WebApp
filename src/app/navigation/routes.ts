@@ -1,3 +1,5 @@
+import { Routes } from '@angular/router';
+
 export const Paths = {
   start: 'start',
   signup: 'signup',
@@ -5,10 +7,17 @@ export const Paths = {
   club_create: 'club-create',
   club_details: 'club-details',
   club_list: 'club-list',
-  show_club: 'show-club/:name',
+  show_club: {
+    path: 'show-club/:name',
+    route: (param: string) => ['show-club/', param],
+  },
+  club_manage: {
+    path: 'club-manage/:clubId',
+    route: (param: string) => ['show-club/', param],
+  },
 };
 
-const navigationRoutes = [
+const navigationRoutes: Routes = [
   {
     path: Paths.club_create,
     loadChildren: () => import('src/app/pages/club/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
@@ -23,7 +32,11 @@ const navigationRoutes = [
     loadChildren: () => import('src/app/pages/club/club-list/club-list.module').then((m) => m.ClubListPageModule),
   },
   {
-    path: Paths.show_club,
+    path: Paths.club_manage.path,
+    loadChildren: () => import('src/app/pages/club/club-manage/club-manage.module').then((m) => m.ClubManagePageModule),
+  },
+  {
+    path: Paths.show_club.path,
     loadChildren: () => import('src/app/pages/club/show-club/show-club.module').then((m) => m.ShowClubPageModule),
   },
 ];
