@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/mutations/create-club-mutation.service';
+import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 
 @Component({
@@ -24,7 +25,8 @@ export class ClubCreatePage implements OnInit {
     private formbuilder: FormBuilder,
     private alertCtrl: AlertController,
     private createClubService: CreateClubMutationService,
-    private router: Router
+    private router: Router,
+    private clubQueryService: MyClubsQueryService, 
   ) {
     this.createClubFormBuilder = new CreateClubFormBuilder(formbuilder);
   }
@@ -78,7 +80,9 @@ export class ClubCreatePage implements OnInit {
           address: formData.address,
           locations: this.locations,
         },
-      })
+      }, { refetchQueries: [{
+        query: this.clubQueryService.document,
+      }],})
       .subscribe(
         (data) => this.handleResponse(data),
         (error) => this.presentAlert(error)

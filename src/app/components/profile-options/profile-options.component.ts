@@ -4,6 +4,8 @@ import { PopoverController } from '@ionic/angular';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 import { IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-options',
@@ -11,6 +13,8 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
+
+  clubs$: Observable<(IMyClubsQuery_myClubs | null)[]>;
   clubs: (IMyClubsQuery_myClubs | null)[] = [];
 
   constructor(
@@ -24,7 +28,13 @@ export class ProfileOptionsComponent implements OnInit {
 
   ngOnInit() {
     console.log('Init called');
-    this.getClubs();
+
+    this.clubs$ = this.clubQueryService.watch().valueChanges.pipe(map(result => result.data.myClubs))
+    this.clubs$.subscribe(
+      (data) => {
+      this.clubs = data;
+      console.log("clubs updated")
+    })
   }
 
   async createClubClicked() {
@@ -43,9 +53,5 @@ export class ProfileOptionsComponent implements OnInit {
   async logOutClicked() {
     console.log('Log out clicked');
     await this.popoverController.dismiss().then(() => this.authenticationService.logout());
-  }
-
-  private getClubs() {
-    this.clubQueryService.fetch().subscribe((data) => (this.clubs = (data.data.myClubs ?? [])));
   }
 }

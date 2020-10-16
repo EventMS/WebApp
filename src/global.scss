@@ -38,3 +38,8 @@ ion-title {
 .center {
   text-align: center;
 }
+
+//Needs to be here, because the modal is in global scope
+.modal-popup {
+  --border-radius: 20px;
+}
