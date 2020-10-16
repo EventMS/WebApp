@@ -16,6 +16,10 @@ const navigationRoutes: Routes = [
     path: 'club-manage/:clubId',
     loadChildren: () => import('src/app/pages/club/club-manage/club-manage.module').then((m) => m.ClubManagePageModule),
   },
+  {
+    path: 'event-create/:clubId',
+    loadChildren: () => import('src/app/pages/event/create-event/create-event.module').then((m) => m.CreateEventPageModule)
+  }
 ];
 
 export default navigationRoutes;

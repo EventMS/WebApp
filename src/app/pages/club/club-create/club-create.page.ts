@@ -82,7 +82,7 @@ export class ClubCreatePage implements OnInit {
         },
       }, { refetchQueries: [{
         query: this.clubQueryService.document,
-      }],})
+        }],})
       .subscribe(
         (data) => this.handleResponse(data),
         (error) => this.presentAlert(error)

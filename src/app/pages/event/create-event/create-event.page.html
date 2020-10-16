@@ -1,0 +1,26 @@
+<ion-content class="centered background">
+  <ion-grid>
+    <ion-col class="ion-padding-top ion-align-self-end">
+      <ion-row class="ion-justify-items-center ion-align-items-end">
+        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h1>Create Event</h1>
+          </div>
+
+          <div scrolly=true>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+              <ion-item>
+                <ion-input formControlName="name" placeholder="Event name"></ion-input>
+              </ion-item>
+              <ion-item *ngFor="let room of (club$ |async)?.rooms">
+                <ion-label>{{room.name}} </ion-label>
+                <ion-checkbox (ionChange)="onRoomCheckboxChange($event, room.roomId)" form slot="end"></ion-checkbox>
+              </ion-item>
+            </form>
+            <ion-button (click)="onSubmit()"></ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+</ion-content>

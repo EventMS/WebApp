@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
-import { IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
+import { IMyClubsQuery, IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,8 +14,8 @@ import { map } from 'rxjs/operators';
 })
 export class ProfileOptionsComponent implements OnInit {
 
-  clubs$: Observable<(IMyClubsQuery_myClubs | null)[]>;
-  clubs: (IMyClubsQuery_myClubs | null)[] = [];
+  clubs$: Observable<IMyClubsQuery["myClubs"]>;
+  clubs: IMyClubsQuery["myClubs"] = [];
 
   constructor(
     private router: Router,

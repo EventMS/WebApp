@@ -26,24 +26,40 @@ export interface ICreateClubMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: IClub
+// GraphQL query operation: ICreateEventClubQuery
 // ====================================================
 
-export interface IClub_clubs {
-  __typename: "Club";
-  accountNumber: string | null;
-  address: string | null;
-  adminId: any;
-  clubId: any;
-  description: string | null;
-  instructorIds: any[] | null;
+export interface ICreateEventClubQuery_clubByID_rooms {
+  __typename: "Room";
+  roomId: any;
   name: string | null;
-  phoneNumber: string | null;
-  registrationNumber: string | null;
 }
 
-export interface IClub {
-  clubs: (IClub_clubs | null)[] | null;
+export interface ICreateEventClubQuery_clubByID_instructors {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_clubsubscription {
+  __typename: "ClubSubscription";
+  clubSubscriptionId: any;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID {
+  __typename: "Club";
+  rooms: (ICreateEventClubQuery_clubByID_rooms | null)[] | null;
+  instructors: (ICreateEventClubQuery_clubByID_instructors | null)[] | null;
+  clubsubscription: (ICreateEventClubQuery_clubByID_clubsubscription | null)[] | null;
+}
+
+export interface ICreateEventClubQuery {
+  clubByID: ICreateEventClubQuery_clubByID | null;
+}
+
+export interface ICreateEventClubQueryVariables {
+  clubId: any;
 }
 
 /* tslint:disable */
@@ -63,10 +79,6 @@ export interface IMyClubsQuery_myClubs {
 
 export interface IMyClubsQuery {
   myClubs: (IMyClubsQuery_myClubs | null)[] | null;
-}
-
-export interface IMyClubsQueryVariables {
-  userId: any;
 }
 
 /* tslint:disable */

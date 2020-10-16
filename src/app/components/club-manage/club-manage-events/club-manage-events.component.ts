@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queries/create-event-club-query.service';
 import { EventCreateComponent } from './event-create/event-create.component';
 
 @Component({
@@ -9,16 +11,26 @@ import { EventCreateComponent } from './event-create/event-create.component';
 })
 export class ClubManageEventsComponent implements OnInit {
 
-  constructor(private modalController: ModalController) { }
+  private clubId: string
 
-  ngOnInit() {}
+  constructor(private modalController: ModalController,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private clubQueryService: CreateEventClubQueryService) { }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.clubId = params['clubId'];
+    });
+  }
 
   async onCreateClicked() {
-    const modal = await this.modalController.create({
+    this.router.navigate(['event-create', this.clubId])
+    /* const modal = await this.modalController.create({
       component: EventCreateComponent,
       cssClass: 'modal-popup'
     });
 
-    return await modal.present();
+    return await modal.present(); */
   }
 }

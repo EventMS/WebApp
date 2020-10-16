@@ -1,0 +1,17 @@
+.rcorners {
+    border-radius: 25px;
+    background: whitesmoke;
+}
+    
+ion-content.background {
+    --background: url(../../../../assets/img/start.png) 0 0/100% 100% no-repeat;
+}
+
+.centered ion-grid {
+    height: 100%;
+    padding-top: 100px;
+}
+
+.centered ion-row {
+    justify-content: center;
+}
