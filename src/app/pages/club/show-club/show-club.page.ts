@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/show-club-query.service';
+import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
 import { IShowClubQuery } from 'src/graphql_interfaces';
+import { PaymentModalPage } from '../../payment/payment-modal/payment-modal.page';
 
 @Component({
   selector: 'app-show-club',
@@ -11,13 +13,28 @@ import { IShowClubQuery } from 'src/graphql_interfaces';
   styleUrls: ['./show-club.page.scss'],
 })
 export class ShowClubPage implements OnInit {
-  constructor(private route: ActivatedRoute, private showClubQueryService: ShowClubQueryService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private showClubQueryService: ShowClubQueryService,
+    private modalController: ModalController
+  ) {}
 
+  private clubId: number;
   public club$: Observable<IShowClubQuery['club']>;
 
   ngOnInit() {
     this.initData();
   }
+
+  public showModal = async (): Promise<void> => {
+    const modal = await this.modalController.create({
+      component: PaymentModalPage,
+      componentProps: {
+        clubId: this.clubId,
+      },
+    });
+    return await modal.present();
+  };
 
   public initData = () => {
     this.route.params.subscribe((params) => {
@@ -29,6 +46,7 @@ export class ShowClubPage implements OnInit {
           })
           .pipe(
             map(({ data }) => {
+              this.clubId = data.club!.clubId;
               return data.club;
             })
           );

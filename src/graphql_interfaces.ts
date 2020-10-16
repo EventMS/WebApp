@@ -4,6 +4,28 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateClubMutation
+// ====================================================
+
+export interface ICreateClubMutation_createClub {
+  __typename: "Club";
+  clubId: any;
+}
+
+export interface ICreateClubMutation {
+  createClub: ICreateClubMutation_createClub | null;
+}
+
+export interface ICreateClubMutationVariables {
+  request?: CreateClubRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IGetClubsQuery
 // ====================================================
 
@@ -21,28 +43,6 @@ export interface IGetClubsQuery_clubs {
 
 export interface IGetClubsQuery {
   clubs: (IGetClubsQuery_clubs | null)[] | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: ICreateClubMutation
-// ====================================================
-
-export interface ICreateClubMutation_createClub {
-  __typename: "Club";
-  clubId: any;
-}
-
-export interface ICreateClubMutation {
-  createClub: ICreateClubMutation_createClub | null;
-}
-
-export interface ICreateClubMutationVariables {
-  request?: CreateClubRequestInput | null;
 }
 
 /* tslint:disable */
@@ -179,6 +179,29 @@ export interface ICreateSubscriptionMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateClubMemberMutation
+// ====================================================
+
+export interface ICreateClubMemberMutation_createClubMember {
+  __typename: "ClubMember";
+  clubId: any;
+  clubSubscriptionId: any;
+}
+
+export interface ICreateClubMemberMutation {
+  createClubMember: ICreateClubMemberMutation_createClubMember | null;
+}
+
+export interface ICreateClubMemberMutationVariables {
+  request?: CreateClubMemberRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: ISubscriptionsForClubQuery
 // ====================================================
 
@@ -205,6 +228,11 @@ export interface ISubscriptionsForClubQueryVariables {
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
+
+export interface CreateClubMemberRequestInput {
+  clubSubscriptionId: any;
+  userId: any;
+}
 
 export interface CreateClubRequestInput {
   accountNumber: string;

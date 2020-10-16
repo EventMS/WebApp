@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/club-list-query.service';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
 import { fromEvent, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Paths } from 'src/app/navigation/routes';
-
+import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/queries/club-list-query.service';
 @Component({
   selector: 'app-club-list',
   templateUrl: './club-list.page.html',

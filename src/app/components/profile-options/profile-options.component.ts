@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Paths } from 'src/app/navigation/routes';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
-import { IMyClubsQuery } from 'src/graphql_interfaces';
+import { IMyClubsQuery, IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-profile-options',
@@ -12,7 +14,7 @@ import { IMyClubsQuery } from 'src/graphql_interfaces';
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  clubs: IMyClubsQuery['myClubs'];
+  clubs$: Observable<IMyClubsQuery['myClubs']>;
 
   constructor(
     private router: Router,
@@ -45,6 +47,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubQueryService.fetch().subscribe((data) => (this.clubs = data.data.myClubs ?? []));
+    this.clubs$ = this.clubQueryService.watch().valueChanges.pipe(map(({ data }) => data.myClubs));
   }
 }

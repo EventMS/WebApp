@@ -7,14 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { ShowClubPageRoutingModule } from './show-club-routing.module';
 
 import { ShowClubPage } from './show-club.page';
+import { PaymentModalPageModule } from '../../payment/payment-modal/payment-modal.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ShowClubPageRoutingModule
-  ],
-  declarations: [ShowClubPage]
+  imports: [CommonModule, FormsModule, IonicModule, ShowClubPageRoutingModule, PaymentModalPageModule],
+  declarations: [ShowClubPage],
 })
 export class ShowClubPageModule {}
