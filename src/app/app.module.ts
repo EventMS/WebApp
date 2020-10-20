@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { StripeModule } from 'stripe-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,9 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    StripeModule.forRoot(
+      'pk_test_51HS0EUBx5A11R9GHe4zQ0OPYybaSBAKDpNJieOALrFCX9QsnMbc9wU6FZToIEoaFdgO45ODaabYVZCXYcyRlero100Dx2lyk2A'
+    ),
   ],
   providers: [
     StatusBar,

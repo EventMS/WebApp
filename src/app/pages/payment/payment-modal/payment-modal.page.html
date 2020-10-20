@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-list>
+  <ion-list class="ion-margin">
     <ion-radio-group [(ngModel)]="clubsubscriptionId">
       <ion-item>
         <ion-list-header><h2>Choose Subscription</h2></ion-list-header>
@@ -13,12 +13,8 @@
       </ion-item>
     </ion-radio-group>
   </ion-list>
-
-  <ion-grid>
-    <ion-row class="ion-justify-content-center ion-align-items-end">
-      <ion-button [disabled]="!clubsubscriptionId" style="width: 80%" (click)="onSubscribe()"
-        >Become a club member</ion-button
-      >
-    </ion-row>
-  </ion-grid>
 </ion-content>
+
+<div style="position: fixed; bottom: 0px; width: 100%">
+  <app-stripe-elements [dismissModal]="dissmiss" [amount]="getAmount()" [description]="getName()"></app-stripe-elements>
+</div>
