@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
@@ -9,7 +9,7 @@ import { PaymentModalPage } from '../../payment/payment-modal/payment-modal.page
 
 @Component({
   selector: 'app-show-club',
-  templateUrl: './show-club.page.html',
+  templateUrl: `./show-club.page.html`,
   styleUrls: ['./show-club.page.scss'],
 })
 export class ShowClubPage implements OnInit {
@@ -20,7 +20,8 @@ export class ShowClubPage implements OnInit {
   ) {}
 
   private clubId: number;
-  public club$: Observable<IShowClubQuery['club']>;
+  public club$: Observable<IShowClubQuery['clubByName']>;
+  public isMobile = isPlatform('mobile');
 
   ngOnInit() {
     this.initData();
@@ -42,12 +43,12 @@ export class ShowClubPage implements OnInit {
       if (name) {
         this.club$ = this.showClubQueryService
           .fetch({
-            name: name.replace(/_/g, ' '),
+            clubByNameName: name.replace(/_/g, ' '),
           })
           .pipe(
             map(({ data }) => {
-              this.clubId = data.club!.clubId;
-              return data.club;
+              this.clubId = data.clubByName!.clubId;
+              return data.clubByName;
             })
           );
       }

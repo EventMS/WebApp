@@ -73,23 +73,47 @@ export interface IMyClubsQuery {
 // GraphQL query operation: IShowClubQuery
 // ====================================================
 
-export interface IShowClubQuery_club {
-  __typename: "Club";
+export interface IShowClubQuery_clubByName_clubsubscription {
+  __typename: "ClubSubscription";
   name: string | null;
-  clubId: any;
+  price: number;
+  clubSubscriptionId: any;
+}
+
+export interface IShowClubQuery_clubByName_instructors {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  email: string | null;
+  id: string | null;
+}
+
+export interface IShowClubQuery_clubByName_user {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  email: string | null;
+}
+
+export interface IShowClubQuery_clubByName {
+  __typename: "Club";
+  address: string | null;
   accountNumber: string | null;
+  adminId: any;
+  clubId: any;
+  name: string | null;
   phoneNumber: string | null;
   registrationNumber: string | null;
-  address: string | null;
+  clubsubscription: (IShowClubQuery_clubByName_clubsubscription | null)[] | null;
   description: string | null;
+  instructors: (IShowClubQuery_clubByName_instructors | null)[] | null;
+  user: IShowClubQuery_clubByName_user | null;
 }
 
 export interface IShowClubQuery {
-  club: IShowClubQuery_club | null;
+  clubByName: IShowClubQuery_clubByName | null;
 }
 
 export interface IShowClubQueryVariables {
-  name: string;
+  clubByNameName?: string | null;
 }
 
 /* tslint:disable */
