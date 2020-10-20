@@ -41,7 +41,9 @@ export class CreateEventPage implements OnInit {
       return sub.clubSubscriptionId != subId
     })
 
-    this.eventPrices.push({price: +price, clubSubscriptionId: subId})
+    if(price!=""){
+      this.eventPrices.push({price: +price, clubSubscriptionId: subId})
+    }
   }
 
   onSubmit() {
