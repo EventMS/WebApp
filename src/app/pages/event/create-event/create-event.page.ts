@@ -6,6 +6,8 @@ import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queri
 import { CreateEventRequestInput, EventPriceRequestInput, ICreateEventClubQuery, ICreateEventClubQuery_clubByID, ICreateEventClubQuery_clubByID_clubsubscription, ICreateEventClubQuery_clubByID_instructors, ICreateEventClubQuery_clubByID_rooms } from 'src/graphql_interfaces';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventMutationService } from 'src/app/services/GRAPHQL/event/mutations/create-event-mutation.service';
+import { LoadingController } from '@ionic/angular';
+import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 
 @Component({
   selector: 'app-create-event',
@@ -27,13 +29,34 @@ export class CreateEventPage implements OnInit {
     private clubQueryService: CreateEventClubQueryService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private eventMutationService: CreateEventMutationService) {
+    private eventMutationService: CreateEventMutationService,
+    public loadingController: LoadingController,
+    private websocketService: SignalRServiceService) {
       this.initForm()
     }
 
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }  
+
   ngOnInit() {
     this.initData()
+    this.websocketService.startConnection();
+    this.websocketService.addListener(this.onDataTransfer)
     console.log("init called")
+  }
+
+  onDataTransfer(data: any) {
+    console.log("response received: " + data)
+    this.loadingController.dismiss();
   }
 
   onPriceSubmit(price: string, subId: string) {
@@ -47,6 +70,7 @@ export class CreateEventPage implements OnInit {
   }
 
   onSubmit() {
+    this.presentLoading()
     console.log(this.form.value)
     console.log(this.eventPrices)
 
@@ -152,3 +176,4 @@ type FormData = {
   description: string;
   publicPrice: number;
 }
+
