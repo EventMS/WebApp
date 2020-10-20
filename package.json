@@ -43,6 +43,7 @@
     "graphql": "^15.3.0",
     "ionic2-calendar": "^0.6.6",
     "jwt-decode": "^3.0.0",
+    "ng-pick-datetime": "^7.0.0",
     "phonegap-nfc": "^1.2.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

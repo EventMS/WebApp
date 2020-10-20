@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { CreateEventPageRoutingModule } from './create-event-routing.module';
 
 import { CreateEventPage } from './create-event.page';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   imports: [
@@ -14,7 +18,12 @@ import { CreateEventPage } from './create-event.page';
     FormsModule,
     IonicModule,
     CreateEventPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   declarations: [CreateEventPage]
 })

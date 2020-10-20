@@ -116,6 +116,29 @@ export interface ICreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateEventMutation
+// ====================================================
+
+export interface ICreateEventMutation_createEvent {
+  __typename: "Event";
+  eventId: any;
+  name: string | null;
+}
+
+export interface ICreateEventMutation {
+  createEvent: ICreateEventMutation_createEvent | null;
+}
+
+export interface ICreateEventMutationVariables {
+  request?: CreateEventRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 
@@ -212,12 +235,29 @@ export interface CreateClubSubscriptionRequestInput {
   referenceId?: any | null;
 }
 
+export interface CreateEventRequestInput {
+  clubId: any;
+  description: string;
+  endTime: any;
+  eventPrices: (EventPriceRequestInput | null)[];
+  instructorForEvents?: any[] | null;
+  locations?: any[] | null;
+  name: string;
+  publicPrice?: number | null;
+  startTime: any;
+}
+
 export interface CreateUserRequestInput {
   birthDate: any;
   email: string;
   name: string;
   password: string;
   phoneNumber: string;
+}
+
+export interface EventPriceRequestInput {
+  clubSubscriptionId: any;
+  price: number;
 }
 
 export interface LoginUserRequestInput {

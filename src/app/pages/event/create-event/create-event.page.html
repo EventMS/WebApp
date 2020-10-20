@@ -16,6 +16,31 @@
                 <ion-label>{{room.name}} </ion-label>
                 <ion-checkbox (ionChange)="onRoomCheckboxChange($event, room.roomId)" form slot="end"></ion-checkbox>
               </ion-item>
+              <label>Starttime</label>
+              <input formControlName="startDate"
+                     [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
+              <owl-date-time #dtPicker1></owl-date-time>
+              <label>Endtime</label>
+              <input formControlName="endDate"
+                     [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
+              <owl-date-time #dtPicker2></owl-date-time>
+              <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
+                <ion-label>{{isntr.name}} </ion-label>
+                <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.id)" form slot="end"></ion-checkbox>
+              </ion-item>
+              <ion-textarea placeholder="description" formControlName="description"></ion-textarea>
+              <ion-item *ngFor="let sub of (club$ |async)?.clubsubscription">
+                <ion-label>{{sub.name}} </ion-label>
+                <ion-input type="number" placeholder="Input price" (input)='onPriceSubmit($event.target.value, sub.clubSubscriptionId)'></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Public event</ion-label>
+                <ion-checkbox formControlName="publicChecked"></ion-checkbox>
+              </ion-item>
+              <ion-item [hidden]="!publicChecked.value">
+                <ion-label>Public price</ion-label>
+                <ion-input type="number" placeholder="Input price" formControlName="publicPrice"></ion-input>
+              </ion-item>
             </form>
             <ion-button (click)="onSubmit()"></ion-button>
           </div>
