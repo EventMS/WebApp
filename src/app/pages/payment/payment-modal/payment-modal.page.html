@@ -1,9 +1,16 @@
 <ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="dissmiss()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Choose Subscription</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ion-list class="ion-margin">
     <ion-radio-group [(ngModel)]="clubsubscriptionId">
-      <ion-item>
-        <ion-list-header><h2>Choose Subscription</h2></ion-list-header>
-      </ion-item>
       <ion-item *ngFor="let sub of clubSubscriptions$ | async">
         <ion-label>{{sub.name}}</ion-label>
         <div class="ion-margin">
