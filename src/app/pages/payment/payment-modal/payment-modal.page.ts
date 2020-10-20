@@ -6,7 +6,6 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
 import { CreateClubMemberMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/create-user-subscription.service';
 import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
 import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
-import { StripeSource, StripeToken } from 'stripe-angular';
 
 @Component({
   selector: 'app-payment-modal',

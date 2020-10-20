@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import waait from 'waait';
 declare var Stripe: stripe.StripeStatic;
@@ -9,7 +10,7 @@ declare var Stripe: stripe.StripeStatic;
   styleUrls: ['./stripe-elements.component.scss'],
 })
 export class StripeElementsComponent implements OnInit, AfterViewInit {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, public loadingController: LoadingController) {}
 
   @Input() amount: number;
   @Input() description: string;
@@ -50,20 +51,23 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
   async handleForm(e: { preventDefault: () => void }) {
     e.preventDefault();
 
-    this.loading = true;
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 1000,
+    });
+    await loading.present();
 
     const { source, error } = await this.stripe.createSource(this.card);
 
     if (error) {
       this.loading = false;
-
       // Inform the customer that there was an error.
       this.cardErrors = error.message;
     } else {
       console.log(source);
       await waait(2000);
       // Send the token to your server.
-      this.loading = false;
+      loading.dismiss();
       this.dismissModal?.();
     }
   }
