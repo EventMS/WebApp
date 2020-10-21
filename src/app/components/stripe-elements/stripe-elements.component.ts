@@ -71,7 +71,7 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
       const invoiceId = localStorage.getItem('latestInvoiceId');
       const isPaymentRetry = true;
       // create new payment method & retry payment on invoice with new payment method
-      this.createPaymentMethod({
+      await this.createPaymentMethod({
         card: this.card,
         isPaymentRetry,
         invoiceId: invoiceId!,
@@ -79,16 +79,14 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
     } else {
       console.log(2);
       // create new payment method & create subscription
-      this.createPaymentMethod({ card: this.card });
+      await this.createPaymentMethod({ card: this.card });
     }
-
-    await waait(2000);
     // Send the token to your server.
     loading.dismiss();
     this.dismissModal?.();
   }
 
-  createPaymentMethod = ({
+  createPaymentMethod = async ({
     card,
     isPaymentRetry = false,
     invoiceId = undefined,
@@ -100,7 +98,7 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
     // Set up payment method for recurring
     const priceId = 'price_1HefJzETjZBFbSa3IBMJBz1Z';
 
-    this.stripe
+    await this.stripe
       .createPaymentMethod({
         type: 'card',
         card: card,
