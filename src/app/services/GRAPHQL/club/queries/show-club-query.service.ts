@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
+import { map } from 'rxjs/operators';
 import { IShowClubQuery, IShowClubQueryVariables } from 'src/graphql_interfaces';
 
 @Injectable({
@@ -34,4 +35,9 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
       }
     }
   `;
+
+  public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
+    this.watch({ clubByNameName: clubByNameName }, { fetchPolicy: 'network-only' }).valueChanges.pipe(
+      map((club) => club.data)
+    );
 }

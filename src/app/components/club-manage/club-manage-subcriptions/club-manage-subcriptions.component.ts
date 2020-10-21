@@ -8,6 +8,7 @@ import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscrip
 import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 import { AlertController } from '@ionic/angular';
 import { CreateSubscriptionFormBuilder } from './subscription-formbuilder';
+import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 
 @Component({
   selector: 'app-club-manage-subcriptions',
@@ -17,36 +18,40 @@ import { CreateSubscriptionFormBuilder } from './subscription-formbuilder';
 export class ClubManageSubcriptionsComponent implements OnInit {
   private subscriptionForm: CreateSubscriptionFormBuilder;
   private clubId: string;
-  
-  clubSubscriptions$: Observable<ISubscriptionsForClubQuery["subscriptionsForClub"]>;
-  clubSubscriptions: ISubscriptionsForClubQuery["subscriptionsForClub"] = [];
 
-  constructor(private clubSubscriptionsService: ClubSubscriptionsQueryService,
-              formBuilder: FormBuilder,
-              private createSubscriptionService: CreateSubscriptionMutationService,
-              private route: ActivatedRoute,
-              private alertCtrl: AlertController) {
+  clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
+  clubSubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'] = [];
+
+  constructor(
+    private clubSubscriptionsService: ClubSubscriptionsQueryService,
+    private myClubsQueryService: MyClubsQueryService,
+    formBuilder: FormBuilder,
+    private createSubscriptionService: CreateSubscriptionMutationService,
+    private route: ActivatedRoute,
+    private alertCtrl: AlertController
+  ) {
     this.subscriptionForm = new CreateSubscriptionFormBuilder(formBuilder);
   }
 
   ngOnInit() {
-    this.initData()
+    this.initData();
   }
-  
+
   private initData() {
     this.route.params.subscribe((params) => {
       this.clubId = params['clubId'];
-      this.getSubscriptions()
+      this.getSubscriptions();
     });
   }
 
   private getSubscriptions() {
-    this.clubSubscriptions$ = this.clubSubscriptionsService.watch({clubId: this.clubId}).valueChanges.pipe(map(result => result.data.subscriptionsForClub))
-    this.clubSubscriptions$.subscribe(
-      (data) => {
+    this.clubSubscriptions$ = this.clubSubscriptionsService
+      .watch({ clubId: this.clubId })
+      .valueChanges.pipe(map((result) => result.data.subscriptionsForClub));
+    this.clubSubscriptions$.subscribe((data) => {
       this.clubSubscriptions = data;
-      this.form.reset()
-    })
+      this.form.reset();
+    });
   }
 
   get form() {
@@ -66,27 +71,35 @@ export class ClubManageSubcriptionsComponent implements OnInit {
   }
 
   onSubmit() {
-    const formData: FormData = this.form.value
+    const formData: FormData = this.form.value;
 
-    this.createSubscriptionService.mutate({
-      request: {
-        clubId: this.clubId,
-        name: formData.name,
-        price: formData.price,
-        referenceId: formData.subscriptionReference
-      }
-    },{
-      refetchQueries: [{
-        query: this.clubSubscriptionsService.document,
-        variables: { clubId: this.clubId }
-      }],
-      awaitRefetchQueries: true,
-    }).subscribe( 
-      () => {},
-      (error) => {
-        console.log(error)
-        this.presentAlert()
-    })
+    this.createSubscriptionService
+      .mutate(
+        {
+          request: {
+            clubId: this.clubId,
+            name: formData.name,
+            price: formData.price,
+            referenceId: formData.subscriptionReference,
+          },
+        },
+        {
+          refetchQueries: [
+            {
+              query: this.clubSubscriptionsService.document,
+              variables: { clubId: this.clubId },
+            },
+          ],
+          awaitRefetchQueries: true,
+        }
+      )
+      .subscribe(
+        () => {},
+        (error) => {
+          console.log(error);
+          this.presentAlert();
+        }
+      );
   }
 
   private async presentAlert() {

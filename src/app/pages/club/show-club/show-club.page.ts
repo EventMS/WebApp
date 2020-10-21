@@ -20,11 +20,17 @@ export class ShowClubPage implements OnInit {
   ) {}
 
   private clubId: number;
-  public club$: Observable<IShowClubQuery['clubByName']>;
+  public club$: Observable<IShowClubQuery>;
   public isMobile = isPlatform('mobile');
 
   ngOnInit() {
-    this.initData();
+    this.route.params.subscribe((params) => {
+      const name = params['name'] as string;
+      if (name) {
+        this.club$ = this.showClubQueryService?.ShowClubQuery$({ clubByNameName: name.replace(/_/g, ' ') });
+        this.club$.subscribe(({ clubByName }) => (this.clubId = clubByName?.clubId!));
+      }
+    });
   }
 
   public showModal = async (): Promise<void> => {
@@ -35,23 +41,5 @@ export class ShowClubPage implements OnInit {
       },
     });
     return await modal.present();
-  };
-
-  public initData = () => {
-    this.route.params.subscribe((params) => {
-      const name = params['name'] as string;
-      if (name) {
-        this.club$ = this.showClubQueryService
-          .fetch({
-            clubByNameName: name.replace(/_/g, ' '),
-          })
-          .pipe(
-            map(({ data }) => {
-              this.clubId = data.clubByName!.clubId;
-              return data.clubByName;
-            })
-          );
-      }
-    });
   };
 }

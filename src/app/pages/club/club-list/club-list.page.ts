@@ -12,20 +12,21 @@ import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/queries/club
 export class ClubListPage implements OnInit {
   constructor(private clubListQuery: ClubListQueryService, private router: Router) {}
 
-  private clubs$: Observable<IGetClubsQuery['clubs']>;
+  public clubs$: Observable<IGetClubsQuery>;
+
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
 
   public filteredClubs: IGetClubsQuery['clubs'];
 
   ngOnInit() {
-    this.clubs$ = this.clubListQuery.watch().valueChanges.pipe(map((result) => result.data.clubs));
-
-    this.clubs$.subscribe((clubs) => (this.filteredClubs = clubs));
-
+    this.clubs$ = this.clubListQuery.IGetClubsQuery$;
+    this.clubs$.subscribe(({ clubs }) => {
+      this.filteredClubs = clubs;
+    });
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
         this.clubs$.subscribe(
-          (clubs) =>
+          ({ clubs }) =>
             (this.filteredClubs = clubs!.filter((club) => {
               if (club && club.name) return club.name.toLowerCase().includes(searchTerm.target.value.toLowerCase());
             }))
