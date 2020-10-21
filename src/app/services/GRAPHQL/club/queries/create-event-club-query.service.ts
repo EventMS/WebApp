@@ -22,6 +22,14 @@ export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
         clubSubscriptionId
         name
       }
+      events{
+        locations{
+          roomId
+        }
+        name
+        startTime
+        endTime
+      }
     }
   }
 `;

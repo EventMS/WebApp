@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as signalR from "@aspnet/signalr";
 
 @Injectable({
@@ -7,10 +8,12 @@ import * as signalR from "@aspnet/signalr";
 export class SignalRServiceService {
 
   private connection: signalR.HubConnection
+  
+  clubId: string
 
   startConnection = () => {
     this.connection = new signalR.HubConnectionBuilder()
-                            .withUrl('http://localhost:5102/')
+                            .withUrl('http://localhost:5113/event')
                             .build();
     this.connection
       .start()
@@ -18,11 +21,10 @@ export class SignalRServiceService {
       .catch(err => console.log('Error while starting connection: ' + err))
   }
 
-  addListener(handler: socketHandler) {
-    this.connection.on('websocketTest', (data) => handler(data))
+  addListener(successHandler: socketHandler, failedHandler: socketHandler) {
+    this.connection.on(this.clubId+'-EventCreated', (data) => successHandler(data))
+    this.connection.on(this.clubId+'-EventCreationFailed', (data) => failedHandler(data))
   }
-
-  constructor() { }
 }
 
 type socketHandler = (data: any) => any

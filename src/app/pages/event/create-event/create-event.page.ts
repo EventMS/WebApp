@@ -3,11 +3,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queries/create-event-club-query.service';
-import { CreateEventRequestInput, EventPriceRequestInput, ICreateEventClubQuery, ICreateEventClubQuery_clubByID, ICreateEventClubQuery_clubByID_clubsubscription, ICreateEventClubQuery_clubByID_instructors, ICreateEventClubQuery_clubByID_rooms } from 'src/graphql_interfaces';
+import { CreateEventRequestInput, EventPriceRequestInput, ICreateEventClubQuery, ICreateEventClubQuery_clubByID, ICreateEventClubQuery_clubByID_clubsubscription, ICreateEventClubQuery_clubByID_events_locations, ICreateEventClubQuery_clubByID_instructors, ICreateEventClubQuery_clubByID_rooms } from 'src/graphql_interfaces';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateEventMutationService } from 'src/app/services/GRAPHQL/event/mutations/create-event-mutation.service';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
+import { CalendarEvent } from 'angular-calendar';
+import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
+
+export interface EMSEvent extends CalendarEvent {
+  locationIds: string[]
+  currentEvent: Boolean
+}
 
 @Component({
   selector: 'app-create-event',
@@ -17,6 +24,10 @@ import { SignalRServiceService } from 'src/app/services/signal-rservice.service'
 export class CreateEventPage implements OnInit {
 
   form: FormGroup;
+
+  viewDate = new Date();
+  events: EMSEvent[] = [];
+  shownEvents: EMSEvent[] = [];
 
   private chosenRoomIds: string[] = []
   private chosenInstrIds: string[] = []
@@ -31,32 +42,45 @@ export class CreateEventPage implements OnInit {
     private router: Router,
     private eventMutationService: CreateEventMutationService,
     public loadingController: LoadingController,
-    private websocketService: SignalRServiceService) {
+    private websocketService: SignalRServiceService,
+    private alertController: AlertController) {
       this.initForm()
     }
-
 
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
-      duration: 2000
     });
     await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
   }  
+
+  async presentAlert(message) {
+    const alert = await this.alertController.create({
+      message: message,
+      buttons: ['OK'],
+    })
+  }
 
   ngOnInit() {
     this.initData()
     this.websocketService.startConnection();
-    this.websocketService.addListener(this.onDataTransfer)
+    this.websocketService.addListener(this.onDataTransfer.bind(this), this.onCreationFailed.bind(this))
     console.log("init called")
+
+    this.form.get("startDate").valueChanges.subscribe(() => this.onDateChanged())
+    this.form.get("endDate").valueChanges.subscribe(() => this.onDateChanged())
+  }
+
+  onCreationFailed(data: any) {
+    console.log("Event creation failed - reason: " + data.reason)
+    this.loadingController.dismiss();
+    this.presentAlert("Could not create event")
   }
 
   onDataTransfer(data: any) {
     console.log("response received: " + data)
     this.loadingController.dismiss();
+    this.router.navigate(['/club-manage/',this.clubId])
   }
 
   onPriceSubmit(price: string, subId: string) {
@@ -114,6 +138,8 @@ export class CreateEventPage implements OnInit {
     this.form.patchValue({
       locations: this.chosenRoomIds
     })
+
+    this.filterEvents()
   }
 
   onInstructorCheckboxChange(event, instrId: string) {
@@ -130,6 +156,46 @@ export class CreateEventPage implements OnInit {
     })
   }
 
+  onDateChanged() {
+    this.shownEvents = this.shownEvents.filter(e => {
+      return e.currentEvent == false
+    })
+
+    var startDate: Date = this.form.get("startDate").value
+    var endDate: Date = this.form.get("endDate").value
+
+    console.log(startDate)
+    console.log(endDate)
+
+    if(startDate == null || endDate == null) {
+      return
+    }
+
+    this.shownEvents.push({
+      start: startDate,
+      end: endDate,
+      locationIds: [],
+      title: "Current event",
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      color: {
+        primary: '#ad2121',
+        secondary: '#FAE3E3',
+      },
+      currentEvent: true
+    })
+  }
+
+  onCurrentEventChanged(event: DateRangeEvent) {
+    this.form.patchValue({
+      startDate: event.startDate,
+      endDate: event.endDate
+    })
+  }
+
   get publicChecked() {
     return this.form.get('publicChecked');
   }
@@ -137,6 +203,7 @@ export class CreateEventPage implements OnInit {
   private initData() {
     this.route.params.subscribe(params => {
       this.clubId = params['clubId']
+      this.websocketService.clubId = this.clubId
       console.log(this.clubId)
       this.fetchData()
     })
@@ -151,8 +218,44 @@ export class CreateEventPage implements OnInit {
           this.router.navigate(['/'])
           return
         }
+
+        this.events = this.createEvents(data)
+        this.filterEvents()
       }
     )
+  }
+
+  private filterEvents() {
+    var currentEvent: EMSEvent = this.shownEvents.find(e => {return e.currentEvent == true})
+
+    this.shownEvents = this.events.filter(event => {
+      return event.locationIds.some(e => this.chosenRoomIds.includes(e))
+    })
+
+    if(currentEvent != null) {
+      this.shownEvents.push(currentEvent)
+    }
+  }
+
+  private createEvents(data: ICreateEventClubQuery_clubByID): EMSEvent[] {
+    var events: EMSEvent[] = []
+
+    data.events.forEach(e => {
+      var locations: string[] = []
+      e.locations.forEach(e => {
+        locations.push(e.roomId)
+      })
+
+      events.push({
+        start: new Date(e.startTime),
+        end: new Date(e.endTime),
+        locationIds: locations,
+        title: e.name,
+        currentEvent: false
+      })
+    })
+
+    return events
   }
 
   private initForm() {

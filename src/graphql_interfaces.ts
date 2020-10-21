@@ -47,11 +47,25 @@ export interface ICreateEventClubQuery_clubByID_clubsubscription {
   name: string | null;
 }
 
+export interface ICreateEventClubQuery_clubByID_events_locations {
+  __typename: "RoomEvent";
+  roomId: any;
+}
+
+export interface ICreateEventClubQuery_clubByID_events {
+  __typename: "Event";
+  locations: (ICreateEventClubQuery_clubByID_events_locations | null)[] | null;
+  name: string | null;
+  startTime: any;
+  endTime: any;
+}
+
 export interface ICreateEventClubQuery_clubByID {
   __typename: "Club";
   rooms: (ICreateEventClubQuery_clubByID_rooms | null)[] | null;
   instructors: (ICreateEventClubQuery_clubByID_instructors | null)[] | null;
   clubsubscription: (ICreateEventClubQuery_clubByID_clubsubscription | null)[] | null;
+  events: (ICreateEventClubQuery_clubByID_events | null)[] | null;
 }
 
 export interface ICreateEventClubQuery {

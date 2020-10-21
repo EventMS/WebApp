@@ -1,7 +1,6 @@
 <ion-content class="centered background">
   <ion-grid>
-    <ion-col class="ion-padding-top ion-align-self-end">
-      <ion-row class="ion-justify-items-center ion-align-items-end">
+      <ion-row class="ion-justify-items-center ion-align-items-center">
         <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
           <div class="ion-text-center">
             <h1>Create Event</h1>
@@ -45,7 +44,9 @@
             <ion-button (click)="onSubmit()"></ion-button>
           </div>
         </ion-col>
+        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
+          <app-event-calendar (eventChanged)="onCurrentEventChanged($event)" [events]="shownEvents" [viewDate]="viewDate"></app-event-calendar>
+        </ion-col>
       </ion-row>
-    </ion-col>
   </ion-grid>
 </ion-content>
