@@ -40,7 +40,6 @@
     "apollo-angular": "^2.0.4",
     "apollo-codegen": "^0.20.2",
     "dayjs": "^1.9.1",
-    "graceful-fs": "^4.2.4",
     "graphql": "^15.3.0",
     "ionic2-calendar": "^0.6.6",
     "jwt-decode": "^3.0.0",
