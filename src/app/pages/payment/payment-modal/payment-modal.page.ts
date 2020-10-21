@@ -39,26 +39,6 @@ export class PaymentModalPage implements OnInit {
 
   getAmount = () => this.clubsubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.price;
 
-  onSubscribe = () => {
-    const { currentUserValue } = this.authService;
-    if (currentUserValue?.user?.id)
-      this.createClubMemberMutationService
-        .mutate({
-          request: {
-            userId: currentUserValue.user.id,
-            clubSubscriptionId: this.clubsubscriptions?.find(
-              (sub) => sub?.clubSubscriptionId == this.clubsubscriptionId
-            ),
-          },
-        })
-        .subscribe(
-          () => {
-            this.modalController.dismiss();
-          },
-          (error) => console.log(error)
-        );
-  };
-
   public dissmiss = () => {
     this.modalController.dismiss();
   };

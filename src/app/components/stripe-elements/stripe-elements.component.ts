@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { SignupForSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/signup-for-subscription-mutation.service';
 import waait from 'waait';
 declare var Stripe: stripe.StripeStatic;
 
@@ -10,10 +11,15 @@ declare var Stripe: stripe.StripeStatic;
   styleUrls: ['./stripe-elements.component.scss'],
 })
 export class StripeElementsComponent implements OnInit, AfterViewInit {
-  constructor(private authService: AuthenticationService, public loadingController: LoadingController) {}
+  constructor(
+    private authService: AuthenticationService,
+    public loadingController: LoadingController,
+    private signUpforSubscriptionMutationService: SignupForSubscriptionMutationService
+  ) {}
 
   @Input() amount: number;
   @Input() description: string;
+  @Input() subscriptionId: string;
   @Input() dismissModal?: () => void;
   @ViewChild('cardElement') cardElement: ElementRef;
 
@@ -24,7 +30,6 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
   loading = false;
 
   ngAfterViewInit() {
-    console.log('called');
     const elements = this.stripe.elements();
 
     this.card = elements.create('card');
@@ -37,7 +42,7 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.stripe = Stripe(
-      'pk_test_51HS0EUBx5A11R9GHe4zQ0OPYybaSBAKDpNJieOALrFCX9QsnMbc9wU6FZToIEoaFdgO45ODaabYVZCXYcyRlero100Dx2lyk2A'
+      'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
     );
   }
 
@@ -57,18 +62,72 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
     });
     await loading.present();
 
-    const { source, error } = await this.stripe.createSource(this.card);
+    // If a previous payment was attempted, get the latest invoice
+    const latestInvoicePaymentIntentStatus = localStorage.getItem('latestInvoicePaymentIntentStatus');
 
-    if (error) {
-      this.loading = false;
-      // Inform the customer that there was an error.
-      this.cardErrors = error.message;
+    if (latestInvoicePaymentIntentStatus === 'requires_payment_method') {
+      console.log(1);
+
+      const invoiceId = localStorage.getItem('latestInvoiceId');
+      const isPaymentRetry = true;
+      // create new payment method & retry payment on invoice with new payment method
+      this.createPaymentMethod({
+        card: this.card,
+        isPaymentRetry,
+        invoiceId: invoiceId!,
+      });
     } else {
-      console.log(source);
-      await waait(2000);
-      // Send the token to your server.
-      loading.dismiss();
-      this.dismissModal?.();
+      console.log(2);
+      // create new payment method & create subscription
+      this.createPaymentMethod({ card: this.card });
     }
+
+    await waait(2000);
+    // Send the token to your server.
+    loading.dismiss();
+    this.dismissModal?.();
   }
+
+  createPaymentMethod = ({
+    card,
+    isPaymentRetry = false,
+    invoiceId = undefined,
+  }: {
+    card: stripe.elements.Element;
+    isPaymentRetry?: boolean;
+    invoiceId?: string;
+  }) => {
+    // Set up payment method for recurring
+    const priceId = 'price_1HefJzETjZBFbSa3IBMJBz1Z';
+
+    this.stripe
+      .createPaymentMethod({
+        type: 'card',
+        card: card,
+      })
+      .then((result) => {
+        if (result.error) {
+          this.cardErrors = result.error.message;
+        } else {
+          if (isPaymentRetry) {
+            // Update the payment method and retry invoice payment
+            // this.retryInvoiceWithNewPaymentMethod({
+            //   customerId: this.authService.currentUserValue.user.id,
+            //   paymentMethodId: result.paymentMethod.id,
+            //   invoiceId: invoiceId,
+            //   priceId: priceId,
+            // });
+            console.log('fuck');
+          } else {
+            //Create the subscription
+            this.signUpforSubscriptionMutationService
+              .signUpForSupscription({
+                clubSubscriptonId: this.subscriptionId,
+                paymentMethodId: result?.paymentMethod?.id,
+              })
+              .subscribe();
+          }
+        }
+      });
+  };
 }

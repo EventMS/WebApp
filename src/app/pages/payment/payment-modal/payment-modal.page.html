@@ -23,5 +23,5 @@
 </ion-content>
 
 <div style="position: fixed; bottom: 0px; width: 100%">
-  <app-stripe-elements [dismissModal]="dissmiss" [amount]="getAmount()" [description]="getName()"></app-stripe-elements>
+  <app-stripe-elements [dismissModal]="dissmiss" [subscriptionId]="clubsubscriptionId" [amount]="getAmount()" [description]="getName()"></app-stripe-elements>
 </div>

@@ -61,9 +61,9 @@
   </ion-grid>
 </ion-content>
 
-<ng-template #mobile>
+<ng-template #mobile *ngIf="(club$ | async)?.clubByName as club">
   <ion-content class="container">
-    <ion-grid *ngIf="(club$ | async)?.clubByName as club">
+    <ion-grid >
       <ion-row class="ion-justify-content-center">
         <ion-col>
           <ion-text class="ion-text-center"><h2>{{club.name | uppercase}}</h2></ion-text>
@@ -115,7 +115,7 @@
       </ion-col>
     </ion-grid>
   </ion-content>
-  <div class="ion-padding singup-mobile">
+  <div class="ion-padding singup-mobile"> 
     <ion-row class="ion-justify-content-center">
       <ion-button class="signup-button-mobile" (click)="showModal()">Sign up</ion-button>
     </ion-row>

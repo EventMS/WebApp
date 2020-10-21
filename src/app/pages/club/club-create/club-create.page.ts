@@ -70,24 +70,19 @@ export class ClubCreatePage implements OnInit {
     const formData: FormData = this.clubform.value;
 
     this.createClubService
-      .mutate({
-        request: {
-          name: formData.name,
-          description: formData.description,
-          phoneNumber: formData.phone.toString(),
-          accountNumber: formData.accountNumber.toString(),
-          registrationNumber: formData.regNumber.toString(),
-          address: formData.address,
-          locations: this.locations,
-        },
+      .mutate(
         {
-          refetchQueries: [
-            {
-              query: this.myClubsQueryService.document
-            },
-          ],
-          awaitRefetchQueries: true,
-        }
+          request: {
+            name: formData.name,
+            description: formData.description,
+            phoneNumber: formData.phone.toString(),
+            accountNumber: formData.accountNumber.toString(),
+            registrationNumber: formData.regNumber.toString(),
+            address: formData.address,
+            locations: this.locations,
+          },
+        },
+        { refetchQueries: [{ query: this.myClubsQueryService.document }] }
       )
       .subscribe(
         (data) => this.handleResponse(data),

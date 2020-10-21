@@ -226,6 +226,28 @@ export interface ICreateClubMemberMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ISignupForSubscriptionMutation
+// ====================================================
+
+export interface ISignupForSubscriptionMutation_signUpForSubscription {
+  __typename: "ClubSubscription";
+  clubSubscriptionId: any;
+}
+
+export interface ISignupForSubscriptionMutation {
+  signUpForSubscription: ISignupForSubscriptionMutation_signUpForSubscription | null;
+}
+
+export interface ISignupForSubscriptionMutationVariables {
+  signUpForSubscriptionReq?: CreateSubscriptionRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: ISubscriptionsForClubQuery
 // ====================================================
 
@@ -273,6 +295,11 @@ export interface CreateClubSubscriptionRequestInput {
   name: string;
   price: number;
   referenceId?: any | null;
+}
+
+export interface CreateSubscriptionRequestInput {
+  clubSubscriptonId: any;
+  paymentMethodId?: string | null;
 }
 
 export interface CreateUserRequestInput {
