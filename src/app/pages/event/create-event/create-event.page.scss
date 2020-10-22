@@ -1,8 +1,6 @@
 .rcorners {
     border-radius: 25px;
-    padding-bottom:20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 30px;
     background: whitesmoke;
 }
     
@@ -17,14 +15,18 @@ ion-content.background {
 
 .centered ion-row {
     justify-content: space-evenly;
-}  
+}
 
 .column-padding {
-    padding-left:20px;
-    padding-right:20px;
+    padding-bottom:40px;
 }
 
 ion-item-divider {
     --background: clear;
     --color: black;
+}
+
+.calendar-element {
+    padding-top: 10px;
+    padding-left: 15px;
 }

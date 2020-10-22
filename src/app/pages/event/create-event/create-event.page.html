@@ -1,7 +1,7 @@
 <ion-content class="centered background">
   <ion-grid>
       <ion-row class="ion-justify-items-center ion-align-items-start">
-        <ion-col size-lg="4" size-xs="12">
+        <ion-col size-lg="4" size-xs="12" class="column-padding">
           <div class="rcorners">
             <div class="ion-text-center">
               <h1>Create Event</h1>
@@ -24,16 +24,16 @@
                   <ion-item-divider>
                     <ion-label>Choose start and endtime</ion-label>
                   </ion-item-divider>
-                  <ion-item>
-                    <input placeholder="Start Date" formControlName="startDate"
+                  <div class="calendar-element">
+                    <input [min]="viewDate" placeholder="Start Date" formControlName="startDate"
                        [owlDateTimeTrigger]="startPicker" [owlDateTime]="startPicker">
                     <owl-date-time #startPicker></owl-date-time>
-                  </ion-item>
-                  <ion-item>
-                    <input placeholder="End Date" formControlName="endDate"
+                  </div>
+                  <div class="calendar-element">
+                    <input [min]="currentEvent.start" placeholder="End Date" formControlName="endDate"
                        [owlDateTimeTrigger]="endPicker" [owlDateTime]="endPicker">
                     <owl-date-time #endPicker></owl-date-time>
-                  </ion-item>
+                  </div>
                 </ion-item-group>
                 <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
                   <ion-label>{{isntr.name}} </ion-label>
@@ -43,15 +43,14 @@
                   <ion-label>Input an event description</ion-label>
                 </ion-item-divider>
                 <ion-item>
-                  <ion-textarea placeholder="description" formControlName="description"></ion-textarea>
+                  <ion-textarea placeholder="Description" formControlName="description"></ion-textarea>
                 </ion-item>
                 <ion-item-group>
                   <ion-item-divider>
                     <ion-label>Choose prices for subscriptions</ion-label>
                   </ion-item-divider>
                   <ion-item *ngFor="let sub of (club$ |async)?.clubsubscription">
-                    <ion-label>{{sub.name}} </ion-label>
-                    <ion-input type="number" placeholder="Input price" (input)='onPriceSubmit($event.target.value, sub.clubSubscriptionId)'></ion-input>
+                    <ion-input type="number" placeholder="Input price for: {{sub.name}}" (input)='onPriceSubmit($event.target.value, sub.clubSubscriptionId)'></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-label>Public event</ion-label>
@@ -67,7 +66,7 @@
             </div>
           </div>
         </ion-col>
-        <ion-col class="rcorners" size-lg="5">
+        <ion-col class="rcorners column-padding" size-lg="5">
           <app-event-calendar (eventChanged)="onCurrentEventChanged($event)" [events]="shownEvents" [viewDate]="viewDate"></app-event-calendar>
         </ion-col>
       </ion-row>

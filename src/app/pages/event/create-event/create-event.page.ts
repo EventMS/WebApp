@@ -25,10 +25,9 @@ export interface EMSEvent extends CalendarEvent {
 export class CreateEventPage implements OnInit {
 
   form: FormGroup;
-
   viewDate = new Date();
-  shownEvents: EMSEvent[] = [];
 
+  shownEvents: EMSEvent[] = [];
   currentEvent: EMSEvent
 
   private events: EMSEvent[] = [];
@@ -84,8 +83,7 @@ export class CreateEventPage implements OnInit {
   onCreationSucceeded(data: any) {
     console.log("response received: " + data)
     this.loadingController.dismiss()
-
-    this.shownEvents = []
+    this.resetPage()
     this.router.navigate(['/club-manage/',this.clubId])
   }
 
@@ -193,6 +191,10 @@ export class CreateEventPage implements OnInit {
   get publicChecked() {
     return this.form.get('publicChecked');
   }
+  
+  get startDate() {
+    return this.form.get('startDate')
+  }
 
   private initData() {
     this.route.params.subscribe(params => {
@@ -294,6 +296,12 @@ export class CreateEventPage implements OnInit {
       startDate: startDate,
       endDate: endDate
     })
+  }
+
+  private resetPage() {
+    this.form.reset()
+    this.chosenRoomIds = []
+    this.filterEvents()
   }
 }
 
