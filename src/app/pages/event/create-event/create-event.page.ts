@@ -10,6 +10,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
+import { DateAdapter } from '@angular/material/core';
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[]
@@ -26,9 +27,11 @@ export class CreateEventPage implements OnInit {
   form: FormGroup;
 
   viewDate = new Date();
-  events: EMSEvent[] = [];
   shownEvents: EMSEvent[] = [];
 
+  currentEvent: EMSEvent
+
+  private events: EMSEvent[] = [];
   private chosenRoomIds: string[] = []
   private chosenInstrIds: string[] = []
   private eventPrices: EventPriceRequestInput[] = []
@@ -64,11 +67,12 @@ export class CreateEventPage implements OnInit {
   ngOnInit() {
     this.initData()
     this.websocketService.startConnection();
-    this.websocketService.addListener(this.onDataTransfer.bind(this), this.onCreationFailed.bind(this))
-    console.log("init called")
+    this.websocketService.addListener(this.onCreationSucceeded.bind(this), this.onCreationFailed.bind(this))
+  
+    this.form.get("startDate")!.valueChanges.subscribe(() => this.onDateChangedForCurrentEvent())
+    this.form.get("endDate")!.valueChanges.subscribe(() => this.onDateChangedForCurrentEvent())
 
-    this.form.get("startDate").valueChanges.subscribe(() => this.onDateChanged())
-    this.form.get("endDate").valueChanges.subscribe(() => this.onDateChanged())
+    this.initCurrentEvent()
   }
 
   onCreationFailed(data: any) {
@@ -77,9 +81,11 @@ export class CreateEventPage implements OnInit {
     this.presentAlert("Could not create event")
   }
 
-  onDataTransfer(data: any) {
+  onCreationSucceeded(data: any) {
     console.log("response received: " + data)
-    this.loadingController.dismiss();
+    this.loadingController.dismiss()
+
+    this.shownEvents = []
     this.router.navigate(['/club-manage/',this.clubId])
   }
 
@@ -94,7 +100,6 @@ export class CreateEventPage implements OnInit {
   }
 
   onSubmit() {
-    this.presentLoading()
     console.log(this.form.value)
     console.log(this.eventPrices)
 
@@ -113,16 +118,20 @@ export class CreateEventPage implements OnInit {
     }
 
     console.log(request)
-    this.eventMutationService.mutate({
-      request: request
-    }).subscribe(
-      (data) => {
-        console.log("this went well - data: " + data)
-      },
-      (error) => {
-        console.log("this went bad - error: " + error)
-      }
-    )
+
+    this.presentLoading().then(() => {
+      this.eventMutationService.mutate({
+        request: request
+      }).subscribe(
+        (data) => {
+          console.log("this went well - data: " + data)
+        },
+        (error) => {
+          console.log(error)
+          this.loadingController.dismiss();
+          this.presentAlert("Could not create event")
+        })
+      })
   }
 
   onRoomCheckboxChange(event, roomId: string) {
@@ -156,37 +165,22 @@ export class CreateEventPage implements OnInit {
     })
   }
 
-  onDateChanged() {
-    this.shownEvents = this.shownEvents.filter(e => {
-      return e.currentEvent == false
-    })
-
-    var startDate: Date = this.form.get("startDate").value
-    var endDate: Date = this.form.get("endDate").value
-
-    console.log(startDate)
-    console.log(endDate)
+  onDateChangedForCurrentEvent() {
+    var startDate: Date = this.form.get("startDate")!.value
+    var endDate: Date = this.form.get("endDate")!.value
 
     if(startDate == null || endDate == null) {
       return
     }
-
-    this.shownEvents.push({
-      start: startDate,
-      end: endDate,
-      locationIds: [],
-      title: "Current event",
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      color: {
-        primary: '#ad2121',
-        secondary: '#FAE3E3',
-      },
-      currentEvent: true
+    
+    this.shownEvents = this.shownEvents.filter((e) => {
+      return e.currentEvent == false
     })
+
+    this.currentEvent.start = startDate
+    this.currentEvent.end = endDate
+
+    this.shownEvents.push(this.currentEvent)
   }
 
   onCurrentEventChanged(event: DateRangeEvent) {
@@ -210,7 +204,9 @@ export class CreateEventPage implements OnInit {
   }
 
   private fetchData() {
-    this.club$ = this.clubQueryService.watch({clubId: this.clubId}).valueChanges.pipe(map(result => result.data.clubByID))
+    this.club$ = this.clubQueryService.watch({clubId: this.clubId}, {fetchPolicy: "cache-and-network"})
+      .valueChanges
+      .pipe(map(result => result.data.clubByID))
     this.club$.subscribe(
       (data) => {
         if(data == null) {
@@ -218,7 +214,6 @@ export class CreateEventPage implements OnInit {
           this.router.navigate(['/'])
           return
         }
-
         this.events = this.createEvents(data)
         this.filterEvents()
       }
@@ -226,7 +221,7 @@ export class CreateEventPage implements OnInit {
   }
 
   private filterEvents() {
-    var currentEvent: EMSEvent = this.shownEvents.find(e => {return e.currentEvent == true})
+    var currentEvent = this.shownEvents.find(e => {return e.currentEvent == true})
 
     this.shownEvents = this.events.filter(event => {
       return event.locationIds.some(e => this.chosenRoomIds.includes(e))
@@ -240,17 +235,17 @@ export class CreateEventPage implements OnInit {
   private createEvents(data: ICreateEventClubQuery_clubByID): EMSEvent[] {
     var events: EMSEvent[] = []
 
-    data.events.forEach(e => {
+    data.events!.forEach(e => {
       var locations: string[] = []
-      e.locations.forEach(e => {
-        locations.push(e.roomId)
+      e!.locations!.forEach(e => {
+        locations.push(e!.roomId)
       })
 
       events.push({
-        start: new Date(e.startTime),
-        end: new Date(e.endTime),
+        start: new Date(e!.startTime),
+        end: new Date(e!.endTime),
         locationIds: locations,
-        title: e.name,
+        title: e!.name ?? "",
         currentEvent: false
       })
     })
@@ -269,6 +264,36 @@ export class CreateEventPage implements OnInit {
       publicPrice: new FormControl(null, null),
       publicChecked: new FormControl(false, null),
     });
+  }
+  
+  private initCurrentEvent() {
+    var startDate = new Date()
+    var endDate = new Date()
+    startDate.setHours(startDate.getHours() + 1)
+    endDate.setHours(startDate.getHours() + 5)
+
+    this.currentEvent = {
+      start: startDate,
+      end: endDate,
+      locationIds: [],
+      title: "Current Event",
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      color: {
+        primary: '#ad2121',
+        secondary: '#FAE3E3',
+      },
+      currentEvent: true
+    }
+
+    this.shownEvents.push(this.currentEvent)
+    this.form.patchValue({
+      startDate: startDate,
+      endDate: endDate
+    })
   }
 }
 

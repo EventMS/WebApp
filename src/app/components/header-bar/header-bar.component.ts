@@ -1,5 +1,7 @@
+import { NullTemplateVisitor } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Platform, PopoverController } from '@ionic/angular';
+import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({
@@ -10,9 +12,11 @@ import { ProfileOptionsComponent } from '../profile-options/profile-options.comp
 export class HeaderBarComponent implements OnInit {
   title: string = this.platform.is('mobile') ? 'EMS' : 'Event Management System';
 
-  ngOnInit() {}
+  ngOnInit(){}
 
-  constructor(public popoverController: PopoverController, public platform: Platform) {}
+  constructor(private popoverController: PopoverController,
+     public platform: Platform) {
+  }
 
   async tappedProfile(ev: any) {
     console.log('Tapped profiled');

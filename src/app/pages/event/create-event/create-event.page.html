@@ -1,50 +1,73 @@
 <ion-content class="centered background">
   <ion-grid>
-      <ion-row class="ion-justify-items-center ion-align-items-center">
-        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h1>Create Event</h1>
-          </div>
-
-          <div scrolly=true>
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
-              <ion-item>
-                <ion-input formControlName="name" placeholder="Event name"></ion-input>
-              </ion-item>
-              <ion-item *ngFor="let room of (club$ |async)?.rooms">
-                <ion-label>{{room.name}} </ion-label>
-                <ion-checkbox (ionChange)="onRoomCheckboxChange($event, room.roomId)" form slot="end"></ion-checkbox>
-              </ion-item>
-              <label>Starttime</label>
-              <input formControlName="startDate"
-                     [owlDateTimeTrigger]="dtPicker1" [owlDateTime]="dtPicker1">
-              <owl-date-time #dtPicker1></owl-date-time>
-              <label>Endtime</label>
-              <input formControlName="endDate"
-                     [owlDateTimeTrigger]="dtPicker2" [owlDateTime]="dtPicker2">
-              <owl-date-time #dtPicker2></owl-date-time>
-              <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
-                <ion-label>{{isntr.name}} </ion-label>
-                <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.id)" form slot="end"></ion-checkbox>
-              </ion-item>
-              <ion-textarea placeholder="description" formControlName="description"></ion-textarea>
-              <ion-item *ngFor="let sub of (club$ |async)?.clubsubscription">
-                <ion-label>{{sub.name}} </ion-label>
-                <ion-input type="number" placeholder="Input price" (input)='onPriceSubmit($event.target.value, sub.clubSubscriptionId)'></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Public event</ion-label>
-                <ion-checkbox formControlName="publicChecked"></ion-checkbox>
-              </ion-item>
-              <ion-item [hidden]="!publicChecked.value">
-                <ion-label>Public price</ion-label>
-                <ion-input type="number" placeholder="Input price" formControlName="publicPrice"></ion-input>
-              </ion-item>
-            </form>
-            <ion-button (click)="onSubmit()"></ion-button>
+      <ion-row class="ion-justify-items-center ion-align-items-start">
+        <ion-col size-lg="4" size-xs="12">
+          <div class="rcorners">
+            <div class="ion-text-center">
+              <h1>Create Event</h1>
+            </div>
+            <div scrolly=true>
+              <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+                <ion-item>
+                  <ion-input formControlName="name" placeholder="Event name"></ion-input>
+                </ion-item>
+                <ion-item-group *ngIf="(club$ |async)?.rooms.length > 0">
+                  <ion-item-divider>
+                    <ion-label>Choose locations</ion-label>
+                  </ion-item-divider>
+                  <ion-item *ngFor="let room of (club$ |async)?.rooms">
+                    <ion-label>{{room.name}} </ion-label>
+                    <ion-checkbox (ionChange)="onRoomCheckboxChange($event, room.roomId)" form slot="end"></ion-checkbox>
+                  </ion-item>
+                </ion-item-group>
+                <ion-item-group>
+                  <ion-item-divider>
+                    <ion-label>Choose start and endtime</ion-label>
+                  </ion-item-divider>
+                  <ion-item>
+                    <input placeholder="Start Date" formControlName="startDate"
+                       [owlDateTimeTrigger]="startPicker" [owlDateTime]="startPicker">
+                    <owl-date-time #startPicker></owl-date-time>
+                  </ion-item>
+                  <ion-item>
+                    <input placeholder="End Date" formControlName="endDate"
+                       [owlDateTimeTrigger]="endPicker" [owlDateTime]="endPicker">
+                    <owl-date-time #endPicker></owl-date-time>
+                  </ion-item>
+                </ion-item-group>
+                <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
+                  <ion-label>{{isntr.name}} </ion-label>
+                  <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.id)" form slot="end"></ion-checkbox>
+                </ion-item>
+                <ion-item-divider>
+                  <ion-label>Input an event description</ion-label>
+                </ion-item-divider>
+                <ion-item>
+                  <ion-textarea placeholder="description" formControlName="description"></ion-textarea>
+                </ion-item>
+                <ion-item-group>
+                  <ion-item-divider>
+                    <ion-label>Choose prices for subscriptions</ion-label>
+                  </ion-item-divider>
+                  <ion-item *ngFor="let sub of (club$ |async)?.clubsubscription">
+                    <ion-label>{{sub.name}} </ion-label>
+                    <ion-input type="number" placeholder="Input price" (input)='onPriceSubmit($event.target.value, sub.clubSubscriptionId)'></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Public event</ion-label>
+                    <ion-checkbox formControlName="publicChecked"></ion-checkbox>
+                  </ion-item>
+                  <ion-item [hidden]="!publicChecked.value">
+                    <ion-input type="number" placeholder="Input public price" formControlName="publicPrice"></ion-input>
+                  </ion-item>
+                </ion-item-group>
+                <ion-button id="submit" size="large" type="submit" color="warning" expand="block" [disabled]="form.invalid">Create Event
+                </ion-button>
+              </form>
+            </div>
           </div>
         </ion-col>
-        <ion-col class="rcorners" size-md="6" size-lg="5" size-xs="12">
+        <ion-col class="rcorners" size-lg="5">
           <app-event-calendar (eventChanged)="onCurrentEventChanged($event)" [events]="shownEvents" [viewDate]="viewDate"></app-event-calendar>
         </ion-col>
       </ion-row>

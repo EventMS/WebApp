@@ -38,7 +38,7 @@ export class EventCalendarComponent implements OnInit {
   }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
-    this.eventChanged.emit({ startDate: newStart, endDate: newEnd })
+    this.eventChanged.emit({ startDate: newStart!, endDate: newEnd! })
     this.refresh.next();
   }
 }
