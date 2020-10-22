@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
-import { fromEvent, Observable, Subscription } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/queries/club-list-query.service';
 @Component({
   selector: 'app-club-list',

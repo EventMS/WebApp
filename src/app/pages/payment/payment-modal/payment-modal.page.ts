@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
-import { CreateClubMemberMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/create-user-subscription.service';
 import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
 import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 
@@ -21,9 +19,7 @@ export class PaymentModalPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private clubSubscriptionQueryService: ClubSubscriptionsQueryService,
-    private createClubMemberMutationService: CreateClubMemberMutationService,
-    private authService: AuthenticationService
+    private clubSubscriptionQueryService: ClubSubscriptionsQueryService
   ) {}
 
   ngOnInit() {
