@@ -8,8 +8,7 @@ import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/queries/club
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit, OnDestroy {
-  seatch: Subscription;
+export class ClubListPage implements OnInit {
   constructor(private clubListQuery: ClubListQueryService) {}
 
   public clubs$: Observable<IGetClubsQuery>;
@@ -23,7 +22,7 @@ export class ClubListPage implements OnInit, OnDestroy {
       this.filteredClubs = clubs;
     });
 
-    this.seatch = this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
+    this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
         this.clubs$.subscribe(
           ({ clubs }) =>
@@ -33,11 +32,6 @@ export class ClubListPage implements OnInit, OnDestroy {
         )
       );
     });
-  }
-
-  ngOnDestroy(): void {
-    console.log(this.seatch.closed);
-    this.seatch.unsubscribe();
   }
 
   public findLocalClubs = () => {
