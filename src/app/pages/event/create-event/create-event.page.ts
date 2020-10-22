@@ -10,7 +10,6 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
-import { DateAdapter } from '@angular/material/core';
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[]

@@ -1,3 +1,20 @@
-<ion-button (click)="onCreateClicked()">
-  CREATE EVENT
-</ion-button>
+<ion-grid>
+  <ion-row>
+    <ion-col class="calendar-col">
+      <app-event-calendar [events]="events" [viewDate]="viewDate"></app-event-calendar>
+    </ion-col>
+    <ion-col class="right-col">
+      <ion-row class="centered-row">
+        <ion-button (click)="onCreateClicked()">
+          Create Event
+        </ion-button>
+      </ion-row>
+      <ion-row class="centered-row">
+        <label>LIST HERE</label>
+      </ion-row>
+      <ion-row class="centered-row">
+        <label>EVENT DETAILS HERE</label>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>
