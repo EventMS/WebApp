@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col class="calendar-col">
-      <app-event-calendar [events]="events" [viewDate]="viewDate"></app-event-calendar>
+      <app-event-calendar (dayClicked)="dayClicked($event.events)" [events]="events" [viewDate]="viewDate"></app-event-calendar>
     </ion-col>
     <ion-col class="right-col">
       <ion-row class="centered-row">
@@ -10,10 +10,19 @@
         </ion-button>
       </ion-row>
       <ion-row class="centered-row">
-        <label>LIST HERE</label>
+        <ion-list *ngFor="let event of eventsForChosenDate">
+          <ion-card (click)="cardClicked(event)">
+            <ion-card-content>
+              <ion-card-header>{{event.title}}</ion-card-header>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
       </ion-row>
       <ion-row class="centered-row">
-        <label>EVENT DETAILS HERE</label>
+        <ion-card *ngIf="selectedEvent != null">
+          <label>{{selectedEvent.title}}</label>
+          <label>{{selectedEvent.start}}</label>
+        </ion-card>
       </ion-row>
     </ion-col>
   </ion-row>

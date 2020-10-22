@@ -8,6 +8,11 @@ export class DateRangeEvent {
   endDate: Date;
 }
 
+export class DateClickedEvent {
+  date: Date
+  events: EMSEvent[]
+}
+
 @Component({
   selector: 'app-event-calendar',
   templateUrl: './event-calendar.component.html',
@@ -18,6 +23,7 @@ export class EventCalendarComponent implements OnInit {
   @Input() viewDate: Date
   @Input() events: EMSEvent[] = []
   @Output() eventChanged: EventEmitter<DateRangeEvent> = new EventEmitter()
+  @Output() dayClicked: EventEmitter<DateClickedEvent> = new EventEmitter()
 
   refresh: Subject<any> = new Subject();
 
@@ -29,6 +35,10 @@ export class EventCalendarComponent implements OnInit {
 
   setView(view: CalendarView) {
     this.view = view
+  }
+
+  onDayClicked({ date, events }: { date: Date; events: EMSEvent[] }): void {
+    this.dayClicked.emit({events: events, date: date})
   }
 
   eventTimesChanged({

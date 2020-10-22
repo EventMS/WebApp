@@ -6,6 +6,7 @@ import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queri
 import { ICreateEventClubQuery, ICreateEventClubQuery_clubByID } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { EMSEvent } from 'src/app/pages/event/create-event/create-event.page';
+import { DateClickedEvent } from '../../event-calendar/event-calendar.component';
 
 @Component({
   selector: 'app-club-manage-events',
@@ -16,7 +17,11 @@ export class ClubManageEventsComponent implements OnInit {
 
   private clubId: string
   events: EMSEvent[] = []
+  eventsForChosenDate: EMSEvent[] = []
   viewDate: Date = new Date()
+
+  selectedEvent: EMSEvent = null
+
   club$: Observable<ICreateEventClubQuery["clubByID"]>
 
   constructor(private modalController: ModalController,
@@ -32,6 +37,15 @@ export class ClubManageEventsComponent implements OnInit {
     })
   }
 
+  dayClicked(events: EMSEvent[]): void {
+    console.log(events)
+    this.eventsForChosenDate = events
+  }
+
+  cardClicked(event: EMSEvent) {
+    this.selectedEvent = event
+  }
+
   private async getRoute() {
     this.activatedRoute.params.subscribe((params) => {
       this.clubId = params['clubId'];
@@ -45,6 +59,7 @@ export class ClubManageEventsComponent implements OnInit {
     this.club$.subscribe(
       (data) => {
         this.events = this.createEvents(data)
+        console.log(this.events)
       })
   }
 
