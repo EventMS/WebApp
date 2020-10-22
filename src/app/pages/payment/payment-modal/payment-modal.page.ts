@@ -13,8 +13,7 @@ import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 export class PaymentModalPage implements OnInit {
   @Input() clubId: string;
 
-  public clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
-  public clubsubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'];
+  public clubSubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'];
   public clubsubscriptionId: string;
 
   constructor(
@@ -23,17 +22,17 @@ export class PaymentModalPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.clubSubscriptions$ = this.clubSubscriptionQueryService.watch({ clubId: this.clubId }).valueChanges.pipe(
+    this.clubSubscriptionQueryService.watch({ clubId: this.clubId }).valueChanges.pipe(
       map(({ data }) => {
-        this.clubsubscriptions = data.subscriptionsForClub;
+        this.clubSubscriptions = data.subscriptionsForClub;
         return data.subscriptionsForClub;
       })
     );
   }
 
-  getName = () => this.clubsubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.name;
+  getName = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.name;
 
-  getAmount = () => this.clubsubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.price;
+  getAmount = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.price;
 
   public dissmiss = () => {
     this.modalController.dismiss();

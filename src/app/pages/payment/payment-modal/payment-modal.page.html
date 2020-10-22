@@ -11,7 +11,7 @@
   </ion-header>
   <ion-list class="ion-margin">
     <ion-radio-group [(ngModel)]="clubsubscriptionId">
-      <ion-item *ngFor="let sub of clubSubscriptions$ | async">
+      <ion-item *ngFor="let sub of clubSubscriptions">
         <ion-label>{{sub.name}}</ion-label>
         <div class="ion-margin">
           <ion-label>{{sub.price}} $</ion-label>
