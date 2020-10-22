@@ -49,7 +49,5 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
   `;
 
   public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
-    this.watch({ clubByNameName: clubByNameName }, { fetchPolicy: 'network-only' }).valueChanges.pipe(
-      map((club) => club.data)
-    );
+    this.watch({ clubByNameName: clubByNameName }).valueChanges.pipe(map((club) => club.data));
 }

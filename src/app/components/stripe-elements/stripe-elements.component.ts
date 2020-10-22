@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import { SignupForSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/signup-for-subscription-mutation.service';
-import waait from 'waait';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({
@@ -12,7 +10,6 @@ declare var Stripe: stripe.StripeStatic;
 })
 export class StripeElementsComponent implements OnInit, AfterViewInit {
   constructor(
-    private authService: AuthenticationService,
     public loadingController: LoadingController,
     private signUpforSubscriptionMutationService: SignupForSubscriptionMutationService
   ) {}
@@ -66,18 +63,15 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
     const latestInvoicePaymentIntentStatus = localStorage.getItem('latestInvoicePaymentIntentStatus');
 
     if (latestInvoicePaymentIntentStatus === 'requires_payment_method') {
-      console.log(1);
-
       const invoiceId = localStorage.getItem('latestInvoiceId');
       const isPaymentRetry = true;
       // create new payment method & retry payment on invoice with new payment method
       await this.createPaymentMethod({
         card: this.card,
         isPaymentRetry,
-        invoiceId: invoiceId!,
+        //invoiceId: invoiceId!,
       });
     } else {
-      console.log(2);
       // create new payment method & create subscription
       await this.createPaymentMethod({ card: this.card });
     }
@@ -89,15 +83,13 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
   createPaymentMethod = async ({
     card,
     isPaymentRetry = false,
-    invoiceId = undefined,
-  }: {
+  }: //invoiceId = undefined,
+  {
     card: stripe.elements.Element;
     isPaymentRetry?: boolean;
-    invoiceId?: string;
+    //invoiceId?: string;
   }) => {
     // Set up payment method for recurring
-    const priceId = 'price_1HefJzETjZBFbSa3IBMJBz1Z';
-
     await this.stripe
       .createPaymentMethod({
         type: 'card',
@@ -115,7 +107,6 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
             //   invoiceId: invoiceId,
             //   priceId: priceId,
             // });
-            console.log('fuck');
           } else {
             //Create the subscription
             this.signUpforSubscriptionMutationService
