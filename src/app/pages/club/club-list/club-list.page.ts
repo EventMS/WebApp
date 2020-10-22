@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
-import { fromEvent, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 import { ClubListQueryService } from 'src/app/services/GRAPHQL/club/queries/club-list-query.service';
 @Component({
   selector: 'app-club-list',
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit {
-  constructor(private clubListQuery: ClubListQueryService, private router: Router) {}
+export class ClubListPage implements OnInit, OnDestroy {
+  seatch: Subscription;
+  constructor(private clubListQuery: ClubListQueryService) {}
 
   public clubs$: Observable<IGetClubsQuery>;
 
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
-
   public filteredClubs: IGetClubsQuery['clubs'];
 
   ngOnInit() {
@@ -23,7 +22,8 @@ export class ClubListPage implements OnInit {
     this.clubs$.subscribe(({ clubs }) => {
       this.filteredClubs = clubs;
     });
-    this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
+
+    this.seatch = this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
         this.clubs$.subscribe(
           ({ clubs }) =>
@@ -34,4 +34,13 @@ export class ClubListPage implements OnInit {
       );
     });
   }
+
+  ngOnDestroy(): void {
+    console.log(this.seatch.closed);
+    this.seatch.unsubscribe();
+  }
+
+  public findLocalClubs = () => {
+    console.log(this.filteredClubs);
+  };
 }

@@ -37,7 +37,12 @@
       <ion-col size="1"> </ion-col>
       <ion-col size="4">
         <ion-row class="ion-justify-content-end">
-          <ion-button size="large" style="width: 60%" (click)="showModal()">Sign up</ion-button>
+          <ion-button *ngIf="currentSubscription else isNotMember" [disabled]="true" size="large" style="width: 60%"
+            >You are signed up</ion-button
+          >
+          <ng-template #isNotMember>
+            <ion-button size="large" style="width: 60%" (click)="showModal()">Sign up</ion-button>
+          </ng-template>
         </ion-row>
         <div class="textContainer">
           <ion-col class="ion-text-end">
@@ -63,7 +68,7 @@
 
 <ng-template #mobile *ngIf="(club$ | async)?.clubByName as club">
   <ion-content class="container">
-    <ion-grid >
+    <ion-grid>
       <ion-row class="ion-justify-content-center">
         <ion-col>
           <ion-text class="ion-text-center"><h2>{{club.name | uppercase}}</h2></ion-text>
@@ -115,7 +120,7 @@
       </ion-col>
     </ion-grid>
   </ion-content>
-  <div class="ion-padding singup-mobile"> 
+  <div class="ion-padding singup-mobile">
     <ion-row class="ion-justify-content-center">
       <ion-button class="signup-button-mobile" (click)="showModal()">Sign up</ion-button>
     </ion-row>

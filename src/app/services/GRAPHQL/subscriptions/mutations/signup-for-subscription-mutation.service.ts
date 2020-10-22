@@ -1,30 +1,29 @@
 import { Injectable } from '@angular/core';
 import { gql, Mutation } from 'apollo-angular';
 import {
-  CreateSubscriptionRequestInput,
-  ISignupForSubscriptionMutation,
-  ISignupForSubscriptionMutationVariables,
+  ISignUpForSubscriptionMutation,
+  ISignUpForSubscriptionMutationVariables,
+  SignUpSubscriptionRequestInput,
 } from 'src/graphql_interfaces';
-
 @Injectable({
   providedIn: 'root',
 })
 export class SignupForSubscriptionMutationService extends Mutation<
-  ISignupForSubscriptionMutation,
-  ISignupForSubscriptionMutationVariables
+  ISignUpForSubscriptionMutation,
+  ISignUpForSubscriptionMutationVariables
 > {
   document = gql`
-    mutation ISignupForSubscriptionMutation($signUpForSubscriptionReq: CreateSubscriptionRequestInput) {
-      signUpForSubscription(req: $signUpForSubscriptionReq) {
+    mutation ISignUpForSubscriptionMutation($signUpForSubscriptionRequest: SignUpSubscriptionRequestInput) {
+      signUpForSubscription(request: $signUpForSubscriptionRequest) {
         clubSubscriptionId
       }
     }
   `;
 
-  signUpForSupscription = ({ clubSubscriptonId, paymentMethodId }: NonNullable<CreateSubscriptionRequestInput>) =>
+  signUpForSupscription = ({ clubSubscriptionId, paymentMethodId }: NonNullable<SignUpSubscriptionRequestInput>) =>
     this.mutate({
-      signUpForSubscriptionReq: {
-        clubSubscriptonId: clubSubscriptonId,
+      signUpForSubscriptionRequest: {
+        clubSubscriptionId: clubSubscriptionId,
         paymentMethodId: paymentMethodId,
       },
     });

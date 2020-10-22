@@ -21,6 +21,7 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
           name
           price
           clubSubscriptionId
+          clubId
         }
         description
         instructors {
@@ -31,6 +32,17 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
         user {
           id
           email
+        }
+      }
+      currentUser {
+        name
+        permissions {
+          clubSubscription {
+            name
+            price
+            clubSubscriptionId
+            clubId
+          }
         }
       }
     }

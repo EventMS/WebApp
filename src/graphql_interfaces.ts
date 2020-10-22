@@ -78,6 +78,7 @@ export interface IShowClubQuery_clubByName_clubsubscription {
   name: string | null;
   price: number;
   clubSubscriptionId: any;
+  clubId: any;
 }
 
 export interface IShowClubQuery_clubByName_instructors {
@@ -108,8 +109,28 @@ export interface IShowClubQuery_clubByName {
   user: IShowClubQuery_clubByName_user | null;
 }
 
+export interface IShowClubQuery_currentUser_permissions_clubSubscription {
+  __typename: "ClubSubscription";
+  name: string | null;
+  price: number;
+  clubSubscriptionId: any;
+  clubId: any;
+}
+
+export interface IShowClubQuery_currentUser_permissions {
+  __typename: "permission_Role";
+  clubSubscription: IShowClubQuery_currentUser_permissions_clubSubscription | null;
+}
+
+export interface IShowClubQuery_currentUser {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  permissions: (IShowClubQuery_currentUser_permissions | null)[] | null;
+}
+
 export interface IShowClubQuery {
   clubByName: IShowClubQuery_clubByName | null;
+  currentUser: IShowClubQuery_currentUser | null;
 }
 
 export interface IShowClubQueryVariables {
@@ -226,20 +247,20 @@ export interface ICreateClubMemberMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ISignupForSubscriptionMutation
+// GraphQL mutation operation: ISignUpForSubscriptionMutation
 // ====================================================
 
-export interface ISignupForSubscriptionMutation_signUpForSubscription {
-  __typename: "ClubSubscription";
+export interface ISignUpForSubscriptionMutation_signUpForSubscription {
+  __typename: "payment_ClubSubscription";
   clubSubscriptionId: any;
 }
 
-export interface ISignupForSubscriptionMutation {
-  signUpForSubscription: ISignupForSubscriptionMutation_signUpForSubscription | null;
+export interface ISignUpForSubscriptionMutation {
+  signUpForSubscription: ISignUpForSubscriptionMutation_signUpForSubscription | null;
 }
 
-export interface ISignupForSubscriptionMutationVariables {
-  signUpForSubscriptionReq?: CreateSubscriptionRequestInput | null;
+export interface ISignUpForSubscriptionMutationVariables {
+  signUpForSubscriptionRequest?: SignUpSubscriptionRequestInput | null;
 }
 
 /* tslint:disable */
@@ -297,11 +318,6 @@ export interface CreateClubSubscriptionRequestInput {
   referenceId?: any | null;
 }
 
-export interface CreateSubscriptionRequestInput {
-  clubSubscriptonId: any;
-  paymentMethodId?: string | null;
-}
-
 export interface CreateUserRequestInput {
   birthDate: any;
   email: string;
@@ -313,6 +329,11 @@ export interface CreateUserRequestInput {
 export interface LoginUserRequestInput {
   email?: string | null;
   password?: string | null;
+}
+
+export interface SignUpSubscriptionRequestInput {
+  clubSubscriptionId: any;
+  paymentMethodId: string;
 }
 
 //==============================================================

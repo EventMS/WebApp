@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
-import { IShowClubQuery } from 'src/graphql_interfaces';
+import { IShowClubQuery, IShowClubQuery_clubByName_clubsubscription } from 'src/graphql_interfaces';
 import { PaymentModalPage } from '../../payment/payment-modal/payment-modal.page';
 
 @Component({
@@ -22,13 +21,14 @@ export class ShowClubPage implements OnInit {
   private clubId: number;
   public club$: Observable<IShowClubQuery>;
   public isMobile = isPlatform('mobile');
+  public currentSubscription: IShowClubQuery_clubByName_clubsubscription | null;
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const name = params['name'] as string;
       if (name) {
         this.club$ = this.showClubQueryService?.ShowClubQuery$({ clubByNameName: name.replace(/_/g, ' ') });
-        this.club$.subscribe(({ clubByName }) => (this.clubId = clubByName?.clubId!));
+        this.initData();
       }
     });
   }
@@ -41,5 +41,18 @@ export class ShowClubPage implements OnInit {
       },
     });
     return await modal.present();
+  };
+
+  private initData = () => {
+    this.club$.subscribe(({ clubByName, currentUser }) => {
+      if (clubByName?.clubId && currentUser) {
+        this.clubId = clubByName.clubId;
+        const subscriptionId = currentUser.permissions?.find(
+          (perm) => perm?.clubSubscription?.clubId === clubByName.clubId
+        )?.clubSubscription?.clubSubscriptionId;
+        this.currentSubscription =
+          clubByName.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
+      }
+    });
   };
 }

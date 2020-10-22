@@ -120,8 +120,8 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
             //Create the subscription
             this.signUpforSubscriptionMutationService
               .signUpForSupscription({
-                clubSubscriptonId: this.subscriptionId,
-                paymentMethodId: result?.paymentMethod?.id,
+                clubSubscriptionId: this.subscriptionId,
+                paymentMethodId: result?.paymentMethod?.id!,
               })
               .subscribe();
           }

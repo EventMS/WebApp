@@ -19,6 +19,11 @@ export const Paths = {
 
 const navigationRoutes: Routes = [
   {
+    path: '',
+    loadChildren: () =>
+      import('src/app//pages/dashboard/dashboard/dashboard.module').then((m) => m.DashboardPageModule),
+  },
+  {
     path: Paths.club_create,
     loadChildren: () => import('src/app/pages/club/club-create/club-create.module').then((m) => m.ClubCreatePageModule),
   },
