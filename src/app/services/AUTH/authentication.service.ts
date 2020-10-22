@@ -37,7 +37,7 @@ export class AuthenticationService {
           const { loginUser } = data!;
           localStorage.setItem(current_user, JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
-          this.router.navigate(['']);
+          this.router.navigateByUrl('', { replaceUrl: true });
         },
         (error: ApolloError) => {
           if (error.message.includes('credentials')) alert('Wrong username or password');
