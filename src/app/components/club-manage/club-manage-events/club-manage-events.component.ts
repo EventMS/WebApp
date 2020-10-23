@@ -101,5 +101,7 @@ export class ClubManageEventsComponent implements OnInit {
 
   async onCreateClicked() {
     this.router.navigate(['event-create', this.clubId])
+    this.selectedDate = null;
+    this.selectedEvent = null;
   }
 }
