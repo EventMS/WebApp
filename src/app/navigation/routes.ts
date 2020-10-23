@@ -15,6 +15,10 @@ export const Paths = {
     path: 'club-manage/:clubId',
     route: (param: string) => ['club-manage/', param],
   },
+  event_page: {
+    path: 'event-page/:name',
+    route: (param: string) => ['event-page/', param],
+  },
 };
 
 const navigationRoutes: Routes = [
@@ -43,6 +47,10 @@ const navigationRoutes: Routes = [
   {
     path: Paths.show_club.path,
     loadChildren: () => import('src/app/pages/club/show-club/show-club.module').then((m) => m.ShowClubPageModule),
+  },
+  {
+    path: Paths.event_page.path,
+    loadChildren: () => import('src/app//pages/event/event-page/event-page.module').then((m) => m.EventPagePageModule),
   },
 ];
 

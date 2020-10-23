@@ -7,6 +7,7 @@ import { ProfileOptionsComponent } from './profile-options/profile-options.compo
 import { ConfirmationButtonComponent } from 'src/app/components/confirmation-button/confirmation-button.component';
 import { ClubManageSubcriptionsComponent } from './club-manage/club-manage-subcriptions/club-manage-subcriptions.component';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
+import { MobileSignupComponent } from './buttons/mobile-signup/mobile-signup.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { StripeElementsComponent } from './stripe-elements/stripe-elements.compo
     ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
     StripeElementsComponent,
+    MobileSignupComponent,
   ],
   exports: [
     HeaderBarComponent,
@@ -22,6 +24,7 @@ import { StripeElementsComponent } from './stripe-elements/stripe-elements.compo
     ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
     StripeElementsComponent,
+    MobileSignupComponent,
   ],
   imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
 })
