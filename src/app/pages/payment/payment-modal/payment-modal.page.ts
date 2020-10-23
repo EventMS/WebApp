@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
-import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
+import { ISubscriptionsForClubQuery, ISubscriptionsForClubQuery_subscriptionsForClub } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-payment-modal',
@@ -15,6 +15,7 @@ export class PaymentModalPage implements OnInit {
 
   public clubSubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'];
   public clubsubscriptionId: string;
+  clubSubscriptions$: Observable<ISubscriptionsForClubQuery_subscriptionsForClub[]>;
 
   constructor(
     private modalController: ModalController,
@@ -22,7 +23,7 @@ export class PaymentModalPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.clubSubscriptionQueryService.watch({ clubId: this.clubId }).valueChanges.pipe(
+    this.clubSubscriptions$ = this.clubSubscriptionQueryService.watch({ clubId: this.clubId }).valueChanges.pipe(
       map(({ data }) => {
         this.clubSubscriptions = data.subscriptionsForClub;
         return data.subscriptionsForClub;

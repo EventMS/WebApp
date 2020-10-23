@@ -13,9 +13,6 @@ export class AuthGuard implements CanActivate {
     const currentUser = this.authenticationService.currentUserValue;
     const isTokenValid = this.authenticationService.isTokenValid();
 
-    console.log(isTokenValid);
-    console.log(currentUser);
-
     if (currentUser && isTokenValid) {
       // check if route is restricted by role
       // if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {

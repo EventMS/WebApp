@@ -8,11 +8,17 @@ declare var Stripe: stripe.StripeStatic;
   templateUrl: './stripe-elements.component.html',
   styleUrls: ['./stripe-elements.component.scss'],
 })
-export class StripeElementsComponent implements OnInit, AfterViewInit {
+export class StripeElementsComponent implements AfterViewInit {
   constructor(
     public loadingController: LoadingController,
     private signUpforSubscriptionMutationService: SignupForSubscriptionMutationService
-  ) {}
+  ) {
+    this.stripe = Stripe(
+      'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
+    );
+    const elements = this.stripe.elements();
+    this.card = elements.create('card');
+  }
 
   @Input() amount: number;
   @Input() description: string;
@@ -24,23 +30,12 @@ export class StripeElementsComponent implements OnInit, AfterViewInit {
   card: stripe.elements.Element;
   cardErrors: string | undefined;
 
-  loading = false;
-
   ngAfterViewInit() {
-    const elements = this.stripe.elements();
-
-    this.card = elements.create('card');
     this.card.mount(this.cardElement.nativeElement);
 
     this.card.addEventListener('change', (error) => {
       this.cardErrors = error?.error?.message;
     });
-  }
-
-  ngOnInit() {
-    this.stripe = Stripe(
-      'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
-    );
   }
 
   getButtonText = () =>
