@@ -12,8 +12,9 @@ import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
 
 export interface EMSEvent extends CalendarEvent {
-  locationIds: string[]
-  currentEvent: Boolean
+  locationIds: string[];
+  currentEvent: Boolean;
+  description: string;
 }
 
 @Component({
@@ -247,7 +248,8 @@ export class CreateEventPage implements OnInit {
         end: new Date(e!.endTime),
         locationIds: locations,
         title: e!.name ?? "",
-        currentEvent: false
+        currentEvent: false,
+        description: e!.description
       })
     })
 
@@ -287,7 +289,8 @@ export class CreateEventPage implements OnInit {
         primary: '#ad2121',
         secondary: '#FAE3E3',
       },
-      currentEvent: true
+      currentEvent: true,
+      description: "",
     }
 
     this.shownEvents.push(this.currentEvent)

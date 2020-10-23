@@ -29,6 +29,7 @@ export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
         name
         startTime
         endTime
+        description
       }
     }
   }

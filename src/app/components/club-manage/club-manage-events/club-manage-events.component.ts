@@ -20,7 +20,8 @@ export class ClubManageEventsComponent implements OnInit {
   eventsForChosenDate: EMSEvent[] = []
   viewDate: Date = new Date()
 
-  selectedEvent: EMSEvent = null
+  selectedEvent: EMSEvent | null = null
+  selectedDate: Date | null = null
 
   club$: Observable<ICreateEventClubQuery["clubByID"]>
 
@@ -28,7 +29,6 @@ export class ClubManageEventsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private clubQueryService: CreateEventClubQueryService) {
-
      }
 
   ngOnInit() {
@@ -37,13 +37,24 @@ export class ClubManageEventsComponent implements OnInit {
     })
   }
 
-  dayClicked(events: EMSEvent[]): void {
+  dayClicked(date: Date, events: EMSEvent[]): void {
+    console.log(date)
     console.log(events)
     this.eventsForChosenDate = events
+    this.selectedDate = date
+    this.selectedEvent = null
   }
 
   cardClicked(event: EMSEvent) {
     this.selectedEvent = event
+  }
+
+  createTimeString(date: Date): string {
+    return date.toDateString()
+    + ", "
+    + date.getHours()
+    + ":"
+    + date.getMinutes();
   }
 
   private async getRoute() {
@@ -59,11 +70,14 @@ export class ClubManageEventsComponent implements OnInit {
     this.club$.subscribe(
       (data) => {
         this.events = this.createEvents(data)
-        console.log(this.events)
       })
   }
 
-  private createEvents(data: ICreateEventClubQuery_clubByID): EMSEvent[] {
+  private createEvents(data: ICreateEventClubQuery_clubByID | null): EMSEvent[] {
+    if(data==null) {
+      return []
+    }
+
     var events: EMSEvent[] = []
 
     data.events!.forEach(e => {
@@ -77,7 +91,8 @@ export class ClubManageEventsComponent implements OnInit {
         end: new Date(e!.endTime),
         locationIds: locations,
         title: e!.name ?? "",
-        currentEvent: false
+        currentEvent: false,
+        description: e!.description
       })
     })
 

@@ -23,7 +23,7 @@ export class EventCalendarComponent implements OnInit {
   @Input() viewDate: Date
   @Input() events: EMSEvent[] = []
   @Output() eventChanged: EventEmitter<DateRangeEvent> = new EventEmitter()
-  @Output() dayClicked: EventEmitter<DateClickedEvent> = new EventEmitter()
+  @Output() dayClicked: EventEmitter<{ date: Date; events: EMSEvent[] }> = new EventEmitter()
 
   refresh: Subject<any> = new Subject();
 

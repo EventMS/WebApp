@@ -58,6 +58,7 @@ export interface ICreateEventClubQuery_clubByID_events {
   name: string | null;
   startTime: any;
   endTime: any;
+  description: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID {
@@ -251,7 +252,7 @@ export interface CreateClubSubscriptionRequestInput {
 
 export interface CreateEventRequestInput {
   clubId: any;
-  description: string;
+  description?: string | null;
   endTime: any;
   eventPrices: (EventPriceRequestInput | null)[];
   instructorForEvents?: any[] | null;
