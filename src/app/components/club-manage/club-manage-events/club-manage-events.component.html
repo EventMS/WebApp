@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col class="calendar-col">
-      <app-event-calendar (dayClicked)="dayClicked($event.date, $event.events)" [events]="events" [viewDate]="viewDate"></app-event-calendar>
+      <app-event-calendar (dayClicked)="dayClicked($event.date, $event.events)" [events]="events" [viewDate]="todaysDate"></app-event-calendar>
     </ion-col>
     <ion-col size="5.5" class="right-col">
       <ion-row class="centered-row">

@@ -18,7 +18,7 @@ export class ClubManageEventsComponent implements OnInit {
   private clubId: string
   events: EMSEvent[] = []
   eventsForChosenDate: EMSEvent[] = []
-  viewDate: Date = new Date()
+  todaysDate: Date = new Date()
 
   selectedEvent: EMSEvent | null = null
   selectedDate: Date | null = null
@@ -92,7 +92,7 @@ export class ClubManageEventsComponent implements OnInit {
         locationIds: locations,
         title: e!.name ?? "",
         currentEvent: false,
-        description: e!.description
+        description: e!.description ?? ""
       })
     })
 

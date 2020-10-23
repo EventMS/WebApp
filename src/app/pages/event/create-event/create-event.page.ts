@@ -249,7 +249,7 @@ export class CreateEventPage implements OnInit {
         locationIds: locations,
         title: e!.name ?? "",
         currentEvent: false,
-        description: e!.description
+        description: e!.description ?? ""
       })
     })
 
