@@ -49,7 +49,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(validName);
     component.signupForm.controls['email'].setValue(invalidEmail);
     component.signupForm.controls['phoneNumber'].setValue(validPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(validBirthday);
+    component.signupForm.controls['birthDate'].setValue(validBirthday);
     component.signupForm.controls['password'].setValue(validPassword);
     expect(component.signupForm.valid).toBeFalsy();
   });
@@ -58,7 +58,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(invalidName);
     component.signupForm.controls['email'].setValue(validEmail);
     component.signupForm.controls['phoneNumber'].setValue(validPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(validBirthday);
+    component.signupForm.controls['birthDate'].setValue(validBirthday);
     component.signupForm.controls['password'].setValue(validPassword);
     expect(component.signupForm.valid).toBeFalsy();
   });
@@ -67,7 +67,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(validName);
     component.signupForm.controls['email'].setValue(validEmail);
     component.signupForm.controls['phoneNumber'].setValue(invalidPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(validBirthday);
+    component.signupForm.controls['birthDate'].setValue(validBirthday);
     component.signupForm.controls['password'].setValue(validPassword);
     expect(component.signupForm.valid).toBeFalsy();
   });
@@ -76,7 +76,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(validName);
     component.signupForm.controls['email'].setValue(validEmail);
     component.signupForm.controls['phoneNumber'].setValue(validPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(invalidBirthday);
+    component.signupForm.controls['birthDate'].setValue(invalidBirthday);
     component.signupForm.controls['password'].setValue(validPassword);
     expect(component.signupForm.valid).toBeFalsy();
   });
@@ -85,7 +85,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(validName);
     component.signupForm.controls['email'].setValue(validEmail);
     component.signupForm.controls['phoneNumber'].setValue(validPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(validBirthday);
+    component.signupForm.controls['birthDate'].setValue(validBirthday);
     component.signupForm.controls['password'].setValue(invalidPassword);
     expect(component.signupForm.valid).toBeFalsy();
   });
@@ -100,7 +100,7 @@ describe('SignupPage', () => {
     component.signupForm.controls['name'].setValue(validName);
     component.signupForm.controls['email'].setValue(validEmail);
     component.signupForm.controls['phoneNumber'].setValue(validPhoneNumber);
-    component.signupForm.controls['birthday'].setValue(validBirthday);
+    component.signupForm.controls['birthDate'].setValue(validBirthday);
     component.signupForm.controls['password'].setValue(validPassword);
     fixture.detectChanges();
 

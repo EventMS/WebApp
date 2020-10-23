@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
 import { CreateClubMutationService } from 'src/app/services/GRAPHQL/club/mutations/create-club-mutation.service';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
@@ -26,7 +27,7 @@ export class ClubCreatePage implements OnInit {
     private alertCtrl: AlertController,
     private createClubService: CreateClubMutationService,
     private router: Router,
-    private clubQueryService: MyClubsQueryService, 
+    private myClubsQueryService: MyClubsQueryService
   ) {
     this.createClubFormBuilder = new CreateClubFormBuilder(formbuilder);
   }
@@ -68,21 +69,21 @@ export class ClubCreatePage implements OnInit {
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
 
-    console.log(formData)
     this.createClubService
-      .mutate({
-        request: {
-          name: formData.name,
-          description: formData.description,
-          phoneNumber: formData.phone.toString(),
-          accountNumber: formData.accountNumber.toString(),
-          registrationNumber: formData.regNumber.toString(),
-          address: formData.address,
-          locations: this.locations,
+      .mutate(
+        {
+          request: {
+            name: formData.name,
+            description: formData.description,
+            phoneNumber: formData.phone.toString(),
+            accountNumber: formData.accountNumber.toString(),
+            registrationNumber: formData.regNumber.toString(),
+            address: formData.address,
+            locations: this.locations,
+          },
         },
-      }, { refetchQueries: [{
-        query: this.clubQueryService.document,
-        }],})
+        { refetchQueries: [{ query: this.myClubsQueryService.document }] }
+      )
       .subscribe(
         (data) => this.handleResponse(data),
         (error) => this.presentAlert(error)
@@ -113,10 +114,10 @@ export class ClubCreatePage implements OnInit {
     this.locations = this.locations.filter((otherLocation) => {
       return location != otherLocation;
     });
-    
+
     this.clubform.patchValue({
-      locations: this.locations
-    })
+      locations: this.locations,
+    });
   }
 
   // Private methods
@@ -134,7 +135,7 @@ export class ClubCreatePage implements OnInit {
   private handleResponse(data) {
     this.clubform.reset();
     //Navigate to page for new created club
-    this.router.navigate(['/club-details']);
+    this.router.navigate([Paths.club_details]);
   }
 }
 

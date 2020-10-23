@@ -1,7 +1,7 @@
-import { NullTemplateVisitor } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Platform, PopoverController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { Paths } from 'src/app/navigation/routes';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({
@@ -14,11 +14,9 @@ export class HeaderBarComponent implements OnInit {
 
   ngOnInit(){}
 
-  constructor(private popoverController: PopoverController,
-     public platform: Platform) {
-  }
+  constructor(public popoverController: PopoverController, public platform: Platform, private router: Router) {}
 
-  async tappedProfile(ev: any) {
+  async tappedProfile(ev: Event) {
     console.log('Tapped profiled');
     const popover = await this.popoverController.create({
       component: ProfileOptionsComponent,
@@ -29,7 +27,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedFindClubs() {
-    console.log('Tapped find clubs');
+    this.router.navigate([Paths.club_list]);
   }
 
   tappedFindEvents() {

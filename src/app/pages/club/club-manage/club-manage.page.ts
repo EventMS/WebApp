@@ -22,7 +22,6 @@ export class ClubManagePage implements OnInit {
   clubName: string;
 
   constructor(private route: ActivatedRoute,
-     private clubQueryService: MyClubsQueryService,
      public platform: Platform) {
     this.route.params.subscribe((params) => {
       this.clubName = params['clubId'];

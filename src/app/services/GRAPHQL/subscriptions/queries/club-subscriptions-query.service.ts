@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
-import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
+import { ISubscriptionsForClubQuery, ISubscriptionsForClubQueryVariables } from 'src/graphql_interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ClubSubscriptionsQueryService extends Query<ISubscriptionsForClubQuery> {
+export class ClubSubscriptionsQueryService extends Query<
+  ISubscriptionsForClubQuery,
+  ISubscriptionsForClubQueryVariables
+> {
   document = gql`
     query ISubscriptionsForClubQuery($clubId: Uuid!) {
-      subscriptionsForClub(clubId: $clubId){
+      subscriptionsForClub(clubId: $clubId) {
         name
         price
         clubSubscriptionId
