@@ -194,6 +194,40 @@ export interface ILoginUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IMembersForClubQuery
+// ====================================================
+
+export interface IMembersForClubQuery_membersForClub_user_permissions {
+  __typename: "permission_Role";
+  userRole: string | null;
+}
+
+export interface IMembersForClubQuery_membersForClub_user {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  id: string | null;
+  permissions: (IMembersForClubQuery_membersForClub_user_permissions | null)[] | null;
+}
+
+export interface IMembersForClubQuery_membersForClub {
+  __typename: "ClubMember";
+  user: IMembersForClubQuery_membersForClub_user | null;
+}
+
+export interface IMembersForClubQuery {
+  membersForClub: (IMembersForClubQuery_membersForClub | null)[] | null;
+}
+
+export interface IMembersForClubQueryVariables {
+  clubId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ICreateSubscriptionMutation
 // ====================================================
 

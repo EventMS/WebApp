@@ -1,0 +1,12 @@
+<ion-label>MEMBERS UP IN THIS CLUB</ion-label>
+
+  <ion-list>
+    <ion-card *ngFor="let item of (members$ | async)?.membersForClub">
+      <ion-card-header>
+        <ion-card-title>{{item.user.name}}</ion-card-title>
+      </ion-card-header>
+      <ion-label *ngIf="!isUserInstructor(item.user.permissions)">IS A MEMBER</ion-label>
+      <ion-label *ngIf="isUserAdmin(item.user.permissions)">IS ADMIN</ion-label>
+      <ion-label *ngIf="isUserInstructor(item.user.permissions)">IS INSTRUCTOR</ion-label>
+    </ion-card>
+  </ion-list>
