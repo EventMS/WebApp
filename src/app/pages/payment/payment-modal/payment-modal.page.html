@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="dissmiss()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Choose Subscription</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list class="ion-margin">
+    <ion-radio-group [(ngModel)]="clubsubscriptionId">
+      <ion-item *ngFor="let sub of clubSubscriptions$ | async">
+        <ion-label>{{sub.name}}</ion-label>
+        <div class="ion-margin">
+          <ion-label>{{sub.price}} $</ion-label>
+        </div>
+        <ion-radio value="{{sub.clubSubscriptionId}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>
+
+<div style="position: fixed; bottom: 0px; width: 100%">
+  <app-stripe-elements [dismissModal]="dissmiss" [subscriptionId]="clubsubscriptionId" [amount]="getAmount()" [description]="getName()"></app-stripe-elements>
+</div>

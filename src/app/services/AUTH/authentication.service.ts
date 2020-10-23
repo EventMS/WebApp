@@ -6,6 +6,7 @@ import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
+import { Paths } from 'src/app/navigation/routes';
 
 const current_user = 'current_user';
 
@@ -26,7 +27,7 @@ export class AuthenticationService {
   loginFromSignup(user: ICreateUserMutation['createUser']) {
     localStorage.setItem(current_user, JSON.stringify(user!));
     this.currentUserSubject.next(user);
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 
   login(data: ILoginUserMutationVariables['request']) {
@@ -36,7 +37,7 @@ export class AuthenticationService {
           const { loginUser } = data!;
           localStorage.setItem(current_user, JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
-          this.router.navigate(['/']);
+          this.router.navigateByUrl('', { replaceUrl: true });
         },
         (error: ApolloError) => {
           if (error.message.includes('credentials')) alert('Wrong username or password');
@@ -50,7 +51,7 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem(current_user);
     this.currentUserSubject.next(null);
-    this.router.navigate(['/start']);
+    this.router.navigate([Paths.start]);
   }
 
   public isTokenValid() {

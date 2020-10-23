@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
-import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
-import { IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Paths } from 'src/app/navigation/routes';
 import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
+import { IMyClubsQuery, IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-profile-options',
@@ -11,16 +14,14 @@ import { AuthenticationService } from 'src/app/services/AUTH/authentication.serv
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  clubs: (IMyClubsQuery_myClubs | null)[] = [];
+  clubs$: Observable<IMyClubsQuery['myClubs']>;
 
   constructor(
     private router: Router,
     private popoverController: PopoverController,
     private clubQueryService: MyClubsQueryService,
     private authenticationService: AuthenticationService
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit() {
     console.log('Init called');
@@ -29,11 +30,11 @@ export class ProfileOptionsComponent implements OnInit {
 
   async createClubClicked() {
     console.log('Clicked create');
-    await this.popoverController.dismiss().then(() => this.router.navigate(['club-create/']));
+    await this.popoverController.dismiss().then(() => this.router.navigate([Paths.club_create]));
   }
 
   async manageClubClicked(clubId: string) {
-    await this.popoverController.dismiss().then(() => this.router.navigate(['club-manage/', clubId]));
+    await this.popoverController.dismiss().then(() => this.router.navigate(Paths.club_manage.route(clubId)));
   }
 
   profileClicked() {
@@ -46,6 +47,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubQueryService.fetch().subscribe((data) => (this.clubs = (data.data.myClubs ?? [])));
+    this.clubs$ = this.clubQueryService.watch().valueChanges.pipe(map(({ data }) => data.myClubs));
   }
 }
