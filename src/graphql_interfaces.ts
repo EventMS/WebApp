@@ -109,17 +109,10 @@ export interface IShowClubQuery_clubByName {
   user: IShowClubQuery_clubByName_user | null;
 }
 
-export interface IShowClubQuery_currentUser_permissions_clubSubscription {
-  __typename: "ClubSubscription";
-  name: string | null;
-  price: number;
-  clubSubscriptionId: any;
-  clubId: any;
-}
-
 export interface IShowClubQuery_currentUser_permissions {
   __typename: "permission_Role";
-  clubSubscription: IShowClubQuery_currentUser_permissions_clubSubscription | null;
+  clubSubscriptionId: any | null;
+  clubId: any;
 }
 
 export interface IShowClubQuery_currentUser {
