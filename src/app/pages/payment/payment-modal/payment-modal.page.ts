@@ -15,7 +15,7 @@ export class PaymentModalPage implements OnInit {
 
   public clubSubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'];
   public clubsubscriptionId: string;
-  clubSubscriptions$: Observable<ISubscriptionsForClubQuery_subscriptionsForClub[]>;
+  clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
 
   constructor(
     private modalController: ModalController,
