@@ -48,11 +48,13 @@ export class ShowClubPage implements OnInit {
       if (clubByName?.clubId && currentUser) {
         this.clubId = clubByName.clubId;
         const subscriptionId = currentUser.permissions?.find(
-          (perm) => perm?.clubSubscription?.clubId === clubByName.clubId
-        )?.clubSubscription?.clubSubscriptionId;
+          (perm) => perm?.clubId === clubByName.clubId
+        )?.clubSubscriptionId;
         this.currentSubscription =
           clubByName.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
       }
+    }, (error) => {
+      console.log(error)
     });
   };
 }

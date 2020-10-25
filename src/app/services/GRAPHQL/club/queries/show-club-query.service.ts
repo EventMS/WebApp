@@ -37,17 +37,21 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
       currentUser {
         name
         permissions {
-          clubSubscription {
-            name
-            price
-            clubSubscriptionId
-            clubId
-          }
+          clubSubscriptionId
+          clubId
         }
       }
     }
   `;
 
+/*   public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
+    this.watch({ clubByNameName: clubByNameName }).valueChanges.pipe(
+      map(({ data, error }) => {
+        if (error) console.log(error);
+        return data;
+      })
+    ); */
+
   public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
-    this.watch({ clubByNameName: clubByNameName }).valueChanges.pipe(map((club) => club.data));
+    this.fetch({ clubByNameName: clubByNameName }).pipe(map((club) => club.data));
 }
