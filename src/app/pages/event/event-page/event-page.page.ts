@@ -11,5 +11,7 @@ export class EventPagePage implements OnInit {
 
   public isMobile = isPlatform('mobile');
 
+  public showModal = () => {};
+
   ngOnInit() {}
 }
