@@ -70,13 +70,13 @@
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button size="large" style="width: 100%;"></ion-button>
+                            <ion-button size="large" class="signUpButton">Sign up</ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
                 <ion-row>
                     <ion-col>
-                        <ion-button style="width: 100%; height: 300px;"></ion-button>
+                        <ion-button style="width: 100%; height: 300px;">MAPS</ion-button>
                         <ion-text>
                             <h1>Address</h1>
                         </ion-text>
@@ -140,10 +140,5 @@
         </ion-card>
     </ion-content>
 
-    <div class="ion-padding singup-mobile">
-        <ion-row class="ion-justify-content-center">
-            <ion-button class="signup-button-mobile" (click)="showModal()">Sign up</ion-button>
-        </ion-row>
-    </div>
-
+    <app-mobile-signup-component [buttonText]="'Sign up'" [callback]="OnSignup"></app-mobile-signup-component>
 </ng-template>

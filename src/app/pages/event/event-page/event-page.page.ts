@@ -13,5 +13,7 @@ export class EventPagePage implements OnInit {
 
   public showModal = () => {};
 
+  public OnSignup = () => {};
+
   ngOnInit() {}
 }
