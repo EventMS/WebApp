@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-mobile-signup',
+  selector: 'app-mobile-signup-component',
   templateUrl: './mobile-signup.component.html',
   styleUrls: ['./mobile-signup.component.scss'],
 })

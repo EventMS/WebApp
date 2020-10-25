@@ -138,9 +138,5 @@
             </ion-col>
         </ion-grid>
     </ion-content>
-    <div class="ion-padding singup-mobile">
-        <ion-row class="ion-justify-content-center">
-            <ion-button class="signup-button-mobile" (click)="showModal()">Sign up</ion-button>
-        </ion-row>
-    </div>
+    <app-mobile-signup-component [buttonText]="'Sign up'" [callback]="showModal"></app-mobile-signup-component>
 </ng-template>
