@@ -81,13 +81,6 @@ export interface IShowClubQuery_clubByName_clubsubscription {
   clubId: any;
 }
 
-export interface IShowClubQuery_clubByName_instructors {
-  __typename: "identity_ApplicationUser";
-  name: string | null;
-  email: string | null;
-  id: string | null;
-}
-
 export interface IShowClubQuery_clubByName_user {
   __typename: "identity_ApplicationUser";
   id: string | null;
@@ -105,7 +98,6 @@ export interface IShowClubQuery_clubByName {
   registrationNumber: string | null;
   clubsubscription: (IShowClubQuery_clubByName_clubsubscription | null)[] | null;
   description: string | null;
-  instructors: (IShowClubQuery_clubByName_instructors | null)[] | null;
   user: IShowClubQuery_clubByName_user | null;
 }
 
