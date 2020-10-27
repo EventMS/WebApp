@@ -34,6 +34,25 @@
                             </ion-grid>
                         </ion-item>
                     </ion-list>
+                    <ion-list class="list" inset="true" lines="none">
+                        <ion-list-header>
+                            <p>Upcoming events in the club</p>
+                        </ion-list-header>
+                        <hr style="height: 1px; background-color: black; width: 90%" />
+                        <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let sup of club.clubsubscription">
+                            <!-- Skal ikke være det her, men nogle få event-->
+                            <ion-grid>
+                                <ion-card>
+                                    <ion-card-header>
+                                        <ion-row class="ion-justify-content-between">
+                                            <ion-text>EVENT NAME</ion-text>
+                                            <ion-text>EVENT PRICE $</ion-text>
+                                        </ion-row>
+                                    </ion-card-header>
+                                </ion-card>
+                            </ion-grid>
+                        </ion-item>
+                    </ion-list>
                 </ion-row>
             </ion-col>
             <ion-col size="1"> </ion-col>
@@ -100,6 +119,21 @@
                             <ion-row class="ion-justify-content-between">
                                 <ion-text>{{sup.name}}</ion-text>
                                 <ion-text>{{sup.price}} $</ion-text>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                </ion-list>
+                <ion-list class="list" inset="true" lines="none">
+                    <ion-list-header>
+                        <p>Upcoming events in the club</p>
+                    </ion-list-header>
+                    <hr style="height: 1px; background-color: black; width: 90%" />
+                    <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let sup of club.clubsubscription">
+                        <!-- Skal ikke være det her, men nogle få event-->
+                        <ion-grid>
+                            <ion-row class="ion-justify-content-between">
+                                <ion-text>EVENT NAME</ion-text>
+                                <ion-text>EVENT PRICE $</ion-text>
                             </ion-row>
                         </ion-grid>
                     </ion-item>
