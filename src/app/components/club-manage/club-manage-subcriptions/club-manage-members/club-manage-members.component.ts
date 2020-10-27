@@ -43,7 +43,7 @@ export class ClubManageMembersComponent implements OnInit {
   async onRemoveMember(member: IMembersForClubQuery_membersForClub_user) {
     console.log("MEMBER REMOVED")
   }
-  ""
+  
   async onDemoteInstructor(member: IMembersForClubQuery_membersForClub_user) {
     const alert = await this.alertCtrl.create({
       header: 'Are you sure?',
