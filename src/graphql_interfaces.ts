@@ -165,6 +165,52 @@ export interface ICreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: IAddInstructorMutation
+// ====================================================
+
+export interface IAddInstructorMutation_addInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IAddInstructorMutation {
+  addInstructor: IAddInstructorMutation_addInstructor | null;
+}
+
+export interface IAddInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: IRemoveInstructorMutation
+// ====================================================
+
+export interface IRemoveInstructorMutation_removeInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IRemoveInstructorMutation {
+  removeInstructor: IRemoveInstructorMutation_removeInstructor | null;
+}
+
+export interface IRemoveInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 

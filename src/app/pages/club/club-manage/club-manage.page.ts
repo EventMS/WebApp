@@ -17,7 +17,7 @@ enum SideBarContent {
   styleUrls: ['./club-manage.page.scss'],
 })
 export class ClubManagePage implements OnInit {
-  sidebarContent: SideBarContent = SideBarContent.subscriptions;
+  sidebarContent: SideBarContent = SideBarContent.members;
   SidebarContent: typeof SideBarContent = SideBarContent;
   clubId: string;
 
