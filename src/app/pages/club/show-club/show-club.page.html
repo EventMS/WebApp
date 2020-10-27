@@ -41,7 +41,7 @@
                 <ion-row class="ion-justify-content-end">
                     <ion-button *ngIf="currentSubscription else isNotMember" [disabled]="true" size="large" style="width: 60%">You are signed up</ion-button>
                     <ng-template #isNotMember>
-                        <ion-button size="large" style="width: 60%" (click)="showModal()">Sign up</ion-button>
+                        <ion-button size="large" class="signUpButton" (click)="showModal()">Sign up</ion-button>
                     </ng-template>
                 </ion-row>
                 <div class="textContainer">
