@@ -12,7 +12,7 @@ import { ProfileOptionsComponent } from '../profile-options/profile-options.comp
 export class HeaderBarComponent implements OnInit {
   title: string = this.platform.is('mobile') ? 'EMS' : 'Event Management System';
 
-  ngOnInit() {}
+  ngOnInit(){}
 
   constructor(public popoverController: PopoverController, public platform: Platform, private router: Router) {}
 

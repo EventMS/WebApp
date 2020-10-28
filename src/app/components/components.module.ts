@@ -6,7 +6,27 @@ import { HeaderBarComponent } from './header-bar/header-bar.component';
 import { ProfileOptionsComponent } from './profile-options/profile-options.component';
 import { ConfirmationButtonComponent } from 'src/app/components/confirmation-button/confirmation-button.component';
 import { ClubManageSubcriptionsComponent } from './club-manage/club-manage-subcriptions/club-manage-subcriptions.component';
+import { ClubManageEventsComponent } from './club-manage/club-manage-events/club-manage-events.component';
+import { EventCalendarComponent } from './event-calendar/event-calendar.component';
+import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
+
+class CustomDateFormatter extends CalendarNativeDateFormatter {
+  public dayViewHour({ date, locale }: DateFormatterParams): string {
+      return new Intl.DateTimeFormat('ca', {
+          hour: 'numeric',
+          minute: 'numeric'
+      }).format(date);
+  }
+
+  public weekViewHour({ date, locale }: DateFormatterParams): string {
+    return new Intl.DateTimeFormat('ca', {
+        hour: 'numeric',
+        minute: 'numeric'
+    }).format(date);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -14,15 +34,33 @@ import { StripeElementsComponent } from './stripe-elements/stripe-elements.compo
     ProfileOptionsComponent,
     ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
-    StripeElementsComponent,
+    ClubManageEventsComponent,
+    EventCalendarComponent,
+    StripeElementsComponent
   ],
   exports: [
-    HeaderBarComponent,
-    ProfileOptionsComponent,
-    ConfirmationButtonComponent,
-    ClubManageSubcriptionsComponent,
-    StripeElementsComponent,
-  ],
-  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule],
-})
+    HeaderBarComponent, 
+    ProfileOptionsComponent, 
+    ConfirmationButtonComponent, 
+    ClubManageSubcriptionsComponent, 
+    ClubManageEventsComponent, 
+    EventCalendarComponent,
+    StripeElementsComponent],
+  imports: [
+    CommonModule,
+    FormsModule, 
+    IonicModule, 
+    ReactiveFormsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+  }, {
+    dateFormatter: {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter
+    }
+  })]
+}
+)
+
 export class ComponentsModule {}

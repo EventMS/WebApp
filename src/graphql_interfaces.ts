@@ -51,6 +51,63 @@ export interface IGetClubsQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: ICreateEventClubQuery
+// ====================================================
+
+export interface ICreateEventClubQuery_clubByID_rooms {
+  __typename: "Room";
+  roomId: any;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_instructors {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_clubsubscription {
+  __typename: "ClubSubscription";
+  clubSubscriptionId: any;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_events_locations {
+  __typename: "RoomEvent";
+  roomId: any;
+}
+
+export interface ICreateEventClubQuery_clubByID_events {
+  __typename: "Event";
+  locations: (ICreateEventClubQuery_clubByID_events_locations | null)[] | null;
+  name: string | null;
+  startTime: any;
+  endTime: any;
+  description: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID {
+  __typename: "Club";
+  rooms: (ICreateEventClubQuery_clubByID_rooms | null)[] | null;
+  instructors: (ICreateEventClubQuery_clubByID_instructors | null)[] | null;
+  clubsubscription: (ICreateEventClubQuery_clubByID_clubsubscription | null)[] | null;
+  events: (ICreateEventClubQuery_clubByID_events | null)[] | null;
+}
+
+export interface ICreateEventClubQuery {
+  clubByID: ICreateEventClubQuery_clubByID | null;
+}
+
+export interface ICreateEventClubQueryVariables {
+  clubId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IMyClubsQuery
 // ====================================================
 
@@ -149,6 +206,29 @@ export interface ICreateUserMutation {
 
 export interface ICreateUserMutationVariables {
   request?: CreateUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ICreateEventMutation
+// ====================================================
+
+export interface ICreateEventMutation_createEvent {
+  __typename: "Event";
+  eventId: any;
+  name: string | null;
+}
+
+export interface ICreateEventMutation {
+  createEvent: ICreateEventMutation_createEvent | null;
+}
+
+export interface ICreateEventMutationVariables {
+  request?: CreateEventRequestInput | null;
 }
 
 /* tslint:disable */
@@ -303,12 +383,29 @@ export interface CreateClubSubscriptionRequestInput {
   referenceId?: any | null;
 }
 
+export interface CreateEventRequestInput {
+  clubId: any;
+  description?: string | null;
+  endTime: any;
+  eventPrices: (EventPriceRequestInput | null)[];
+  instructorForEvents?: any[] | null;
+  locations?: any[] | null;
+  name: string;
+  publicPrice?: number | null;
+  startTime: any;
+}
+
 export interface CreateUserRequestInput {
   birthDate: any;
   email: string;
   name: string;
   password: string;
   phoneNumber: string;
+}
+
+export interface EventPriceRequestInput {
+  clubSubscriptionId: any;
+  price: number;
 }
 
 export interface LoginUserRequestInput {
