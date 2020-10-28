@@ -24,11 +24,6 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
           clubId
         }
         description
-        instructors {
-          name
-          email
-          id
-        }
         user {
           id
           email
@@ -44,7 +39,7 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
     }
   `;
 
-/*   public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
+  /*   public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
     this.watch({ clubByNameName: clubByNameName }).valueChanges.pipe(
       map(({ data, error }) => {
         if (error) console.log(error);
