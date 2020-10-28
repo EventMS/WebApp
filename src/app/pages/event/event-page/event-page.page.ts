@@ -73,7 +73,7 @@ export class EventPagePage implements OnInit {
         this.price = price;
         this.color = 'green';
       } else {
-        this.price = getEvent.publicPrice;
+        this.price = getEvent.publicPrice ?? 0;
         this.color = 'black';
       }
     }
