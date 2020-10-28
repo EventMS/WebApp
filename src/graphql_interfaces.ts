@@ -101,10 +101,18 @@ export interface IShowClubQuery_clubByID {
   user: IShowClubQuery_clubByID_user | null;
 }
 
+export interface IShowClubQuery_eventsForClub_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: any;
+}
+
 export interface IShowClubQuery_eventsForClub {
   __typename: "Event";
   description: string | null;
   eventId: any;
+  name: string | null;
+  eventPrices: (IShowClubQuery_eventsForClub_eventPrices | null)[] | null;
 }
 
 export interface IShowClubQuery_currentUser_permissions {

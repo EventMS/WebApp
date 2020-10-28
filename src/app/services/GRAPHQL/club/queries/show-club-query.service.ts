@@ -32,6 +32,11 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
       eventsForClub(clubId: $clubByID) {
         description
         eventId
+        name
+        eventPrices {
+          price
+          clubSubscriptionId
+        }
       }
       currentUser {
         id
