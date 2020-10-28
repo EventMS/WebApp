@@ -21,5 +21,5 @@ export class EventListQueryService extends Query<IEventListQuery> {
     }
   `;
 
-  public EventListQuery$ = this.watch().valueChanges.pipe(map(({ data }) => data));
+  public EventListQuery = this.watch().valueChanges.pipe(map(({ data }) => data));
 }

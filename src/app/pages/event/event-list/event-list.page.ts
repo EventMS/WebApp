@@ -17,6 +17,6 @@ export class EventListPage implements OnInit {
   constructor(private eventListQueryService: EventListQueryService) {}
 
   ngOnInit() {
-    this.evenListQuery$ = this.eventListQueryService.EventListQuery$;
+    this.evenListQuery$ = this.eventListQueryService.EventListQuery;
   }
 }

@@ -1,25 +1,24 @@
 <ion-content *ngIf="!isMobile else mobile">
-    <ion-grid class="ion-margin">
+    <ion-grid class="ion-margin" *ngIf="(event$ | async)?.getEvent as event">
         <ion-col size="2" offset="5">
             <ion-row class="ion-justify-content-center">
                 <ion-label>
-                    <h1>
-                        EVENT NAME
+                    <h1 class="heading">
+                        {{event.name}}
                     </h1>
                 </ion-label>
             </ion-row>
         </ion-col>
-
-        <ion-row>
+        <ion-row *ngIf="(clubInfo$ | async)?.clubByID as clubInfo">
             <ion-col size="5">
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-title>Event Date</ion-card-title>
-                        <ion-card-subtitle>Club Name</ion-card-subtitle>
+                        <ion-card-title>From {{event.startTime | date}} To {{event.endTime | date}}</ion-card-title>
+                        <ion-card-subtitle>Club: {{clubInfo.name}}</ion-card-subtitle>
                     </ion-card-header>
-                    <ion-card-content>
+                    <ion-card-content *ngFor="let instructor of event.instructorForEvents">
                         <ion-label>
-                            Instructor name
+                            {{instructor.user.name}}
                         </ion-label>
                     </ion-card-content>
                 </ion-card>
@@ -29,8 +28,7 @@
                     </ion-card-header>
                     <ion-card-content>
                         <ion-label>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            {{event.description}}
                         </ion-label>
                     </ion-card-content>
                 </ion-card>
@@ -66,7 +64,7 @@
                     <ion-row class="ion-align-items-center">
                         <ion-col size="4" class="ion-text-center ion-text">
                             <div class="boxed">
-                                1000$
+                                Price: {{price}} $
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
@@ -78,7 +76,7 @@
                     <ion-col>
                         <ion-button style="width: 100%; height: 300px;">MAPS</ion-button>
                         <ion-text>
-                            <h1>Address</h1>
+                            <h1>{{event.locations[0]?.roomId ? "Her skal fixes room" : clubInfo.address}}</h1>
                         </ion-text>
                     </ion-col>
                 </ion-row>
@@ -89,28 +87,27 @@
 
 
 <ng-template #mobile>
-    <ion-content>
-        <ion-card>
+    <ion-content *ngIf="(event$ | async)?.getEvent as event">
+        <ion-card *ngIf="(clubInfo$ | async)?.clubByID as clubInfo">
             <ion-card-header>
                 <ion-card-title>
-                    Event name
+                    {{event.name}}
                 </ion-card-title>
                 <ion-card-subtitle>
-                    Event date
+                    From {{event.startTime | date}} To {{event.endTime | date}}
                 </ion-card-subtitle>
                 <ion-card-subtitle>
-                    Price
+                    Price: {{price}} $
                 </ion-card-subtitle>
                 <ion-card-subtitle>
-                    Club name
+                    Club: {{clubInfo.name}}
                 </ion-card-subtitle>
-                <ion-card-subtitle>
-                    instructor name
+                <ion-card-subtitle *ngFor="let instructor of event.instructorForEvents">
+                    {{instructor.user.name}}
                 </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {{event.description}}
             </ion-card-content>
         </ion-card>
         <ion-card>

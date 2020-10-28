@@ -17,7 +17,7 @@ export const Paths = {
     route: (param: string) => ['club-manage/', param],
   },
   event_page: {
-    path: 'event-page/:name',
+    path: 'event-page/:eventId',
     route: (param: string) => ['/event-page/', param],
   },
 };

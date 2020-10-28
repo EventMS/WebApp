@@ -200,6 +200,112 @@ export interface IEventListQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IEventPageInfoQuery
+// ====================================================
+
+export interface IEventPageInfoQuery_currentUser_permissions {
+  __typename: "permission_Role";
+  clubSubscriptionId: any | null;
+  clubId: any;
+}
+
+export interface IEventPageInfoQuery_currentUser {
+  __typename: "identity_ApplicationUser";
+  permissions: (IEventPageInfoQuery_currentUser_permissions | null)[] | null;
+}
+
+export interface IEventPageInfoQuery_clubByID_clubsubscription {
+  __typename: "ClubSubscription";
+  name: string | null;
+  price: number;
+  clubSubscriptionId: any;
+  clubId: any;
+}
+
+export interface IEventPageInfoQuery_clubByID {
+  __typename: "Club";
+  clubId: any;
+  name: string | null;
+  address: string | null;
+  clubsubscription: (IEventPageInfoQuery_clubByID_clubsubscription | null)[] | null;
+}
+
+export interface IEventPageInfoQuery {
+  currentUser: IEventPageInfoQuery_currentUser | null;
+  clubByID: IEventPageInfoQuery_clubByID | null;
+}
+
+export interface IEventPageInfoQueryVariables {
+  clubByID: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IEventPageQuery
+// ====================================================
+
+export interface IEventPageQuery_getEvent_locations_event {
+  __typename: "Event";
+  name: string | null;
+}
+
+export interface IEventPageQuery_getEvent_locations {
+  __typename: "RoomEvent";
+  eventId: any;
+  event: IEventPageQuery_getEvent_locations_event | null;
+  roomId: any;
+}
+
+export interface IEventPageQuery_getEvent_instructorForEvents_user {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface IEventPageQuery_getEvent_instructorForEvents {
+  __typename: "InstructorForEvent";
+  instructorId: any;
+  user: IEventPageQuery_getEvent_instructorForEvents_user;
+}
+
+export interface IEventPageQuery_getEvent_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: any;
+}
+
+export interface IEventPageQuery_getEvent {
+  __typename: "Event";
+  eventId: any;
+  clubId: any;
+  name: string | null;
+  description: string | null;
+  startTime: any;
+  endTime: any;
+  publicPrice: number | null;
+  locations: (IEventPageQuery_getEvent_locations | null)[] | null;
+  instructorForEvents: (IEventPageQuery_getEvent_instructorForEvents | null)[] | null;
+  eventPrices: (IEventPageQuery_getEvent_eventPrices | null)[] | null;
+}
+
+export interface IEventPageQuery {
+  getEvent: IEventPageQuery_getEvent | null;
+}
+
+export interface IEventPageQueryVariables {
+  eventId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 
