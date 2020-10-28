@@ -173,6 +173,33 @@ export interface ICreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IEventListQuery
+// ====================================================
+
+export interface IEventListQuery_eventsConfirmed_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: any;
+}
+
+export interface IEventListQuery_eventsConfirmed {
+  __typename: "Event";
+  eventId: any;
+  name: string | null;
+  description: string | null;
+  eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
+}
+
+export interface IEventListQuery {
+  eventsConfirmed: (IEventListQuery_eventsConfirmed | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 

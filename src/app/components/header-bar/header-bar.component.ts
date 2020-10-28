@@ -17,7 +17,6 @@ export class HeaderBarComponent implements OnInit {
   constructor(public popoverController: PopoverController, public platform: Platform, private router: Router) {}
 
   async tappedProfile(ev: Event) {
-    console.log('Tapped profiled');
     const popover = await this.popoverController.create({
       component: ProfileOptionsComponent,
       event: ev,
@@ -31,7 +30,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedFindEvents() {
-    console.log('Tapped find events');
+    this.router.navigate([Paths.event_list]);
   }
 
   tappedMyEvents() {
