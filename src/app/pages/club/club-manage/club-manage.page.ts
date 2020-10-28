@@ -17,16 +17,16 @@ enum SideBarContent {
   styleUrls: ['./club-manage.page.scss'],
 })
 export class ClubManagePage implements OnInit {
-  sidebarContent: SideBarContent = SideBarContent.members;
+  sidebarContent: SideBarContent = SideBarContent.events;
   SidebarContent: typeof SideBarContent = SideBarContent;
-  clubId: string;
+  clubName: string;
 
-  constructor(private route: ActivatedRoute, private clubQueryService: MyClubsQueryService, public platform: Platform) {
-  }
-
-  ngOnInit() {
+  constructor(private route: ActivatedRoute,
+     public platform: Platform) {
     this.route.params.subscribe((params) => {
-      this.clubId = params['clubId'];
+      this.clubName = params['clubId'];
     });
   }
+
+  ngOnInit() {}
 }

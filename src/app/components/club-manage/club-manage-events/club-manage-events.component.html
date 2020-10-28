@@ -1,0 +1,50 @@
+<ion-grid>
+  <ion-row>
+    <ion-col class="calendar-col">
+      <app-event-calendar (dayClicked)="dayClicked($event.date, $event.events)" [events]="events" [viewDate]="todaysDate"></app-event-calendar>
+    </ion-col>
+    <ion-col size="5.5" class="right-col">
+      <ion-row class="centered-row">
+        <ion-button (click)="onCreateClicked()">
+          Create Event
+        </ion-button>
+      </ion-row>
+      <ion-row class="centered-row">
+        <div *ngIf="selectedDate != null">
+          <ion-label>Showing events for {{selectedDate.toDateString()}} - select an event to show details</ion-label>
+        </div>
+        <div *ngIf="selectedDate == null">
+          <ion-label>Select a date to show events</ion-label>
+        </div>
+        <div *ngIf="eventsForChosenDate.length > 0" class="rcorners">
+          <div class="scrollable-content">
+            <ion-list>
+              <ion-item class="ion-activatable ripple-parent" (click)="cardClicked(event)" *ngFor="let event of eventsForChosenDate">
+                <ion-label>{{event.title}}</ion-label>
+                <ion-ripple-effect></ion-ripple-effect>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+      </ion-row>
+      <ion-row class="centered-row">
+        <div *ngIf="selectedEvent != null" style="padding-top: 10px; max-width: 90%;">
+          <ion-label>Showing event details - click to go to event page</ion-label>
+        </div>
+        <ion-card *ngIf="selectedEvent != null">
+            <ion-card-header>
+              <ion-card-title>{{selectedEvent.title}}</ion-card-title>
+              <ion-card-subtitle>{{"Starttime: " + createTimeString(selectedEvent.start)}}</ion-card-subtitle>
+              <ion-card-subtitle>{{"Endtime: " + createTimeString(selectedEvent.end)}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-card-subtitle>
+                Event description:
+              </ion-card-subtitle>
+              {{selectedEvent.description}}
+            </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>

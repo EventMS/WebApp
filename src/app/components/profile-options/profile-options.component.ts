@@ -21,7 +21,9 @@ export class ProfileOptionsComponent implements OnInit {
     private popoverController: PopoverController,
     private clubQueryService: MyClubsQueryService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
     console.log('Init called');

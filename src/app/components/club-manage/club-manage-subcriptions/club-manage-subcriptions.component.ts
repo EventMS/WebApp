@@ -24,7 +24,6 @@ export class ClubManageSubcriptionsComponent implements OnInit {
 
   constructor(
     private clubSubscriptionsService: ClubSubscriptionsQueryService,
-    private myClubsQueryService: MyClubsQueryService,
     formBuilder: FormBuilder,
     private createSubscriptionService: CreateSubscriptionMutationService,
     private route: ActivatedRoute,

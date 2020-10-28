@@ -6,6 +6,7 @@ import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
+import { Apollo } from 'apollo-angular';
 import { Paths } from 'src/app/navigation/routes';
 
 const current_user = 'current_user';
@@ -15,7 +16,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
 
-  constructor(private router: Router, private loginMutationService: LoginMutationService) {
+  constructor(private router: Router, private loginMutationService: LoginMutationService, private apollo: Apollo) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(current_user)!));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -37,6 +38,7 @@ export class AuthenticationService {
           const { loginUser } = data!;
           localStorage.setItem(current_user, JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
+          this.apollo.client.clearStore();
           this.router.navigateByUrl('', { replaceUrl: true });
         },
         (error: ApolloError) => {
