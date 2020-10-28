@@ -85,7 +85,6 @@ export class ClubManageMembersComponent implements OnInit {
   }
 
   promoteInstructor(member: IMembersForClubQuery_membersForClub_user) {
-    console.log(member)
     this.addInstructorMutationService
     .mutate({clubId: this.clubId, instructorId: member.id},  {
       refetchQueries: [
