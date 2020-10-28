@@ -20,6 +20,7 @@ export class EventPagePage implements OnInit {
   public event$: Observable<IEventPageQuery>;
   public clubInfo$: Observable<IEventPageInfoQuery>;
   public price: number | null;
+  public color = 'brown';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,7 +47,7 @@ export class EventPagePage implements OnInit {
           if (getEvent) {
             this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
             this.clubInfo$.subscribe(({ clubByID, currentUser }) =>
-              this.getPriceForEvent(clubByID, currentUser, getEvent)
+              this.handlePriceForEvent(clubByID, currentUser, getEvent)
             );
           }
         });
@@ -54,7 +55,7 @@ export class EventPagePage implements OnInit {
     });
   };
 
-  private getPriceForEvent = (
+  private handlePriceForEvent = (
     clubByID: IEventPageInfoQuery['clubByID'],
     currentUser: IEventPageInfoQuery['currentUser'],
     getEvent: IEventPageQuery['getEvent']
@@ -63,9 +64,18 @@ export class EventPagePage implements OnInit {
       const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId == clubByID.clubId)
         ?.clubSubscriptionId;
       const currentSubscription = clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId);
-      this.price =
-        getEvent.eventPrices?.find((ePrice) => ePrice?.clubSubscriptionId == currentSubscription?.clubSubscriptionId)
-          ?.price ?? getEvent.publicPrice;
+
+      const price = getEvent.eventPrices?.find(
+        (ePrice) => ePrice?.clubSubscriptionId == currentSubscription?.clubSubscriptionId
+      )?.price;
+
+      if (price) {
+        this.price = price;
+        this.color = 'green';
+      } else {
+        this.price = getEvent.publicPrice;
+        this.color = 'black';
+      }
     }
   };
 }
