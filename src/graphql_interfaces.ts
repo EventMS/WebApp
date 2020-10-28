@@ -51,6 +51,63 @@ export interface IGetClubsQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: ICreateEventClubQuery
+// ====================================================
+
+export interface ICreateEventClubQuery_clubByID_rooms {
+  __typename: "Room";
+  roomId: any;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_instructors {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_clubsubscription {
+  __typename: "ClubSubscription";
+  clubSubscriptionId: any;
+  name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_events_locations {
+  __typename: "RoomEvent";
+  roomId: any;
+}
+
+export interface ICreateEventClubQuery_clubByID_events {
+  __typename: "Event";
+  locations: (ICreateEventClubQuery_clubByID_events_locations | null)[] | null;
+  name: string | null;
+  startTime: any;
+  endTime: any;
+  description: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID {
+  __typename: "Club";
+  rooms: (ICreateEventClubQuery_clubByID_rooms | null)[] | null;
+  instructors: (ICreateEventClubQuery_clubByID_instructors | null)[] | null;
+  clubsubscription: (ICreateEventClubQuery_clubByID_clubsubscription | null)[] | null;
+  events: (ICreateEventClubQuery_clubByID_events | null)[] | null;
+}
+
+export interface ICreateEventClubQuery {
+  clubByID: ICreateEventClubQuery_clubByID | null;
+}
+
+export interface ICreateEventClubQueryVariables {
+  clubId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IMyClubsQuery
 // ====================================================
 
@@ -165,6 +222,29 @@ export interface ICreateUserMutation {
 
 export interface ICreateUserMutationVariables {
   request?: CreateUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ICreateEventMutation
+// ====================================================
+
+export interface ICreateEventMutation_createEvent {
+  __typename: "Event";
+  eventId: any;
+  name: string | null;
+}
+
+export interface ICreateEventMutation {
+  createEvent: ICreateEventMutation_createEvent | null;
+}
+
+export interface ICreateEventMutationVariables {
+  request?: CreateEventRequestInput | null;
 }
 
 /* tslint:disable */
@@ -306,6 +386,52 @@ export interface IEventPageQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: IAddInstructorMutation
+// ====================================================
+
+export interface IAddInstructorMutation_addInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IAddInstructorMutation {
+  addInstructor: IAddInstructorMutation_addInstructor | null;
+}
+
+export interface IAddInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: IRemoveInstructorMutation
+// ====================================================
+
+export interface IRemoveInstructorMutation_removeInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IRemoveInstructorMutation {
+  removeInstructor: IRemoveInstructorMutation_removeInstructor | null;
+}
+
+export interface IRemoveInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ILoginUserMutation
 // ====================================================
 
@@ -327,6 +453,40 @@ export interface ILoginUserMutation {
 
 export interface ILoginUserMutationVariables {
   request?: LoginUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IMembersForClubQuery
+// ====================================================
+
+export interface IMembersForClubQuery_membersForClub_user_permissions {
+  __typename: "permission_Role";
+  userRole: string | null;
+}
+
+export interface IMembersForClubQuery_membersForClub_user {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  id: string | null;
+  permissions: (IMembersForClubQuery_membersForClub_user_permissions | null)[] | null;
+}
+
+export interface IMembersForClubQuery_membersForClub {
+  __typename: "ClubMember";
+  user: IMembersForClubQuery_membersForClub_user;
+}
+
+export interface IMembersForClubQuery {
+  membersForClub: (IMembersForClubQuery_membersForClub | null)[] | null;
+}
+
+export interface IMembersForClubQueryVariables {
+  clubId: any;
 }
 
 /* tslint:disable */
@@ -452,12 +612,29 @@ export interface CreateClubSubscriptionRequestInput {
   referenceId?: any | null;
 }
 
+export interface CreateEventRequestInput {
+  clubId: any;
+  description?: string | null;
+  endTime: any;
+  eventPrices: (EventPriceRequestInput | null)[];
+  instructorForEvents?: any[] | null;
+  locations: any[];
+  name: string;
+  publicPrice?: number | null;
+  startTime: any;
+}
+
 export interface CreateUserRequestInput {
   birthDate: any;
   email: string;
   name: string;
   password: string;
   phoneNumber: string;
+}
+
+export interface EventPriceRequestInput {
+  clubSubscriptionId: any;
+  price: number;
 }
 
 export interface LoginUserRequestInput {

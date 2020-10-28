@@ -11,7 +11,7 @@ ion-avatar {
 }
 
 ion-toolbar {
-  --background: darkorange;
+  --background: url(../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
 
 ion-button {
@@ -32,7 +32,7 @@ ion-button {
 
 .regular:hover  {
  --background: black;
- --color: darkorange;
+ --color: url(../../../assets/img/start.jpg) 0 0/100% 100%;
 }
 
 ion-title {

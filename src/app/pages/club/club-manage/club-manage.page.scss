@@ -16,8 +16,18 @@
   padding: 20px;
 }
 
-.content {
+.sub-content {
   height: 100%;
+}
+
+.member-content {
+  height: 100%;
+  width: 100%;
+}
+
+.event-content {
+  height:100%;
+  width:100%;
 }
 
 ion-button {
@@ -25,5 +35,5 @@ ion-button {
 }
 
 .background {
-  --background: url(../../../../assets/img/start.png) 0 0/100% 100% no-repeat;
+  --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
