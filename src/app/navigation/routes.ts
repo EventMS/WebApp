@@ -8,7 +8,7 @@ export const Paths = {
   club_details: 'club-details',
   club_list: 'club-list',
   show_club: {
-    path: 'show-club/:name',
+    path: 'show-club/:clubId',
     route: (param: string) => ['show-club/', param],
   },
   club_manage: {

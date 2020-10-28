@@ -1,5 +1,5 @@
 <ion-content *ngIf="!isMobile; else mobile">
-    <ion-grid *ngIf="(club$ | async)?.clubByName as club" class="ion-margin">
+    <ion-grid *ngIf="(club$ | async)?.clubByID as club" class="ion-margin">
         <ion-row class="ion-justify-content-center headline">
             <ion-text>
                 <h1>{{club.name | uppercase}}</h1>
@@ -94,7 +94,7 @@
 </ion-content>
 
 <ng-template #mobile>
-    <ion-content class="container" *ngIf="(club$ | async)?.clubByName as club">
+    <ion-content class="container" *ngIf="(club$ | async)?.clubByID as club">
         <ion-grid>
             <ion-row class="ion-justify-content-center">
                 <ion-col>

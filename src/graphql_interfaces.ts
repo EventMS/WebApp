@@ -73,7 +73,7 @@ export interface IMyClubsQuery {
 // GraphQL query operation: IShowClubQuery
 // ====================================================
 
-export interface IShowClubQuery_clubByName_clubsubscription {
+export interface IShowClubQuery_clubByID_clubsubscription {
   __typename: "ClubSubscription";
   name: string | null;
   price: number;
@@ -81,13 +81,13 @@ export interface IShowClubQuery_clubByName_clubsubscription {
   clubId: any;
 }
 
-export interface IShowClubQuery_clubByName_user {
+export interface IShowClubQuery_clubByID_user {
   __typename: "identity_ApplicationUser";
   id: string | null;
   email: string | null;
 }
 
-export interface IShowClubQuery_clubByName {
+export interface IShowClubQuery_clubByID {
   __typename: "Club";
   address: string | null;
   accountNumber: string | null;
@@ -96,9 +96,15 @@ export interface IShowClubQuery_clubByName {
   name: string | null;
   phoneNumber: string | null;
   registrationNumber: string | null;
-  clubsubscription: (IShowClubQuery_clubByName_clubsubscription | null)[] | null;
+  clubsubscription: (IShowClubQuery_clubByID_clubsubscription | null)[] | null;
   description: string | null;
-  user: IShowClubQuery_clubByName_user | null;
+  user: IShowClubQuery_clubByID_user | null;
+}
+
+export interface IShowClubQuery_eventsForClub {
+  __typename: "Event";
+  description: string | null;
+  eventId: any;
 }
 
 export interface IShowClubQuery_currentUser_permissions {
@@ -109,17 +115,19 @@ export interface IShowClubQuery_currentUser_permissions {
 
 export interface IShowClubQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  id: string | null;
   name: string | null;
   permissions: (IShowClubQuery_currentUser_permissions | null)[] | null;
 }
 
 export interface IShowClubQuery {
-  clubByName: IShowClubQuery_clubByName | null;
+  clubByID: IShowClubQuery_clubByID | null;
+  eventsForClub: (IShowClubQuery_eventsForClub | null)[] | null;
   currentUser: IShowClubQuery_currentUser | null;
 }
 
 export interface IShowClubQueryVariables {
-  clubByNameName?: string | null;
+  clubByID: any;
 }
 
 /* tslint:disable */
