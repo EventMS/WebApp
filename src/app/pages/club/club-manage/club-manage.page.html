@@ -33,6 +33,7 @@
     <ion-content class="background">
       <div class="example-sidenav-content">
         <!-- Erstat labels med komponenter, når vi har lavet dem -->
+        <app-club-manage-members *ngIf="sidebarContent==SidebarContent.members" class="member-content"></app-club-manage-members>
         <ion-label *ngIf="sidebarContent==SidebarContent.club">CLUBS</ion-label>
         <app-club-manage-events class="event-content" *ngIf="sidebarContent==SidebarContent.events"></app-club-manage-events>
         <ion-label *ngIf="sidebarContent==SidebarContent.members">MEMBERS</ion-label>

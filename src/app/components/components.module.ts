@@ -11,6 +11,7 @@ import { EventCalendarComponent } from './event-calendar/event-calendar.componen
 import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
+import { ClubManageMembersComponent } from './club-manage/club-manage-subcriptions/club-manage-members/club-manage-members.component';
 
 class CustomDateFormatter extends CalendarNativeDateFormatter {
   public dayViewHour({ date, locale }: DateFormatterParams): string {
@@ -34,18 +35,21 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     ProfileOptionsComponent,
     ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
+    StripeElementsComponent,
+    ClubManageMembersComponent,
     ClubManageEventsComponent,
     EventCalendarComponent,
     StripeElementsComponent
   ],
   exports: [
-    HeaderBarComponent, 
-    ProfileOptionsComponent, 
-    ConfirmationButtonComponent, 
-    ClubManageSubcriptionsComponent, 
-    ClubManageEventsComponent, 
-    EventCalendarComponent,
-    StripeElementsComponent],
+    HeaderBarComponent,
+    ProfileOptionsComponent,
+    ConfirmationButtonComponent,
+    ClubManageSubcriptionsComponent,
+    StripeElementsComponent,
+    ClubManageMembersComponent,
+    ClubManageEventsComponent
+  ],
   imports: [
     CommonModule,
     FormsModule, 
@@ -60,7 +64,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
       useClass: CustomDateFormatter
     }
   })]
-}
-)
+})
 
 export class ComponentsModule {}

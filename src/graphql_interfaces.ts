@@ -214,6 +214,46 @@ export interface ICreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: IAddInstructorMutation
+// ====================================================
+
+export interface IAddInstructorMutation_addInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IAddInstructorMutation {
+  addInstructor: IAddInstructorMutation_addInstructor | null;
+}
+
+export interface IAddInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: IRemoveInstructorMutation
+// ====================================================
+
+export interface IRemoveInstructorMutation_removeInstructor {
+  __typename: "permission_Role";
+  userId: any;
+}
+
+export interface IRemoveInstructorMutation {
+  removeInstructor: IRemoveInstructorMutation_removeInstructor | null;
+}
+
+export interface IRemoveInstructorMutationVariables {
+  clubId: any;
+  instructorId: any;
+}
+
 // GraphQL mutation operation: ICreateEventMutation
 // ====================================================
 
@@ -258,6 +298,40 @@ export interface ILoginUserMutation {
 
 export interface ILoginUserMutationVariables {
   request?: LoginUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IMembersForClubQuery
+// ====================================================
+
+export interface IMembersForClubQuery_membersForClub_user_permissions {
+  __typename: "permission_Role";
+  userRole: string | null;
+}
+
+export interface IMembersForClubQuery_membersForClub_user {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  id: string | null;
+  permissions: (IMembersForClubQuery_membersForClub_user_permissions | null)[] | null;
+}
+
+export interface IMembersForClubQuery_membersForClub {
+  __typename: "ClubMember";
+  user: IMembersForClubQuery_membersForClub_user | null;
+}
+
+export interface IMembersForClubQuery {
+  membersForClub: (IMembersForClubQuery_membersForClub | null)[] | null;
+}
+
+export interface IMembersForClubQueryVariables {
+  clubId: any;
 }
 
 /* tslint:disable */
