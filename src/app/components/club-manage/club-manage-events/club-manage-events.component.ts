@@ -6,7 +6,6 @@ import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queri
 import { ICreateEventClubQuery, ICreateEventClubQuery_clubByID } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { EMSEvent } from 'src/app/pages/event/create-event/create-event.page';
-import { DateClickedEvent } from '../../event-calendar/event-calendar.component';
 
 @Component({
   selector: 'app-club-manage-events',
@@ -38,8 +37,6 @@ export class ClubManageEventsComponent implements OnInit {
   }
 
   dayClicked(date: Date, events: EMSEvent[]): void {
-    console.log(date)
-    console.log(events)
     this.eventsForChosenDate = events
     this.selectedDate = date
     this.selectedEvent = null
@@ -73,7 +70,7 @@ export class ClubManageEventsComponent implements OnInit {
       })
   }
 
-  private createEvents(data: ICreateEventClubQuery_clubByID | null): EMSEvent[] {
+  private createEvents(data: ICreateEventClubQuery["clubByID"]): EMSEvent[] {
     if(data==null) {
       return []
     }
@@ -81,18 +78,22 @@ export class ClubManageEventsComponent implements OnInit {
     var events: EMSEvent[] = []
 
     data.events!.forEach(e => {
+      if(!e) {return null}
+
       var locations: string[] = []
-      e!.locations!.forEach(e => {
-        locations.push(e!.roomId)
+
+      e.locations!.forEach(e => {
+        if(!e) {return null}
+        locations.push(e.roomId)
       })
 
       events.push({
-        start: new Date(e!.startTime),
-        end: new Date(e!.endTime),
+        start: new Date(e.startTime),
+        end: new Date(e.endTime),
         locationIds: locations,
-        title: e!.name ?? "",
-        currentEvent: false,
-        description: e!.description ?? ""
+        title: e.name ?? "",
+        isCurrentEvent: false,
+        description: e.description ?? ""
       })
     })
 

@@ -13,7 +13,7 @@ import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[];
-  currentEvent: Boolean;
+  isCurrentEvent: Boolean;
   description: string;
 }
 
@@ -75,13 +75,11 @@ export class CreateEventPage implements OnInit {
   }
 
   onCreationFailed(data: any) {
-    console.log("Event creation failed - reason: " + data.reason)
     this.loadingController.dismiss();
     this.presentAlert("Could not create event")
   }
 
   onCreationSucceeded(data: any) {
-    console.log("response received: " + data)
     this.loadingController.dismiss()
     this.resetPage()
     this.router.navigate(['/club-manage/',this.clubId])
@@ -98,9 +96,6 @@ export class CreateEventPage implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value)
-    console.log(this.eventPrices)
-
     const formData: FormData = this.form.value
 
     var request: CreateEventRequestInput = {
@@ -115,17 +110,12 @@ export class CreateEventPage implements OnInit {
         eventPrices: this.eventPrices,
     }
 
-    console.log(request)
-
     this.presentLoading().then(() => {
       this.eventMutationService.mutate({
         request: request
       }).subscribe(
-        (data) => {
-          console.log("this went well - data: " + data)
-        },
-        (error) => {
-          console.log(error)
+        () => {},
+        () => {
           this.loadingController.dismiss();
           this.presentAlert("Could not create event")
         })
@@ -135,7 +125,6 @@ export class CreateEventPage implements OnInit {
   onRoomCheckboxChange(event, roomId: string) {
     if(event.target.checked) {
       this.chosenRoomIds.push(roomId)
-      console.log("pushed")
     } else {
       this.chosenRoomIds = this.chosenRoomIds.filter((otherRoomId) => {
         return otherRoomId != roomId
@@ -172,7 +161,7 @@ export class CreateEventPage implements OnInit {
     }
     
     this.shownEvents = this.shownEvents.filter((e) => {
-      return e.currentEvent == false
+      return e.isCurrentEvent == false
     })
 
     this.currentEvent.start = startDate
@@ -200,7 +189,6 @@ export class CreateEventPage implements OnInit {
     this.route.params.subscribe(params => {
       this.clubId = params['clubId']
       this.websocketService.clubId = this.clubId
-      console.log(this.clubId)
       this.fetchData()
     })
   }
@@ -212,7 +200,6 @@ export class CreateEventPage implements OnInit {
     this.club$.subscribe(
       (data) => {
         if(data == null) {
-          console.log("Something went totally wrong")
           this.router.navigate(['/'])
           return
         }
@@ -223,7 +210,7 @@ export class CreateEventPage implements OnInit {
   }
 
   private filterEvents() {
-    var currentEvent = this.shownEvents.find(e => {return e.currentEvent == true})
+    var currentEvent = this.shownEvents.find(e => {return e.isCurrentEvent == true})
 
     this.shownEvents = this.events.filter(event => {
       return event.locationIds.some(e => this.chosenRoomIds.includes(e))
@@ -238,18 +225,20 @@ export class CreateEventPage implements OnInit {
     var events: EMSEvent[] = []
 
     data.events!.forEach(e => {
+      if(!e) {return null}
+
       var locations: string[] = []
-      e!.locations!.forEach(e => {
+      e.locations!.forEach(e => {
         locations.push(e!.roomId)
       })
 
       events.push({
-        start: new Date(e!.startTime),
-        end: new Date(e!.endTime),
+        start: new Date(e.startTime),
+        end: new Date(e.endTime),
         locationIds: locations,
-        title: e!.name ?? "",
-        currentEvent: false,
-        description: e!.description ?? ""
+        title: e.name ?? "",
+        isCurrentEvent: false,
+        description: e.description ?? ""
       })
     })
 
@@ -289,7 +278,7 @@ export class CreateEventPage implements OnInit {
         primary: '#ad2121',
         secondary: '#FAE3E3',
       },
-      currentEvent: true,
+      isCurrentEvent: true,
       description: "",
     }
 

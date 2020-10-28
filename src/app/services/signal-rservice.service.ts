@@ -17,7 +17,7 @@ export class SignalRServiceService {
                             .build();
     this.connection
       .start()
-      .then(() => console.log('Connection started'))
+      .then(() => console.log('Connection started for clubId: ' + this.clubId))
       .catch(err => console.log('Error while starting connection: ' + err))
   }
 

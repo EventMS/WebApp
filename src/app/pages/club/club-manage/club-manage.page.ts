@@ -25,7 +25,6 @@ export class ClubManagePage implements OnInit {
      public platform: Platform) {
     this.route.params.subscribe((params) => {
       this.clubName = params['clubId'];
-      console.log(this.clubName)
     });
   }
 
