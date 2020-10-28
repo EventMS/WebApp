@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { isPlatform } from '@ionic/angular';
+import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/event-page.service';
@@ -10,6 +10,7 @@ import {
   IEventPageInfoQuery_clubByID_clubsubscription,
   IEventPageQuery,
 } from 'src/graphql_interfaces';
+import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
 
 @Component({
   selector: 'app-event-page',
@@ -25,14 +26,21 @@ export class EventPagePage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventPageInfoQueryService: EventPageInfoQueryService,
-    private eventPageQueryService: EventPageQueryService
+    private eventPageQueryService: EventPageQueryService,
+    private modalController: ModalController
   ) {}
 
   public isMobile = isPlatform('mobile');
 
-  public showModal = () => {};
-
-  public OnSignup = () => {};
+  public onSignup = async () => {
+    const modal = await this.modalController.create({
+      component: EventPaymentModalPage,
+      componentProps: {
+        price: this.price,
+      },
+    });
+    return await modal.present();
+  };
 
   ngOnInit() {
     this.initData();
