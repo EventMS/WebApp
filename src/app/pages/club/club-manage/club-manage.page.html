@@ -36,7 +36,6 @@
         <app-club-manage-members *ngIf="sidebarContent==SidebarContent.members" class="member-content"></app-club-manage-members>
         <ion-label *ngIf="sidebarContent==SidebarContent.club">CLUBS</ion-label>
         <app-club-manage-events class="event-content" *ngIf="sidebarContent==SidebarContent.events"></app-club-manage-events>
-        <ion-label *ngIf="sidebarContent==SidebarContent.members">MEMBERS</ion-label>
         <ion-label *ngIf="sidebarContent==SidebarContent.instructors">INSTRUCTORS</ion-label>
         <app-club-manage-subcriptions class="sub-content" *ngIf="sidebarContent==SidebarContent.subscriptions"></app-club-manage-subcriptions>
       </div>

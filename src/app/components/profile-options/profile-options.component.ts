@@ -26,12 +26,10 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Init called');
     this.getClubs();
   }
 
   async createClubClicked() {
-    console.log('Clicked create');
     await this.popoverController.dismiss().then(() => this.router.navigate([Paths.club_create]));
   }
 
@@ -44,11 +42,13 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   async logOutClicked() {
-    console.log('Log out clicked');
     await this.popoverController.dismiss().then(() => this.authenticationService.logout());
   }
 
   private getClubs() {
-    this.clubs$ = this.clubQueryService.watch().valueChanges.pipe(map(({ data }) => data.myClubs));
+    this.clubs$ = this.clubQueryService
+    .watch(null, {fetchPolicy: 'cache-and-network'})
+    .valueChanges
+    .pipe(map(({ data }) => data.myClubs));
   }
 }

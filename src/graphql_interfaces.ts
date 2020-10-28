@@ -60,10 +60,15 @@ export interface ICreateEventClubQuery_clubByID_rooms {
   name: string | null;
 }
 
-export interface ICreateEventClubQuery_clubByID_instructors {
+export interface ICreateEventClubQuery_clubByID_instructors_user {
   __typename: "identity_ApplicationUser";
-  id: string | null;
   name: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_instructors {
+  __typename: "permission_Role";
+  userId: any;
+  user: ICreateEventClubQuery_clubByID_instructors_user | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_clubsubscription {
@@ -214,6 +219,29 @@ export interface ICreateUserMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ICreateEventMutation
+// ====================================================
+
+export interface ICreateEventMutation_createEvent {
+  __typename: "Event";
+  eventId: any;
+  name: string | null;
+}
+
+export interface ICreateEventMutation {
+  createEvent: ICreateEventMutation_createEvent | null;
+}
+
+export interface ICreateEventMutationVariables {
+  request?: CreateEventRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: IAddInstructorMutation
 // ====================================================
 
@@ -252,23 +280,6 @@ export interface IRemoveInstructorMutation {
 export interface IRemoveInstructorMutationVariables {
   clubId: any;
   instructorId: any;
-}
-
-// GraphQL mutation operation: ICreateEventMutation
-// ====================================================
-
-export interface ICreateEventMutation_createEvent {
-  __typename: "Event";
-  eventId: any;
-  name: string | null;
-}
-
-export interface ICreateEventMutation {
-  createEvent: ICreateEventMutation_createEvent | null;
-}
-
-export interface ICreateEventMutationVariables {
-  request?: CreateEventRequestInput | null;
 }
 
 /* tslint:disable */
@@ -463,7 +474,7 @@ export interface CreateEventRequestInput {
   endTime: any;
   eventPrices: (EventPriceRequestInput | null)[];
   instructorForEvents?: any[] | null;
-  locations?: any[] | null;
+  locations: any[];
   name: string;
   publicPrice?: number | null;
   startTime: any;
