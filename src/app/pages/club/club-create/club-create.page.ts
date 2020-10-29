@@ -6,7 +6,8 @@ import { Paths } from 'src/app/navigation/routes';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
 import { Observable } from 'rxjs';
-import { ICreateClubMutation_createClub } from 'src/graphql_interfaces';
+import { ICreateClubMutation, ICreateClubMutation_createClub } from 'src/graphql_interfaces';
+import { FetchResult } from '@apollo/client/core';
 
 @Component({
   selector: 'app-club-create',
@@ -69,19 +70,20 @@ export class ClubCreatePage implements OnInit {
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
 
-    this.clubService.createClub({
-      name: formData.name,
-      description: formData.description,
-      phoneNumber: formData.phone.toString(),
-      accountNumber: formData.accountNumber.toString(),
-      registrationNumber: formData.regNumber.toString(),
-      address: formData.address,
-      locations: this.locations,
-    })
-    .subscribe(
-      (data) => this.handleResponse(data),
-      (error) => this.presentAlert(error)
-    );
+    this.clubService
+      .createClub({
+        name: formData.name,
+        description: formData.description,
+        phoneNumber: formData.phone.toString(),
+        accountNumber: formData.accountNumber.toString(),
+        registrationNumber: formData.regNumber.toString(),
+        address: formData.address,
+        locations: this.locations,
+      })
+      .subscribe(
+        ({ data }) => this.handleResponse(data!),
+        ({ error }) => this.presentAlert(error)
+      );
   };
 
   didAddLocationItem() {
@@ -126,10 +128,10 @@ export class ClubCreatePage implements OnInit {
     (await alert).present();
   }
 
-  private handleResponse(data) {
+  private handleResponse(data: ICreateClubMutation) {
     this.clubform.reset();
     //Navigate to page for new created club
-    this.router.navigate([Paths.club_details]);
+    this.router.navigate(Paths.club_manage.route(data?.createClub?.clubId!));
   }
 }
 
