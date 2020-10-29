@@ -68,8 +68,13 @@
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
+                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large"
+                                class="signUpButton" (click)="onSignup()" [disabled]="disabled">
                                 Sign up</ion-button>
+                            <ng-template #alreadySignedUpButton>
+                                <ion-button size="large" class="signUpButton" [disabled]="disabled">Signed up!
+                                </ion-button>
+                            </ng-template>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

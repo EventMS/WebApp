@@ -52,23 +52,18 @@ export class ShowClubPage implements OnInit {
   };
 
   private initData = () => {
-    this.club$.subscribe(
-      ({ clubByID, currentUser, eventsForClub }) => {
-        if (clubByID?.clubId && currentUser) {
-          this.clubId = clubByID.clubId;
-          const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
-            ?.clubSubscriptionId;
-          this.currentSubscription =
-            clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
-        }
-
-        if (eventsForClub) {
-          this.events = eventsForClub;
-        }
-      },
-      (error) => {
-        console.log(error);
+    this.club$.subscribe(({ clubByID, currentUser, eventsForClub }) => {
+      if (clubByID?.clubId && currentUser) {
+        this.clubId = clubByID.clubId;
+        const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
+          ?.clubSubscriptionId;
+        this.currentSubscription =
+          clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
       }
-    );
+
+      if (eventsForClub) {
+        this.events = eventsForClub;
+      }
+    });
   };
 }

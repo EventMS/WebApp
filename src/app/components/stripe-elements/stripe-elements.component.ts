@@ -59,21 +59,18 @@ export class StripeElementsComponent implements AfterViewInit {
   async handleForm(e: { preventDefault: () => void }) {
     e.preventDefault();
 
-    const loading = await this.loadingController.create({
-      message: 'Please wait...',
-      duration: 10000,
-    });
-    await loading.present();
-
-    // if (this.subscriptionId) this.handleSubscription();
-    // else if (this.eventId) this.handleSinglePayment();
-    // else console.log('wrong inputs.');
-    loading.dismiss();
-    this.dismissModal?.();
+    if (this.subscriptionId) this.handleSubscription();
+    else if (this.eventId) this.handleSinglePayment();
   }
 
   handleSinglePayment = () => {
     this.signUpForEventMutationService.signUpForEventMutation(this.eventId).subscribe(async ({ data }) => {
+      const loading = await this.loadingController.create({
+        message: 'Please wait...',
+        duration: 10000,
+      });
+      await loading.present();
+
       if (data?.signUpForEvent?.clientSecret) {
         const result = await this.stripe.confirmCardPayment(data.signUpForEvent.clientSecret, {
           payment_method: {
@@ -97,6 +94,8 @@ export class StripeElementsComponent implements AfterViewInit {
             // post-payment actions.
           }
         }
+        loading.dismiss();
+        this.dismissModal?.();
       }
     });
   };
@@ -130,6 +129,11 @@ export class StripeElementsComponent implements AfterViewInit {
     isPaymentRetry?: boolean;
     //invoiceId?: string;
   }) => {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 10000,
+    });
+    await loading.present();
     // Set up payment method for recurring
     await this.stripe
       .createPaymentMethod({
@@ -158,6 +162,8 @@ export class StripeElementsComponent implements AfterViewInit {
               .subscribe();
           }
         }
+        loading.dismiss();
+        this.dismissModal?.();
       });
   };
 }

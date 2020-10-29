@@ -313,6 +313,13 @@ export interface IEventListQuery {
 // GraphQL query operation: IEventPageInfoQuery
 // ====================================================
 
+export interface IEventPageInfoQuery_currentUser_events {
+  __typename: "EventVerification";
+  code: string | null;
+  eventVerificationId: number;
+  eventId: string;
+}
+
 export interface IEventPageInfoQuery_currentUser_permissions {
   __typename: "permission_Role";
   clubSubscriptionId: string | null;
@@ -321,6 +328,7 @@ export interface IEventPageInfoQuery_currentUser_permissions {
 
 export interface IEventPageInfoQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  events: (IEventPageInfoQuery_currentUser_events | null)[] | null;
   permissions: (IEventPageInfoQuery_currentUser_permissions | null)[] | null;
 }
 

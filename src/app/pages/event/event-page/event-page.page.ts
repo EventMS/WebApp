@@ -4,7 +4,12 @@ import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page.service';
-import { IEventPageInfoQuery, IEventPageQuery } from 'src/graphql_interfaces';
+import {
+  IEventPageInfoQuery,
+  IEventPageInfoQuery_currentUser,
+  IEventPageQuery,
+  IEventPageQuery_getEvent,
+} from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
 
 @Component({
@@ -20,6 +25,7 @@ export class EventPagePage implements OnInit {
   public eventName: string;
   public eventId: string;
   public disabled: boolean;
+  public alreadySignedUp: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,6 +63,7 @@ export class EventPagePage implements OnInit {
             this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
               this.eventName = getEvent.name!;
               this.eventId = getEvent.eventId!;
+              this.handleAlreadySignedUp(currentUser, getEvent);
               this.handlePriceForEvent(clubByID, currentUser, getEvent);
             });
           }
@@ -64,6 +71,14 @@ export class EventPagePage implements OnInit {
       }
     });
   };
+
+  handleAlreadySignedUp(currentUser: IEventPageInfoQuery['currentUser'], getEvent: IEventPageQuery['getEvent']) {
+    const eventId = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
+    if (eventId) {
+      this.alreadySignedUp = true;
+      this.disabled = true;
+    }
+  }
 
   private handlePriceForEvent = (
     clubByID: IEventPageInfoQuery['clubByID'],

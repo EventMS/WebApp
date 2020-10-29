@@ -21,7 +21,8 @@
                             <p>Subscriptions in the club</p>
                         </ion-list-header>
                         <hr style="height: 1px; background-color: black; width: 90%" />
-                        <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let sup of club.clubsubscription">
+                        <ion-item class="substyle ion-justify-content-evenly"
+                            *ngFor=" let sup of club.clubsubscription">
                             <ion-grid>
                                 <ion-card>
                                     <ion-card-header>
@@ -58,7 +59,8 @@
             <ion-col size="1"> </ion-col>
             <ion-col size="4">
                 <ion-row class="ion-justify-content-end">
-                    <ion-button *ngIf="currentSubscription else isNotMember" [disabled]="true" size="large" style="width: 60%">You are signed up</ion-button>
+                    <ion-button *ngIf="currentSubscription else isNotMember" [disabled]="true" size="large"
+                        style="width: 60%">You are signed up</ion-button>
                     <ng-template #isNotMember>
                         <ion-button size="large" class="signUpButton" (click)="showModal()">Sign up</ion-button>
                     </ng-template>
