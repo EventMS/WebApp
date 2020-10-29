@@ -14,8 +14,11 @@ export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
           name
         }
         instructors {
-          id
-          name
+          userId
+          user {
+            name
+            id
+          }
         }
         clubsubscription {
           clubSubscriptionId

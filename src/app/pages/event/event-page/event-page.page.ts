@@ -20,8 +20,10 @@ import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-p
 export class EventPagePage implements OnInit {
   public event$: Observable<IEventPageQuery>;
   public clubInfo$: Observable<IEventPageInfoQuery>;
-  public price: number | null;
-  public color = 'brown';
+  public price: number | string | null;
+  public color = 'black';
+  public eventName: string;
+  public disabled: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +39,7 @@ export class EventPagePage implements OnInit {
       component: EventPaymentModalPage,
       componentProps: {
         price: this.price,
+        description: this.eventName,
       },
     });
     return await modal.present();
@@ -54,9 +57,10 @@ export class EventPagePage implements OnInit {
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
-            this.clubInfo$.subscribe(({ clubByID, currentUser }) =>
-              this.handlePriceForEvent(clubByID, currentUser, getEvent)
-            );
+            this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
+              this.eventName = getEvent.name!;
+              this.handlePriceForEvent(clubByID, currentUser, getEvent);
+            });
           }
         });
       }
@@ -78,11 +82,13 @@ export class EventPagePage implements OnInit {
       )?.price;
 
       if (price) {
-        this.price = price;
+        this.price = `Price: ${price} $`;
         this.color = 'green';
+      } else if (getEvent.publicPrice) {
+        this.price = `Price: ${getEvent.publicPrice} $`;
       } else {
-        this.price = getEvent.publicPrice ?? 0;
-        this.color = 'black';
+        this.price = 'You a not subcribed to this club';
+        this.disabled = true;
       }
     }
   };

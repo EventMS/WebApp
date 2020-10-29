@@ -60,10 +60,16 @@ export interface ICreateEventClubQuery_clubByID_rooms {
   name: string | null;
 }
 
-export interface ICreateEventClubQuery_clubByID_instructors {
+export interface ICreateEventClubQuery_clubByID_instructors_user {
   __typename: "identity_ApplicationUser";
-  id: string | null;
   name: string | null;
+  id: string | null;
+}
+
+export interface ICreateEventClubQuery_clubByID_instructors {
+  __typename: "permission_Role";
+  userId: any;
+  user: ICreateEventClubQuery_clubByID_instructors_user | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_clubsubscription {

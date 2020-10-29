@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-payment-modal',
@@ -7,8 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class EventPaymentModalPage implements OnInit {
   @Input() price: number;
+  @Input() description: number;
 
-  constructor() {}
+  constructor(private modalController: ModalController) {}
+
+  public dismissModal = () => {
+    this.modalController.dismiss();
+  };
 
   ngOnInit() {}
 }
