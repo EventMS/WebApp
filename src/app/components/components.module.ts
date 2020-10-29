@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -19,7 +19,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
 import { ClubManageMembersComponent } from './club-manage/club-manage-members/club-manage-members.component';
 import { MobileSignupComponent } from './buttons/mobile-signup/mobile-signup.component';
-
+@Injectable({
+  providedIn: 'root',
+})
 class CustomDateFormatter extends CalendarNativeDateFormatter {
   public dayViewHour({ date, locale }: DateFormatterParams): string {
     return new Intl.DateTimeFormat('ca', {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
-import { EventListQueryService } from 'src/app/services/GRAPHQL/events/event-list-query.service';
+import { EventListQueryService } from 'src/app/services/GRAPHQL/events/queries/event-list-query.service';
 import { IEventListQuery } from 'src/graphql_interfaces';
 
 @Component({
