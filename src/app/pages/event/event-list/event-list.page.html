@@ -8,7 +8,7 @@
 </ion-row>
 
 <ion-content>
-    <ion-list *ngFor="let event of (evenListQuery$ | async)?.eventsConfirmed ">
+    <ion-list *ngFor="let event of ((eventListQueryService.Events) | async)?.data.eventsConfirmed ">
         <ion-card>
             <ion-card-header>
                 <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>

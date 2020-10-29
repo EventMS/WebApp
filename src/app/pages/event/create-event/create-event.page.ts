@@ -10,6 +10,8 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
+import { EventListQueryService } from 'src/app/services/GRAPHQL/events/queries/event-list-query.service';
+import { Apollo } from 'apollo-angular';
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[];
@@ -45,7 +47,9 @@ export class CreateEventPage implements OnInit {
     private eventMutationService: CreateEventMutationService,
     public loadingController: LoadingController,
     private websocketService: SignalRServiceService,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private eventQuery: EventListQueryService,
+    private client: Apollo) {
       this.initForm()
     }
 

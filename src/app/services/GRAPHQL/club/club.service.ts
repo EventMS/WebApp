@@ -3,6 +3,7 @@ import { CreateClubRequestInput, ICreateClubMutation_createClub } from 'src/grap
 import { CreateClubMutationService } from './mutations/create-club-mutation.service';
 import { MyClubsQueryService } from './queries/my-clubs-query.service';
 import { Observable } from 'rxjs';
+import { ClubListQueryService } from './queries/club-list-query.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { Observable } from 'rxjs';
 export class ClubService {
 
   constructor(private createClubMutation: CreateClubMutationService,
-    private myClubsQuery: MyClubsQueryService) {}
+    private myClubsQuery: MyClubsQueryService,
+    private clubListQuery: ClubListQueryService) {}
 
 
   // Mutations
@@ -20,6 +22,6 @@ export class ClubService {
       {
         request: request
       }
-    )
+    ,{refetchQueries: [{query: this.myClubsQuery.document}, {query: this.clubListQuery.document}]})
   }
 }

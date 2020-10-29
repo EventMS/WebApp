@@ -54,13 +54,7 @@ export class ClubManageEventsComponent implements OnInit {
     + date.getMinutes();
   }
 
-  private async getRoute() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.clubId = params['clubId'];
-    });
-  }
-
-  private getEvents() {
+  getEvents() {
     this.club$ = this.clubQueryService.watch({clubId: this.clubId}, {fetchPolicy: "cache-and-network"})
     .valueChanges
     .pipe(map(result => result.data.clubByID))
@@ -68,6 +62,13 @@ export class ClubManageEventsComponent implements OnInit {
       (data) => {
         this.events = this.createEvents(data)
       })
+  }
+
+
+  private async getRoute() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.clubId = params['clubId'];
+    });
   }
 
   private createEvents(data: ICreateEventClubQuery["clubByID"]): EMSEvent[] {
