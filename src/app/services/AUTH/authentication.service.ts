@@ -41,7 +41,7 @@ export class AuthenticationService {
           this.apollo.client.clearStore();
           this.router.navigateByUrl('', { replaceUrl: true });
         },
-        (error: ApolloError) => {
+        (error: ApolloError) => { 
           if (error.message.includes('credentials')) alert('Wrong username or password');
           else alert('something went wrong, please try again later');
         }

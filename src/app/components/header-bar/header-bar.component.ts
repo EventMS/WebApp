@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform, PopoverController } from '@ionic/angular';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
+import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({
@@ -12,9 +15,9 @@ import { ProfileOptionsComponent } from '../profile-options/profile-options.comp
 export class HeaderBarComponent implements OnInit {
   title: string = this.platform.is('mobile') ? 'EMS' : 'Event Management System';
 
-  ngOnInit(){}
+  constructor(public popoverController: PopoverController, public platform: Platform, private router: Router, public authService: AuthenticationService) {}
 
-  constructor(public popoverController: PopoverController, public platform: Platform, private router: Router) {}
+  ngOnInit(){}
 
   async tappedProfile(ev: Event) {
     const popover = await this.popoverController.create({
