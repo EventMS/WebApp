@@ -47,7 +47,7 @@ export class ProfileOptionsComponent implements OnInit {
 
   private getClubs() {
     this.clubs$ = this.clubQueryService
-    .watch({}, {fetchPolicy: 'cache-and-network'})
+    .watch({})
     .valueChanges
     .pipe(map(({ data }) => data.myClubs));
   }

@@ -8,7 +8,7 @@ import { IAddInstructorMutation, IAddInstructorMutationVariables } from 'src/gra
 export class AddInstructorMutationService extends Mutation<IAddInstructorMutation, IAddInstructorMutationVariables> {
 
   document = gql`
-    mutation IAddInstructorMutation($clubId: Uuid!, $instructorId: Uuid!) {
+    mutation IAddInstructorMutation($clubId: String!, $instructorId: String!) {
       addInstructor(clubId: $clubId, instructorId: $instructorId){
         userId
       }

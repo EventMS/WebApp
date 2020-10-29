@@ -18,7 +18,7 @@ export class ShowClubPage implements OnInit {
     private modalController: ModalController
   ) {}
 
-  private clubId: number;
+  private clubId: string;
   public club$: Observable<IShowClubQuery>;
   public isMobile = isPlatform('mobile');
   public currentSubscription: IShowClubQuery_clubByName_clubsubscription | null;

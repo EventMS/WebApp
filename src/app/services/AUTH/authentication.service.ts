@@ -14,11 +14,9 @@ const current_user = 'current_user';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User | null>;
-  public currentUser: Observable<User | null>;
 
   constructor(private router: Router, private loginMutationService: LoginMutationService, private apollo: Apollo) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(current_user)!));
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): User | null {

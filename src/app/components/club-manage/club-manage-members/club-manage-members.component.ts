@@ -86,7 +86,7 @@ export class ClubManageMembersComponent implements OnInit {
 
   promoteInstructor(member: IMembersForClubQuery_membersForClub_user) {
     this.addInstructorMutationService
-    .mutate({clubId: this.clubId, instructorId: member.id},  {
+    .mutate({clubId: this.clubId, instructorId: member.id!},  {
       refetchQueries: [
         {
           query: this.memberQueryService.document,
@@ -99,7 +99,7 @@ export class ClubManageMembersComponent implements OnInit {
 
   removeInstructor(member: IMembersForClubQuery_membersForClub_user) {
     this.removeInstructorMutationService
-    .mutate({clubId: this.clubId, instructorId: member.id}, {
+    .mutate({clubId: this.clubId, instructorId: member.id!}, {
       refetchQueries: [
         {
           query: this.memberQueryService.document,

@@ -9,7 +9,7 @@
 
 export interface ICreateClubMutation_createClub {
   __typename: "Club";
-  clubId: any;
+  clubId: string;
 }
 
 export interface ICreateClubMutation {
@@ -31,10 +31,10 @@ export interface ICreateClubMutationVariables {
 
 export interface IGetClubsQuery_clubs {
   __typename: "Club";
-  clubId: any;
+  clubId: string;
   accountNumber: string | null;
   address: string | null;
-  adminId: any;
+  adminId: string;
   description: string | null;
   name: string | null;
   phoneNumber: string | null;
@@ -56,7 +56,7 @@ export interface IGetClubsQuery {
 
 export interface ICreateEventClubQuery_clubByID_rooms {
   __typename: "Room";
-  roomId: any;
+  roomId: string;
   name: string | null;
 }
 
@@ -67,19 +67,19 @@ export interface ICreateEventClubQuery_clubByID_instructors_user {
 
 export interface ICreateEventClubQuery_clubByID_instructors {
   __typename: "permission_Role";
-  userId: any;
+  userId: string;
   user: ICreateEventClubQuery_clubByID_instructors_user | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_clubsubscription {
   __typename: "ClubSubscription";
-  clubSubscriptionId: any;
+  clubSubscriptionId: string;
   name: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_events_locations {
   __typename: "RoomEvent";
-  roomId: any;
+  roomId: string;
 }
 
 export interface ICreateEventClubQuery_clubByID_events {
@@ -104,7 +104,7 @@ export interface ICreateEventClubQuery {
 }
 
 export interface ICreateEventClubQueryVariables {
-  clubId: any;
+  clubId: string;
 }
 
 /* tslint:disable */
@@ -119,7 +119,7 @@ export interface ICreateEventClubQueryVariables {
 export interface IMyClubsQuery_myClubs {
   __typename: "Club";
   name: string | null;
-  clubId: any;
+  clubId: string;
 }
 
 export interface IMyClubsQuery {
@@ -139,8 +139,8 @@ export interface IShowClubQuery_clubByName_clubsubscription {
   __typename: "ClubSubscription";
   name: string | null;
   price: number;
-  clubSubscriptionId: any;
-  clubId: any;
+  clubSubscriptionId: string;
+  clubId: string;
 }
 
 export interface IShowClubQuery_clubByName_user {
@@ -153,8 +153,8 @@ export interface IShowClubQuery_clubByName {
   __typename: "Club";
   address: string | null;
   accountNumber: string | null;
-  adminId: any;
-  clubId: any;
+  adminId: string;
+  clubId: string;
   name: string | null;
   phoneNumber: string | null;
   registrationNumber: string | null;
@@ -165,8 +165,8 @@ export interface IShowClubQuery_clubByName {
 
 export interface IShowClubQuery_currentUser_permissions {
   __typename: "permission_Role";
-  clubSubscriptionId: any | null;
-  clubId: any;
+  clubSubscriptionId: string | null;
+  clubId: string;
 }
 
 export interface IShowClubQuery_currentUser {
@@ -225,7 +225,7 @@ export interface ICreateUserMutationVariables {
 
 export interface ICreateEventMutation_createEvent {
   __typename: "Event";
-  eventId: any;
+  eventId: string;
   name: string | null;
 }
 
@@ -248,7 +248,7 @@ export interface ICreateEventMutationVariables {
 
 export interface IAddInstructorMutation_addInstructor {
   __typename: "permission_Role";
-  userId: any;
+  userId: string;
 }
 
 export interface IAddInstructorMutation {
@@ -256,8 +256,8 @@ export interface IAddInstructorMutation {
 }
 
 export interface IAddInstructorMutationVariables {
-  clubId: any;
-  instructorId: any;
+  clubId: string;
+  instructorId: string;
 }
 
 /* tslint:disable */
@@ -271,7 +271,7 @@ export interface IAddInstructorMutationVariables {
 
 export interface IRemoveInstructorMutation_removeInstructor {
   __typename: "permission_Role";
-  userId: any;
+  userId: string;
 }
 
 export interface IRemoveInstructorMutation {
@@ -279,8 +279,8 @@ export interface IRemoveInstructorMutation {
 }
 
 export interface IRemoveInstructorMutationVariables {
-  clubId: any;
-  instructorId: any;
+  clubId: string;
+  instructorId: string;
 }
 
 /* tslint:disable */
@@ -344,7 +344,7 @@ export interface IMembersForClubQuery {
 }
 
 export interface IMembersForClubQueryVariables {
-  clubId: any;
+  clubId: string;
 }
 
 /* tslint:disable */
@@ -381,8 +381,8 @@ export interface ICreateSubscriptionMutationVariables {
 
 export interface ICreateClubMemberMutation_createClubMember {
   __typename: "ClubMember";
-  clubId: any;
-  clubSubscriptionId: any;
+  clubId: string;
+  clubSubscriptionId: string;
 }
 
 export interface ICreateClubMemberMutation {
@@ -404,7 +404,7 @@ export interface ICreateClubMemberMutationVariables {
 
 export interface ISignUpForSubscriptionMutation_signUpForSubscription {
   __typename: "payment_ClubSubscription";
-  clubSubscriptionId: any;
+  clubSubscriptionId: string;
 }
 
 export interface ISignUpForSubscriptionMutation {
@@ -428,7 +428,7 @@ export interface ISubscriptionsForClubQuery_subscriptionsForClub {
   __typename: "ClubSubscription";
   name: string | null;
   price: number;
-  clubSubscriptionId: any;
+  clubSubscriptionId: string;
 }
 
 export interface ISubscriptionsForClubQuery {
@@ -436,7 +436,7 @@ export interface ISubscriptionsForClubQuery {
 }
 
 export interface ISubscriptionsForClubQueryVariables {
-  clubId: any;
+  clubId: string;
 }
 
 /* tslint:disable */
@@ -449,8 +449,8 @@ export interface ISubscriptionsForClubQueryVariables {
 //==============================================================
 
 export interface CreateClubMemberRequestInput {
-  clubSubscriptionId: any;
-  userId: any;
+  clubSubscriptionId: string;
+  userId: string;
 }
 
 export interface CreateClubRequestInput {
@@ -464,19 +464,19 @@ export interface CreateClubRequestInput {
 }
 
 export interface CreateClubSubscriptionRequestInput {
-  clubId: any;
+  clubId: string;
   name: string;
   price: number;
-  referenceId?: any | null;
+  referenceId?: string | null;
 }
 
 export interface CreateEventRequestInput {
-  clubId: any;
+  clubId: string;
   description?: string | null;
   endTime: any;
   eventPrices: (EventPriceRequestInput | null)[];
-  instructorForEvents?: any[] | null;
-  locations: any[];
+  instructorForEvents?: string[] | null;
+  locations: string[];
   name: string;
   publicPrice?: number | null;
   startTime: any;
@@ -491,7 +491,7 @@ export interface CreateUserRequestInput {
 }
 
 export interface EventPriceRequestInput {
-  clubSubscriptionId: any;
+  clubSubscriptionId: string;
   price: number;
 }
 
@@ -501,7 +501,7 @@ export interface LoginUserRequestInput {
 }
 
 export interface SignUpSubscriptionRequestInput {
-  clubSubscriptionId: any;
+  clubSubscriptionId: string;
   paymentMethodId: string;
 }
 

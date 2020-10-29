@@ -10,7 +10,7 @@ export class ClubSubscriptionsQueryService extends Query<
   ISubscriptionsForClubQueryVariables
 > {
   document = gql`
-    query ISubscriptionsForClubQuery($clubId: Uuid!) {
+    query ISubscriptionsForClubQuery($clubId: String!) {
       subscriptionsForClub(clubId: $clubId) {
         name
         price

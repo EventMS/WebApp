@@ -8,7 +8,7 @@ import { ICreateEventClubQuery } from 'src/graphql_interfaces';
 export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
 
   document = gql`
-  query ICreateEventClubQuery($clubId: Uuid!) {
+  query ICreateEventClubQuery($clubId: String!) {
     clubByID(clubId: $clubId){
       rooms{
         roomId

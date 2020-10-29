@@ -8,6 +8,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: httpLink.create({ uri: environment.apiUrl }),
     cache: new InMemoryCache(),
+    defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
   };
 }
 

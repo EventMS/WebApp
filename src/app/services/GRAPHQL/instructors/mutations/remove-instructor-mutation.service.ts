@@ -8,7 +8,7 @@ import { IRemoveInstructorMutation, IRemoveInstructorMutationVariables } from 's
 export class RemoveInstructorMutationService extends Mutation<IRemoveInstructorMutation, IRemoveInstructorMutationVariables> {
 
   document = gql`
-    mutation IRemoveInstructorMutation($clubId: Uuid!, $instructorId: Uuid!) {
+    mutation IRemoveInstructorMutation($clubId: String!, $instructorId: String!) {
       removeInstructor(clubId: $clubId, instructorId: $instructorId){
         userId
       }

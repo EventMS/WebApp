@@ -36,8 +36,8 @@
                   </div>
                 </ion-item-group>
                 <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
-                  <ion-label>{{isntr.name}} </ion-label>
-                  <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.id)" form slot="end"></ion-checkbox>
+                  <ion-label>{{isntr.user.name}} </ion-label>
+                  <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.userId)" form slot="end"></ion-checkbox>
                 </ion-item>
                 <ion-item-divider>
                   <ion-label>Input an event description</ion-label>

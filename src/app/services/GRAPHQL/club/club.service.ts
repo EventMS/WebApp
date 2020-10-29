@@ -15,12 +15,11 @@ export class ClubService {
 
   // Mutations
 
-  createClub(request: CreateClubRequestInput): Observable<ICreateClubMutation_createClub["clubId"]> {
+  createClub(request: CreateClubRequestInput) {
     return this.createClubMutation.mutate(
       {
         request: request
-      },
-      { refetchQueries: [{ query: this.myClubsQuery.document }] }
+      }
     )
   }
 }
