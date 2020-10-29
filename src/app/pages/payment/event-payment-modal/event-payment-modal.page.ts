@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class EventPaymentModalPage implements OnInit {
   @Input() price: number;
   @Input() description: number;
+  @Input() eventId: string;
 
   constructor(private modalController: ModalController) {}
 

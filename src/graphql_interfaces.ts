@@ -260,6 +260,29 @@ export interface ICreateEventMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ISignUpForEventMutationService
+// ====================================================
+
+export interface ISignUpForEventMutationService_signUpForEvent {
+  __typename: "PaymentIntentResponse";
+  price: number;
+  clientSecret: string | null;
+}
+
+export interface ISignUpForEventMutationService {
+  signUpForEvent: ISignUpForEventMutationService_signUpForEvent | null;
+}
+
+export interface ISignUpForEventMutationServiceVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IEventListQuery
 // ====================================================
 

@@ -18,6 +18,7 @@ export class EventPagePage implements OnInit {
   public price: number | string | null;
   public color = 'black';
   public eventName: string;
+  public eventId: string;
   public disabled: boolean;
 
   constructor(
@@ -35,6 +36,7 @@ export class EventPagePage implements OnInit {
       componentProps: {
         price: this.price,
         description: this.eventName,
+        eventId: this.eventId,
       },
     });
     return await modal.present();
@@ -54,6 +56,7 @@ export class EventPagePage implements OnInit {
             this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
             this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
               this.eventName = getEvent.name!;
+              this.eventId = getEvent.eventId!;
               this.handlePriceForEvent(clubByID, currentUser, getEvent);
             });
           }
@@ -76,13 +79,12 @@ export class EventPagePage implements OnInit {
         (ePrice) => ePrice?.clubSubscriptionId == currentSubscription?.clubSubscriptionId
       )?.price;
 
-      if (price) {
-        this.price = `Price: ${price} $`;
+      if (price && price !== getEvent?.publicPrice) {
+        this.price = price;
         this.color = 'green';
       } else if (getEvent.publicPrice) {
-        this.price = `Price: ${getEvent.publicPrice} $`;
+        this.price = getEvent.publicPrice;
       } else {
-        this.price = 'You a not subcribed to this club';
         this.disabled = true;
       }
     }
