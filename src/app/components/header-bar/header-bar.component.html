@@ -6,6 +6,7 @@
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedFindEvents()">Find Events</ion-button>
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedMyEvents()">My Events</ion-button>
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedMyClubs()">My Clubs</ion-button>
+      <ion-label color="dark">Welcome {{currentUserName}}</ion-label>
       <ion-button class="profile" ion-item (click)="tappedProfile($event)">
         <ion-avatar>
           <img

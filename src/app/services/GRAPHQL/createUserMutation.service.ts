@@ -13,6 +13,7 @@ export class CreateUserMutationService extends Mutation<ICreateUserMutation, ICr
         user {
           email
           id
+          name
         }
       }
     }

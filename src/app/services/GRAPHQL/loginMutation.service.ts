@@ -13,6 +13,7 @@ export class LoginMutationService extends Mutation<ILoginUserMutation, ILoginUse
         user {
           email
           id
+          name
         }
       }
     }

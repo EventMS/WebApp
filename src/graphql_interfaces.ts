@@ -197,6 +197,7 @@ export interface ICreateUserMutation_createUser_user {
   __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
+  name: string | null;
 }
 
 export interface ICreateUserMutation_createUser {
@@ -295,6 +296,7 @@ export interface ILoginUserMutation_loginUser_user {
   __typename: "identity_ApplicationUser";
   email: string | null;
   id: string | null;
+  name: string | null;
 }
 
 export interface ILoginUserMutation_loginUser {
@@ -334,7 +336,7 @@ export interface IMembersForClubQuery_membersForClub_user {
 
 export interface IMembersForClubQuery_membersForClub {
   __typename: "ClubMember";
-  user: IMembersForClubQuery_membersForClub_user | null;
+  user: IMembersForClubQuery_membersForClub_user;
 }
 
 export interface IMembersForClubQuery {
