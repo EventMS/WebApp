@@ -18,11 +18,14 @@ export class EventPageQueryService extends Query<IEventPageQuery, IEventPageQuer
         endTime
         publicPrice
         locations {
-          eventId
           event {
+            eventId
             name
           }
-          roomId
+          room {
+            name
+            roomId
+          }
         }
         instructorForEvents {
           instructorId

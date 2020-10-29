@@ -337,14 +337,20 @@ export interface IEventPageInfoQueryVariables {
 
 export interface IEventPageQuery_getEvent_locations_event {
   __typename: "Event";
+  eventId: any;
   name: string | null;
+}
+
+export interface IEventPageQuery_getEvent_locations_room {
+  __typename: "Room";
+  name: string | null;
+  roomId: any;
 }
 
 export interface IEventPageQuery_getEvent_locations {
   __typename: "RoomEvent";
-  eventId: any;
   event: IEventPageQuery_getEvent_locations_event | null;
-  roomId: any;
+  room: IEventPageQuery_getEvent_locations_room;
 }
 
 export interface IEventPageQuery_getEvent_instructorForEvents_user {
