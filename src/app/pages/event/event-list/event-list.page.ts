@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
 import { EventListQueryService } from 'src/app/services/GRAPHQL/events/queries/event-list-query.service';
-import { IEventListQuery } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-event-list',
@@ -10,13 +8,16 @@ import { IEventListQuery } from 'src/graphql_interfaces';
   styleUrls: ['./event-list.page.scss'],
 })
 export class EventListPage implements OnInit {
-  evenListQuery$: Observable<IEventListQuery>;
 
   public route = (eventId: string) => Paths.event_page.route(eventId);
 
-  constructor(private eventListQueryService: EventListQueryService) {}
+  constructor(public eventListQueryService: EventListQueryService) {}
 
   ngOnInit() {
-    this.evenListQuery$ = this.eventListQueryService.EventListQuery;
+  }
+
+  ionViewWillEnter() {
+    this.eventListQueryService.getEvents();
+    console.log("will enter")
   }
 }
