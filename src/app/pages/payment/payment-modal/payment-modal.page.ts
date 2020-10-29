@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
-import { ISubscriptionsForClubQuery, ISubscriptionsForClubQuery_subscriptionsForClub } from 'src/graphql_interfaces';
+import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-payment-modal',

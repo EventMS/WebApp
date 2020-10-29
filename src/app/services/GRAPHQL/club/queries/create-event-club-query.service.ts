@@ -3,10 +3,9 @@ import { gql, Query } from 'apollo-angular';
 import { ICreateEventClubQuery } from 'src/graphql_interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
-
   document = gql`
   query ICreateEventClubQuery($clubId: String!) {
     clubByID(clubId: $clubId){
@@ -14,18 +13,19 @@ export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
         roomId
         name
       }
-      instructors{
+      instructors {
         userId
-        user{
+        user {
           name
+          id
         }
       }
-      clubsubscription{
+      clubsubscription {
         clubSubscriptionId
         name
       }
-      events{
-        locations{
+      events {
+        locations {
           roomId
         }
         name
@@ -35,5 +35,5 @@ export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
       }
     }
   }
-`;
+  `;
 }

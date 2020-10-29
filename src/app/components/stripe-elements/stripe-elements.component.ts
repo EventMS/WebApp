@@ -50,7 +50,7 @@ export class StripeElementsComponent implements AfterViewInit {
 
     const loading = await this.loadingController.create({
       message: 'Please wait...',
-      duration: 1000,
+      duration: 10000,
     });
     await loading.present();
 
@@ -103,13 +103,17 @@ export class StripeElementsComponent implements AfterViewInit {
             //   priceId: priceId,
             // });
           } else {
-            //Create the subscription
-            this.signUpforSubscriptionMutationService
-              .signUpForSupscription({
-                clubSubscriptionId: this.subscriptionId,
-                paymentMethodId: result?.paymentMethod?.id!,
-              })
-              .subscribe();
+            if (this.subscriptionId)
+              //Create the subscription
+              this.signUpforSubscriptionMutationService
+                .signUpForSupscription({
+                  clubSubscriptionId: this.subscriptionId,
+                  paymentMethodId: result?.paymentMethod?.id!,
+                })
+                .subscribe();
+            else {
+              console.log('Single payment');
+            }
           }
         }
       });

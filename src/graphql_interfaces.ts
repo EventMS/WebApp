@@ -63,6 +63,7 @@ export interface ICreateEventClubQuery_clubByID_rooms {
 export interface ICreateEventClubQuery_clubByID_instructors_user {
   __typename: "identity_ApplicationUser";
   name: string | null;
+  id: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_instructors {
@@ -135,7 +136,7 @@ export interface IMyClubsQuery {
 // GraphQL query operation: IShowClubQuery
 // ====================================================
 
-export interface IShowClubQuery_clubByName_clubsubscription {
+export interface IShowClubQuery_clubByID_clubsubscription {
   __typename: "ClubSubscription";
   name: string | null;
   price: number;
@@ -143,13 +144,13 @@ export interface IShowClubQuery_clubByName_clubsubscription {
   clubId: string;
 }
 
-export interface IShowClubQuery_clubByName_user {
+export interface IShowClubQuery_clubByID_user {
   __typename: "identity_ApplicationUser";
   id: string | null;
   email: string | null;
 }
 
-export interface IShowClubQuery_clubByName {
+export interface IShowClubQuery_clubByID {
   __typename: "Club";
   address: string | null;
   accountNumber: string | null;
@@ -158,9 +159,23 @@ export interface IShowClubQuery_clubByName {
   name: string | null;
   phoneNumber: string | null;
   registrationNumber: string | null;
-  clubsubscription: (IShowClubQuery_clubByName_clubsubscription | null)[] | null;
+  clubsubscription: (IShowClubQuery_clubByID_clubsubscription | null)[] | null;
   description: string | null;
-  user: IShowClubQuery_clubByName_user | null;
+  user: IShowClubQuery_clubByID_user | null;
+}
+
+export interface IShowClubQuery_eventsForClub_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: string;
+}
+
+export interface IShowClubQuery_eventsForClub {
+  __typename: "Event";
+  description: string | null;
+  eventId: string;
+  name: string | null;
+  eventPrices: (IShowClubQuery_eventsForClub_eventPrices | null)[] | null;
 }
 
 export interface IShowClubQuery_currentUser_permissions {
@@ -171,17 +186,19 @@ export interface IShowClubQuery_currentUser_permissions {
 
 export interface IShowClubQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  id: string | null;
   name: string | null;
   permissions: (IShowClubQuery_currentUser_permissions | null)[] | null;
 }
 
 export interface IShowClubQuery {
-  clubByName: IShowClubQuery_clubByName | null;
+  clubByID: IShowClubQuery_clubByID | null;
+  eventsForClub: (IShowClubQuery_eventsForClub | null)[] | null;
   currentUser: IShowClubQuery_currentUser | null;
 }
 
 export interface IShowClubQueryVariables {
-  clubByNameName?: string | null;
+  clubByID: string;
 }
 
 /* tslint:disable */
@@ -235,6 +252,145 @@ export interface ICreateEventMutation {
 
 export interface ICreateEventMutationVariables {
   request?: CreateEventRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IEventListQuery
+// ====================================================
+
+export interface IEventListQuery_eventsConfirmed_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: string;
+}
+
+export interface IEventListQuery_eventsConfirmed {
+  __typename: "Event";
+  eventId: string;
+  name: string | null;
+  description: string | null;
+  eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
+}
+
+export interface IEventListQuery {
+  eventsConfirmed: (IEventListQuery_eventsConfirmed | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IEventPageInfoQuery
+// ====================================================
+
+export interface IEventPageInfoQuery_currentUser_permissions {
+  __typename: "permission_Role";
+  clubSubscriptionId: string | null;
+  clubId: string;
+}
+
+export interface IEventPageInfoQuery_currentUser {
+  __typename: "identity_ApplicationUser";
+  permissions: (IEventPageInfoQuery_currentUser_permissions | null)[] | null;
+}
+
+export interface IEventPageInfoQuery_clubByID_clubsubscription {
+  __typename: "ClubSubscription";
+  name: string | null;
+  price: number;
+  clubSubscriptionId: string;
+  clubId: string;
+}
+
+export interface IEventPageInfoQuery_clubByID {
+  __typename: "Club";
+  clubId: string;
+  name: string | null;
+  address: string | null;
+  clubsubscription: (IEventPageInfoQuery_clubByID_clubsubscription | null)[] | null;
+}
+
+export interface IEventPageInfoQuery {
+  currentUser: IEventPageInfoQuery_currentUser | null;
+  clubByID: IEventPageInfoQuery_clubByID | null;
+}
+
+export interface IEventPageInfoQueryVariables {
+  clubByID: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IEventPageQuery
+// ====================================================
+
+export interface IEventPageQuery_getEvent_locations_event {
+  __typename: "Event";
+  eventId: string;
+  name: string | null;
+}
+
+export interface IEventPageQuery_getEvent_locations_room {
+  __typename: "Room";
+  name: string | null;
+  roomId: string;
+}
+
+export interface IEventPageQuery_getEvent_locations {
+  __typename: "RoomEvent";
+  event: IEventPageQuery_getEvent_locations_event | null;
+  room: IEventPageQuery_getEvent_locations_room;
+}
+
+export interface IEventPageQuery_getEvent_instructorForEvents_user {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface IEventPageQuery_getEvent_instructorForEvents {
+  __typename: "InstructorForEvent";
+  instructorId: string;
+  user: IEventPageQuery_getEvent_instructorForEvents_user | null;
+}
+
+export interface IEventPageQuery_getEvent_eventPrices {
+  __typename: "EventPrice";
+  price: number;
+  clubSubscriptionId: string;
+}
+
+export interface IEventPageQuery_getEvent {
+  __typename: "Event";
+  eventId: string;
+  clubId: string;
+  name: string | null;
+  description: string | null;
+  startTime: any;
+  endTime: any;
+  publicPrice: number | null;
+  locations: (IEventPageQuery_getEvent_locations | null)[] | null;
+  instructorForEvents: (IEventPageQuery_getEvent_instructorForEvents | null)[] | null;
+  eventPrices: (IEventPageQuery_getEvent_eventPrices | null)[] | null;
+}
+
+export interface IEventPageQuery {
+  getEvent: IEventPageQuery_getEvent | null;
+}
+
+export interface IEventPageQueryVariables {
+  eventId: string;
 }
 
 /* tslint:disable */
@@ -336,7 +492,7 @@ export interface IMembersForClubQuery_membersForClub_user {
 
 export interface IMembersForClubQuery_membersForClub {
   __typename: "ClubMember";
-  user: IMembersForClubQuery_membersForClub_user;
+  user: IMembersForClubQuery_membersForClub_user | null;
 }
 
 export interface IMembersForClubQuery {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -8,23 +8,32 @@ import { ConfirmationButtonComponent } from 'src/app/components/confirmation-but
 import { ClubManageSubcriptionsComponent } from './club-manage/club-manage-subcriptions/club-manage-subcriptions.component';
 import { ClubManageEventsComponent } from './club-manage/club-manage-events/club-manage-events.component';
 import { EventCalendarComponent } from './event-calendar/event-calendar.component';
-import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
+import {
+  CalendarDateFormatter,
+  CalendarModule,
+  CalendarNativeDateFormatter,
+  DateAdapter,
+  DateFormatterParams,
+} from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
 import { ClubManageMembersComponent } from './club-manage/club-manage-members/club-manage-members.component';
-
+import { MobileSignupComponent } from './buttons/mobile-signup/mobile-signup.component';
+@Injectable({
+  providedIn: 'root',
+})
 class CustomDateFormatter extends CalendarNativeDateFormatter {
   public dayViewHour({ date, locale }: DateFormatterParams): string {
-      return new Intl.DateTimeFormat('ca', {
-          hour: 'numeric',
-          minute: 'numeric'
-      }).format(date);
+    return new Intl.DateTimeFormat('ca', {
+      hour: 'numeric',
+      minute: 'numeric',
+    }).format(date);
   }
 
   public weekViewHour({ date, locale }: DateFormatterParams): string {
     return new Intl.DateTimeFormat('ca', {
-        hour: 'numeric',
-        minute: 'numeric'
+      hour: 'numeric',
+      minute: 'numeric',
     }).format(date);
   }
 }
@@ -39,7 +48,8 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     ClubManageMembersComponent,
     ClubManageEventsComponent,
     EventCalendarComponent,
-    StripeElementsComponent
+    StripeElementsComponent,
+    MobileSignupComponent,
   ],
   exports: [
     HeaderBarComponent,
@@ -49,22 +59,26 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     StripeElementsComponent,
     ClubManageMembersComponent,
     ClubManageEventsComponent,
-    EventCalendarComponent
+    EventCalendarComponent,
+    MobileSignupComponent,
   ],
   imports: [
     CommonModule,
-    FormsModule, 
-    IonicModule, 
+    FormsModule,
+    IonicModule,
     ReactiveFormsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-  }, {
-    dateFormatter: {
-      provide: CalendarDateFormatter,
-      useClass: CustomDateFormatter
-    }
-  })]
+    CalendarModule.forRoot(
+      {
+        provide: DateAdapter,
+        useFactory: adapterFactory,
+      },
+      {
+        dateFormatter: {
+          provide: CalendarDateFormatter,
+          useClass: CustomDateFormatter,
+        },
+      }
+    ),
+  ],
 })
-
 export class ComponentsModule {}

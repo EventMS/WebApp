@@ -8,8 +8,8 @@ import { IShowClubQuery, IShowClubQueryVariables } from 'src/graphql_interfaces'
 })
 export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVariables> {
   document = gql`
-    query IShowClubQuery($clubByNameName: String) {
-      clubByName(name: $clubByNameName) {
+    query IShowClubQuery($clubByID: String!) {
+      clubByID(clubId: $clubByID) {
         address
         accountNumber
         adminId
@@ -29,7 +29,17 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
           email
         }
       }
+      eventsForClub(clubId: $clubByID) {
+        description
+        eventId
+        name
+        eventPrices {
+          price
+          clubSubscriptionId
+        }
+      }
       currentUser {
+        id
         name
         permissions {
           clubSubscriptionId
@@ -47,6 +57,6 @@ export class ShowClubQueryService extends Query<IShowClubQuery, IShowClubQueryVa
       })
     ); */
 
-  public ShowClubQuery$ = ({ clubByNameName }: IShowClubQueryVariables) =>
-    this.fetch({ clubByNameName: clubByNameName }).pipe(map((club) => club.data));
+  public ShowClubQuery$ = ({ clubByID }: IShowClubQueryVariables) =>
+    this.fetch({ clubByID: clubByID }).pipe(map((club) => club.data));
 }
