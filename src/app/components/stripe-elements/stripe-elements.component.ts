@@ -31,15 +31,21 @@ export class StripeElementsComponent implements AfterViewInit {
   @Input() dismissModal?: () => void;
   @ViewChild('cardElement') cardElement: ElementRef;
 
-  stripe: stripe.Stripe; // : stripe.Stripe;
-  card: stripe.elements.Element;
-  cardErrors: string | undefined;
+  public stripe: stripe.Stripe; // : stripe.Stripe;
+  public card: stripe.elements.Element;
+  public cardErrors: string | undefined;
+  public disabled: boolean = true;
 
   ngAfterViewInit() {
     this.card.mount(this.cardElement.nativeElement);
 
-    this.card.addEventListener('change', (error) => {
-      this.cardErrors = error?.error?.message;
+    this.card.addEventListener('change', (response) => {
+      if (response) {
+        const { complete, error } = response;
+        if (complete) this.disabled = false;
+
+        this.cardErrors = error?.message;
+      }
     });
   }
 
@@ -59,9 +65,9 @@ export class StripeElementsComponent implements AfterViewInit {
     });
     await loading.present();
 
-    if (this.subscriptionId) this.handleSubscription();
-    else if (this.eventId) this.handleSinglePayment();
-    else console.log('wrong inputs.');
+    // if (this.subscriptionId) this.handleSubscription();
+    // else if (this.eventId) this.handleSinglePayment();
+    // else console.log('wrong inputs.');
     loading.dismiss();
     this.dismissModal?.();
   }

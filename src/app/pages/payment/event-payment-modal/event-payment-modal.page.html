@@ -6,5 +6,6 @@
             </h1>
         </ion-row>
     </ion-grid>
-    <app-stripe-elements [amount]="price" [description]="description" [eventId]="eventId"></app-stripe-elements>
+    <app-stripe-elements [dismissModal]="dismissModal" [amount]="price" [description]="description" [eventId]="eventId">
+    </app-stripe-elements>
 </ion-content>
