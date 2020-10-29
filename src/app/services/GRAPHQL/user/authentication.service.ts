@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { LoginMutationService } from '../GRAPHQL/loginMutation.service';
+import { BehaviorSubject } from 'rxjs';
+import { LoginMutationService } from 'src/app/services/GRAPHQL/user/mutations/loginMutation.service'
 import { ICreateUserMutation, ILoginUserMutation, ILoginUserMutationVariables } from 'src/graphql_interfaces';
 import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';

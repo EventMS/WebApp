@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MembersForClubQueryService } from 'src/app/services/GRAPHQL/member/members-for-club-query.service';
 import { Observable } from 'rxjs';
 import { IMembersForClubQuery, IMembersForClubQuery_membersForClub_user, IMembersForClubQuery_membersForClub_user_permissions } from 'src/graphql_interfaces';
-import { map } from 'rxjs/operators';
-import { AddInstructorMutationService } from 'src/app/services/GRAPHQL/instructors/mutations/add-instructor-mutation.service';
-import { RemoveInstructorMutationService } from 'src/app/services/GRAPHQL/instructors/mutations/remove-instructor-mutation.service';
 import { AlertController } from '@ionic/angular';
+import { MemberService } from 'src/app/services/GRAPHQL/member/member.service';
 
 @Component({
   selector: 'app-club-manage-members',
@@ -18,11 +15,9 @@ export class ClubManageMembersComponent implements OnInit {
   members$: Observable<IMembersForClubQuery>
   private clubId: string
 
-  constructor(private memberQueryService: MembersForClubQueryService,
-    private route: ActivatedRoute,
-    private addInstructorMutationService: AddInstructorMutationService,
-    private removeInstructorMutationService: RemoveInstructorMutationService,
-    private alertCtrl: AlertController) { }
+  constructor(private route: ActivatedRoute,
+    private alertCtrl: AlertController,
+    private memberService: MemberService) { }
 
   ngOnInit() {
     this.getRoute().then(() => {
@@ -37,7 +32,7 @@ export class ClubManageMembersComponent implements OnInit {
   }
 
   fetchData() {
-    this.members$ = this.memberQueryService.watch({clubId: this.clubId}).valueChanges.pipe(map((value) => value.data));
+    this.members$ = this.memberService.getMembers(this.clubId)
   }
 
   async onRemoveMember(member: IMembersForClubQuery_membersForClub_user) {
@@ -85,29 +80,11 @@ export class ClubManageMembersComponent implements OnInit {
   }
 
   promoteInstructor(member: IMembersForClubQuery_membersForClub_user) {
-    this.addInstructorMutationService
-    .mutate({clubId: this.clubId, instructorId: member.id!},  {
-      refetchQueries: [
-        {
-          query: this.memberQueryService.document,
-          variables: { clubId: this.clubId },
-        },
-      ]
-    })
-    .subscribe()
+    this.memberService.addInstructor(this.clubId, member.id!).subscribe()
   }
 
   removeInstructor(member: IMembersForClubQuery_membersForClub_user) {
-    this.removeInstructorMutationService
-    .mutate({clubId: this.clubId, instructorId: member.id!}, {
-      refetchQueries: [
-        {
-          query: this.memberQueryService.document,
-          variables: { clubId: this.clubId },
-        },
-      ]
-    })
-    .subscribe()
+    this.memberService.removeInstructor(this.clubId, member.id!).subscribe()
   }
 
   isUserAdmin(permissions: (IMembersForClubQuery_membersForClub_user_permissions | null)[]) {

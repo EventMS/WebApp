@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Platform, PopoverController } from '@ionic/angular';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 import { ProfileOptionsComponent } from '../profile-options/profile-options.component';
 
 @Component({

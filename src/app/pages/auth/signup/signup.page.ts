@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ApolloError } from '@apollo/client/core';
 import { ToastController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
-import { CreateUserMutationService } from 'src/app/services/GRAPHQL/createUserMutation.service';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
+import { CreateUserMutationService } from 'src/app/services/GRAPHQL/user/mutations/createUserMutation.service';
 import { ICreateUserMutationVariables } from 'src/graphql_interfaces';
 
 @Component({
