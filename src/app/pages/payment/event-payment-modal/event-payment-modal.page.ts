@@ -10,10 +10,12 @@ export class EventPaymentModalPage implements OnInit {
   @Input() price: number;
   @Input() description: number;
   @Input() eventId: string;
+  @Input() callback: (success: boolean) => void;
 
   constructor(private modalController: ModalController) {}
 
-  public dismissModal = () => {
+  public dismissModal = (success: boolean) => {
+    this.callback(success);
     this.modalController.dismiss();
   };
 

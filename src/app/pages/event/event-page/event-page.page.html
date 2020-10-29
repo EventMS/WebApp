@@ -18,7 +18,7 @@
                     </ion-card-header>
                     <ion-card-content *ngFor="let instructor of event.instructorForEvents">
                         <ion-label>
-                            {{instructor.user.name}}
+                            Instructor: {{instructor.user.name}}
                         </ion-label>
                     </ion-card-content>
                 </ion-card>
@@ -68,8 +68,7 @@
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large"
-                                class="signUpButton" (click)="onSignup()" [disabled]="disabled">
+                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
                                 Sign up</ion-button>
                             <ng-template #alreadySignedUpButton>
                                 <ion-button size="large" class="signUpButton" [disabled]="disabled">Signed up!

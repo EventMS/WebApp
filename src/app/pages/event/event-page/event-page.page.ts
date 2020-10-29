@@ -43,6 +43,7 @@ export class EventPagePage implements OnInit {
         price: this.price,
         description: this.eventName,
         eventId: this.eventId,
+        callback: this.modalCallback,
       },
     });
     return await modal.present();
@@ -72,13 +73,23 @@ export class EventPagePage implements OnInit {
     });
   };
 
-  handleAlreadySignedUp(currentUser: IEventPageInfoQuery['currentUser'], getEvent: IEventPageQuery['getEvent']) {
+  public modalCallback = (succes: boolean) => {
+    if (succes) {
+      this.alreadySignedUp = true;
+      this.disabled = true;
+    }
+  };
+
+  public handleAlreadySignedUp = (
+    currentUser: IEventPageInfoQuery['currentUser'],
+    getEvent: IEventPageQuery['getEvent']
+  ) => {
     const eventId = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
     if (eventId) {
       this.alreadySignedUp = true;
       this.disabled = true;
     }
-  }
+  };
 
   private handlePriceForEvent = (
     clubByID: IEventPageInfoQuery['clubByID'],
@@ -98,6 +109,7 @@ export class EventPagePage implements OnInit {
         this.price = price;
         this.color = 'green';
       } else if (getEvent.publicPrice) {
+        this.color = 'black';
         this.price = getEvent.publicPrice;
       } else {
         this.disabled = true;

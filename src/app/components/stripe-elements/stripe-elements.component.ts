@@ -28,7 +28,7 @@ export class StripeElementsComponent implements AfterViewInit {
   @Input() description: string;
   @Input() eventId: string;
   @Input() subscriptionId: string;
-  @Input() dismissModal?: () => void;
+  @Input() dismissModal?: (success: boolean) => void;
   @ViewChild('cardElement') cardElement: ElementRef;
 
   public stripe: stripe.Stripe; // : stripe.Stripe;
@@ -82,6 +82,8 @@ export class StripeElementsComponent implements AfterViewInit {
         });
         if (result.error) {
           // Show error to your customer (e.g., insufficient funds)
+          loading.dismiss();
+          this.dismissModal?.(false);
           console.log(result.error.message);
         } else {
           // The payment has been processed!
@@ -95,7 +97,7 @@ export class StripeElementsComponent implements AfterViewInit {
           }
         }
         loading.dismiss();
-        this.dismissModal?.();
+        this.dismissModal?.(true);
       }
     });
   };
@@ -142,9 +144,13 @@ export class StripeElementsComponent implements AfterViewInit {
       })
       .then((result) => {
         if (result.error) {
+          loading.dismiss();
+          this.dismissModal?.(false);
           this.cardErrors = result.error.message;
         } else {
           if (isPaymentRetry) {
+            loading.dismiss();
+            this.dismissModal?.(false);
             // Update the payment method and retry invoice payment
             // this.retryInvoiceWithNewPaymentMethod({
             //   customerId: this.authService.currentUserValue.user.id,
@@ -163,7 +169,7 @@ export class StripeElementsComponent implements AfterViewInit {
           }
         }
         loading.dismiss();
-        this.dismissModal?.();
+        this.dismissModal?.(true);
       });
   };
 }
