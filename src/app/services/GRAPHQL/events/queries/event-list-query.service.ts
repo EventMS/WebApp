@@ -25,6 +25,6 @@ export class EventListQueryService extends Query<IEventListQuery> {
   public Events: Observable<any>
 
   getEvents() {
-    this.Events = this.fetch(null, {fetchPolicy: 'network-only'});
+    this.Events = this.fetch({}, {fetchPolicy: 'network-only'});
   }
 }

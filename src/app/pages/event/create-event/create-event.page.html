@@ -35,6 +35,9 @@
                     <owl-date-time #endPicker></owl-date-time>
                   </div>
                 </ion-item-group>
+                <ion-item-divider *ngIf="(club$ | async)?.instructors.length > 0">
+                  <ion-label>Choose instructors</ion-label>
+                </ion-item-divider>
                 <ion-item *ngFor="let isntr of (club$ |async)?.instructors">
                   <ion-label>{{isntr.user.name}} </ion-label>
                   <ion-checkbox (ionChange)="onInstructorCheckboxChange($event, isntr.userId)" form slot="end"></ion-checkbox>
