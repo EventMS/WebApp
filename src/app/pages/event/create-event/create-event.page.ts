@@ -47,9 +47,7 @@ export class CreateEventPage implements OnInit {
     private eventMutationService: CreateEventMutationService,
     public loadingController: LoadingController,
     private websocketService: SignalRServiceService,
-    private alertController: AlertController,
-    private eventQuery: EventListQueryService,
-    private client: Apollo) {
+    private alertController: AlertController) {
       this.initForm()
     }
 
