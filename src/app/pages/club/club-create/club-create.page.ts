@@ -131,7 +131,7 @@ export class ClubCreatePage implements OnInit {
   private handleResponse(data: ICreateClubMutation) {
     this.clubform.reset();
     //Navigate to page for new created club
-    this.router.navigate(['/']);
+    this.router.navigate(Paths.show_club.route(data?.createClub?.clubId!));
   }
 }
 
