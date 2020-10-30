@@ -6,7 +6,7 @@
           <ion-list-header>
             <ion-title>Club members</ion-title>
           </ion-list-header>          
-          <ion-card *ngFor="let item of (members$ | async)?.membersForClub">
+          <ion-card *ngFor="let item of (members$ | async)?.permissionsInClub">
             <ion-avatar>
               <img
                 src="https://www.iconfinder.com/data/icons/mixed-communication-and-ui-pack-1/48/general_pack_NEW_glyph_profile-512.png"
@@ -21,24 +21,24 @@
                 </ion-col>
                 <ion-col size="3">
                   <ion-card-header>
-                    <ion-card-title *ngIf="isUserAdmin(item.user.permissions)">Admin</ion-card-title>
-                    <ion-card-title *ngIf="isUserMember(item.user.permissions)">Member</ion-card-title>
-                    <ion-card-title *ngIf="isUserInstructor(item.user.permissions)">Instructor</ion-card-title>
+                    <ion-card-title *ngIf="isUserAdmin(item)">Admin</ion-card-title>
+                    <ion-card-title *ngIf="isUserMember(item)">Member</ion-card-title>
+                    <ion-card-title *ngIf="isUserInstructor(item)">Instructor</ion-card-title>
                   </ion-card-header>
                 </ion-col>
                 <ion-col class="end">
                   <ion-card-content>
                     <ion-toolbar>
                       <ion-buttons>
-                        <ion-button (click)="onPromoteInstructor(item.user)" *ngIf="isUserMember(item.user.permissions)">
+                        <ion-button (click)="onPromoteInstructor(item.user)" *ngIf="isUserMember(item)">
                           <ion-label>Instructor</ion-label>
                           <ion-icon name="arrow-up-outline"></ion-icon>
                         </ion-button>
-                        <ion-button (click)="onDemoteInstructor(item.user)" *ngIf="isUserInstructor(item.user.permissions)">
+                        <ion-button (click)="onDemoteInstructor(item.user)" *ngIf="isUserInstructor(item)">
                           <ion-label>Member</ion-label>
                           <ion-icon name="arrow-down-outline"></ion-icon>
                         </ion-button>
-                        <ion-button (click)="onRemoveMember(item.user)" *ngIf="!isUserAdmin(item.user.permissions)">
+                        <ion-button (click)="onRemoveMember(item.user)" *ngIf="!isUserAdmin(item)">
                           <ion-icon name="trash-outline"></ion-icon>
                         </ion-button>
                       </ion-buttons>

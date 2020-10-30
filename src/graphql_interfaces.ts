@@ -207,36 +207,6 @@ export interface IShowClubQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ICreateUserMutation
-// ====================================================
-
-export interface ICreateUserMutation_createUser_user {
-  __typename: "identity_ApplicationUser";
-  email: string | null;
-  id: string | null;
-  name: string | null;
-}
-
-export interface ICreateUserMutation_createUser {
-  __typename: "identity_Response";
-  token: string | null;
-  user: ICreateUserMutation_createUser_user | null;
-}
-
-export interface ICreateUserMutation {
-  createUser: ICreateUserMutation_createUser | null;
-}
-
-export interface ICreateUserMutationVariables {
-  request?: CreateUserRequestInput | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: ICreateEventMutation
 // ====================================================
 
@@ -445,58 +415,23 @@ export interface IRemoveInstructorMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ILoginUserMutation
-// ====================================================
-
-export interface ILoginUserMutation_loginUser_user {
-  __typename: "identity_ApplicationUser";
-  email: string | null;
-  id: string | null;
-  name: string | null;
-}
-
-export interface ILoginUserMutation_loginUser {
-  __typename: "identity_Response";
-  token: string | null;
-  user: ILoginUserMutation_loginUser_user | null;
-}
-
-export interface ILoginUserMutation {
-  loginUser: ILoginUserMutation_loginUser | null;
-}
-
-export interface ILoginUserMutationVariables {
-  request?: LoginUserRequestInput | null;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: IMembersForClubQuery
 // ====================================================
 
-export interface IMembersForClubQuery_membersForClub_user_permissions {
-  __typename: "permission_Role";
-  userRole: string | null;
-}
-
-export interface IMembersForClubQuery_membersForClub_user {
+export interface IMembersForClubQuery_permissionsInClub_user {
   __typename: "identity_ApplicationUser";
   name: string | null;
   id: string | null;
-  permissions: (IMembersForClubQuery_membersForClub_user_permissions | null)[] | null;
 }
 
-export interface IMembersForClubQuery_membersForClub {
-  __typename: "ClubMember";
-  user: IMembersForClubQuery_membersForClub_user | null;
+export interface IMembersForClubQuery_permissionsInClub {
+  __typename: "permission_Role";
+  user: IMembersForClubQuery_permissionsInClub_user | null;
+  userRole: string | null;
 }
 
 export interface IMembersForClubQuery {
-  membersForClub: (IMembersForClubQuery_membersForClub | null)[] | null;
+  permissionsInClub: (IMembersForClubQuery_permissionsInClub | null)[] | null;
 }
 
 export interface IMembersForClubQueryVariables {
@@ -593,6 +528,66 @@ export interface ISubscriptionsForClubQuery {
 
 export interface ISubscriptionsForClubQueryVariables {
   clubId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ICreateUserMutation
+// ====================================================
+
+export interface ICreateUserMutation_createUser_user {
+  __typename: "identity_ApplicationUser";
+  email: string | null;
+  id: string | null;
+  name: string | null;
+}
+
+export interface ICreateUserMutation_createUser {
+  __typename: "identity_Response";
+  token: string | null;
+  user: ICreateUserMutation_createUser_user | null;
+}
+
+export interface ICreateUserMutation {
+  createUser: ICreateUserMutation_createUser | null;
+}
+
+export interface ICreateUserMutationVariables {
+  request?: CreateUserRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ILoginUserMutation
+// ====================================================
+
+export interface ILoginUserMutation_loginUser_user {
+  __typename: "identity_ApplicationUser";
+  email: string | null;
+  id: string | null;
+  name: string | null;
+}
+
+export interface ILoginUserMutation_loginUser {
+  __typename: "identity_Response";
+  token: string | null;
+  user: ILoginUserMutation_loginUser_user | null;
+}
+
+export interface ILoginUserMutation {
+  loginUser: ILoginUserMutation_loginUser | null;
+}
+
+export interface ILoginUserMutationVariables {
+  request?: LoginUserRequestInput | null;
 }
 
 /* tslint:disable */
