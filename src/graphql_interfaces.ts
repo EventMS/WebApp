@@ -260,6 +260,29 @@ export interface ICreateEventMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: ISignUpForEventMutationService
+// ====================================================
+
+export interface ISignUpForEventMutationService_signUpForEvent {
+  __typename: "PaymentIntentResponse";
+  price: number;
+  clientSecret: string | null;
+}
+
+export interface ISignUpForEventMutationService {
+  signUpForEvent: ISignUpForEventMutationService_signUpForEvent | null;
+}
+
+export interface ISignUpForEventMutationServiceVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IEventListQuery
 // ====================================================
 
@@ -290,6 +313,13 @@ export interface IEventListQuery {
 // GraphQL query operation: IEventPageInfoQuery
 // ====================================================
 
+export interface IEventPageInfoQuery_currentUser_events {
+  __typename: "EventVerification";
+  code: string | null;
+  eventVerificationId: number;
+  eventId: string;
+}
+
 export interface IEventPageInfoQuery_currentUser_permissions {
   __typename: "permission_Role";
   clubSubscriptionId: string | null;
@@ -298,6 +328,7 @@ export interface IEventPageInfoQuery_currentUser_permissions {
 
 export interface IEventPageInfoQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  events: (IEventPageInfoQuery_currentUser_events | null)[] | null;
   permissions: (IEventPageInfoQuery_currentUser_permissions | null)[] | null;
 }
 

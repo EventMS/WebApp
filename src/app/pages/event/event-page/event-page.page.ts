@@ -4,7 +4,12 @@ import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page.service';
-import { IEventPageInfoQuery, IEventPageQuery } from 'src/graphql_interfaces';
+import {
+  IEventPageInfoQuery,
+  IEventPageInfoQuery_currentUser,
+  IEventPageQuery,
+  IEventPageQuery_getEvent,
+} from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
 
 @Component({
@@ -18,7 +23,9 @@ export class EventPagePage implements OnInit {
   public price: number | string | null;
   public color = 'black';
   public eventName: string;
+  public eventId: string;
   public disabled: boolean;
+  public alreadySignedUp: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -35,6 +42,8 @@ export class EventPagePage implements OnInit {
       componentProps: {
         price: this.price,
         description: this.eventName,
+        eventId: this.eventId,
+        callback: this.modalCallback,
       },
     });
     return await modal.present();
@@ -54,12 +63,32 @@ export class EventPagePage implements OnInit {
             this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
             this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
               this.eventName = getEvent.name!;
+              this.eventId = getEvent.eventId!;
+              this.handleAlreadySignedUp(currentUser, getEvent);
               this.handlePriceForEvent(clubByID, currentUser, getEvent);
             });
           }
         });
       }
     });
+  };
+
+  public modalCallback = (succes: boolean) => {
+    if (succes) {
+      this.alreadySignedUp = true;
+      this.disabled = true;
+    }
+  };
+
+  public handleAlreadySignedUp = (
+    currentUser: IEventPageInfoQuery['currentUser'],
+    getEvent: IEventPageQuery['getEvent']
+  ) => {
+    const eventId = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
+    if (eventId) {
+      this.alreadySignedUp = true;
+      this.disabled = true;
+    }
   };
 
   private handlePriceForEvent = (
@@ -76,13 +105,13 @@ export class EventPagePage implements OnInit {
         (ePrice) => ePrice?.clubSubscriptionId == currentSubscription?.clubSubscriptionId
       )?.price;
 
-      if (price) {
-        this.price = `Price: ${price} $`;
+      if (price && price !== getEvent?.publicPrice) {
+        this.price = price;
         this.color = 'green';
       } else if (getEvent.publicPrice) {
-        this.price = `Price: ${getEvent.publicPrice} $`;
+        this.color = 'black';
+        this.price = getEvent.publicPrice;
       } else {
-        this.price = 'You a not subcribed to this club';
         this.disabled = true;
       }
     }
