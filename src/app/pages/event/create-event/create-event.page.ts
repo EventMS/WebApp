@@ -61,6 +61,7 @@ export class CreateEventPage implements OnInit {
       message: message,
       buttons: ['OK'],
     })
+    await alert.present();
   }
 
   ngOnInit() {
