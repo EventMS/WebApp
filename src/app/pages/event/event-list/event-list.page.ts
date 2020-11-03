@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Paths } from 'src/app/navigation/routes';
-import { EventListQueryService } from 'src/app/services/GRAPHQL/events/queries/event-list-query.service';
+import { EventListQueryService } from 'src/app/services/GRAPHQL/event/queries/event-list-query.service';
 
 @Component({
   selector: 'app-event-list',

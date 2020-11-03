@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page-info-query.service';
-import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page.service';
+import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/event/queries/event-page-info-query.service';
+import { EventPageQueryService } from 'src/app/services/GRAPHQL/event/queries/event-page.service';
 import { IEventPageInfoQuery, IEventPageQuery } from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
 

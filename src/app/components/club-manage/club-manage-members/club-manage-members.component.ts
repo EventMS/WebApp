@@ -88,11 +88,11 @@ export class ClubManageMembersComponent implements OnInit {
   }
 
   isUserAdmin(permissions: (IMembersForClubQuery_permissionsInClub | null)) {
-    return permissions.userRole == "Admin"
+    return permissions!.userRole == "Admin"
   }
 
   isUserInstructor(permissions: (IMembersForClubQuery_permissionsInClub | null)) {
-    return permissions.userRole == "Instructor"
+    return permissions!.userRole == "Instructor"
   }
 
   isUserMember(permissions: (IMembersForClubQuery_permissionsInClub | null)) {
