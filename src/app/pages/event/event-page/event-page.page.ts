@@ -4,13 +4,9 @@ import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page.service';
-import {
-  IEventPageInfoQuery,
-  IEventPageInfoQuery_currentUser,
-  IEventPageQuery,
-  IEventPageQuery_getEvent,
-} from 'src/graphql_interfaces';
-import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
+import { IEventPageInfoQuery, IEventPageQuery } from 'src/graphql_interfaces';
+import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
+import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
 
 @Component({
   selector: 'app-event-page',
@@ -54,6 +50,7 @@ export class EventPagePage implements OnInit {
   }
 
   private initData = () => {
+    this.alreadySignedUp = true;
     this.activatedRoute.params.subscribe((params) => {
       const eventId = params['eventId'] as string;
       if (eventId) {
@@ -78,6 +75,11 @@ export class EventPagePage implements OnInit {
       this.alreadySignedUp = true;
       this.disabled = true;
     }
+  };
+
+  public onVerifyClicked = async () => {
+    const modal = await this.modalController.create({ component: VerifyModalUserPage });
+    return await modal.present();
   };
 
   public handleAlreadySignedUp = (

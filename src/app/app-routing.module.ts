@@ -21,10 +21,6 @@ const routes: Routes = [
     loadChildren: () => import('./navigation/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'event-payment-modal',
-    loadChildren: () => import('./pages/payment/event-payment-modal/event-payment-modal.module').then( m => m.EventPaymentModalPageModule)
-  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],

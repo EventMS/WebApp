@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ShowClubPageRoutingModule } from './show-club-routing.module';
 
 import { ShowClubPage } from './show-club.page';
-import { PaymentModalPageModule } from '../../payment/payment-modal/payment-modal.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { PaymentModalPageModule } from '../../modals/payment-modal/payment-modal.module';
 
 @NgModule({
   imports: [
