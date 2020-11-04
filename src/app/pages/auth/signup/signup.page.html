@@ -14,23 +14,23 @@
         <ion-row class="ion-align-items-stretch" style="margin-top: 1em">
           <h4>Or create a user</h4>
         </ion-row>
-        <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
           <ion-item>
             <ion-input id="name" formControlName="name" type="text" placeholder="Name"></ion-input>
-            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-              <div *ngIf="name.errors.required">Name is required.</div>
+            <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger">
+              <div *ngIf="name!.errors!.required">Name is required.</div>
             </div>
           </ion-item>
           <ion-item>
             <ion-input id="email" formControlName="email" type="email" placeholder="your@email.com"></ion-input>
-            <div *ngIf="email.invalid && (email.touched)" class="alert alert-danger">
-              <div *ngIf="email.errors">Email is required</div>
+            <div *ngIf="email!.invalid && (email!.touched)" class="alert alert-danger">
+              <div *ngIf="email!.errors">Email is required</div>
             </div>
           </ion-item>
           <ion-item>
             <ion-input id="phoneNumber" formControlName="phoneNumber" placeholder="88225566"></ion-input>
-            <div *ngIf="phoneNumber.invalid && (phoneNumber.touched)" class="alert alert-danger">
-              <div *ngIf="phoneNumber.errors">phoneNumber is required</div>
+            <div *ngIf="phoneNumber!.invalid && (phoneNumber!.touched)" class="alert alert-danger">
+              <div *ngIf="phoneNumber!.errors">phoneNumber is required</div>
             </div>
           </ion-item>
           <ion-item>
@@ -44,15 +44,15 @@
             />
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <div *ngIf="birthDate.invalid && (birthDate.touched)" class="alert alert-danger">
-              <div *ngIf="birthDate.errors">birthDate is required</div>
+            <div *ngIf="birthDate!.invalid && (birthDate!.touched)" class="alert alert-danger">
+              <div *ngIf="birthDate!.errors">birthDate is required</div>
             </div>
           </ion-item>
           <ion-item>
             <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
           </ion-item>
-          <div *ngIf="password.invalid && (password.touched)" class="alert alert-danger">
-            <div *ngIf="password.errors">Password is required and needs 1 uppercase letter and a special character</div>
+          <div *ngIf="password!.invalid && (password!.touched)" class="alert alert-danger">
+            <div *ngIf="password!.errors">Password is required and needs 1 uppercase letter and a special character</div>
           </div>
           <div>
             <ion-button
@@ -61,7 +61,7 @@
               type="submit"
               color="warning"
               expand="block"
-              [disabled]="signupForm.invalid"
+              [disabled]="signupForm!.invalid"
               >Submit</ion-button
             >
           </div>

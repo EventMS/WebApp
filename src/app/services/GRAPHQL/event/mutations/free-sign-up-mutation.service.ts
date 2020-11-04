@@ -13,6 +13,4 @@ export class FreeSignUpMutationService extends Mutation<IFreeSignUpMutation, IFr
       }
     }
   `;
-
-  public signUpForFreeEventMutation = ({ eventId }: IFreeSignUpMutationVariables) => this.mutate({ eventId });
 }

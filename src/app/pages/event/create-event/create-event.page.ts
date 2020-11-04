@@ -10,8 +10,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
-import { EventListQueryService } from 'src/app/services/GRAPHQL/events/queries/event-list-query.service';
-import { Apollo } from 'apollo-angular';
+import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[];
@@ -41,13 +40,12 @@ export class CreateEventPage implements OnInit {
   club$: Observable<ICreateEventClubQuery["clubByID"]>
 
   constructor(private route: ActivatedRoute,
-    private clubQueryService: CreateEventClubQueryService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private eventMutationService: CreateEventMutationService,
     public loadingController: LoadingController,
     private websocketService: SignalRServiceService,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private eventService: EventService) {
       this.initForm()
     }
 
@@ -63,6 +61,7 @@ export class CreateEventPage implements OnInit {
       message: message,
       buttons: ['OK'],
     })
+    await alert.present();
   }
 
   ngOnInit() {
@@ -113,15 +112,15 @@ export class CreateEventPage implements OnInit {
     }
 
     this.presentLoading().then(() => {
-      this.eventMutationService.mutate({
-        request: request
-      }).subscribe(
+      this.eventService.createEvent(request)
+      .subscribe(
         () => {},
         () => {
           this.loadingController.dismiss();
           this.presentAlert("Could not create event")
-        })
-      })
+        }
+      )
+    })
   }
 
   onRoomCheckboxChange(event, roomId: string) {
@@ -196,9 +195,7 @@ export class CreateEventPage implements OnInit {
   }
 
   private fetchData() {
-    this.club$ = this.clubQueryService.watch({clubId: this.clubId}, {fetchPolicy: "cache-and-network"})
-      .valueChanges
-      .pipe(map(result => result.data.clubByID))
+    this.club$ = this.eventService.createEventClubInfo(this.clubId)
     this.club$.subscribe(
       (data) => {
         if(data == null) {

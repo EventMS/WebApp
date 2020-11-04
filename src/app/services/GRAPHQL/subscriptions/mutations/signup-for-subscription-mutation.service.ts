@@ -19,12 +19,4 @@ export class SignupForSubscriptionMutationService extends Mutation<
       }
     }
   `;
-
-  signUpForSupscription = ({ clubSubscriptionId, paymentMethodId }: NonNullable<SignUpSubscriptionRequestInput>) =>
-    this.mutate({
-      signUpForSubscriptionRequest: {
-        clubSubscriptionId: clubSubscriptionId,
-        paymentMethodId: paymentMethodId,
-      },
-    });
 }

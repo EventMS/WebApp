@@ -8,14 +8,12 @@ import { IMembersForClubQuery, IMembersForClubQueryVariables } from 'src/graphql
 export class MembersForClubQueryService extends Query<IMembersForClubQuery, IMembersForClubQueryVariables> {
   document = gql`
     query IMembersForClubQuery($clubId: String!) {
-      membersForClub(clubId: $clubId){
-        user{
+      permissionsInClub(clubId: $clubId) {
+        user {
           name
           id
-          permissions{
-            userRole
-          }
         }
+        userRole
       }
     }
   `;

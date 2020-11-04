@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ApolloError } from '@apollo/client/core';
 import { ToastController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
-import { CreateUserMutationService } from 'src/app/services/GRAPHQL/createUserMutation.service';
-import { ICreateUserMutationVariables } from 'src/graphql_interfaces';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
+import { CreateUserMutationService } from 'src/app/services/GRAPHQL/user/mutations/createUserMutation.service';
+import { CreateUserRequestInput, ICreateUserMutationVariables } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +15,6 @@ export class SignupPage {
   constructor(
     private toastController: ToastController,
     private formBuilder: FormBuilder,
-    private createUserMutationService: CreateUserMutationService,
     private authenticationService: AuthenticationService
   ) {}
 
@@ -64,10 +63,16 @@ export class SignupPage {
       password,
     }: NonNullable<ICreateUserMutationVariables['request']> = this.signupForm.value;
 
-    this.createUserMutationService
-      .mutate({
-        request: { email: email, name: name, password: password, phoneNumber: phoneNumber, birthDate: birthDate },
-      })
+    const request: CreateUserRequestInput = {
+      name: name,
+      email: email,
+      birthDate: birthDate,
+      phoneNumber: phoneNumber,
+      password: password
+    }
+
+    this.authenticationService
+      .createUser(request)
       .subscribe(
         ({ data }) => {
           this.presentToast();

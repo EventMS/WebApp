@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
 import { IShowClubQuery, IShowClubQuery_clubByID_clubsubscription } from 'src/graphql_interfaces';
 import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page';
@@ -14,7 +15,7 @@ import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page'
 export class ShowClubPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private showClubQueryService: ShowClubQueryService,
+    private clubService: ClubService,
     private modalController: ModalController
   ) {}
 
@@ -28,7 +29,7 @@ export class ShowClubPage implements OnInit {
     this.route.params.subscribe((params) => {
       const clubId = params['clubId'] as string;
       if (clubId) {
-        this.club$ = this.showClubQueryService?.ShowClubQuery$({ clubByID: clubId });
+        this.club$ = this.clubService.getClubDetails(clubId);
         this.initData();
       }
     });

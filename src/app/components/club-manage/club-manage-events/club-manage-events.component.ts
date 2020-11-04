@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
-import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queries/create-event-club-query.service';
-import { ICreateEventClubQuery, ICreateEventClubQuery_clubByID } from 'src/graphql_interfaces';
+import { ICreateEventClubQuery } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { EMSEvent } from 'src/app/pages/event/create-event/create-event.page';
+import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
+import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 
 @Component({
   selector: 'app-club-manage-events',
@@ -24,10 +24,9 @@ export class ClubManageEventsComponent implements OnInit {
 
   club$: Observable<ICreateEventClubQuery["clubByID"]>
 
-  constructor(private modalController: ModalController,
-    private router: Router,
+  constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
-    private clubQueryService: CreateEventClubQueryService) {
+    private eventService: EventService) {
      }
 
   ngOnInit() {
@@ -55,15 +54,13 @@ export class ClubManageEventsComponent implements OnInit {
   }
 
   getEvents() {
-    this.club$ = this.clubQueryService.watch({clubId: this.clubId}, {fetchPolicy: "cache-and-network"})
-    .valueChanges
-    .pipe(map(result => result.data.clubByID))
+    this.club$ = this.eventService.createEventClubInfo(this.clubId)
     this.club$.subscribe(
       (data) => {
         this.events = this.createEvents(data)
-      })
+      }
+    )
   }
-
 
   private async getRoute() {
     this.activatedRoute.params.subscribe((params) => {
