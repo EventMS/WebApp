@@ -1,4 +1,9 @@
-<ion-header>
+<ion-header *ngIf="(clubs$ | async)?.myClubs.length == 0">
+  <ion-toolbar>
+    <ion-title>You are not connected to any clubs yet!</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-header *ngIf="adminClubs.length > 0">
   <ion-toolbar>
     <ion-title>Clubs where im Admin</ion-title>
   </ion-toolbar>

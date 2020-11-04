@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { Observable } from 'rxjs'
 import { IMyClubsListQuery, IMyClubsListQuery_currentUser_permissions, IMyClubsListQuery_myClubs, IMyClubsListQuery_myClubs_clubsubscription } from 'src/graphql_interfaces';
-import { Router } from '@angular/router';
-import { Paths } from 'src/app/navigation/routes';
 
 @Component({
   selector: 'app-myclubs',
@@ -39,7 +37,7 @@ export class MyclubsPage implements OnInit {
     const permissionsForClub = permissions.find((perm) => {
       return perm.clubId == club.clubId
     })
-    
+
     if(permissionsForClub.userRole == "Member"){return "Your subscription: " + permissionsForClub.clubSubscription.name}
     else { return ""}
   }
