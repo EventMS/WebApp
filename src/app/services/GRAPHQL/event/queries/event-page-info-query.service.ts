@@ -10,6 +10,7 @@ export class EventPageInfoQueryService extends Query<IEventPageInfoQuery, IEvent
   document = gql`
     query IEventPageInfoQuery($clubByID: String!) {
       currentUser {
+        id
         events {
           eventId
           code

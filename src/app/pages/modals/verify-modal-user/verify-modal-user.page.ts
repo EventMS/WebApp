@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-verify-modal-user',
@@ -7,7 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class VerifyModalUserPage implements OnInit {
   @Input() code: string;
-  constructor() {}
+
+  public instructorCode: string;
+
+  constructor(modalController: ModalController) {}
 
   ngOnInit() {}
+
+  public onCodeSubmitted = () => {};
 }

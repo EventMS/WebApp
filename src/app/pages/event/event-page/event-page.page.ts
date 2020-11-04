@@ -3,7 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
-import { IEventPageInfoQuery, IEventPageQuery, IEventPageQuery_getEvent } from 'src/graphql_interfaces';
+import {
+  IEventPageInfoQuery,
+  IEventPageInfoQuery_currentUser,
+  IEventPageQuery,
+  IEventPageQuery_getEvent,
+  IEventPageQuery_getEvent_instructorForEvents,
+} from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
 
@@ -18,10 +24,12 @@ export class EventPagePage implements OnInit {
   public price: number | string | null;
   public color = 'black';
   public eventName: string;
-  public eventId: string;
   public disabled: boolean;
   public alreadySignedUp: boolean = false;
-  public code: string;
+
+  private eventId: string;
+  private code: string | null;
+  private clubId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,11 +69,12 @@ export class EventPagePage implements OnInit {
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
+            this.handlePriceForEvent(getEvent);
+            this.eventName = getEvent.name!;
+            this.eventId = getEvent.eventId!;
+            this.clubId = getEvent.clubId;
             this.clubInfo$.subscribe(({ currentUser }) => {
-              this.eventName = getEvent.name!;
-              this.eventId = getEvent.eventId!;
-              this.handleAlreadySignedUp(currentUser, getEvent);
-              this.handlePriceForEvent(getEvent);
+              this.handleAlreadySignedUp(currentUser!, getEvent);
             });
           }
         });
@@ -75,7 +84,9 @@ export class EventPagePage implements OnInit {
 
   public modalCallback = (succes: boolean) => {
     if (succes) {
-      this.alreadySignedUp = true;
+      this.eventService
+        .refetchEventPageInfo({ clubByID: this.clubId })
+        .subscribe(({ data }) => console.log(data.currentUser.events));
     }
   };
 
@@ -87,13 +98,11 @@ export class EventPagePage implements OnInit {
     return await modal.present();
   };
 
-  public handleAlreadySignedUp = (
-    currentUser: IEventPageInfoQuery['currentUser'],
-    getEvent: IEventPageQuery['getEvent']
-  ) => {
+  public handleAlreadySignedUp = (currentUser: IEventPageInfoQuery_currentUser, getEvent: IEventPageQuery_getEvent) => {
     const event = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
-    if (event) {
-      this.code = event.code!;
+
+    if (event || this.isInstructorForEvent(getEvent.instructorForEvents, currentUser.id!)) {
+      this.code = event?.code ?? null;
       this.alreadySignedUp = true;
     }
   };
@@ -108,5 +117,12 @@ export class EventPagePage implements OnInit {
       this.color = 'black';
       this.price = getEvent.publicPrice;
     }
+  };
+
+  private isInstructorForEvent = (
+    instructors: IEventPageQuery_getEvent['instructorForEvents'],
+    instructorId: string
+  ) => {
+    return Boolean(instructors?.find((ins) => ins?.user?.id === instructorId)?.user?.id);
   };
 }

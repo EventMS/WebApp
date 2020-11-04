@@ -313,6 +313,7 @@ export interface IEventPageInfoQuery_currentUser_events {
 
 export interface IEventPageInfoQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  id: string | null;
   events: (IEventPageInfoQuery_currentUser_events | null)[] | null;
 }
 

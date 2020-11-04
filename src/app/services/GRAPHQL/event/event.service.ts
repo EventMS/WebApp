@@ -4,6 +4,7 @@ import {
   ICreateEventClubQuery,
   IEventListQuery,
   IEventPageInfoQuery,
+  IEventPageInfoQueryVariables,
   IEventPageQuery,
 } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
@@ -83,4 +84,8 @@ export class EventService {
       })
       .valueChanges.pipe(map(({ data }) => data));
   }
+
+  refetchEventPageInfo = ({ clubByID }: IEventPageInfoQueryVariables) => {
+    return this.eventPageInfoQuery.fetch({ clubByID }, { fetchPolicy: 'network-only' });
+  };
 }
