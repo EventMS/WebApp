@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
-import { SignUpForEventMutationService } from 'src/app/services/GRAPHQL/events/mutations/single-payment-mutation.service';
-import { SignupForSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/signup-for-subscription-mutation.service';
+import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
+import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({
@@ -13,8 +13,8 @@ declare var Stripe: stripe.StripeStatic;
 export class StripeElementsComponent implements AfterViewInit {
   constructor(
     public loadingController: LoadingController,
-    private signUpforSubscriptionMutationService: SignupForSubscriptionMutationService,
-    private signUpForEventMutationService: SignUpForEventMutationService,
+    private subscriptionService: SubscriptionService,
+    private eventService: EventService,
     private authService: AuthenticationService
   ) {
     this.stripe = Stripe(
@@ -64,7 +64,8 @@ export class StripeElementsComponent implements AfterViewInit {
   }
 
   handleSinglePayment = () => {
-    this.signUpForEventMutationService.signUpForEventMutation(this.eventId).subscribe(async ({ data }) => {
+    this.eventService.signUpForEvent(this.eventId)
+    .subscribe(async ({ data }) => {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
         duration: 10000,
@@ -159,13 +160,17 @@ export class StripeElementsComponent implements AfterViewInit {
             //   priceId: priceId,
             // });
           } else {
-            //Create the subscription
-            this.signUpforSubscriptionMutationService
-              .signUpForSupscription({
-                clubSubscriptionId: this.subscriptionId,
-                paymentMethodId: result?.paymentMethod?.id!,
-              })
-              .subscribe();
+            if (this.subscriptionId)
+              //Create the subscription
+              this.subscriptionService
+                .signUpForSupscription({
+                  clubSubscriptionId: this.subscriptionId,
+                  paymentMethodId: result?.paymentMethod?.id!,
+                })
+                .subscribe();
+            else {
+              console.log('Single payment');
+            }
           }
         }
         loading.dismiss();

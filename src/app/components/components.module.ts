@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
 import { ProfileOptionsComponent } from './profile-options/profile-options.component';
-import { ConfirmationButtonComponent } from 'src/app/components/confirmation-button/confirmation-button.component';
 import { ClubManageSubcriptionsComponent } from './club-manage/club-manage-subcriptions/club-manage-subcriptions.component';
 import { ClubManageEventsComponent } from './club-manage/club-manage-events/club-manage-events.component';
 import { EventCalendarComponent } from './event-calendar/event-calendar.component';
@@ -42,7 +41,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   declarations: [
     HeaderBarComponent,
     ProfileOptionsComponent,
-    ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
     StripeElementsComponent,
     ClubManageMembersComponent,
@@ -54,7 +52,6 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   exports: [
     HeaderBarComponent,
     ProfileOptionsComponent,
-    ConfirmationButtonComponent,
     ClubManageSubcriptionsComponent,
     StripeElementsComponent,
     ClubManageMembersComponent,

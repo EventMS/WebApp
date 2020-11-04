@@ -17,6 +17,4 @@ export class SignUpForEventMutationService extends Mutation<
       }
     }
   `;
-
-  public signUpForEventMutation = (eventId: string) => this.mutate({ eventId });
 }

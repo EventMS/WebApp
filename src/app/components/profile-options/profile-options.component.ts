@@ -4,9 +4,9 @@ import { PopoverController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Paths } from 'src/app/navigation/routes';
-import { AuthenticationService } from 'src/app/services/AUTH/authentication.service';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
-import { IMyClubsQuery, IMyClubsQuery_myClubs } from 'src/graphql_interfaces';
+import { IMyClubsQuery } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-profile-options',

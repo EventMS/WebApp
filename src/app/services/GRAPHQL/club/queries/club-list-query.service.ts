@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
-import { map } from 'rxjs/operators';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
 
 @Injectable({
@@ -21,6 +20,4 @@ export class ClubListQueryService extends Query<IGetClubsQuery> {
       }
     }
   `;
-
-  public GetClubsQuery = this.watch().valueChanges.pipe(map((value) => value.data));
 }

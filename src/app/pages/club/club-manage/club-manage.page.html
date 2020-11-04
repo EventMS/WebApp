@@ -3,11 +3,6 @@
     <mat-drawer *ngIf="platform.is('desktop')" opened="true" disableClose="true" #drawer class="example-sidenav" mode="side">
       <ion-list>
         <ion-item>
-          <ion-button fill="clear" (click)="sidebarContent = SidebarContent.club">
-            <ion-label>Manage Club</ion-label>
-          </ion-button>
-        </ion-item>
-        <ion-item>
           <ion-button fill="clear" (click)="sidebarContent = SidebarContent.events">
             <ion-label>Manage Events</ion-label>
           </ion-button>
@@ -15,11 +10,6 @@
         <ion-item>
           <ion-button fill="clear" (click)="sidebarContent = SidebarContent.members">
             <ion-label>Manage Members</ion-label>
-          </ion-button>
-        </ion-item>
-        <ion-item>
-          <ion-button fill="clear" (click)="sidebarContent = SidebarContent.instructors">
-            <ion-label>Manage Instructors</ion-label>
           </ion-button>
         </ion-item>
         <ion-item>
