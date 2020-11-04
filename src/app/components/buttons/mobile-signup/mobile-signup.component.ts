@@ -10,13 +10,7 @@ export class MobileSignupComponent implements OnInit {
   @Input() verify: boolean;
   @Input() callback: () => void;
 
-  public colorVar: string = '#70ad47';
-
-  constructor() {
-    console.log(this.verify, this.buttonText, this.callback);
-
-    if (this.verify) this.colorVar = 'blue';
-  }
+  constructor() {}
 
   ngOnInit() {}
 }
