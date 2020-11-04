@@ -307,21 +307,13 @@ export interface IEventListQuery {
 
 export interface IEventPageInfoQuery_currentUser_events {
   __typename: "EventVerification";
-  code: string | null;
-  eventVerificationId: number;
   eventId: string;
-}
-
-export interface IEventPageInfoQuery_currentUser_permissions {
-  __typename: "permission_Role";
-  clubSubscriptionId: string | null;
-  clubId: string;
+  code: string | null;
 }
 
 export interface IEventPageInfoQuery_currentUser {
   __typename: "identity_ApplicationUser";
   events: (IEventPageInfoQuery_currentUser_events | null)[] | null;
-  permissions: (IEventPageInfoQuery_currentUser_permissions | null)[] | null;
 }
 
 export interface IEventPageInfoQuery_clubByID_clubsubscription {
@@ -358,12 +350,6 @@ export interface IEventPageInfoQueryVariables {
 // GraphQL query operation: IEventPageQuery
 // ====================================================
 
-export interface IEventPageQuery_getEvent_locations_event {
-  __typename: "Event";
-  eventId: string;
-  name: string | null;
-}
-
 export interface IEventPageQuery_getEvent_locations_room {
   __typename: "Room";
   name: string | null;
@@ -372,7 +358,6 @@ export interface IEventPageQuery_getEvent_locations_room {
 
 export interface IEventPageQuery_getEvent_locations {
   __typename: "RoomEvent";
-  event: IEventPageQuery_getEvent_locations_event | null;
   room: IEventPageQuery_getEvent_locations_room;
 }
 
@@ -384,7 +369,6 @@ export interface IEventPageQuery_getEvent_instructorForEvents_user {
 
 export interface IEventPageQuery_getEvent_instructorForEvents {
   __typename: "InstructorForEvent";
-  instructorId: string;
   user: IEventPageQuery_getEvent_instructorForEvents_user | null;
 }
 

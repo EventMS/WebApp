@@ -11,13 +11,8 @@ export class EventPageInfoQueryService extends Query<IEventPageInfoQuery, IEvent
     query IEventPageInfoQuery($clubByID: String!) {
       currentUser {
         events {
-          code
-          eventVerificationId
           eventId
-        }
-        permissions {
-          clubSubscriptionId
-          clubId
+          code
         }
       }
       clubByID(clubId: $clubByID) {

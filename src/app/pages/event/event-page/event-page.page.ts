@@ -21,6 +21,7 @@ export class EventPagePage implements OnInit {
   public eventId: string;
   public disabled: boolean;
   public alreadySignedUp: boolean = false;
+  public code: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,7 +61,7 @@ export class EventPagePage implements OnInit {
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
-            this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
+            this.clubInfo$.subscribe(({ currentUser }) => {
               this.eventName = getEvent.name!;
               this.eventId = getEvent.eventId!;
               this.handleAlreadySignedUp(currentUser, getEvent);
@@ -79,7 +80,10 @@ export class EventPagePage implements OnInit {
   };
 
   public onVerifyClicked = async () => {
-    const modal = await this.modalController.create({ component: VerifyModalUserPage });
+    const modal = await this.modalController.create({
+      component: VerifyModalUserPage,
+      componentProps: { code: this.code },
+    });
     return await modal.present();
   };
 
@@ -89,6 +93,7 @@ export class EventPagePage implements OnInit {
   ) => {
     const event = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
     if (event) {
+      this.code = event.code!;
       this.alreadySignedUp = true;
     }
   };
