@@ -9,8 +9,6 @@ import { IMyClubsListQuery, IMyClubsListQuery_currentUser_permissions, IMyClubsL
   styleUrls: ['./myclubs.page.scss'],
 })
 export class MyclubsPage implements OnInit {
-
-  admin = "Admin"
   clubs$: Observable<IMyClubsListQuery>
 
   adminClubs: IMyClubsListQuery["myClubs"] = []
