@@ -8,7 +8,7 @@
             </div>
 
             <div scrolly=true>
-                <form [formGroup]="clubform" (ngSubmit)="onSubmit(clubform)">
+                <form [formGroup]="clubform" (ngSubmit)="onSubmit()">
                     <ion-item-group>
                         <ion-item-divider>
                             <ion-label>Basic information</ion-label>
@@ -16,21 +16,21 @@
                     </ion-item-group>
                     <ion-item>
                         <ion-input id="name" formControlName="name" type="text" placeholder="Name"></ion-input>
-                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
-                            <div *ngIf="name.errors.required">Name is required.</div>
+                        <div *ngIf="name!.invalid && (name!.dirty || name!.touched)" class="alert alert-danger">
+                            <div *ngIf="name!.errors!.required">Name is required.</div>
                         </div>
                     </ion-item>
                     <ion-item>
                         <ion-input id="phone" formControlName="phone" type="number" placeholder="Phonenumber"></ion-input>
-                        <div *ngIf="phone.invalid && phone.touched" class="alert alert-danger">
-                            <div *ngIf="phone.errors.required">Phonenumber is required</div>
-                            <div *ngIf="phone.errors.pattern && !phone.pending">Phonenumber must be 8 digits</div>
+                        <div *ngIf="phone!.invalid && phone!.touched" class="alert alert-danger">
+                            <div *ngIf="phone!.errors!.required">Phonenumber is required</div>
+                            <div *ngIf="phone!.errors!.pattern && !phone!.pending">Phonenumber must be 8 digits</div>
                         </div>
                     </ion-item>
                     <ion-item>
                         <ion-input id="address" formControlName="address" type="text" placeholder="Address"></ion-input>
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
-                            <div *ngIf="address.errors.required">Address is required</div>
+                        <div *ngIf="address!.invalid && (address!.dirty || address!.touched)" class="alert alert-danger">
+                            <div *ngIf="address!.errors!.required">Address is required</div>
                         </div>
                     </ion-item>
                     <ion-item-group>
@@ -70,16 +70,16 @@
                         </ion-item-divider>
                         <ion-item>
                             <ion-input id="regNumber" type="number" formControlName="regNumber" placeholder="Registration number"></ion-input>
-                            <div *ngIf="regNumber.invalid && regNumber.touched" class="alert alert-danger">
-                                <div *ngIf="regNumber.errors.required">Reg. number is required</div>
-                                <div *ngIf="regNumber.errors.pattern && !regNumber.pending">Reg. number must be 4 digits</div>
+                            <div *ngIf="regNumber!.invalid && regNumber!.touched" class="alert alert-danger">
+                                <div *ngIf="regNumber!.errors!.required">Reg. number is required</div>
+                                <div *ngIf="regNumber!.errors!.pattern && !regNumber!.pending">Reg. number must be 4 digits</div>
                             </div>
                         </ion-item>
                         <ion-item>
                             <ion-input id="accountNumber" type="number" formControlName="accountNumber" placeholder="Account number"></ion-input>
-                            <div *ngIf="accountNumber.invalid && accountNumber.touched" class="alert alert-danger">
-                                <div *ngIf="accountNumber.errors.required">Acc. number is required</div>
-                                <div *ngIf="accountNumber.errors.pattern && !accountNumber.pending">Acc. number must be 8 digits</div>
+                            <div *ngIf="accountNumber!.invalid && accountNumber!.touched" class="alert alert-danger">
+                                <div *ngIf="accountNumber!.errors!.required">Acc. number is required</div>
+                                <div *ngIf="accountNumber!.errors!.pattern && !accountNumber!.pending">Acc. number must be 8 digits</div>
                             </div>
                         </ion-item>
                     </ion-item-group>
