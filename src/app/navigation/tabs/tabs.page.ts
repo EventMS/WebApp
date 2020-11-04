@@ -9,5 +9,6 @@ import { Platform } from '@ionic/angular';
 export class TabsPage {
   //private platform: Platform
 
+  empty: string 
   constructor(public platform: Platform) {}
 }

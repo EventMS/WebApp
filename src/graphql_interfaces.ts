@@ -114,6 +114,53 @@ export interface ICreateEventClubQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IMyClubsListQuery
+// ====================================================
+
+export interface IMyClubsListQuery_myClubs_clubsubscription {
+  __typename: "ClubSubscription";
+  clubSubscriptionId: string;
+  name: string | null;
+}
+
+export interface IMyClubsListQuery_myClubs {
+  __typename: "Club";
+  name: string | null;
+  clubId: string;
+  description: string | null;
+  address: string | null;
+  clubsubscription: (IMyClubsListQuery_myClubs_clubsubscription | null)[] | null;
+}
+
+export interface IMyClubsListQuery_currentUser_permissions_clubSubscription {
+  __typename: "ClubSubscription";
+  name: string | null;
+  clubSubscriptionId: string;
+}
+
+export interface IMyClubsListQuery_currentUser_permissions {
+  __typename: "permission_Role";
+  userRole: string | null;
+  clubId: string;
+  clubSubscription: IMyClubsListQuery_currentUser_permissions_clubSubscription | null;
+}
+
+export interface IMyClubsListQuery_currentUser {
+  __typename: "identity_ApplicationUser";
+  permissions: (IMyClubsListQuery_currentUser_permissions | null)[] | null;
+}
+
+export interface IMyClubsListQuery {
+  myClubs: (IMyClubsListQuery_myClubs | null)[] | null;
+  currentUser: IMyClubsListQuery_currentUser | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IMyClubsQuery
 // ====================================================
 
