@@ -21,6 +21,11 @@ const routes: Routes = [
     loadChildren: () => import('./navigation/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'myclubs',
+    loadChildren: () => import('./pages/club/myclubs/myclubs.module').then( m => m.MyclubsPageModule)
+  },
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],

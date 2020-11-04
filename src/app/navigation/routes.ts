@@ -7,6 +7,7 @@ export const Paths = {
   club_create: 'club-create',
   club_list: 'club-list',
   event_list: 'event-list',
+  my_clubs: 'my-clubs',
   show_club: {
     path: 'show-club/:clubId',
     route: (param: string) => ['show-club/', param],
@@ -60,6 +61,10 @@ const navigationRoutes: Routes = [
     loadChildren: () =>
       import('src/app/pages/event/create-event/create-event.module').then((m) => m.CreateEventPageModule),
   },
+  {
+    path: Paths.my_clubs,
+    loadChildren: () => import('src/app/pages/club/myclubs/myclubs.module').then((m) => m.MyclubsPageModule),
+  }
 ];
 
 export default navigationRoutes;
