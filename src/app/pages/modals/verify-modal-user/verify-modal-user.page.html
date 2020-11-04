@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-grid *ngIf="code else instructor">
+    <ion-grid *ngIf="!isInstructor else instructor">
         <ion-row class="ion-margin">
             <ion-col>
                 <ion-row class="ion-justify-content-center">
@@ -37,9 +37,9 @@
             </h3>
             <ion-row>
                 <ion-col offset="3" size="3" style="margin-bottom: 10px;">
-                    <ion-input [(ngModel)]="instructorCode" inputmode="number" minlength="4" min="4" required placeholder="1234"></ion-input>
+                    <ion-input [(ngModel)]="code" inputmode="number" minlength="4" min="4" required placeholder="1234"></ion-input>
                 </ion-col>
-                <ion-button [disabled]="instructorCode?.length !== 4" (click)="onCodeSubmitted()">submit</ion-button>
+                <ion-button [disabled]="code?.length !== 4" (click)="onCodeSubmitted()">submit</ion-button>
             </ion-row>
         </ion-text>
     </ng-template>

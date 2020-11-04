@@ -275,6 +275,28 @@ export interface ISignUpForEventMutationServiceVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: IVerifyCodeMutation
+// ====================================================
+
+export interface IVerifyCodeMutation_verifyCode {
+  __typename: "EventVerification";
+  status: PresenceStatusEnum;
+}
+
+export interface IVerifyCodeMutation {
+  verifyCode: IVerifyCodeMutation_verifyCode | null;
+}
+
+export interface IVerifyCodeMutationVariables {
+  request?: VerifyCodeRequestInput | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IEventListQuery
 // ====================================================
 
@@ -308,7 +330,6 @@ export interface IEventListQuery {
 export interface IEventPageInfoQuery_currentUser_events {
   __typename: "EventVerification";
   eventId: string;
-  code: string | null;
 }
 
 export interface IEventPageInfoQuery_currentUser {
@@ -393,6 +414,30 @@ export interface IEventPageQuery {
 
 export interface IEventPageQueryVariables {
   eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IVerifyCodeQuery
+// ====================================================
+
+export interface IVerifyCodeQuery_currentUser_events {
+  __typename: "EventVerification";
+  code: string | null;
+  eventId: string;
+}
+
+export interface IVerifyCodeQuery_currentUser {
+  __typename: "identity_ApplicationUser";
+  events: (IVerifyCodeQuery_currentUser_events | null)[] | null;
+}
+
+export interface IVerifyCodeQuery {
+  currentUser: IVerifyCodeQuery_currentUser | null;
 }
 
 /* tslint:disable */
@@ -631,6 +676,12 @@ export interface ILoginUserMutationVariables {
 // START Enums and Input Objects
 //==============================================================
 
+export enum PresenceStatusEnum {
+  ATTEND = "ATTEND",
+  DIDNOTATTEND = "DIDNOTATTEND",
+  SIGNEDUP = "SIGNEDUP",
+}
+
 export interface CreateClubMemberRequestInput {
   clubSubscriptionId: string;
   userId: string;
@@ -686,6 +737,11 @@ export interface LoginUserRequestInput {
 export interface SignUpSubscriptionRequestInput {
   clubSubscriptionId: string;
   paymentMethodId: string;
+}
+
+export interface VerifyCodeRequestInput {
+  code?: string | null;
+  eventId: string;
 }
 
 //==============================================================

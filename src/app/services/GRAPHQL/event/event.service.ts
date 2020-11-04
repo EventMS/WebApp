@@ -17,6 +17,7 @@ import { EventPageQueryService } from './queries/event-page.service';
 import { EventPageInfoQueryService } from './queries/event-page-info-query.service';
 import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
 import { SignUpForEventMutationService } from './mutations/single-payment-mutation.service';
+import { VerifyCodeQueryService } from './queries/verify-query.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,8 @@ export class EventService {
     private eventDetailsQuery: EventPageQueryService,
     private eventPageInfoQuery: EventPageInfoQueryService,
     private freeSignupMutation: FreeSignUpMutationService,
-    private signUpForEventMutation: SignUpForEventMutationService
+    private signUpForEventMutation: SignUpForEventMutationService,
+    private verifyCodeQueryService: VerifyCodeQueryService
   ) {}
 
   // Mutations
@@ -85,7 +87,7 @@ export class EventService {
       .valueChanges.pipe(map(({ data }) => data));
   }
 
-  refetchEventPageInfo = ({ clubByID }: IEventPageInfoQueryVariables) => {
-    return this.eventPageInfoQuery.fetch({ clubByID }, { fetchPolicy: 'network-only' });
+  getVerificationCodes = () => {
+    return this.verifyCodeQueryService.watch().valueChanges.pipe(map(({ data }) => data));
   };
 }

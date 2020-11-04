@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 
 @Component({
   selector: 'app-verify-modal-user',
@@ -7,13 +8,19 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./verify-modal-user.page.scss'],
 })
 export class VerifyModalUserPage implements OnInit {
-  @Input() code: string;
+  @Input() eventId: string;
+  @Input() isInstructor: boolean;
+  public code: string;
 
-  public instructorCode: string;
+  constructor(private modalController: ModalController, private eventService: EventService) {}
 
-  constructor(modalController: ModalController) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.eventService.getVerificationCodes().subscribe(({ currentUser }) => {
+      this.code =
+        currentUser?.events?.find((data) => data?.eventId == this.eventId)?.code ??
+        'code not generated yet, try again later';
+    });
+  }
 
   public onCodeSubmitted = () => {};
 }

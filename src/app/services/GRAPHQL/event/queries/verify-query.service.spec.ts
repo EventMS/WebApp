@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VerifyQueryService } from './verify-query.service';
+import { VerifyCodeQueryService } from './verify-query.service';
 
-describe('VerifyQueryService', () => {
-  let service: VerifyQueryService;
+describe('VerifyCodeQueryService', () => {
+  let service: VerifyCodeQueryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(VerifyQueryService);
+    service = TestBed.inject(VerifyCodeQueryService);
   });
 
   it('should be created', () => {
