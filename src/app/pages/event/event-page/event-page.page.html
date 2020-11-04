@@ -71,7 +71,7 @@
                             <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
                                 Sign up</ion-button>
                             <ng-template #alreadySignedUpButton>
-                                <ion-button size="large" class="verifyButton" [disabled]="disabled">Verify
+                                <ion-button size="large" class="verifyButton" (click)="onVerifyClicked()">Verify
                                 </ion-button>
                             </ng-template>
                         </ion-col>

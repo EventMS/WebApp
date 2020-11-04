@@ -101,6 +101,8 @@ export class EventPagePage implements OnInit {
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
+    console.log(getEvent);
+
     const { userPrice: price } = getEvent;
 
     if (price !== getEvent?.publicPrice) {
