@@ -260,6 +260,28 @@ export interface ICreateEventMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: IFreeSignUpMutation
+// ====================================================
+
+export interface IFreeSignUpMutation_signUpForFreeEvent {
+  __typename: "payment_Event";
+  eventId: string;
+}
+
+export interface IFreeSignUpMutation {
+  signUpForFreeEvent: IFreeSignUpMutation_signUpForFreeEvent | null;
+}
+
+export interface IFreeSignUpMutationVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: ISignUpForEventMutationService
 // ====================================================
 
@@ -396,12 +418,6 @@ export interface IEventPageQuery_getEvent_instructorForEvents {
   user: IEventPageQuery_getEvent_instructorForEvents_user | null;
 }
 
-export interface IEventPageQuery_getEvent_eventPrices {
-  __typename: "EventPrice";
-  price: number;
-  clubSubscriptionId: string;
-}
-
 export interface IEventPageQuery_getEvent {
   __typename: "Event";
   eventId: string;
@@ -411,9 +427,9 @@ export interface IEventPageQuery_getEvent {
   startTime: any;
   endTime: any;
   publicPrice: number | null;
+  userPrice: number | null;
   locations: (IEventPageQuery_getEvent_locations | null)[] | null;
   instructorForEvents: (IEventPageQuery_getEvent_instructorForEvents | null)[] | null;
-  eventPrices: (IEventPageQuery_getEvent_eventPrices | null)[] | null;
 }
 
 export interface IEventPageQuery {

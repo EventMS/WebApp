@@ -17,6 +17,7 @@ export class EventPageQueryService extends Query<IEventPageQuery, IEventPageQuer
         startTime
         endTime
         publicPrice
+        userPrice
         locations {
           event {
             eventId
@@ -33,10 +34,6 @@ export class EventPageQueryService extends Query<IEventPageQuery, IEventPageQuer
             id
             name
           }
-        }
-        eventPrices {
-          price
-          clubSubscriptionId
         }
       }
     }
