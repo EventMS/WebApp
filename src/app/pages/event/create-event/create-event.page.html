@@ -7,7 +7,7 @@
               <h1>Create Event</h1>
             </div>
             <div scrolly=true>
-              <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <ion-item>
                   <ion-input formControlName="name" placeholder="Event name"></ion-input>
                 </ion-item>
@@ -59,7 +59,7 @@
                     <ion-label>Public event</ion-label>
                     <ion-checkbox formControlName="publicChecked"></ion-checkbox>
                   </ion-item>
-                  <ion-item [hidden]="!publicChecked.value">
+                  <ion-item [hidden]="!publicChecked!.value">
                     <ion-input type="number" placeholder="Input public price" formControlName="publicPrice"></ion-input>
                   </ion-item>
                 </ion-item-group>
