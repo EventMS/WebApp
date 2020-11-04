@@ -14,7 +14,7 @@
         <ion-row class="ion-align-items-stretch" style="margin-top: 1em">
           <h4>Or sign in</h4>
         </ion-row>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div>
             <ion-item>
               <ion-input formControlName="email" type="email" placeholder="your@email.com"></ion-input>
