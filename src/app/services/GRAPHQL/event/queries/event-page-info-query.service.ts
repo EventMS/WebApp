@@ -28,7 +28,4 @@ export class EventPageInfoQueryService extends Query<IEventPageInfoQuery, IEvent
       }
     }
   `;
-
-  public EventListInfoQuery = ({ clubByID }: IEventPageInfoQueryVariables) =>
-    this.watch({ clubByID }).valueChanges.pipe(map(({ data }) => data));
 }

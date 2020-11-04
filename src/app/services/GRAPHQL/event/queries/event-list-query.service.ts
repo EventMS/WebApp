@@ -21,10 +21,4 @@ export class EventListQueryService extends Query<IEventListQuery> {
       }
     }
   `;
-
-  public Events: Observable<any>
-
-  getEvents() {
-    this.Events = this.fetch({}, {fetchPolicy: 'network-only'});
-  }
 }

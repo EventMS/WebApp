@@ -3,7 +3,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs'
 import { CreateSubscriptionMutationService } from './mutations/create-subscription-mutation.service';
 import { ClubSubscriptionsQueryService } from './queries/club-subscriptions-query.service';
-import { CreateClubSubscriptionRequestInput, ISubscriptionsForClubQuery, ISubscriptionsForClubQuery_subscriptionsForClub } from 'src/graphql_interfaces';
+import { CreateClubSubscriptionRequestInput, ISubscriptionsForClubQuery, ISubscriptionsForClubQuery_subscriptionsForClub, SignUpSubscriptionRequestInput } from 'src/graphql_interfaces';
+import { SignupForSubscriptionMutationService } from './mutations/signup-for-subscription-mutation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ import { CreateClubSubscriptionRequestInput, ISubscriptionsForClubQuery, ISubscr
 export class SubscriptionService {
 
   constructor(private subscriptionQuery: ClubSubscriptionsQueryService,
-    private createSubscriptionMutation: CreateSubscriptionMutationService) {}
+    private createSubscriptionMutation: CreateSubscriptionMutationService,
+    private signUpForSubscriptionMutation: SignupForSubscriptionMutationService) {}
 
 
     getSubscriptions(clubId: string): Observable<ISubscriptionsForClubQuery["subscriptionsForClub"]> {
@@ -35,4 +37,12 @@ export class SubscriptionService {
         }
       )
     }
+
+    signUpForSupscription = ({ clubSubscriptionId, paymentMethodId }: NonNullable<SignUpSubscriptionRequestInput>) =>
+    this.signUpForSubscriptionMutation.mutate({
+      signUpForSubscriptionRequest: {
+        clubSubscriptionId: clubSubscriptionId,
+        paymentMethodId: paymentMethodId,
+      },
+    });
 }

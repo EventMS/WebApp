@@ -21,6 +21,4 @@ export class ClubListQueryService extends Query<IGetClubsQuery> {
       }
     }
   `;
-
-  public IGetClubsQuery$ = this.watch().valueChanges.pipe(map((value) => value.data));
 }

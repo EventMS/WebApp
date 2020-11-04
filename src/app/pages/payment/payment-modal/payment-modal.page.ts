@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
+import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
 import { ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 
 @Component({
@@ -19,16 +18,14 @@ export class PaymentModalPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private clubSubscriptionQueryService: ClubSubscriptionsQueryService
+    private subscriptionService: SubscriptionService
   ) {}
 
   ngOnInit() {
-    this.clubSubscriptions$ = this.clubSubscriptionQueryService.watch({ clubId: this.clubId }).valueChanges.pipe(
-      map(({ data }) => {
-        this.clubSubscriptions = data.subscriptionsForClub;
-        return data.subscriptionsForClub;
-      })
-    );
+    this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId)
+    this.clubSubscriptions$.subscribe((data) => {
+      this.clubSubscriptions = data
+    })
   }
 
   getName = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.name;

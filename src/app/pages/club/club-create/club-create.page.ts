@@ -5,8 +5,6 @@ import { AlertController } from '@ionic/angular';
 import { Paths } from 'src/app/navigation/routes';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { CreateClubFormBuilder } from './club-create-formbuilder';
-import { Observable } from 'rxjs';
-import { ICreateClubMutation_createClub } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-club-create',
@@ -79,7 +77,9 @@ export class ClubCreatePage implements OnInit {
       locations: this.locations,
     })
     .subscribe(
-      (data) => this.handleResponse(data),
+      (data) => {
+        this.handleResponse(data.data!.createClub!.clubId)
+      },
       (error) => this.presentAlert(error)
     );
   };
@@ -126,10 +126,11 @@ export class ClubCreatePage implements OnInit {
     (await alert).present();
   }
 
-  private handleResponse(data) {
+  private handleResponse(clubId: string) {
     this.clubform.reset();
     //Navigate to page for new created club
-    this.router.navigate([Paths.club_details]);
+    console.log(clubId)
+    this.router.navigate(Paths.show_club.route(clubId));
   }
 }
 

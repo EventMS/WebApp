@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/event/queries/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/event/queries/event-page.service';
 import { IEventPageInfoQuery, IEventPageQuery } from 'src/graphql_interfaces';
@@ -22,8 +23,7 @@ export class EventPagePage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private eventPageInfoQueryService: EventPageInfoQueryService,
-    private eventPageQueryService: EventPageQueryService,
+    private eventService: EventService,
     private modalController: ModalController
   ) {}
 
@@ -48,10 +48,10 @@ export class EventPagePage implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       const eventId = params['eventId'] as string;
       if (eventId) {
-        this.event$ = this.eventPageQueryService.EventListQuery({ eventId });
+        this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
-            this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
+            this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
             this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
               this.eventName = getEvent.name!;
               this.handlePriceForEvent(clubByID, currentUser, getEvent);

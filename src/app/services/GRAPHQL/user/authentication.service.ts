@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LoginMutationService } from 'src/app/services/GRAPHQL/user/mutations/loginMutation.service'
-import { ICreateUserMutation, ILoginUserMutation, ILoginUserMutationVariables } from 'src/graphql_interfaces';
+import { CreateUserRequestInput, ICreateUserMutation, ILoginUserMutation, ILoginUserMutationVariables } from 'src/graphql_interfaces';
 import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import dayjs from 'dayjs';
 import { Apollo } from 'apollo-angular';
 import { Paths } from 'src/app/navigation/routes';
+import { CreateUserMutationService } from './mutations/createUserMutation.service';
 
 const current_user = 'current_user';
 
@@ -15,12 +16,21 @@ const current_user = 'current_user';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User | null>;
 
-  constructor(private router: Router, private loginMutationService: LoginMutationService, private apollo: Apollo) {
+  constructor(private router: Router, private loginMutationService: LoginMutationService, private apollo: Apollo,     private createUserMutationService: CreateUserMutationService,) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(current_user)!));
   }
 
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  createUser(request: CreateUserRequestInput) {
+    return this.createUserMutationService
+    .mutate(
+      {
+        request: request
+      }
+    )
   }
 
   loginFromSignup(user: ICreateUserMutation['createUser']) {

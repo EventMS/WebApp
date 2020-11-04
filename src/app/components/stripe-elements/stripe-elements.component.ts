@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { SignupForSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/signup-for-subscription-mutation.service';
+import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({
@@ -11,7 +11,7 @@ declare var Stripe: stripe.StripeStatic;
 export class StripeElementsComponent implements AfterViewInit {
   constructor(
     public loadingController: LoadingController,
-    private signUpforSubscriptionMutationService: SignupForSubscriptionMutationService
+    private subscriptionService: SubscriptionService
   ) {
     this.stripe = Stripe(
       'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
@@ -105,7 +105,7 @@ export class StripeElementsComponent implements AfterViewInit {
           } else {
             if (this.subscriptionId)
               //Create the subscription
-              this.signUpforSubscriptionMutationService
+              this.subscriptionService
                 .signUpForSupscription({
                   clubSubscriptionId: this.subscriptionId,
                   paymentMethodId: result?.paymentMethod?.id!,

@@ -41,7 +41,4 @@ export class EventPageQueryService extends Query<IEventPageQuery, IEventPageQuer
       }
     }
   `;
-
-  public EventListQuery = ({ eventId }: IEventPageQueryVariables) =>
-    this.watch({ eventId }).valueChanges.pipe(map(({ data }) => data));
 }
