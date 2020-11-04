@@ -21,12 +21,12 @@ export class MyclubsPage implements OnInit {
     this.getData()
   }
 
-  filterListBy(value: string, clubs: IMyClubsListQuery, club: IMyClubsListQuery_myClubs): boolean {
-    const permissionsForClub = clubs.currentUser.permissions.find((perm) => {
-      return perm.clubId == club.clubId
+  filterListBy(value: string, clubs: IMyClubsListQuery, club: IMyClubsListQuery_myClubs | null): boolean {
+    const permissionsForClub = clubs!.currentUser!.permissions!.find((perm) => {
+      return perm!.clubId == club!.clubId
     })
 
-    return permissionsForClub.userRole == value
+    return permissionsForClub!.userRole == value
   }
 
   userSubscription(club: IMyClubsListQuery_myClubs, permissions: IMyClubsListQuery_currentUser_permissions[]): string {
@@ -36,16 +36,16 @@ export class MyclubsPage implements OnInit {
       return perm.clubId == club.clubId
     })
 
-    if(permissionsForClub.userRole == "Member"){return "Your subscription: " + permissionsForClub.clubSubscription.name}
+    if(permissionsForClub!.userRole == "Member"){return "Your subscription: " + permissionsForClub!.clubSubscription!.name}
     else { return ""}
   }
 
   private getData() {
     this.clubs$ = this.clubService.myClubsListDetails()
     this.clubs$.subscribe((clubs) => {
-      this.adminClubs = clubs.myClubs.filter((club) => this.filterListBy("Admin", clubs, club))
-      this.instructorClubs = clubs.myClubs.filter((club) => this.filterListBy("Instructor", clubs, club))
-      this.instructorClubs = clubs.myClubs.filter((club) => this.filterListBy("Member", clubs, club))
+      this.adminClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Admin", clubs, club))
+      this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Instructor", clubs, club))
+      this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Member", clubs, club))
     })
   }
 }
