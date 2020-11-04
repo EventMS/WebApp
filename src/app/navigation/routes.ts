@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const Paths = {
+  dashboard: 'dashboard',
   start: 'start',
   signup: 'signup',
   login: 'login',
@@ -8,6 +9,7 @@ export const Paths = {
   club_list: 'club-list',
   event_list: 'event-list',
   my_clubs: 'my-clubs',
+  my_events: 'my-events',
   show_club: {
     path: 'show-club/:clubId',
     route: (param: string) => ['show-club/', param],
@@ -28,7 +30,7 @@ export const Paths = {
 
 const navigationRoutes: Routes = [
   {
-    path: '',
+    path: Paths.dashboard,
     loadChildren: () =>
       import('src/app//pages/dashboard/dashboard/dashboard.module').then((m) => m.DashboardPageModule),
   },
@@ -64,6 +66,14 @@ const navigationRoutes: Routes = [
   {
     path: Paths.my_clubs,
     loadChildren: () => import('src/app/pages/club/myclubs/myclubs.module').then((m) => m.MyclubsPageModule),
+  },
+  {
+    path: Paths.my_events,
+    loadChildren: () => import('src/app/pages/event/myevents/myevents.module').then((m) => m.MyeventsPageModule)
+  },
+  {
+    path: '',
+    redirectTo: Paths.dashboard
   }
 ];
 

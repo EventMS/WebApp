@@ -22,8 +22,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'myclubs',
-    loadChildren: () => import('./pages/club/myclubs/myclubs.module').then( m => m.MyclubsPageModule)
+    path: 'myevents',
+    loadChildren: () => import('./pages/event/myevents/myevents.module').then( m => m.MyeventsPageModule)
   },
 
 ];
