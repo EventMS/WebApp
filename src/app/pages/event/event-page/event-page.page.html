@@ -142,6 +142,6 @@
         </ion-card>
     </ion-content>
 
-    <app-mobile-signup-component [buttonText]="'Sign up'" [disabled]="disabled" [callback]="onSignup ">
+    <app-mobile-signup-component [buttonText]="alreadySignedUp ? 'Verify' : 'Sign up'" [verify]="alreadySignedUp" [callback]="alreadySignedUp ? onSignup : onVerifyClicked">
     </app-mobile-signup-component>
 </ng-template>

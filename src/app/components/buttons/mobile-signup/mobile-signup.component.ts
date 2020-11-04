@@ -7,10 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MobileSignupComponent implements OnInit {
   @Input() buttonText: string;
-  @Input() disabled: boolean;
+  @Input() verify: boolean;
   @Input() callback: () => void;
 
-  constructor() {}
+  public colorVar: string = '#70ad47';
+
+  constructor() {
+    console.log(this.verify, this.buttonText, this.callback);
+
+    if (this.verify) this.colorVar = 'blue';
+  }
 
   ngOnInit() {}
 }

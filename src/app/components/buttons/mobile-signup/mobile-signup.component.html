@@ -1,5 +1,5 @@
 <div class="ion-padding singup-mobile">
     <ion-row class="ion-justify-content-center">
-        <ion-button [disabled]="disabled" class="signup-button-mobile" (click)="callback()">{{buttonText}}</ion-button>
+        <ion-button class="signup-button-mobile" [style.--background]="verify ?'#43B3C3': '#70ad47'" (click)="callback()">{{buttonText}}</ion-button>
     </ion-row>
 </div>

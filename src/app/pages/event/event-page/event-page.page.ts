@@ -59,7 +59,6 @@ export class EventPagePage implements OnInit {
   }
 
   private initData = () => {
-    this.alreadySignedUp = true;
     this.activatedRoute.params.subscribe((params) => {
       const eventId = params['eventId'] as string;
       if (eventId) {
@@ -101,8 +100,6 @@ export class EventPagePage implements OnInit {
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
-    console.log(getEvent);
-
     const { userPrice: price } = getEvent;
 
     if (price !== getEvent?.publicPrice) {

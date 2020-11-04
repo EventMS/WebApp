@@ -171,5 +171,5 @@
             </ion-col>
         </ion-grid>
     </ion-content>
-    <app-mobile-signup-component [buttonText]=" 'Sign up' " [callback]="showModal "></app-mobile-signup-component>
+    <app-mobile-signup-component [buttonText]=" isNotMember ? 'Sign up' : 'Already signed up'" [disabled]="!isNotMember" [callback]="showModal "></app-mobile-signup-component>
 </ng-template>
