@@ -8,6 +8,8 @@ import { EventListQueryService } from './queries/event-list-query.service';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { EventPageQueryService } from './queries/event-page.service';
 import { EventPageInfoQueryService } from './queries/event-page-info-query.service';
+import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
+import { SignUpForEventMutationService } from './mutations/single-payment-mutation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,9 @@ export class EventService {
     private createEventMutation: CreateEventMutationService,
     private eventListQuery: EventListQueryService,
     private eventDetailsQuery: EventPageQueryService,
-    private eventPageInfoQuery: EventPageInfoQueryService) { }
+    private eventPageInfoQuery: EventPageInfoQueryService,
+    private freeSignupMutation: FreeSignUpMutationService,
+    private signUpForEventMutation: SignUpForEventMutationService) { }
 
   // Mutations
 
@@ -27,6 +31,24 @@ export class EventService {
     .mutate(
       {
         request: request
+      }
+    )
+  }
+
+  signUpForFreeEvent(eventId: string) {
+    return this.freeSignupMutation
+    .mutate(
+      {
+        eventId: eventId
+      }
+    )
+  }
+  
+  signUpForEvent(eventId: string) {
+    return this.signUpForEventMutation
+    .mutate(
+      {
+        eventId: eventId
       }
     )
   }

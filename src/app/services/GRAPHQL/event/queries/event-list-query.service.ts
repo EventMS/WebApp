@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs'
 import { IEventListQuery } from 'src/graphql_interfaces';
 
 @Injectable({

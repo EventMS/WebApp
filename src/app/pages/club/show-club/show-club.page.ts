@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
 import { IShowClubQuery, IShowClubQuery_clubByID_clubsubscription } from 'src/graphql_interfaces';
-import { PaymentModalPage } from '../../payment/payment-modal/payment-modal.page';
+import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page';
 
 @Component({
   selector: 'app-show-club',
@@ -53,23 +53,18 @@ export class ShowClubPage implements OnInit {
   };
 
   private initData = () => {
-    this.club$.subscribe(
-      ({ clubByID, currentUser, eventsForClub }) => {
-        if (clubByID?.clubId && currentUser) {
-          this.clubId = clubByID.clubId;
-          const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
-            ?.clubSubscriptionId;
-          this.currentSubscription =
-            clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
-        }
-
-        if (eventsForClub) {
-          this.events = eventsForClub;
-        }
-      },
-      (error) => {
-        console.log(error);
+    this.club$.subscribe(({ clubByID, currentUser, eventsForClub }) => {
+      if (clubByID?.clubId && currentUser) {
+        this.clubId = clubByID.clubId;
+        const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
+          ?.clubSubscriptionId;
+        this.currentSubscription =
+          clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
       }
-    );
+
+      if (eventsForClub) {
+        this.events = eventsForClub;
+      }
+    });
   };
 }

@@ -14,7 +14,7 @@ export class ClubListPage implements OnInit {
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
   public filteredClubs: IGetClubsQuery['clubs'];
 
-  ngOnInit() {}
+  ngOnInit(){}
 
   ionViewWillEnter() {
     this.clubService.getAllClubs().subscribe(({ clubs }) => {

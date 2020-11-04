@@ -34,17 +34,16 @@
                             </ion-grid>
                         </ion-item>
                     </ion-list>
-                    <ion-list class="list" inset="true" lines="none" *ngIf="(club$ | async)?.eventsForClub as events">
+                    <ion-list class="list" inset="true" lines="none">
                         <ion-list-header>
                             <p>Upcoming events in the club</p>
                         </ion-list-header>
-                        <hr style="height: 1px; background-color: black; width: 90%" />
-                        <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let event of events; index as i">
-                            <!-- Skal ikke være det her, men nogle få event-->
+                        <hr style="height: 1px; background-color: black; width: 90% " />
+                        <ion-item class="substyle ion-justify-content-evenly " *ngFor=" let event of (club$ | async)?.eventsForClub; index as i ">
                             <ion-grid>
                                 <ion-card>
                                     <ion-card-header>
-                                        <ion-row class="ion-justify-content-between">
+                                        <ion-row class="ion-justify-content-between ">
                                             <ion-text>{{event.name}}</ion-text>
                                             <ion-text>{{getEventPrice(i)}} $</ion-text>
                                         </ion-row>
@@ -55,37 +54,37 @@
                     </ion-list>
                 </ion-row>
             </ion-col>
-            <ion-col size="1"> </ion-col>
-            <ion-col size="4">
-                <ion-row class="ion-justify-content-end">
-                    <ion-button *ngIf="currentSubscription else isNotMember" [disabled]="true" size="large" style="width: 60%">You are signed up</ion-button>
+            <ion-col size="1 "> </ion-col>
+            <ion-col size="4 ">
+                <ion-row class="ion-justify-content-end ">
+                    <ion-button *ngIf="currentSubscription else isNotMember " [disabled]="true " size="large " style="width: 60% ">You are signed up</ion-button>
                     <ng-template #isNotMember>
-                        <ion-button size="large" class="signUpButton" (click)="showModal()">Sign up</ion-button>
+                        <ion-button size="large " class="signUpButton " (click)="showModal() ">Sign up</ion-button>
                     </ng-template>
                 </ion-row>
-                <div class="textContainer">
-                    <ion-col class="ion-text-end">
+                <div class="textContainer ">
+                    <ion-col class="ion-text-end ">
                         <ion-text>
                             <h2>Opening hours: Todo</h2>
                         </ion-text>
                     </ion-col>
-                    <ion-col class="ion-text-end">
+                    <ion-col class="ion-text-end ">
                         <ion-text>
                             <h2>Telephone: {{club.phoneNumber}}</h2>
                         </ion-text>
                     </ion-col>
-                    <ion-col class="ion-text-end">
+                    <ion-col class="ion-text-end ">
                         <ion-text>
                             <h2>Mail: todo.email.com</h2>
                         </ion-text>
                     </ion-col>
-                    <ion-col class="ion-text-end">
+                    <ion-col class="ion-text-end ">
                         <ion-text>
                             <h2>Address: {{club.address}}</h2>
                         </ion-text>
                     </ion-col>
                     <ion-col>
-                        <ion-button style="width: 100%; height: 300px"> MAPS</ion-button>
+                        <ion-button style="width: 100%; height: 300px "> MAPS</ion-button>
                     </ion-col>
                 </div>
             </ion-col>
@@ -94,44 +93,44 @@
 </ion-content>
 
 <ng-template #mobile>
-    <ion-content class="container" *ngIf="(club$ | async)?.clubByID as club">
+    <ion-content class="container " *ngIf="(club$ | async)?.clubByID as club ">
         <ion-grid>
-            <ion-row class="ion-justify-content-center">
+            <ion-row class="ion-justify-content-center ">
                 <ion-col>
-                    <ion-text class="ion-text-center">
+                    <ion-text class="ion-text-center ">
                         <h2>{{club.name | uppercase}}</h2>
                     </ion-text>
                 </ion-col>
             </ion-row>
             <ion-card>
                 <ion-card-header>
-                    <ion-text style="color: black"> {{club.description}} </ion-text>
+                    <ion-text style="color: black "> {{club.description}} </ion-text>
                 </ion-card-header>
             </ion-card>
-            <ion-row class="ion-justify-content-center">
-                <ion-list class="list" inset="true" lines="none">
+            <ion-row class="ion-justify-content-center ">
+                <ion-list class="list " inset="true " lines="none ">
                     <ion-list-header>
                         <p>Subscriptions in the club</p>
                     </ion-list-header>
-                    <hr style="height: 1px; background-color: black; width: 90%" />
-                    <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let sup of club.clubsubscription">
+                    <hr style="height: 1px; background-color: black; width: 90% " />
+                    <ion-item class="substyle ion-justify-content-evenly " *ngFor=" let sup of club.clubsubscription ">
                         <ion-grid>
-                            <ion-row class="ion-justify-content-between">
+                            <ion-row class="ion-justify-content-between ">
                                 <ion-text>{{sup.name}}</ion-text>
                                 <ion-text>{{sup.price}} $</ion-text>
                             </ion-row>
                         </ion-grid>
                     </ion-item>
                 </ion-list>
-                <ion-list class="list" inset="true" lines="none">
+                <ion-list class="list " inset="true " lines="none ">
                     <ion-list-header>
                         <p>Upcoming events in the club</p>
                     </ion-list-header>
-                    <hr style="height: 1px; background-color: black; width: 90%" />
-                    <ion-item class="substyle ion-justify-content-evenly" *ngFor=" let sup of club.clubsubscription">
+                    <hr style="height: 1px; background-color: black; width: 90% " />
+                    <ion-item class="substyle ion-justify-content-evenly " *ngFor=" let sup of club.clubsubscription ">
                         <!-- Skal ikke være det her, men nogle få event-->
                         <ion-grid>
-                            <ion-row class="ion-justify-content-between">
+                            <ion-row class="ion-justify-content-between ">
                                 <ion-text>EVENT NAME</ion-text>
                                 <ion-text>EVENT PRICE $</ion-text>
                             </ion-row>
@@ -141,24 +140,24 @@
             </ion-row>
             <ion-card>
                 <ion-card-content>
-                    <ion-row class="ion-justify-content-center">
-                        <div class="textContainer">
-                            <ion-col class="ion-text-end">
+                    <ion-row class="ion-justify-content-center ">
+                        <div class="textContainer ">
+                            <ion-col class="ion-text-end ">
                                 <ion-text>
                                     <p>Opening hours: Todo</p>
                                 </ion-text>
                             </ion-col>
-                            <ion-col class="ion-text-end">
+                            <ion-col class="ion-text-end ">
                                 <ion-text>
                                     <p>Telephone: {{club.phoneNumber}}</p>
                                 </ion-text>
                             </ion-col>
-                            <ion-col class="ion-text-end">
+                            <ion-col class="ion-text-end ">
                                 <ion-text>
                                     <p>Mail: {{club.user.email}}</p>
                                 </ion-text>
                             </ion-col>
-                            <ion-col class="ion-text-end">
+                            <ion-col class="ion-text-end ">
                                 <ion-text>
                                     <p>Address: {{club.address}}</p>
                                 </ion-text>
@@ -168,9 +167,9 @@
                 </ion-card-content>
             </ion-card>
             <ion-col>
-                <ion-button style="width: 100%; height: 300px"> MAPS</ion-button>
+                <ion-button style="width: 100%; height: 300px "> MAPS</ion-button>
             </ion-col>
         </ion-grid>
     </ion-content>
-    <app-mobile-signup-component [buttonText]="'Sign up'" [callback]="showModal"></app-mobile-signup-component>
+    <app-mobile-signup-component [buttonText]=" 'Sign up' " [callback]="showModal "></app-mobile-signup-component>
 </ng-template>
