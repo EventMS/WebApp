@@ -8,7 +8,7 @@ import { EventPagePageRoutingModule } from './event-page-routing.module';
 
 import { EventPagePage } from './event-page.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { EventPaymentModalPageModule } from '../../payment/event-payment-modal/event-payment-modal.module';
+import { EventPaymentModalPageModule } from '../../modals/event-payment-modal/event-payment-modal.module';
 
 @NgModule({
   imports: [

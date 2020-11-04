@@ -2,15 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { FreeSignUpMutationService } from 'src/app/services/GRAPHQL/events/mutations/free-sign-up-mutation.service';
 import { EventPageInfoQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page-info-query.service';
 import { EventPageQueryService } from 'src/app/services/GRAPHQL/events/queries/event-page.service';
-import {
-  IEventPageInfoQuery,
-  IEventPageInfoQuery_currentUser,
-  IEventPageQuery,
-  IEventPageQuery_getEvent,
-} from 'src/graphql_interfaces';
-import { EventPaymentModalPage } from '../../payment/event-payment-modal/event-payment-modal.page';
+import { IEventPageInfoQuery, IEventPageQuery, IEventPageQuery_getEvent } from 'src/graphql_interfaces';
+import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 
 @Component({
   selector: 'app-event-page',
@@ -31,12 +27,20 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventPageInfoQueryService: EventPageInfoQueryService,
     private eventPageQueryService: EventPageQueryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private freeSignUpMutationService: FreeSignUpMutationService
   ) {}
 
   public isMobile = isPlatform('mobile');
 
   public onSignup = async () => {
+    if (this.price === 0) {
+      this.freeSignUpMutationService
+        .signUpForFreeEventMutation({ eventId: this.eventId })
+        .subscribe(() => (this.alreadySignedUp = true));
+      return;
+    }
+
     const modal = await this.modalController.create({
       component: EventPaymentModalPage,
       componentProps: {
@@ -61,11 +65,11 @@ export class EventPagePage implements OnInit {
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.clubInfo$ = this.eventPageInfoQueryService.EventListInfoQuery({ clubByID: getEvent.clubId });
-            this.clubInfo$.subscribe(({ clubByID, currentUser }) => {
+            this.clubInfo$.subscribe(({ currentUser }) => {
               this.eventName = getEvent.name!;
               this.eventId = getEvent.eventId!;
               this.handleAlreadySignedUp(currentUser, getEvent);
-              this.handlePriceForEvent(clubByID, currentUser, getEvent);
+              this.handlePriceForEvent(getEvent);
             });
           }
         });
@@ -76,7 +80,6 @@ export class EventPagePage implements OnInit {
   public modalCallback = (succes: boolean) => {
     if (succes) {
       this.alreadySignedUp = true;
-      this.disabled = true;
     }
   };
 
@@ -84,36 +87,21 @@ export class EventPagePage implements OnInit {
     currentUser: IEventPageInfoQuery['currentUser'],
     getEvent: IEventPageQuery['getEvent']
   ) => {
-    const eventId = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
-    if (eventId) {
+    const event = currentUser!.events?.find((event) => event?.eventId === getEvent!.eventId);
+    if (event) {
       this.alreadySignedUp = true;
-      this.disabled = true;
     }
   };
 
-  private handlePriceForEvent = (
-    clubByID: IEventPageInfoQuery['clubByID'],
-    currentUser: IEventPageInfoQuery['currentUser'],
-    getEvent: IEventPageQuery['getEvent']
-  ) => {
-    if (clubByID && currentUser && getEvent) {
-      const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId == clubByID.clubId)
-        ?.clubSubscriptionId;
-      const currentSubscription = clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId);
+  private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
+    const { userPrice: price } = getEvent;
 
-      const price = getEvent.eventPrices?.find(
-        (ePrice) => ePrice?.clubSubscriptionId == currentSubscription?.clubSubscriptionId
-      )?.price;
-
-      if (price && price !== getEvent?.publicPrice) {
-        this.price = price;
-        this.color = 'green';
-      } else if (getEvent.publicPrice) {
-        this.color = 'black';
-        this.price = getEvent.publicPrice;
-      } else {
-        this.disabled = true;
-      }
+    if (price !== getEvent?.publicPrice) {
+      this.price = price;
+      this.color = 'green';
+    } else if (getEvent.publicPrice) {
+      this.color = 'black';
+      this.price = getEvent.publicPrice;
     }
   };
 }

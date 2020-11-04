@@ -4,7 +4,7 @@ import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
 import { IShowClubQuery, IShowClubQuery_clubByID_clubsubscription } from 'src/graphql_interfaces';
-import { PaymentModalPage } from '../../payment/payment-modal/payment-modal.page';
+import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page';
 
 @Component({
   selector: 'app-show-club',
