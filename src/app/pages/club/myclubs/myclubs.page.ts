@@ -45,7 +45,7 @@ export class MyclubsPage implements OnInit {
     this.clubs$.subscribe((clubs) => {
       this.adminClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Admin", clubs, club))
       this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Instructor", clubs, club))
-      this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Member", clubs, club))
+      this.memberClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Member", clubs, club))
     })
   }
 }
