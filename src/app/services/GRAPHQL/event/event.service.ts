@@ -10,6 +10,7 @@ import { EventPageQueryService } from './queries/event-page.service';
 import { EventPageInfoQueryService } from './queries/event-page-info-query.service';
 import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
 import { SignUpForEventMutationService } from './mutations/single-payment-mutation.service';
+import { MyEventsQueryService } from './queries/my-events-query.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class EventService {
     private eventDetailsQuery: EventPageQueryService,
     private eventPageInfoQuery: EventPageInfoQueryService,
     private freeSignupMutation: FreeSignUpMutationService,
-    private signUpForEventMutation: SignUpForEventMutationService) { }
+    private signUpForEventMutation: SignUpForEventMutationService,
+    private myEventsQuery: MyEventsQueryService) { }
 
   // Mutations
 
@@ -94,6 +96,9 @@ export class EventService {
   }
 
   getMyEvents() {
-    
+    return this.myEventsQuery
+    .watch()
+    .valueChanges
+    .pipe(map(({data}) => data))
   }
 }

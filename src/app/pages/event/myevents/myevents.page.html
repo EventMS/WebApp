@@ -1,21 +1,32 @@
-<div>
+<div *ngIf="showUpcomingEvents()">
   <ion-header>
     <ion-toolbar>
       <ion-title>My upcoming events</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list>
-
-  </ion-list>
+  <div *ngIf="upcomingMemberEvents.length > 0">
+    <ion-label>You are participating in</ion-label>
+    <ion-list>
+  
+    </ion-list>
+  </div>
+  <div *ngIf="upcomingInstructorEvents.length > 0">
+    <ion-label>You are instructor for</ion-label>
+    <ion-list>
+  
+    </ion-list>
+  </div>
 </div>
 
-<div>
+<div *ngIf="showPastEvents()">
   <ion-header>
     <ion-toolbar>
       <ion-title>My past events</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list>
-    
+    <ion-card>
+
+    </ion-card>
   </ion-list>
 </div>
