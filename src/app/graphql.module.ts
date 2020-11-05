@@ -12,6 +12,9 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
         Event: {
           keyFields: ['eventId'],
         },
+        Club: {
+          keyFields: ['clubId'],
+        },
       },
     }),
     defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
