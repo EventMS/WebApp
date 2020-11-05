@@ -500,7 +500,6 @@ export interface IVerifyCodeQuery_getEvent_participants {
 export interface IVerifyCodeQuery_getEvent {
   __typename: "Event";
   eventId: string;
-  clubId: string;
   participants: (IVerifyCodeQuery_getEvent_participants | null)[] | null;
 }
 

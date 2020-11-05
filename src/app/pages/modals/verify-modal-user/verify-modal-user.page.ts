@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ApolloError } from '@apollo/client/core';
 import { ModalController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
@@ -13,6 +14,7 @@ export class VerifyModalUserPage implements OnInit {
   @Input() isInstructor: boolean;
   public code: string;
   public participants: IVerifyCodeQuery_getEvent['participants'];
+  public wrongCode: string;
 
   constructor(private modalController: ModalController, private eventService: EventService) {}
 
@@ -29,6 +31,14 @@ export class VerifyModalUserPage implements OnInit {
   }
 
   public onCodeSubmitted = () => {
-    this.eventService.verifyCode({ request: { eventId: this.eventId, code: this.code.trim() } }).subscribe();
+    this.eventService.verifyCode({ request: { eventId: this.eventId, code: this.code.trim() } }).subscribe(
+      () => {
+        this.wrongCode = '';
+      },
+      (error: ApolloError) => {
+        this.wrongCode = error.message.includes('Invalid') ? 'Invalid code' : 'Code has already been used';
+        console.log(error);
+      }
+    );
   };
 }
