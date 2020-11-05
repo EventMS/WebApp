@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { Observable } from 'rxjs'
-import { IMyClubsListQuery, IMyClubsListQuery_currentUser_permissions, IMyClubsListQuery_myClubs, IMyClubsListQuery_myClubs_clubsubscription } from 'src/graphql_interfaces';
+import { IMyClubsListQuery, IMyClubsListQuery_userRoles } from 'src/graphql_interfaces';
 
 @Component({
   selector: 'app-myclubs',
@@ -9,11 +9,11 @@ import { IMyClubsListQuery, IMyClubsListQuery_currentUser_permissions, IMyClubsL
   styleUrls: ['./myclubs.page.scss'],
 })
 export class MyclubsPage implements OnInit {
-  clubs$: Observable<IMyClubsListQuery>
+  roles$: Observable<IMyClubsListQuery>
 
-  adminClubs: IMyClubsListQuery["myClubs"] = []
-  instructorClubs: IMyClubsListQuery["myClubs"] = []
-  memberClubs: IMyClubsListQuery["myClubs"] = []
+  adminRoles: IMyClubsListQuery["userRoles"] = []
+  instructorRoles: IMyClubsListQuery["userRoles"] = []
+  memberRoles: IMyClubsListQuery["userRoles"] = []
 
   constructor(private clubService: ClubService) { }
 
@@ -21,31 +21,28 @@ export class MyclubsPage implements OnInit {
     this.getData()
   }
 
-  filterListBy(value: string, clubs: IMyClubsListQuery, club: IMyClubsListQuery_myClubs | null): boolean {
-    const permissionsForClub = clubs!.currentUser!.permissions!.find((perm) => {
-      return perm!.clubId == club!.clubId
-    })
-
-    return permissionsForClub!.userRole == value
+  filterListBy(value: string, role: IMyClubsListQuery_userRoles | null): boolean {
+    return role!.userRole == value
   }
 
-  userSubscription(club: IMyClubsListQuery_myClubs, permissions: IMyClubsListQuery_currentUser_permissions[]): string {
-    if(!permissions) {return ""}
+  userSubscription(role: IMyClubsListQuery_userRoles | null): string {
+    if(!role) {return ""}
 
-    const permissionsForClub = permissions.find((perm) => {
-      return perm.clubId == club.clubId
+    const userSubscription = role!.club!.clubsubscription!.find((sub) => {
+      return sub!.clubSubscriptionId == role!.clubSubscriptionId
     })
 
-    if(permissionsForClub!.userRole == "Member"){return "Your subscription: " + permissionsForClub!.clubSubscription!.name}
-    else { return ""}
+    if(!userSubscription) {return ""}
+
+    return userSubscription.name ?? ""
   }
 
   private getData() {
-    this.clubs$ = this.clubService.myClubsListDetails()
-    this.clubs$.subscribe((clubs) => {
-      this.adminClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Admin", clubs, club))
-      this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Instructor", clubs, club))
-      this.instructorClubs = clubs!.myClubs!.filter((club) => this.filterListBy("Member", clubs, club))
+    this.roles$ = this.clubService.myClubsListDetails()
+    this.roles$.subscribe((clubs) => {
+      this.adminRoles = clubs!.userRoles!.filter((club) => this.filterListBy("Admin", club))
+      this.instructorRoles = clubs!.userRoles!.filter((club) => this.filterListBy("Instructor", club))
+      this.memberRoles = clubs!.userRoles!.filter((club) => this.filterListBy("Member", club))
     })
   }
 }

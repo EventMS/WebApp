@@ -26,7 +26,7 @@ export class ClubService {
       {
         request: request
       }
-    ,{refetchQueries: [{query: this.myClubsQuery.document}, {query: this.clubListQuery.document}]})
+    ,{refetchQueries: [{query: this.myClubsQuery.document}, {query: this.clubListQuery.document}, {query: this.myClubsListQuery.document}]})
   }
 
   // Queries
