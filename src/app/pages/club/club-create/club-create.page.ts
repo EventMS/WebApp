@@ -67,21 +67,22 @@ export class ClubCreatePage implements OnInit {
   onSubmit = async () => {
     const formData: FormData = this.clubform.value;
 
-    this.clubService.createClub({
-      name: formData.name,
-      description: formData.description,
-      phoneNumber: formData.phone.toString(),
-      accountNumber: formData.accountNumber.toString(),
-      registrationNumber: formData.regNumber.toString(),
-      address: formData.address,
-      locations: this.locations,
-    })
-    .subscribe(
-      (data) => {
-        this.handleResponse(data.data!.createClub!.clubId)
-      },
-      (error) => this.presentAlert(error)
-    );
+    this.clubService
+      .createClub({
+        name: formData.name,
+        description: formData.description,
+        phoneNumber: formData.phone.toString(),
+        accountNumber: formData.accountNumber.toString(),
+        registrationNumber: formData.regNumber.toString(),
+        address: formData.address,
+        locations: this.locations,
+      })
+      .subscribe(
+        (data) => {
+          this.handleResponse(data.data!.createClub!.clubId);
+        },
+        (error) => this.presentAlert(error)
+      );
   };
 
   didAddLocationItem() {
@@ -129,8 +130,7 @@ export class ClubCreatePage implements OnInit {
   private handleResponse(clubId: string) {
     this.clubform.reset();
     //Navigate to page for new created club
-    console.log(clubId)
-    this.router.navigate(Paths.show_club.route(clubId));
+    this.router.navigate(Paths.club_manage.route(clubId));
   }
 }
 

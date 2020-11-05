@@ -16,9 +16,10 @@ export class VerifyModalUserPage implements OnInit {
 
   ngOnInit() {
     this.eventService.getVerificationCodes().subscribe(({ currentUser }) => {
-      this.code =
-        currentUser?.events?.find((data) => data?.eventId == this.eventId)?.code ??
-        'code not generated yet, try again later';
+      if (!this.isInstructor)
+        this.code =
+          currentUser?.events?.find((data) => data?.eventId == this.eventId)?.code ??
+          'code not generated yet, try again later';
     });
   }
 

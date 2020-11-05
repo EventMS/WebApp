@@ -68,10 +68,13 @@
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
+                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large"
+                                class="signUpButton" (click)="onSignup()" [disabled]="disabled">
                                 Sign up</ion-button>
                             <ng-template #alreadySignedUpButton>
-                                <ion-button size="large" class="verifyButton" (click)="onVerifyClicked()">Verify
+                                <ion-button size="large" class="verifyButton" [disabled]="alreadyVerified"
+                                    (click)="onVerifyClicked()">
+                                    {{this.isInstructorForEvent ? 'Verify users' : 'verify'}}
                                 </ion-button>
                             </ng-template>
                         </ion-col>
@@ -81,7 +84,9 @@
                     <ion-col>
                         <ion-button style="width: 100%; height: 300px; ">MAPS</ion-button>
                         <ion-row class="ion-justify-content-center ion-margin">
-                            <h1>Address: {{event.locations[0]?.room.roomId ? event.locations[0].room.name : clubInfo.address}}</h1>
+                            <h1>Address:
+                                {{event.locations[0]?.room.roomId ? event.locations[0].room.name : clubInfo.address}}
+                            </h1>
                         </ion-row>
                     </ion-col>
                 </ion-row>
@@ -142,6 +147,8 @@
         </ion-card>
     </ion-content>
 
-    <app-mobile-signup-component [buttonText]="alreadySignedUp ? 'Verify' : 'Sign up'" [verify]="alreadySignedUp" [callback]="alreadySignedUp ? onSignup : onVerifyClicked">
+    <app-mobile-signup-component [text]="alreadySignedUp ? 'Verify' : 'Sign up'"
+        [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'"
+        [callback]="alreadySignedUp ?  onVerifyClicked : onSignup">
     </app-mobile-signup-component>
 </ng-template>

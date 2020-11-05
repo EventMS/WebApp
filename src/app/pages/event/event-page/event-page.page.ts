@@ -27,8 +27,11 @@ export class EventPagePage implements OnInit {
   public eventName: string;
   public disabled: boolean;
   public alreadySignedUp: boolean = false;
+  public isMobile = isPlatform('mobile');
+  public alreadyVerified: boolean;
+  public isInstructorForEvent: boolean;
+
   private eventId: string;
-  private isInstructorForEvent: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,7 +39,9 @@ export class EventPagePage implements OnInit {
     private modalController: ModalController
   ) {}
 
-  public isMobile = isPlatform('mobile');
+  ngOnInit() {
+    this.initData();
+  }
 
   public onSignup = async () => {
     if (this.price === 0) {
@@ -56,10 +61,6 @@ export class EventPagePage implements OnInit {
     return await modal.present();
   };
 
-  ngOnInit() {
-    this.initData();
-  }
-
   private initData = () => {
     this.activatedRoute.params.subscribe((params) => {
       const eventId = params['eventId'] as string;
@@ -67,7 +68,7 @@ export class EventPagePage implements OnInit {
         this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
-            this.setGetEventValues({ getEvent });
+            this.setEventValues({ getEvent });
             this.clubInfo$.subscribe(({ currentUser }) => {
               this.isInstructorForEvent = Boolean(
                 getEvent.instructorForEvents?.find((ins) => ins?.user?.id === currentUser?.id)?.user?.id
@@ -101,7 +102,7 @@ export class EventPagePage implements OnInit {
     }
   };
 
-  private setGetEventValues = ({ getEvent }) => {
+  private setEventValues = ({ getEvent }) => {
     this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
     this.handlePriceForEvent(getEvent);
     this.eventName = getEvent.name!;

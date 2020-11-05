@@ -6,8 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./mobile-signup.component.scss'],
 })
 export class MobileSignupComponent implements OnInit {
-  @Input() buttonText: string;
-  @Input() verify: boolean;
+  @Input() text: string;
+  @Input() color: boolean;
   @Input() callback: () => void;
 
   constructor() {}
