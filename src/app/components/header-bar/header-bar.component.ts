@@ -35,7 +35,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedMyEvents() {
-    console.log('Tapped my events');
+    this.router.navigate([Paths.my_events]);
   }
 
   tappedMyClubs() {

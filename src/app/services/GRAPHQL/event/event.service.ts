@@ -92,4 +92,8 @@ export class EventService {
     .valueChanges
     .pipe(map(({data}) => data))
   }
+
+  getMyEvents() {
+    
+  }
 }
