@@ -7,13 +7,17 @@
   <div *ngIf="upcomingMemberEvents.length > 0">
     <ion-label>You are participating in</ion-label>
     <ion-list>
-  
+      <ion-card *ngFor="let participation of upcomingMemberEvents">
+        <ion-label>{{participation.event.name}}</ion-label>
+      </ion-card>
     </ion-list>
   </div>
   <div *ngIf="upcomingInstructorEvents.length > 0">
     <ion-label>You are instructor for</ion-label>
     <ion-list>
-  
+      <ion-card *ngFor="let event of upcomingInstructorEvents">
+        <ion-label>{{event.name}}</ion-label>
+      </ion-card>
     </ion-list>
   </div>
 </div>
@@ -25,8 +29,8 @@
     </ion-toolbar>
   </ion-header>
   <ion-list>
-    <ion-card>
-
+    <ion-card *ngFor="let participation of pastMemberEvents">
+      <ion-label>{{participation.event.name}}</ion-label>
     </ion-card>
   </ion-list>
 </div>

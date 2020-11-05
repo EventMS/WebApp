@@ -13,10 +13,9 @@ export class MyeventsPage implements OnInit {
   private today = new Date();
 
   events$: Observable<IMyEventsQuery>
-  upcomingMemberEvents: IMyEventsQuery["myEventParticipations"]
-  pastMemberEvents: IMyEventsQuery["myEventParticipations"]
-  upcomingInstructorEvents: IMyEventsQuery["myInstructorEvents"]
-  pastInstructorEvents: IMyEventsQuery["myInstructorEvents"]
+  upcomingMemberEvents: IMyEventsQuery["myEventParticipations"] = []
+  pastMemberEvents: IMyEventsQuery["myEventParticipations"] = []
+  upcomingInstructorEvents: IMyEventsQuery["myInstructorEvents"] = []
 
   constructor(private eventService: EventService) { }
 
@@ -29,16 +28,21 @@ export class MyeventsPage implements OnInit {
   }
 
   showPastEvents(): boolean {
-    return (this.pastMemberEvents.length > 0) || (this.pastInstructorEvents.length > 0)
+    return (this.pastMemberEvents.length > 0)
+  }
+
+  private isPast(dateString: string): boolean {
+    const date = new Date(dateString)
+    return date < this.today
   }
 
   private getData() {
     this.events$ = this.eventService.getMyEvents()
     this.events$.subscribe((events) => {
-      this.upcomingMemberEvents = events.myEventParticipations.filter(ev => ev.event.startTime > this.today);
-      this.pastMemberEvents = events.myEventParticipations.filter(ev => ev.event.endTime < this.today);
-      this.upcomingInstructorEvents = events.myInstructorEvents.filter(ev => ev.startTime > this.today);
-      this.pastInstructorEvents = events.myInstructorEvents.filter(ev => ev.endTime < this.today);
+      console.log(events)
+      this.upcomingMemberEvents = events.myEventParticipations.filter(ev => !this.isPast(ev.event.endTime))
+      this.pastMemberEvents = events.myEventParticipations.filter(ev => this.isPast(ev.event.endTime));
+      this.upcomingInstructorEvents = events.myInstructorEvents.filter(ev => !this.isPast(ev.endTime));
     })
   }
 }
