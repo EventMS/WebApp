@@ -4,10 +4,8 @@ import { Platform } from '@ionic/angular';
 import { MyClubsQueryService } from 'src/app/services/GRAPHQL/club/queries/my-clubs-query.service';
 
 enum SideBarContent {
-  club,
   events,
   members,
-  instructors,
   subscriptions,
 }
 

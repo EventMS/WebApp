@@ -25,8 +25,11 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    if (url === '/') this.router.navigate([Paths.start]);
-    else if (url === 'login') alert('Wrong credentials');
+    if(url === 'login') {
+      alert('Wrong credentials');
+    } else {
+      this.router.navigate([Paths.start]);
+    }
 
     // not logged in so redirect to login page with the return url
 

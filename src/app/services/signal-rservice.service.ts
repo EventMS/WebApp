@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as signalR from "@aspnet/signalr";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SignalRServiceService {
 
   startConnection = () => {
     this.connection = new signalR.HubConnectionBuilder()
-                            .withUrl('http://localhost:5113/event')
+                            .withUrl(environment.websocketUrl + "event")
                             .build();
     this.connection
       .start()
