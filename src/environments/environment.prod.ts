@@ -1,5 +1,5 @@
 export const environment: { apiUrl: string, production: boolean, websocketUrl: string } = {
-  apiUrl: 'http://eventms/api/',
+  apiUrl: 'api/',
   production: true,
-  websocketUrl: 'http://eventms/api/websocket/'
+  websocketUrl: 'api/websocket/'
 };
