@@ -36,7 +36,7 @@ export class AuthenticationService {
   loginFromSignup(user: ICreateUserMutation['createUser']) {
     localStorage.setItem(current_user, JSON.stringify(user!));
     this.currentUserSubject.next(user);
-    this.router.navigate(['']);
+    this.router.navigateByUrl('', { replaceUrl: true });
   }
 
   login(data: ILoginUserMutationVariables['request']) {
