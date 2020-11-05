@@ -10,6 +10,7 @@ export class VerifyCodeMutationService extends Mutation<IVerifyCodeMutation, IVe
     mutation IVerifyCodeMutation($request: VerifyCodeRequestInput) {
       verifyCode(request: $request) {
         status
+        userId
       }
     }
   `;

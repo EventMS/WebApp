@@ -6,6 +6,8 @@ import {
   IEventPageInfoQuery,
   IEventPageInfoQueryVariables,
   IEventPageQuery,
+  IVerifyCodeMutationVariables,
+  IVerifyCodeQueryVariables,
 } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { CreateEventClubQueryService } from '../club/queries/create-event-club-query.service';
@@ -18,6 +20,7 @@ import { EventPageInfoQueryService } from './queries/event-page-info-query.servi
 import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
 import { SignUpForEventMutationService } from './mutations/single-payment-mutation.service';
 import { VerifyCodeQueryService } from './queries/verify-query.service';
+import { VerifyCodeMutationService } from './mutations/verify-mutation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +34,8 @@ export class EventService {
     private eventPageInfoQuery: EventPageInfoQueryService,
     private freeSignupMutation: FreeSignUpMutationService,
     private signUpForEventMutation: SignUpForEventMutationService,
-    private verifyCodeQueryService: VerifyCodeQueryService
+    private verifyCodeQueryService: VerifyCodeQueryService,
+    private verifyCodeMutationService: VerifyCodeMutationService
   ) {}
 
   // Mutations
@@ -87,7 +91,18 @@ export class EventService {
       .valueChanges.pipe(map(({ data }) => data));
   }
 
-  getVerificationCodes = () => {
-    return this.verifyCodeQueryService.watch().valueChanges.pipe(map(({ data }) => data));
+  getVerificationCodes = ({ eventId }: IVerifyCodeQueryVariables) => {
+    return this.verifyCodeQueryService.watch({ eventId }).valueChanges.pipe(map(({ data }) => data));
+  };
+
+  verifyCode = ({ request }: IVerifyCodeMutationVariables) => {
+    const refetchVar = request?.eventId;
+    return this.verifyCodeMutationService.mutate(
+      { request },
+      {
+        refetchQueries: [{ query: this.verifyCodeQueryService.document, variables: { eventId: refetchVar } }],
+        awaitRefetchQueries: true,
+      }
+    );
   };
 }

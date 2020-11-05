@@ -328,6 +328,7 @@ export interface ISignUpForEventMutationServiceVariables {
 export interface IVerifyCodeMutation_verifyCode {
   __typename: "EventVerification";
   status: PresenceStatusEnum;
+  userId: string;
 }
 
 export interface IVerifyCodeMutation {
@@ -480,11 +481,36 @@ export interface IVerifyCodeQuery_currentUser_events {
 
 export interface IVerifyCodeQuery_currentUser {
   __typename: "identity_ApplicationUser";
+  id: string | null;
   events: (IVerifyCodeQuery_currentUser_events | null)[] | null;
+}
+
+export interface IVerifyCodeQuery_getEvent_participants_user {
+  __typename: "identity_ApplicationUser";
+  id: string | null;
+  name: string | null;
+}
+
+export interface IVerifyCodeQuery_getEvent_participants {
+  __typename: "EventVerification";
+  user: IVerifyCodeQuery_getEvent_participants_user | null;
+  status: PresenceStatusEnum;
+}
+
+export interface IVerifyCodeQuery_getEvent {
+  __typename: "Event";
+  eventId: string;
+  clubId: string;
+  participants: (IVerifyCodeQuery_getEvent_participants | null)[] | null;
 }
 
 export interface IVerifyCodeQuery {
   currentUser: IVerifyCodeQuery_currentUser | null;
+  getEvent: IVerifyCodeQuery_getEvent | null;
+}
+
+export interface IVerifyCodeQueryVariables {
+  eventId: string;
 }
 
 /* tslint:disable */

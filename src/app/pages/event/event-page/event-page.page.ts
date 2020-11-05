@@ -5,15 +5,12 @@ import { Observable } from 'rxjs';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
   IEventPageInfoQuery,
-  IEventPageInfoQuery_currentUser,
   IEventPageInfoQuery_currentUser_events,
   IEventPageQuery,
   IEventPageQuery_getEvent,
-  IEventPageQuery_getEvent_instructorForEvents,
 } from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
-
 @Component({
   selector: 'app-event-page',
   templateUrl: './event-page.page.html',
@@ -80,6 +77,10 @@ export class EventPagePage implements OnInit {
         });
       }
     });
+  };
+
+  getButtonText = () => {
+    return this.isInstructorForEvent ? 'Verify users' : this.alreadySignedUp ? 'Verify' : 'Sign up';
   };
 
   public modalCallback = (succes: boolean) => {

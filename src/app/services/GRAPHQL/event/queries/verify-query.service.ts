@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
-import { IVerifyCodeQuery } from 'src/graphql_interfaces';
+import { IVerifyCodeQuery, IVerifyCodeQueryVariables } from 'src/graphql_interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VerifyCodeQueryService extends Query<IVerifyCodeQuery> {
+export class VerifyCodeQueryService extends Query<IVerifyCodeQuery, IVerifyCodeQueryVariables> {
   document = gql`
-    query IVerifyCodeQuery {
+    query IVerifyCodeQuery($eventId: String!) {
       currentUser {
+        id
         events {
           code
           eventId
+        }
+      }
+      getEvent(eventId: $eventId) {
+        eventId
+        participants {
+          user {
+            id
+            name
+          }
+          status
         }
       }
     }

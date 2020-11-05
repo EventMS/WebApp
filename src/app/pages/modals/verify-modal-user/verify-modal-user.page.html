@@ -21,7 +21,7 @@
     </ion-grid>
 
     <ng-template #instructor>
-        <ion-grid style="height: 60%;">
+        <ion-grid style="height: 60%; width: 100%;">
             <ion-text class="ion-text-center">
                 <h1>
                     NFC is on
@@ -30,6 +30,20 @@
             <ion-row class="ion-justify-content-center ion-margin-top">
                 <ion-spinner class="spinner"></ion-spinner>
             </ion-row>
+            <ion-row class="ion-justify-content-center">
+                <ion-list>
+                    <ion-item *ngFor="let participant of participants">
+                        <ion-row class="ion-justify-content-between" style="width: 200px;">
+                            <ion-text>{{participant.user.name}}</ion-text>
+                            <ion-icon *ngIf="participant.status === 'SIGNEDUP' else Attending" name="close-circle"
+                                color="danger"></ion-icon>
+                            <ng-template #Attending>
+                                <ion-icon name="checkmark-circle" color="primary"></ion-icon>
+                            </ng-template>
+                        </ion-row>
+                    </ion-item>
+                </ion-list>
+            </ion-row>
         </ion-grid>
         <ion-text class="ion-text-center">
             <h3>
@@ -37,11 +51,11 @@
             </h3>
             <ion-row>
                 <ion-col offset="3" size="3" style="margin-bottom: 10px;">
-                    <ion-input [(ngModel)]="code" inputmode="number" minlength="4" min="4" required placeholder="1234"></ion-input>
+                    <ion-input [(ngModel)]="code" inputmode="number" min="4" required placeholder="1234">
+                    </ion-input>
                 </ion-col>
-                <ion-button [disabled]="code?.length !== 4" (click)="onCodeSubmitted()">submit</ion-button>
+                <ion-button [disabled]="code?.length < 4" (click)="onCodeSubmitted()">Submit</ion-button>
             </ion-row>
         </ion-text>
     </ng-template>
-
 </ion-content>

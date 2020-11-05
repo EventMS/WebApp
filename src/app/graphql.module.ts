@@ -7,7 +7,13 @@ import { environment } from 'src/environments/environment';
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   return {
     link: httpLink.create({ uri: environment.apiUrl }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Event: {
+          keyFields: ['eventId'],
+        },
+      },
+    }),
     defaultOptions: { watchQuery: { fetchPolicy: 'cache-and-network' } },
   };
 }

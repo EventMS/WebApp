@@ -147,7 +147,7 @@
         </ion-card>
     </ion-content>
 
-    <app-mobile-signup-component [text]="alreadySignedUp ? 'Verify' : 'Sign up'"
+    <app-mobile-signup-component [text]="getButtonText()"
         [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'"
         [callback]="alreadySignedUp ?  onVerifyClicked : onSignup">
     </app-mobile-signup-component>
