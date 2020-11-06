@@ -39,7 +39,7 @@ export class ClubListPage implements OnInit {
   }
 
   private presentLoading = async () => {
-    return this.loadingController.create({ message: 'Loading clubs...', duration: 10000 });
+    return this.loadingController.create({ message: 'Loading clubs...' });
   };
 
   public findLocalClubs = () => {

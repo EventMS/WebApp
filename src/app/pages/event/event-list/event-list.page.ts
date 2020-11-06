@@ -32,6 +32,6 @@ export class EventListPage implements OnInit {
   }
 
   private presentLoading = async () => {
-    return this.loadingController.create({ message: 'Loading events...', duration: 10000 });
+    return this.loadingController.create({ message: 'Loading events...' });
   };
 }
