@@ -8,23 +8,18 @@ import { IMyClubsListQuery } from 'src/graphql_interfaces';
 export class MyClubsListQueryService extends Query<IMyClubsListQuery> {
   document = gql`
   query IMyClubsListQuery {
-    myClubs {
-      name
+    userRoles {
+      userRole
       clubId
-      description
-      address
-      clubsubscription {
-        clubSubscriptionId
+      clubSubscriptionId
+      club {
         name
-      }
-    }
-    currentUser{
-      permissions{
-        userRole
         clubId
-        clubSubscription{
-          name
+        description
+        address
+        clubsubscription {
           clubSubscriptionId
+          name
         }
       }
     }
