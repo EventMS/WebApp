@@ -10,6 +10,7 @@ export class MyEventsQueryService extends Query<IMyEventsQuery> {
     query IMyEventsQuery {
       myEventParticipations{
         eventParticipantId
+        eventId
         event{
           name
           startTime

@@ -26,6 +26,10 @@ export class HeaderBarComponent implements OnInit {
     await popover.present();
   }
 
+  tappedTitle() {
+    this.router.navigate([Paths.dashboard])  
+  }
+
   tappedFindClubs() {
     this.router.navigate([Paths.club_list]);
   }

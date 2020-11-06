@@ -8,7 +8,21 @@
     <ion-label>You are participating in</ion-label>
     <ion-list>
       <ion-card *ngFor="let participation of upcomingMemberEvents">
-        <ion-label>{{participation.event.name}}</ion-label>
+        <ion-card-header>
+          <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> 
+        <div style="display: flex;">
+          <div style="display: flex;">
+            <h1 style="padding-right:10px; font-weight: bold;">From:</h1>
+            <h2>{{formatDate(participation.event.startTime)}}</h2>
+          </div>
+          <div style="display: flex; padding-left:20px;">
+            <h1 style="padding-right:10px; font-weight: bold;">To:</h1>
+            <h2>{{formatDate(participation.event.endTime)}}</h2>
+          </div>
+        </div>
+      </ion-card-content>
       </ion-card>
     </ion-list>
   </div>
@@ -16,7 +30,21 @@
     <ion-label>You are instructor for</ion-label>
     <ion-list>
       <ion-card *ngFor="let event of upcomingInstructorEvents">
-        <ion-label>{{event.name}}</ion-label>
+        <ion-card-header>
+          <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content> 
+        <div style="display: flex;">
+          <div style="display: flex;">
+            <h1 style="padding-right:10px; font-weight: bold;">From:</h1>
+            <h2>{{formatDate(event.startTime)}}</h2>
+          </div>
+          <div style="display: flex; padding-left:20px;">
+            <h1 style="padding-right:10px; font-weight: bold;">To:</h1>
+            <h2>{{formatDate(event.endTime)}}</h2>
+          </div>
+        </div>
+      </ion-card-content>
       </ion-card>
     </ion-list>
   </div>
@@ -29,8 +57,22 @@
     </ion-toolbar>
   </ion-header>
   <ion-list>
-    <ion-card *ngFor="let participation of pastMemberEvents">
-      <ion-label>{{participation.event.name}}</ion-label>
+    <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of pastMemberEvents">
+      <ion-card-header>
+        <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content> 
+      <div style="display: flex;">
+        <div style="display: flex;">
+          <h1 style="padding-right:10px; font-weight: bold;">From:</h1>
+          <h2>{{formatDate(participation.event.startTime)}}</h2>
+        </div>
+        <div style="display: flex; padding-left:20px;">
+          <h1 style="padding-right:10px; font-weight: bold;">To:</h1>
+          <h2>{{formatDate(participation.event.endTime)}}</h2>
+        </div>
+      </div>
+    </ion-card-content>
     </ion-card>
   </ion-list>
 </div>

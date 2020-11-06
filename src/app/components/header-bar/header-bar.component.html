@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ title }} </ion-title>
+    <ion-button (click)="tappedTitle()" Fill="clear">
+      <ion-title>{{ title }} </ion-title>
+    </ion-button>
     <ion-buttons slot="primary">
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedFindClubs()">Find Clubs</ion-button>
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedFindEvents()">Find Events</ion-button>

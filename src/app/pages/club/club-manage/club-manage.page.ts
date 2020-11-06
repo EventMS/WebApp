@@ -15,9 +15,11 @@ enum SideBarContent {
   styleUrls: ['./club-manage.page.scss'],
 })
 export class ClubManagePage implements OnInit {
-  sidebarContent: SideBarContent = SideBarContent.events;
+  sidebarContent: SideBarContent = SideBarContent.members;
   SidebarContent: typeof SideBarContent = SideBarContent;
   clubName: string;
+
+  items = ["members", "subscriptions", "events",]
 
   constructor(private route: ActivatedRoute,
      public platform: Platform) {

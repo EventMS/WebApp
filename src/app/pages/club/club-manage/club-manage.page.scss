@@ -37,3 +37,13 @@ ion-button {
 .background {
   --background: url(../../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
 }
+
+ion-segment {
+  --background: transparent;
+}
+
+.item-border {
+  border: 1px solid black;
+  border-radius: 15px;
+  margin-right:15px;
+}
