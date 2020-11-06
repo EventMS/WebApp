@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { isPlatform, ModalController } from '@ionic/angular';
+import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
@@ -33,7 +33,8 @@ export class EventPagePage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
   ) {}
 
   ngOnInit() {
@@ -93,6 +94,8 @@ export class EventPagePage implements OnInit {
     const modal = await this.modalController.create({
       component: VerifyModalUserPage,
       componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
     });
     return await modal.present();
   };

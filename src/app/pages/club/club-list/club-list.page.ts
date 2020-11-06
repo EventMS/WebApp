@@ -3,23 +3,28 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
 import { fromEvent, Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-club-list',
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
 export class ClubListPage implements OnInit {
-  constructor(private clubService: ClubService) {}
+  constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
   public filteredClubs: IGetClubsQuery['clubs'];
 
-  ngOnInit(){}
+  ngOnInit() {}
 
-  ionViewWillEnter() {
-    this.clubService.getAllClubs().subscribe(({ clubs }) => {
-      this.filteredClubs = clubs
-    })
+  async ionViewWillEnter() {
+    const loading = await this.presentLoading();
+    await loading.present();
+
+    this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
+      this.filteredClubs = clubs;
+      await loading.dismiss();
+    });
 
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
@@ -32,6 +37,10 @@ export class ClubListPage implements OnInit {
       );
     });
   }
+
+  private presentLoading = async () => {
+    return this.loadingController.create({ message: 'Loading clubs...', duration: 10000 });
+  };
 
   public findLocalClubs = () => {
     console.log(this.filteredClubs);
