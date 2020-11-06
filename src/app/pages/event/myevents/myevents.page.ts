@@ -54,6 +54,8 @@ export class MyeventsPage implements OnInit {
       this.pastMemberEvents = events.myEventParticipations!.filter(ev => this.isPast(ev!.event!.endTime));
       this.upcomingInstructorEvents = events.myInstructorEvents!.filter(ev => !this.isPast(ev!.endTime));
       this.pastMemberEvents.sort((ev1,ev2)=>this.getDate(ev2.event.endTime).getDay()-this.getDate(ev1.event.endTime).getDay())
+      this.upcomingMemberEvents.sort((ev1,ev2)=>this.getDate(ev1.event.endTime).getDay()-this.getDate(ev2.event.endTime).getDay())
+      this.upcomingInstructorEvents.sort((ev1,ev2)=>this.getDate(ev1.endTime).getDay()-this.getDate(ev2.endTime).getDay())
     })
   }
 }
