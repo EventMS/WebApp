@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button (click)="tappedTitle()" Fill="clear">
-      <ion-title>{{ title }} </ion-title>
+    <ion-button style="width: -webkit-fill-available;" (click)="tappedTitle()" Fill="clear">
+      <ion-title style="width: auto;">{{ title }} </ion-title>
     </ion-button>
     <ion-buttons slot="primary">
       <ion-button *ngIf="platform.is('desktop')" class="regular" (click)="tappedFindClubs()">Find Clubs</ion-button>
