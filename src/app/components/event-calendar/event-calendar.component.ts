@@ -9,8 +9,8 @@ export class DateRangeEvent {
 }
 
 export class DateClickedEvent {
-  date: Date
-  events: EMSEvent[]
+  date: Date;
+  events: EMSEvent[];
 }
 
 @Component({
@@ -19,36 +19,31 @@ export class DateClickedEvent {
   styleUrls: ['./event-calendar.component.scss'],
 })
 export class EventCalendarComponent implements OnInit {
-  
-  @Input() viewDate: Date
-  @Input() events: EMSEvent[] = []
-  @Output() eventChanged: EventEmitter<DateRangeEvent> = new EventEmitter()
-  @Output() dayClicked: EventEmitter<{ date: Date; events: EMSEvent[] }> = new EventEmitter()
+  @Input() viewDate: Date;
+  @Input() events: EMSEvent[] = [];
+  @Output() eventChanged: EventEmitter<DateRangeEvent> = new EventEmitter();
+  @Output() dayClicked: EventEmitter<{ date: Date; events: EMSEvent[] }> = new EventEmitter();
 
   refresh: Subject<any> = new Subject();
 
-  CalendarView = CalendarView
+  CalendarView = CalendarView;
 
-  view: CalendarView = CalendarView.Month
+  view: CalendarView = CalendarView.Month;
 
   ngOnInit() {}
 
   setView(view: CalendarView) {
-    this.view = view
+    this.view = view;
   }
 
   onDayClicked({ date, events }: { date: Date; events: EMSEvent[] }): void {
-    this.dayClicked.emit({events: events, date: date})
+    this.dayClicked.emit({ events: events, date: date });
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
+  eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
-    this.eventChanged.emit({ startDate: newStart!, endDate: newEnd! })
+    this.eventChanged.emit({ startDate: newStart!, endDate: newEnd! });
     this.refresh.next();
   }
 }

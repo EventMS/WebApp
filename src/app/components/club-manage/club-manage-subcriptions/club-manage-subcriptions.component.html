@@ -18,12 +18,18 @@
                 <div class="selecter" *ngIf="clubSubscriptions!.length > 0">
                   <ion-select formControlName="subscriptionReference" placeholder="Choose existing subscription">
                     <ion-select-option *ngFor="let sub of clubSubscriptions" [value]="sub.clubSubscriptionId">
-                      {{sub.name}}
+                      {{ sub.name }}
                     </ion-select-option>
                   </ion-select>
                 </div>
               </div>
-              <ion-button [disabled]="form.invalid" id="submit" size="large" type="submit" color="success" expand="block"
+              <ion-button
+                [disabled]="form.invalid"
+                id="submit"
+                size="large"
+                type="submit"
+                color="success"
+                expand="block"
                 >Create subscription
               </ion-button>
             </form>
@@ -37,7 +43,7 @@
           <div class="ion-text-center">
             <h1>Existing subscriptions</h1>
           </div>
-          <div> 
+          <div>
             <div class="ion-text-center" *ngIf="clubSubscriptions!.length == 0">
               <h3>No existing subscriptions</h3>
             </div>

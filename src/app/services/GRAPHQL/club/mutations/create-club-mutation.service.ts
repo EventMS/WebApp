@@ -5,9 +5,7 @@ import { ICreateClubMutation, ICreateClubMutationVariables } from 'src/graphql_i
 @Injectable({
   providedIn: 'root',
 })
-
 export class CreateClubMutationService extends Mutation<ICreateClubMutation, ICreateClubMutationVariables> {
-
   document = gql`
     mutation ICreateClubMutation($request: CreateClubRequestInput) {
       createClub(request: $request) {

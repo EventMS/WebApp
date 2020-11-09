@@ -4,10 +4,7 @@ import {
   ICreateEventClubQuery,
   IEventListQuery,
   IEventPageInfoQuery,
-  IEventPageInfoQueryVariables,
   IEventPageQuery,
-  IVerifyCodeMutationVariables,
-  IVerifyCodeQueryVariables,
 } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { CreateEventClubQueryService } from '../club/queries/create-event-club-query.service';

@@ -3,7 +3,7 @@ import { gql, Query } from 'apollo-angular';
 import { IMembersForClubQuery, IMembersForClubQueryVariables } from 'src/graphql_interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MembersForClubQueryService extends Query<IMembersForClubQuery, IMembersForClubQueryVariables> {
   document = gql`

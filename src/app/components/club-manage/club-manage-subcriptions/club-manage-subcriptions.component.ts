@@ -43,12 +43,11 @@ export class ClubManageSubcriptionsComponent implements OnInit {
   }
 
   private getSubscriptions() {
-    this.clubSubscriptions$ = this.subscriptionService
-    .getSubscriptions(this.clubId)
+    this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId);
     this.clubSubscriptions$.subscribe((data) => {
       this.clubSubscriptions = data;
       this.form.reset();
-    })
+    });
   }
 
   get form() {
@@ -74,17 +73,16 @@ export class ClubManageSubcriptionsComponent implements OnInit {
       clubId: this.clubId,
       name: formData.name,
       price: formData.price,
-      referenceId: formData.subscriptionReference
-    }
+      referenceId: formData.subscriptionReference,
+    };
 
-    this.subscriptionService.createSubscription(request)
-    .subscribe(
+    this.subscriptionService.createSubscription(request).subscribe(
       () => {},
       (error) => {
         console.log(error);
         this.presentAlert();
       }
-    )
+    );
   }
 
   private async presentAlert() {

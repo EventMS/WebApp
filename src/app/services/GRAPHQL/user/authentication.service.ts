@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { LoginMutationService } from 'src/app/services/GRAPHQL/user/mutations/loginMutation.service'
-import { CreateUserRequestInput, ICreateUserMutation, ILoginUserMutation, ILoginUserMutationVariables } from 'src/graphql_interfaces';
+import { LoginMutationService } from 'src/app/services/GRAPHQL/user/mutations/loginMutation.service';
+import {
+  CreateUserRequestInput,
+  ICreateUserMutation,
+  ILoginUserMutation,
+  ILoginUserMutationVariables,
+} from 'src/graphql_interfaces';
 import { ApolloError } from '@apollo/client/core';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
@@ -16,7 +21,12 @@ const current_user = 'current_user';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User | null>;
 
-  constructor(private router: Router, private loginMutationService: LoginMutationService, private apollo: Apollo,     private createUserMutationService: CreateUserMutationService,) {
+  constructor(
+    private router: Router,
+    private loginMutationService: LoginMutationService,
+    private apollo: Apollo,
+    private createUserMutationService: CreateUserMutationService
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(current_user)!));
   }
 
@@ -25,12 +35,9 @@ export class AuthenticationService {
   }
 
   createUser(request: CreateUserRequestInput) {
-    return this.createUserMutationService
-    .mutate(
-      {
-        request: request
-      }
-    )
+    return this.createUserMutationService.mutate({
+      request: request,
+    });
   }
 
   loginFromSignup(user: ICreateUserMutation['createUser']) {
@@ -49,7 +56,7 @@ export class AuthenticationService {
           this.apollo.client.clearStore();
           this.router.navigateByUrl('', { replaceUrl: true });
         },
-        (error: ApolloError) => { 
+        (error: ApolloError) => {
           if (error.message.includes('credentials')) alert('Wrong username or password');
           else alert('something went wrong, please try again later');
         }

@@ -16,16 +16,13 @@ export class PaymentModalPage implements OnInit {
   public clubsubscriptionId: string;
   clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
 
-  constructor(
-    private modalController: ModalController,
-    private subscriptionService: SubscriptionService
-  ) {}
+  constructor(private modalController: ModalController, private subscriptionService: SubscriptionService) {}
 
   ngOnInit() {
-    this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId)
+    this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId);
     this.clubSubscriptions$.subscribe((data) => {
-      this.clubSubscriptions = data
-    })
+      this.clubSubscriptions = data;
+    });
   }
 
   getName = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.name;

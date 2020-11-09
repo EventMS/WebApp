@@ -7,33 +7,33 @@ import { ICreateEventClubQuery } from 'src/graphql_interfaces';
 })
 export class CreateEventClubQueryService extends Query<ICreateEventClubQuery> {
   document = gql`
-  query ICreateEventClubQuery($clubId: String!) {
-    clubByID(clubId: $clubId){
-      rooms{
-        roomId
-        name
-      }
-      instructors {
-        userId
-        user {
-          name
-          id
-        }
-      }
-      clubsubscription {
-        clubSubscriptionId
-        name
-      }
-      events {
-        locations {
+    query ICreateEventClubQuery($clubId: String!) {
+      clubByID(clubId: $clubId) {
+        rooms {
           roomId
+          name
         }
-        name
-        startTime
-        endTime
-        description
+        instructors {
+          userId
+          user {
+            name
+            id
+          }
+        }
+        clubsubscription {
+          clubSubscriptionId
+          name
+        }
+        events {
+          locations {
+            roomId
+          }
+          name
+          startTime
+          endTime
+          description
+        }
       }
     }
-  }
   `;
 }
