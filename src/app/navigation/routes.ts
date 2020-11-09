@@ -70,12 +70,12 @@ const navigationRoutes: Routes = [
   },
   {
     path: Paths.my_events,
-    loadChildren: () => import('src/app/pages/event/myevents/myevents.module').then((m) => m.MyeventsPageModule)
+    loadChildren: () => import('src/app/pages/event/myevents/myevents.module').then((m) => m.MyeventsPageModule),
   },
   {
     path: '',
-    redirectTo: Paths.dashboard
-  }
+    redirectTo: Paths.dashboard,
+  },
 ];
 
 export default navigationRoutes;

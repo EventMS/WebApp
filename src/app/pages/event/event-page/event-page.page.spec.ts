@@ -9,8 +9,8 @@ describe('EventPagePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventPagePage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EventPagePage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventPagePage);

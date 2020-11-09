@@ -68,21 +68,19 @@ export class SignupPage {
       email: email,
       birthDate: birthDate,
       phoneNumber: phoneNumber,
-      password: password
-    }
+      password: password,
+    };
 
-    this.authenticationService
-      .createUser(request)
-      .subscribe(
-        ({ data }) => {
-          this.presentToast();
-          this.authenticationService.loginFromSignup(data!.createUser);
-        },
-        (error: ApolloError) => {
-          if (error.message.includes('input')) alert('Email is already in use');
-          else alert('Something went wrong, try again later');
-        }
-      );
+    this.authenticationService.createUser(request).subscribe(
+      ({ data }) => {
+        this.presentToast();
+        this.authenticationService.loginFromSignup(data!.createUser);
+      },
+      (error: ApolloError) => {
+        if (error.message.includes('input')) alert('Email is already in use');
+        else alert('Something went wrong, try again later');
+      }
+    );
   };
 }
 

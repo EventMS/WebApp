@@ -9,8 +9,8 @@ describe('ClubManageMembersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClubManageMembersComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ClubManageMembersComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ClubManageMembersComponent);

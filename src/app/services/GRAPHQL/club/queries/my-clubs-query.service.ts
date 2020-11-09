@@ -4,10 +4,9 @@ import { IMyClubsQuery } from 'src/graphql_interfaces';
 import { Query } from 'apollo-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MyClubsQueryService extends Query<IMyClubsQuery> {
-
   document = gql`
     query IMyClubsQuery {
       myClubs {

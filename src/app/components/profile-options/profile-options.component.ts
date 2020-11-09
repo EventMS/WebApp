@@ -21,9 +21,7 @@ export class ProfileOptionsComponent implements OnInit {
     private popoverController: PopoverController,
     private clubQueryService: MyClubsQueryService,
     private authenticationService: AuthenticationService
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit() {
     this.getClubs();
@@ -46,9 +44,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubs$ = this.clubQueryService
-    .watch({})
-    .valueChanges
-    .pipe(map(({ data }) => data.myClubs));
+    this.clubs$ = this.clubQueryService.watch({}).valueChanges.pipe(map(({ data }) => data.myClubs));
   }
 }

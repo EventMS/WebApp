@@ -4,7 +4,7 @@ import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { IEventPageInfoQuery, IEventPageQuery, IEventPageQuery_getEvent } from 'src/graphql_interfaces';
-import { EventPaymentModalPage } from '../../../pages/modals/event-payment-modal/event-payment-modal.page'
+import { EventPaymentModalPage } from '../../../pages/modals/event-payment-modal/event-payment-modal.page';
 
 @Component({
   selector: 'app-event-page',
@@ -24,16 +24,14 @@ export class EventPagePage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
-    private modalController: ModalController,
+    private modalController: ModalController
   ) {}
 
   public isMobile = isPlatform('mobile');
 
   public onSignup = async () => {
     if (this.price === 0) {
-      this.eventService
-        .signUpForFreeEvent(this.eventId)
-        .subscribe(() => (this.alreadySignedUp = true));
+      this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
       return;
     }
 

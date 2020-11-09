@@ -5,39 +5,44 @@ import { RemoveInstructorMutationService } from './mutations/remove-instructor-m
 import { MembersForClubQueryService } from './queries/members-for-club-query.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MemberService {
-
   constructor(
     private addInstructorMutation: AddInstructorMutationService,
     private removeInstructorMutation: RemoveInstructorMutationService,
     private membersForClubQuery: MembersForClubQueryService
-  ) { }
+  ) {}
 
   addInstructor(clubId: string, instructorId: string) {
-    return this.addInstructorMutation.mutate({clubId: clubId, instructorId: instructorId},  {
-      refetchQueries: [
-        {
-          query: this.membersForClubQuery.document,
-          variables: { clubId: clubId },
-        },
-      ]
-    })
+    return this.addInstructorMutation.mutate(
+      { clubId: clubId, instructorId: instructorId },
+      {
+        refetchQueries: [
+          {
+            query: this.membersForClubQuery.document,
+            variables: { clubId: clubId },
+          },
+        ],
+      }
+    );
   }
 
   removeInstructor(clubId: string, instructorId: string) {
-    return this.removeInstructorMutation.mutate({clubId: clubId, instructorId: instructorId},  {
-      refetchQueries: [
-        {
-          query: this.membersForClubQuery.document,
-          variables: { clubId: clubId },
-        },
-      ]
-    })
+    return this.removeInstructorMutation.mutate(
+      { clubId: clubId, instructorId: instructorId },
+      {
+        refetchQueries: [
+          {
+            query: this.membersForClubQuery.document,
+            variables: { clubId: clubId },
+          },
+        ],
+      }
+    );
   }
 
   getMembers(clubId: string) {
-    return this.membersForClubQuery.watch({clubId: clubId}).valueChanges.pipe(map((value) => value.data));
+    return this.membersForClubQuery.watch({ clubId: clubId }).valueChanges.pipe(map((value) => value.data));
   }
 }

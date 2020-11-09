@@ -1,33 +1,33 @@
 .vertical-align {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .calendar-col {
-    width:800px;
+  width: 800px;
 }
 
 .right-col {
-    padding-top: 63px;
+  padding-top: 63px;
 }
 
 .centered-row {
-    justify-content: center;
+  justify-content: center;
 }
 
 .scrollable-content {
-    max-height: 300px;
-    display:block !important;
-    overflow-y:scroll !important;
+  max-height: 300px;
+  display: block !important;
+  overflow-y: scroll !important;
 }
 
 ion-card {
-    width: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
 
 .rcorners {
-    border-radius: 25px;
-    padding: 30px;
-    background: whitesmoke;
-    width: 95%;
+  border-radius: 25px;
+  padding: 30px;
+  background: whitesmoke;
+  width: 95%;
 }

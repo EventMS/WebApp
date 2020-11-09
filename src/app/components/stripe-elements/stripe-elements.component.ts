@@ -64,8 +64,7 @@ export class StripeElementsComponent implements AfterViewInit {
   }
 
   handleSinglePayment = () => {
-    this.eventService.signUpForEvent(this.eventId)
-    .subscribe(async ({ data }) => {
+    this.eventService.signUpForEvent(this.eventId).subscribe(async ({ data }) => {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
         duration: 10000,
