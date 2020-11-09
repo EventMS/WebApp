@@ -45,10 +45,10 @@ export class ClubService {
 
   getClubDetails(clubId: string): Observable<IShowClubQuery> {
     return this.showClubQueryService
-      .fetch({
+      .watch({
         clubByID: clubId,
       })
-      .pipe(map((club) => club.data));
+      .valueChanges.pipe(map((club) => club.data));
   }
 
   myClubsListDetails(): Observable<IMyClubsListQuery> {

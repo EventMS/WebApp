@@ -35,23 +35,6 @@ export class ShowClubPage implements OnInit {
     });
   }
 
-  getEventPrice = (i: number) => {
-    const eventPrice = this.events?.[i]?.eventPrices?.find(
-      (ep) => ep?.clubSubscriptionId == this.currentSubscription?.clubSubscriptionId
-    );
-    return eventPrice?.price ?? 'no price for you';
-  };
-
-  public showModal = async (): Promise<void> => {
-    const modal = await this.modalController.create({
-      component: PaymentModalPage,
-      componentProps: {
-        clubId: this.clubId,
-      },
-    });
-    return await modal.present();
-  };
-
   private initData = () => {
     this.club$.subscribe(
       ({ clubByID, currentUser, eventsForClub }) => {
@@ -71,5 +54,22 @@ export class ShowClubPage implements OnInit {
         console.log(error);
       }
     );
+  };
+
+  getEventPrice = (i: number) => {
+    const eventPrice = this.events?.[i]?.eventPrices?.find(
+      (ep) => ep?.clubSubscriptionId == this.currentSubscription?.clubSubscriptionId
+    );
+    return eventPrice?.price ?? 'no price for you';
+  };
+
+  public showModal = async (): Promise<void> => {
+    const modal = await this.modalController.create({
+      component: PaymentModalPage,
+      componentProps: {
+        clubId: this.clubId,
+      },
+    });
+    return await modal.present();
   };
 }
