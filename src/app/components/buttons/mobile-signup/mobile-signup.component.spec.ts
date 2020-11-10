@@ -9,8 +9,8 @@ describe('MobileSignupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileSignupComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [MobileSignupComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MobileSignupComponent);

@@ -9,12 +9,7 @@ import { MyclubsPageRoutingModule } from './myclubs-routing.module';
 import { MyclubsPage } from './myclubs.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MyclubsPageRoutingModule
-  ],
-  declarations: [MyclubsPage]
+  imports: [CommonModule, FormsModule, IonicModule, MyclubsPageRoutingModule],
+  declarations: [MyclubsPage],
 })
 export class MyclubsPageModule {}

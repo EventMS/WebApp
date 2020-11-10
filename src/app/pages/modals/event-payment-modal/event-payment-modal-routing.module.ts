@@ -6,8 +6,8 @@ import { EventPaymentModalPage } from './event-payment-modal.page';
 const routes: Routes = [
   {
     path: '',
-    component: EventPaymentModalPage
-  }
+    component: EventPaymentModalPage,
+  },
 ];
 
 @NgModule({

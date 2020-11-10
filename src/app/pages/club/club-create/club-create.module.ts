@@ -7,14 +7,7 @@ import { ClubCreatePage } from './club-create.page';
 import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ClubCreatePageRoutingModule,
-    ComponentsModule,
-    ReactiveFormsModule
-  ],
-  declarations: [ClubCreatePage]
+  imports: [CommonModule, FormsModule, IonicModule, ClubCreatePageRoutingModule, ComponentsModule, ReactiveFormsModule],
+  declarations: [ClubCreatePage],
 })
 export class ClubCreatePageModule {}

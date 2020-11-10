@@ -26,11 +26,9 @@ import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
     MatFormFieldModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   declarations: [CreateEventPage],
-  providers: [
-    {provide: OWL_DATE_TIME_LOCALE, useValue: 'dk'},
-  ],
+  providers: [{ provide: OWL_DATE_TIME_LOCALE, useValue: 'dk' }],
 })
 export class CreateEventPageModule {}

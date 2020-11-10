@@ -17,7 +17,6 @@ ion-toolbar {
 ion-button {
   padding-left: 8px;
   padding-right: 8px;
-
 }
 
 .profile {
@@ -30,9 +29,9 @@ ion-button {
   --color: AliceBlue;
 }
 
-.regular:hover  {
- --background: black;
- --color: url(../../../assets/img/start.jpg) 0 0/100% 100%;
+.regular:hover {
+  --background: black;
+  --color: url(../../../assets/img/start.jpg) 0 0/100% 100%;
 }
 
 ion-title {

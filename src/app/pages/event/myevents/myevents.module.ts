@@ -9,12 +9,7 @@ import { MyeventsPageRoutingModule } from './myevents-routing.module';
 import { MyeventsPage } from './myevents.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MyeventsPageRoutingModule
-  ],
-  declarations: [MyeventsPage]
+  imports: [CommonModule, FormsModule, IonicModule, MyeventsPageRoutingModule],
+  declarations: [MyeventsPage],
 })
 export class MyeventsPageModule {}

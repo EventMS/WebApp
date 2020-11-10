@@ -14,18 +14,15 @@ describe('ClubManageSubcriptionsComponent', () => {
   let el: HTMLElement;
 
   beforeEach(async(() => {
-
     //mockService = jasmine.createSpyObj('ClubSubscriptionsQueryService', ['watch'])
 
     TestBed.configureTestingModule({
-      declarations: [ ClubManageSubcriptionsComponent ],
+      declarations: [ClubManageSubcriptionsComponent],
       imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ClubManageSubcriptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   }));
-
 });

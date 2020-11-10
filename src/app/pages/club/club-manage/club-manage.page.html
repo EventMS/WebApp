@@ -1,6 +1,13 @@
 <ion-content>
   <mat-drawer-container class="example-container" autosize>
-    <mat-drawer *ngIf="platform.is('desktop')" opened="true" disableClose="true" #drawer class="example-sidenav" mode="side">
+    <mat-drawer
+      *ngIf="platform.is('desktop')"
+      opened="true"
+      disableClose="true"
+      #drawer
+      class="example-sidenav"
+      mode="side"
+    >
       <ion-list>
         <ion-item>
           <ion-button fill="clear" (click)="sidebarContent = SidebarContent.events">
@@ -48,8 +55,5 @@
         <app-club-manage-subcriptions class="sub-content" *ngIf="sidebarContent==SidebarContent.subscriptions"></app-club-manage-subcriptions>
       </div>
     </ion-content>
-    
   </mat-drawer-container>
-  
 </ion-content>
-

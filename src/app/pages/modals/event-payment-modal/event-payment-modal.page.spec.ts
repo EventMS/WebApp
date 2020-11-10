@@ -9,8 +9,8 @@ describe('EventPaymentModalPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventPaymentModalPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EventPaymentModalPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventPaymentModalPage);

@@ -6,8 +6,8 @@ import { PaymentModalPage } from './payment-modal.page';
 const routes: Routes = [
   {
     path: '',
-    component: PaymentModalPage
-  }
+    component: PaymentModalPage,
+  },
 ];
 
 @NgModule({

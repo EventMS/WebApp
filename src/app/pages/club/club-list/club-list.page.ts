@@ -14,12 +14,12 @@ export class ClubListPage implements OnInit {
   private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
   public filteredClubs: IGetClubsQuery['clubs'];
 
-  ngOnInit(){}
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.clubService.getAllClubs().subscribe(({ clubs }) => {
-      this.filteredClubs = clubs
-    })
+      this.filteredClubs = clubs;
+    });
 
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
