@@ -130,8 +130,7 @@ export class ClubCreatePage implements OnInit {
   private handleResponse(clubId: string) {
     this.clubform.reset();
     //Navigate to page for new created club
-    console.log(clubId);
-    this.router.navigate(Paths.show_club.route(clubId));
+    this.router.navigate(Paths.club_manage.route(clubId));
   }
 }
 

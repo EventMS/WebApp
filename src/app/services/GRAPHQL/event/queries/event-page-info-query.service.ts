@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { gql, Query } from 'apollo-angular';
-import { map } from 'rxjs/operators';
 import { IEventPageInfoQuery, IEventPageInfoQueryVariables } from 'src/graphql_interfaces';
 
 @Injectable({
@@ -10,14 +9,9 @@ export class EventPageInfoQueryService extends Query<IEventPageInfoQuery, IEvent
   document = gql`
     query IEventPageInfoQuery($clubByID: String!) {
       currentUser {
+        id
         events {
-          code
-          eventVerificationId
           eventId
-        }
-        permissions {
-          clubSubscriptionId
-          clubId
         }
       }
       clubByID(clubId: $clubByID) {

@@ -35,6 +35,27 @@ export class ShowClubPage implements OnInit {
     });
   }
 
+  private initData = () => {
+    this.club$.subscribe(
+      ({ clubByID, currentUser, eventsForClub }) => {
+        if (clubByID?.clubId && currentUser) {
+          this.clubId = clubByID.clubId;
+          const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
+            ?.clubSubscriptionId;
+          this.currentSubscription =
+            clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
+        }
+
+        if (eventsForClub) {
+          this.events = eventsForClub;
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   getEventPrice = (i: number) => {
     const eventPrice = this.events?.[i]?.eventPrices?.find(
       (ep) => ep?.clubSubscriptionId == this.currentSubscription?.clubSubscriptionId
@@ -50,21 +71,5 @@ export class ShowClubPage implements OnInit {
       },
     });
     return await modal.present();
-  };
-
-  private initData = () => {
-    this.club$.subscribe(({ clubByID, currentUser, eventsForClub }) => {
-      if (clubByID?.clubId && currentUser) {
-        this.clubId = clubByID.clubId;
-        const subscriptionId = currentUser.permissions?.find((perm) => perm?.clubId === clubByID.clubId)
-          ?.clubSubscriptionId;
-        this.currentSubscription =
-          clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
-      }
-
-      if (eventsForClub) {
-        this.events = eventsForClub;
-      }
-    });
   };
 }

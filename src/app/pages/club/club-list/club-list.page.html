@@ -1,25 +1,25 @@
 <ion-row class="ion-justify-content-around ion-margin">
-  <ion-col size="7">
-    <ion-searchbar inputmode="text" animated placeholder="Search"></ion-searchbar>
-  </ion-col>
-  <ion-col>
-    <ion-button class="searchButton" fill="solid" (click)="findLocalClubs()">Find Local Clubs</ion-button>
-  </ion-col>
+    <ion-col size="12">
+        <ion-searchbar inputmode="text" animated placeholder="Search"></ion-searchbar>
+    </ion-col>
+    <ion-col>
+        <!-- <ion-button class="searchButton" fill="solid" (click)="findLocalClubs()">Find Local Clubs</ion-button> -->
+    </ion-col>
 </ion-row>
 
 <ion-content>
-  <ion-list *ngFor="let club of filteredClubs">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{club.name.toUpperCase()}}</ion-card-title>
-        <ion-card-subtitle>
-          <ion-row class="ion-justify-content-between">
-            <ion-text style="margin-top: 1rem"> {{club.address}} </ion-text>
-            <ion-button class="goToClubButton" [routerLink]="['/show-club/', club.clubId]">Go to club</ion-button>
-          </ion-row>
-        </ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content> {{club.description}} </ion-card-content>
-    </ion-card>
-  </ion-list>
+    <ion-list *ngFor="let club of filteredClubs">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>{{club.name.toUpperCase()}}</ion-card-title>
+                <ion-card-subtitle>
+                    <ion-row class="ion-justify-content-between">
+                        <ion-text style="margin-top: 1rem"> {{club.address}} </ion-text>
+                        <ion-button class="goToClubButton" [routerLink]="['/show-club/', club.clubId]">Go to club</ion-button>
+                    </ion-row>
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content> {{club.description}} </ion-card-content>
+        </ion-card>
+    </ion-list>
 </ion-content>
