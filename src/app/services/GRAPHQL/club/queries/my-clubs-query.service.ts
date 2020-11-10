@@ -9,7 +9,7 @@ import { Query } from 'apollo-angular';
 export class MyClubsQueryService extends Query<IMyClubsQuery> {
   document = gql`
     query IMyClubsQuery {
-      myClubs {
+      myAdminClubs {
         name
         clubId
       }

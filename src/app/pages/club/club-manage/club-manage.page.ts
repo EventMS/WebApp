@@ -15,11 +15,14 @@ enum SideBarContent {
   styleUrls: ['./club-manage.page.scss'],
 })
 export class ClubManagePage implements OnInit {
-  sidebarContent: SideBarContent = SideBarContent.events;
+  sidebarContent: SideBarContent = SideBarContent.members;
   SidebarContent: typeof SideBarContent = SideBarContent;
   clubName: string;
 
-  constructor(private route: ActivatedRoute, public platform: Platform) {
+  items = ["members", "subscriptions", "events",]
+
+  constructor(private route: ActivatedRoute,
+     public platform: Platform) {
     this.route.params.subscribe((params) => {
       this.clubName = params['clubId'];
     });

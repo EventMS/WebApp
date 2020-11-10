@@ -31,6 +31,10 @@ export class HeaderBarComponent implements OnInit {
     await popover.present();
   }
 
+  tappedTitle() {
+    this.router.navigate([Paths.dashboard])  
+  }
+
   tappedFindClubs() {
     this.router.navigate([Paths.club_list]);
   }
@@ -40,7 +44,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedMyEvents() {
-    console.log('Tapped my events');
+    this.router.navigate([Paths.my_events]);
   }
 
   tappedMyClubs() {
