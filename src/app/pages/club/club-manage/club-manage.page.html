@@ -28,22 +28,31 @@
     </mat-drawer>
 
     <ion-content class="background">
+      <div *ngIf="platform.is('mobile')">
+        <ion-segment class="ion-padding" scrollable mode="md">
+          <div class="item-border">
+            <ion-segment-button (click)="sidebarContent = SidebarContent.members" value="members">
+              Manage Members
+            </ion-segment-button>
+          </div>
+          <div class="item-border">
+            <ion-segment-button (click)="sidebarContent = SidebarContent.subscriptions" value="subscriptions">
+              Manage Subscriptions
+            </ion-segment-button>
+          </div>
+          <div class="item-border">
+            <ion-segment-button (click)="sidebarContent = SidebarContent.events" value="events">
+              Manage Events
+            </ion-segment-button>
+          </div>
+        </ion-segment>
+      </div>
+
       <div class="example-sidenav-content">
         <!-- Erstat labels med komponenter, når vi har lavet dem -->
-        <app-club-manage-members
-          *ngIf="sidebarContent==SidebarContent.members"
-          class="member-content"
-        ></app-club-manage-members>
-        <ion-label *ngIf="sidebarContent==SidebarContent.club">CLUBS</ion-label>
-        <app-club-manage-events
-          class="event-content"
-          *ngIf="sidebarContent==SidebarContent.events"
-        ></app-club-manage-events>
-        <ion-label *ngIf="sidebarContent==SidebarContent.instructors">INSTRUCTORS</ion-label>
-        <app-club-manage-subcriptions
-          class="sub-content"
-          *ngIf="sidebarContent==SidebarContent.subscriptions"
-        ></app-club-manage-subcriptions>
+        <app-club-manage-members *ngIf="sidebarContent==SidebarContent.members" class="member-content"></app-club-manage-members>
+        <app-club-manage-events class="event-content" *ngIf="sidebarContent==SidebarContent.events"></app-club-manage-events>
+        <app-club-manage-subcriptions class="sub-content" *ngIf="sidebarContent==SidebarContent.subscriptions"></app-club-manage-subcriptions>
       </div>
     </ion-content>
   </mat-drawer-container>

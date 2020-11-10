@@ -229,3 +229,8 @@
     --ion-card-background: #1e1e1e;
   }
 }
+
+ion-segment-button {
+  --indicator-color: transparent !important;
+  --indicator-color-checked: transparent !important;
+}

@@ -153,14 +153,14 @@ export interface IMyClubsListQuery {
 // GraphQL query operation: IMyClubsQuery
 // ====================================================
 
-export interface IMyClubsQuery_myClubs {
+export interface IMyClubsQuery_myAdminClubs {
   __typename: "Club";
   name: string | null;
   clubId: string;
 }
 
 export interface IMyClubsQuery {
-  myClubs: (IMyClubsQuery_myClubs | null)[] | null;
+  myAdminClubs: (IMyClubsQuery_myAdminClubs | null)[] | null;
 }
 
 /* tslint:disable */
@@ -428,6 +428,42 @@ export interface IEventPageQuery {
 
 export interface IEventPageQueryVariables {
   eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IMyEventsQuery
+// ====================================================
+
+export interface IMyEventsQuery_myEventParticipations_event {
+  __typename: "Event";
+  name: string | null;
+  startTime: any;
+  endTime: any;
+}
+
+export interface IMyEventsQuery_myEventParticipations {
+  __typename: "EventParticipant";
+  eventParticipantId: string;
+  eventId: string;
+  event: IMyEventsQuery_myEventParticipations_event | null;
+}
+
+export interface IMyEventsQuery_myInstructorEvents {
+  __typename: "Event";
+  eventId: string;
+  name: string | null;
+  startTime: any;
+  endTime: any;
+}
+
+export interface IMyEventsQuery {
+  myEventParticipations: (IMyEventsQuery_myEventParticipations | null)[] | null;
+  myInstructorEvents: (IMyEventsQuery_myInstructorEvents | null)[] | null;
 }
 
 /* tslint:disable */
