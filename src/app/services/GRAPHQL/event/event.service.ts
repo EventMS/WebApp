@@ -37,18 +37,25 @@ export class EventService {
   createEvent(request: CreateEventRequestInput) {
     return this.createEventMutation.mutate({
       request: request,
-    });
+    },
+    {refetchQueries: [{query: this.createEventClubQuery.document }]});
   }
 
   signUpForFreeEvent(eventId: string) {
     return this.freeSignupMutation.mutate({
       eventId: eventId,
+    },
+    {
+      refetchQueries: [{query: this.myEventsQuery.document}]
     });
   }
 
   signUpForEvent(eventId: string) {
     return this.signUpForEventMutation.mutate({
       eventId: eventId,
+    },
+    {
+      refetchQueries: [{query: this.myEventsQuery.document}]
     });
   }
 

@@ -1,11 +1,11 @@
 <ion-header *ngIf="(roles$ | async)?.userRoles.length == 0">
   <ion-toolbar>
-    <ion-title>You are not connected to any clubs yet!</ion-title>
+    <ion-title class="auto-width">You are not connected to any clubs yet!</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-header *ngIf="adminRoles.length > 0">
   <ion-toolbar>
-    <ion-title>Clubs where im Admin</ion-title>
+    <ion-title class="auto-width">Clubs where im Admin</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -22,7 +22,7 @@
   </ion-list>
   <ion-header *ngIf="instructorRoles.length > 0">
     <ion-toolbar>
-      <ion-title>Clubs where im Instructor</ion-title>
+      <ion-title class="auto-width">Clubs where im Instructor</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list>
@@ -41,7 +41,7 @@
   </ion-list>
   <ion-header *ngIf="memberRoles.length > 0">
     <ion-toolbar>
-      <ion-title>Clubs where im Member</ion-title>
+      <ion-title class="auto-width">Clubs where im Member</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list>

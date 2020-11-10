@@ -1,13 +1,21 @@
+<ion-header *ngIf="(events$ | async)?.myEventParticipations.length == 0 && (events$ | async)?.myInstructorEvents.length == 0">
+  <ion-toolbar>
+    <ion-title class="auto-width">You are not connected to any events yet!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <div *ngIf="showUpcomingEvents()">
   <ion-header>
     <ion-toolbar>
-      <ion-title>My upcoming events</ion-title>
+      <ion-title class="auto-width">My upcoming events</ion-title>
     </ion-toolbar>
   </ion-header>
   <div *ngIf="upcomingMemberEvents.length > 0">
-    <ion-label>You are participating in</ion-label>
+    <ion-list-header>
+      <ion-label style="font-size: 16px; font-weight: 700;">You are participating in</ion-label>
+    </ion-list-header>
     <ion-list>
-      <ion-card *ngFor="let participation of upcomingMemberEvents">
+      <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of upcomingMemberEvents">
         <ion-card-header>
           <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
       </ion-card-header>
@@ -27,9 +35,11 @@
     </ion-list>
   </div>
   <div *ngIf="upcomingInstructorEvents.length > 0">
-    <ion-label>You are instructor for</ion-label>
     <ion-list>
-      <ion-card *ngFor="let event of upcomingInstructorEvents">
+      <ion-list-header>
+        <ion-label style="font-size: 16px; font-weight: 700;">You are instructor for</ion-label>
+      </ion-list-header>
+      <ion-card [routerLink]="['/event-page/', event.eventId]" button="true" *ngFor="let event of upcomingInstructorEvents">
         <ion-card-header>
           <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>
       </ion-card-header>
@@ -53,7 +63,7 @@
 <div *ngIf="showPastEvents()">
   <ion-header>
     <ion-toolbar>
-      <ion-title>My past events</ion-title>
+      <ion-title class="auto-width">My past events</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list>

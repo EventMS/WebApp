@@ -44,6 +44,7 @@ export class MyeventsPage implements OnInit {
   }
   
   private getDate(dateString): Date {
+    const date = new Date(dateString)
     return new Date(dateString)
   }
 
@@ -53,9 +54,18 @@ export class MyeventsPage implements OnInit {
       this.upcomingMemberEvents = events.myEventParticipations!.filter(ev => !this.isPast(ev!.event!.endTime))
       this.pastMemberEvents = events.myEventParticipations!.filter(ev => this.isPast(ev!.event!.endTime));
       this.upcomingInstructorEvents = events.myInstructorEvents!.filter(ev => !this.isPast(ev!.endTime));
-      this.pastMemberEvents.sort((ev1,ev2)=>this.getDate(ev2!.event!.endTime).getDay()-this.getDate(ev1!.event!.endTime).getDay())
-      this.upcomingMemberEvents.sort((ev1,ev2)=>this.getDate(ev1!.event!.endTime).getDay()-this.getDate(ev2!.event!.endTime).getDay())
-      this.upcomingInstructorEvents.sort((ev1,ev2)=>this.getDate(ev1!.endTime).getDay()-this.getDate(ev2!.endTime).getDay())
+
+      this.pastMemberEvents = this.pastMemberEvents.sort((ev1,ev2)=>this.compareDates(this.getDate(ev1!.event!.endTime), this.getDate(ev2!.event!.endTime)))
+      this.upcomingMemberEvents = this.upcomingMemberEvents.sort((ev1,ev2)=>this.compareDates(this.getDate(ev1!.event!.endTime), this.getDate(ev2!.event!.endTime)))
+      this.upcomingInstructorEvents = this.upcomingInstructorEvents.sort((ev1,ev2)=>this.compareDates(this.getDate(ev1!.endTime), this.getDate(ev2!.endTime)))
     })
+  }
+
+  private compareDates(date1: Date, date2: Date): number {
+    const sameTime = date1.getTime() === date2.getTime();
+    if (sameTime) return 0;
+    if (date1 > date2) return 1;
+    if (date1 < date2) return -1;
+    else return 0;
   }
 }

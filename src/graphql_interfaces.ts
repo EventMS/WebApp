@@ -448,8 +448,8 @@ export interface IMyEventsQuery_myEventParticipations_event {
 
 export interface IMyEventsQuery_myEventParticipations {
   __typename: "EventParticipant";
-  eventParticipantId: string;
   eventId: string;
+  eventParticipantId: string;
   event: IMyEventsQuery_myEventParticipations_event | null;
 }
 
