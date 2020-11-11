@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { GoogleNearby } from '@ionic-native/google-nearby/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
   ],
   providers: [
     StatusBar,
+    GoogleNearby,
     SplashScreen,
     NFC,
     Ndef,
