@@ -87,7 +87,7 @@ export class CreateEventPage implements OnInit {
 
   onCreationFailed(data: any) {
     this.loadingController.dismiss();
-    this.presentAlert('Could not create event');
+    this.presentAlert('Room is already booked for this timeslot');
   }
 
   onCreationSucceeded(data: any) {
