@@ -4,6 +4,7 @@ import { IGetClubsQuery } from 'src/graphql_interfaces';
 import { fromEvent, Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { LoadingController } from '@ionic/angular';
+import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 @Component({
   selector: 'app-club-list',
   templateUrl: './club-list.page.html',
@@ -28,6 +29,7 @@ export class ClubListPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    //@ts-ignore
     this.searches$ = fromEvent<any>(document.querySelector('ion-searchbar'), 'input');
 
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {

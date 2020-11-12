@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 import {
   IMembersForClubQuery,
   IMembersForClubQuery_permissionsInClub_user,
@@ -8,6 +8,7 @@ import {
 } from 'src/graphql_interfaces';
 import { AlertController } from '@ionic/angular';
 import { MemberService } from 'src/app/services/GRAPHQL/member/member.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-club-manage-members',
@@ -16,6 +17,11 @@ import { MemberService } from 'src/app/services/GRAPHQL/member/member.service';
 })
 export class ClubManageMembersComponent implements OnInit {
   members$: Observable<IMembersForClubQuery>;
+  admin: IMembersForClubQuery_permissionsInClub | null | undefined;
+  members: IMembersForClubQuery["permissionsInClub"]=[]
+  filteredMembers: IMembersForClubQuery["permissionsInClub"]=[]
+  searchQuery: string;
+
   private clubId: string;
 
   constructor(
@@ -23,6 +29,13 @@ export class ClubManageMembersComponent implements OnInit {
     private alertCtrl: AlertController,
     private memberService: MemberService
   ) {}
+
+  searchBarChange(event: string) {
+    this.filteredMembers = this.members!.filter((permission) => {
+      if(permission!.userRole! == "Admin") { return false }
+      else { return permission!.user!.name!.toLocaleLowerCase().includes(event.toLocaleLowerCase())};
+    })
+  }
 
   ngOnInit() {
     this.getRoute().then(() => {
@@ -38,6 +51,13 @@ export class ClubManageMembersComponent implements OnInit {
 
   fetchData() {
     this.members$ = this.memberService.getMembers(this.clubId);
+    this.members$.subscribe((members) => {
+      this.admin = members!.permissionsInClub!.find((member) => {
+        return member!.userRole == "Admin";
+      })
+      this.members = members.permissionsInClub
+      this.filteredMembers = members.permissionsInClub
+    })
   }
 
   async onRemoveMember(member: IMembersForClubQuery_permissionsInClub_user) {
