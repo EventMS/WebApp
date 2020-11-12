@@ -17,7 +17,7 @@
     "#DEV:/",
     "#USER"
   ],
-  "_resolved": "git+https://github.com/EventMS/cordova-plugin-google-nearby.git#4c4f7ff4ac3d7d6e1ddc87101bc5197febcf58fb",
+  "_resolved": "git+https://github.com/EventMS/cordova-plugin-google-nearby.git#5e27e6e57deffe083eb661b2aa7316d642b023b0",
   "_spec": "https://github.com/EventMS/cordova-plugin-google-nearby",
   "_where": "/home/simon/source/WebApp",
   "author": "",

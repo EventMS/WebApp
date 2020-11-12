@@ -22,8 +22,10 @@ import com.google.android.gms.tasks.OnFailureListener;
 public class NearbyPlugin extends CordovaPlugin {
     private static final String TAG = "NearbyPlugin";
     private static CallbackContext publish_callback;
+    private static CallbackContext unpublish_callback;
     private static CallbackContext subscribe_callback;
     private static CallbackContext unsubscribe_callback;
+    private static Message mActiveMessage;
     private static final int REQUEST_RESOLVE_ERROR = 1001;
     MessageListener mMessageListener = new MessageListener() {
         @Override
@@ -62,7 +64,11 @@ public class NearbyPlugin extends CordovaPlugin {
             return true;
         } else if (action.equals("publish")) {
             this.publish_callback = callbackContext;
-            this.publish(message);
+                this.publish(message);
+            return true;
+        }else if (action.equals("unPublish")) {
+            this.unpublish_callback = callbackContext;
+            this.unPublish();
             return true;
         } else {
             return false;
@@ -91,10 +97,20 @@ public class NearbyPlugin extends CordovaPlugin {
             }
         };        
         PublishOptions options = new PublishOptions.Builder().setCallback(callback).build();
-        Message mActiveMessage = new Message(message.getBytes());
+        mActiveMessage = new Message(message.getBytes());
         Nearby.getMessagesClient(cordova.getActivity()).publish(mActiveMessage, options).addOnFailureListener(this.failListener);
         Log.d(TAG, "published message: " + message);
         this.publish_callback.success("published message");
+        setTimeout(() -> this.unPublish(), 1000);
+
+    }
+
+    private void unPublish()  {
+        Log.i(TAG, "Unpublishing.");
+        if(mActiveMessage != null) {
+            Nearby.getMessagesClient(cordova.getActivity()).unpublish(mActiveMessage);
+            mActiveMessage = null;
+        }
     }
 
     private void unsubscribe() {
@@ -102,4 +118,17 @@ public class NearbyPlugin extends CordovaPlugin {
         Log.d(TAG, "unsubscribed");
         this.unsubscribe_callback.success("unsubscribed");
     }
+
+    public static void setTimeout(Runnable runnable, int delay){
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+                runnable.run();
+            }
+            catch (Exception e){
+                System.err.println(e);
+            }
+        }).start();
+    }
 }
+
