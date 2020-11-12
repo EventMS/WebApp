@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
 import { ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
 
@@ -9,14 +11,19 @@ import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
   templateUrl: './verify-modal-user.page.html',
   styleUrls: ['./verify-modal-user.page.scss'],
 })
-export class VerifyModalUserPage implements OnInit {
+export class VerifyModalUserPage implements OnInit, OnDestroy {
   @Input() eventId: string;
   @Input() isInstructor: boolean;
   public code: string;
   public participants: IVerifyCodeQuery_getEvent['participants'];
   public wrongCode: string;
+  private subscription: Subscription;
 
-  constructor(private modalController: ModalController, private verificationService: VerificationService) {}
+  constructor(
+    private modalController: ModalController,
+    private verificationService: VerificationService,
+    private googleNearby: GoogleNearbyService
+  ) {}
 
   ngOnInit() {
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
@@ -26,6 +33,9 @@ export class VerifyModalUserPage implements OnInit {
           this.code =
             currentUser.events?.find((data) => data?.eventId == this.eventId)?.code ??
             'code not generated yet, try again later';
+        else {
+          this.startNearbyRead();
+        }
       }
     });
   }
@@ -40,4 +50,19 @@ export class VerifyModalUserPage implements OnInit {
       }
     );
   };
+
+  public startNearbyRead = () => {
+    this.subscription = this.googleNearby.read().subscribe((code: string) => {
+      this.code = code;
+      this.onCodeSubmitted();
+    });
+  };
+
+  public startNearbyBroadcast = () => {
+    this.googleNearby.broadcast(this.code);
+  };
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
