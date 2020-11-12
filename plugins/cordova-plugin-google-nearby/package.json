@@ -1,0 +1,49 @@
+{
+  "_from": "cordova-plugin-google-nearby",
+  "_id": "cordova-plugin-google-nearby@1.1.6",
+  "_inBundle": false,
+  "_integrity": "sha512-L4XJtp3QsO72rMfBYpOP7pN8o5FOkCoXefRxQ5dyYMI4XVqHhIT6vXhOJa5XntM4ztPYC8RNPpFaPIvKCpPJgg==",
+  "_location": "/cordova-plugin-google-nearby",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-google-nearby",
+    "name": "cordova-plugin-google-nearby",
+    "escapedName": "cordova-plugin-google-nearby",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-google-nearby/-/cordova-plugin-google-nearby-1.1.6.tgz",
+  "_shasum": "04d89f1fe6fcd8b0e9f29ebaaa460b46d03325d1",
+  "_spec": "cordova-plugin-google-nearby",
+  "_where": "/home/simon/source/WebApp",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/hahahannes/cordova-plugin-google-nearby/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "This plugin adds support for the [Google Nearby Messages API](https://developers.google.com/nearby/messages/overview). Support for the other Nearby APIs will follow.",
+  "homepage": "https://github.com/hahahannes/cordova-plugin-google-nearby#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "cordova-plugin-google-nearby",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hahahannes/cordova-plugin-google-nearby.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.6"
+}

@@ -1,0 +1,10 @@
+{
+  "cordova-plugin-google-nearby": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-google-nearby@^1.1.6"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}
