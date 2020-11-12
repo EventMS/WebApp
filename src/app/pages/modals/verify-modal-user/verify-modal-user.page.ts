@@ -1,7 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
-import { ModalController, Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
@@ -11,20 +10,21 @@ import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
   templateUrl: './verify-modal-user.page.html',
   styleUrls: ['./verify-modal-user.page.scss'],
 })
-export class VerifyModalUserPage implements OnInit, OnDestroy {
+export class VerifyModalUserPage implements OnInit {
   @Input() eventId: string;
   @Input() isInstructor: boolean;
   public code: string;
   public participants: IVerifyCodeQuery_getEvent['participants'];
   public wrongCode: string;
-  private subscription: Subscription;
   public cordovaAvailable: boolean;
+  currentUserName: string;
 
   constructor(
     private modalController: ModalController,
     private platform: Platform,
     private verificationService: VerificationService,
-    private googleNearby: GoogleNearbyService
+    private googleNearby: GoogleNearbyService,
+    private toastController: ToastController
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
   }
@@ -33,6 +33,7 @@ export class VerifyModalUserPage implements OnInit, OnDestroy {
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
       if (getEvent && currentUser) {
         this.participants = getEvent.participants;
+        this.currentUserName = currentUser.name!;
         if (!this.isInstructor)
           this.code =
             currentUser.events?.find((data) => data?.eventId == this.eventId)?.code ??
@@ -56,16 +57,26 @@ export class VerifyModalUserPage implements OnInit, OnDestroy {
   };
 
   public startNearbyRead = () => {
-    this.subscription = this.googleNearby.read().subscribe((code: string) => {
-      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: code.trim() } }).subscribe();
+    this.googleNearby.read().subscribe(async (message: string) => {
+      const messages = message.split(':');
+
+      const toast = await this.toastController.create({
+        message: 'Verifiyng code from ' + messages[1],
+        duration: 3000,
+      });
+
+      await toast.present();
+
+      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
     });
   };
 
-  public startNearbyBroadcast = () => {
-    this.googleNearby.broadcast(this.code);
+  public startNearbyBroadcast = async () => {
+    this.googleNearby.broadcast(this.code + ':' + this.currentUserName);
+    const toast = await this.toastController.create({ message: 'Verifiyng', duration: 5000 });
+    await toast.present();
+    await this.modalController.dismiss({
+      dismissed: true,
+    });
   };
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 }

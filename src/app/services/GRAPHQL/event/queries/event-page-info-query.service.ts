@@ -12,6 +12,7 @@ export class EventPageInfoQueryService extends Query<IEventPageInfoQuery, IEvent
         id
         events {
           eventId
+          status
         }
       }
       clubByID(clubId: $clubByID) {

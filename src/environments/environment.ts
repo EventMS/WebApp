@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: { apiUrl: string; production: boolean; websocketUrl: string } = {
-  apiUrl: 'http://cc1091337813.ngrok.io',
+  apiUrl: 'http://34.120.17.251/api/',
   production: false,
-  websocketUrl: 'http://localhost:5113/',
+  websocketUrl: 'http://34.120.17.251/api/websocket/',
 };
 
 /*

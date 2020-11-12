@@ -344,6 +344,7 @@ export interface IEventListQuery {
 export interface IEventPageInfoQuery_currentUser_events {
   __typename: "EventVerification";
   eventId: string;
+  status: PresenceStatusEnum;
 }
 
 export interface IEventPageInfoQuery_currentUser {
@@ -448,8 +449,8 @@ export interface IMyEventsQuery_myEventParticipations_event {
 
 export interface IMyEventsQuery_myEventParticipations {
   __typename: "EventParticipant";
-  eventId: string;
   eventParticipantId: string;
+  eventId: string;
   event: IMyEventsQuery_myEventParticipations_event | null;
 }
 
@@ -734,6 +735,7 @@ export interface IVerifyCodeQuery_currentUser_events {
 export interface IVerifyCodeQuery_currentUser {
   __typename: "identity_ApplicationUser";
   id: string | null;
+  name: string | null;
   events: (IVerifyCodeQuery_currentUser_events | null)[] | null;
 }
 

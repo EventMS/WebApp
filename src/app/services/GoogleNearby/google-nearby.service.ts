@@ -11,7 +11,7 @@ export class GoogleNearbyService {
     return this.googleNearby.subscribe();
   };
 
-  public broadcast = (message: string) => {
-    this.googleNearby.publish(message);
+  public broadcast = async (message: string) => {
+    await this.googleNearby.publish(message);
   };
 }

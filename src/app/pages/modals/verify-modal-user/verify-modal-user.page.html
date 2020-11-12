@@ -26,7 +26,7 @@
     </ion-grid>
 
     <ng-template #instructor>
-        <div *ngIf="participants.length else noParticiants">
+        <div *ngIf="participants else noParticiants">
             <ion-grid style="height: 60%; width: 100%;">
                 <ion-text class="ion-text-center">
                     <h1>

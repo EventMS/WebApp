@@ -30,33 +30,40 @@ export class EventService {
     private eventPageInfoQuery: EventPageInfoQueryService,
     private freeSignupMutation: FreeSignUpMutationService,
     private signUpForEventMutation: SignUpForEventMutationService,
-    private myEventsQuery: MyEventsQueryService) { }
+    private myEventsQuery: MyEventsQueryService
+  ) {}
 
   // Mutations
 
   createEvent(request: CreateEventRequestInput) {
-    return this.createEventMutation.mutate({
-      request: request,
-    },
-    {refetchQueries: [{query: this.createEventClubQuery.document }]});
+    return this.createEventMutation.mutate(
+      {
+        request: request,
+      },
+      { refetchQueries: [{ query: this.createEventClubQuery.document }] }
+    );
   }
 
   signUpForFreeEvent(eventId: string) {
-    return this.freeSignupMutation.mutate({
-      eventId: eventId,
-    },
-    {
-      refetchQueries: [{query: this.myEventsQuery.document}]
-    });
+    return this.freeSignupMutation.mutate(
+      {
+        eventId: eventId,
+      },
+      {
+        refetchQueries: [{ query: this.myEventsQuery.document }],
+      }
+    );
   }
 
   signUpForEvent(eventId: string) {
-    return this.signUpForEventMutation.mutate({
-      eventId: eventId,
-    },
-    {
-      refetchQueries: [{query: this.myEventsQuery.document}]
-    });
+    return this.signUpForEventMutation.mutate(
+      {
+        eventId: eventId,
+      },
+      {
+        refetchQueries: [{ query: this.myEventsQuery.document }],
+      }
+    );
   }
 
   // Queries
@@ -92,10 +99,18 @@ export class EventService {
       .valueChanges.pipe(map(({ data }) => data));
   }
 
+  refetchEventPageInfo(clubId: string) {
+    return this.eventPageInfoQuery
+      .watch(
+        {
+          clubByID: clubId,
+        },
+        { fetchPolicy: 'network-only' }
+      )
+      .refetch({ clubByID: clubId });
+  }
+
   getMyEvents() {
-    return this.myEventsQuery
-    .watch()
-    .valueChanges
-    .pipe(map(({data}) => data))
+    return this.myEventsQuery.watch().valueChanges.pipe(map(({ data }) => data));
   }
 }
