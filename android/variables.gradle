@@ -14,5 +14,4 @@ ext {
     androidxJunitVersion =  '1.1.1'
     androidxEspressoCoreVersion =  '3.2.0'
     cordovaAndroidVersion =  '7.0.0'
-    API_KEY = 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs'
 }

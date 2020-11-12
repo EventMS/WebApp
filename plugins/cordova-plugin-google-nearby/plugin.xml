@@ -26,7 +26,7 @@
 
   <platform name="android">
     <preference name="API_KEY" />
-    <framework src="com.google.android.gms:play-services-nearby:11.6.0" />
+    <framework src="com.google.android.gms:play-services-nearby:17.0.0" />
 
     <config-file target="app/src/main/res/xml/config.xml" parent="/*">
       <feature name="NearbyPlugin">
@@ -37,7 +37,7 @@
     <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest/application">
       <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="$API_KEY" />
+            android:value="AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs" />
     </config-file>
 
     <config-file target="app/src/main/AndroidManifest.xml" parent="/manifest">

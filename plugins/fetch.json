@@ -2,7 +2,7 @@
   "cordova-plugin-google-nearby": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-google-nearby@^1.1.6"
+      "id": "https://github.com/EventMS/cordova-plugin-google-nearby"
     },
     "is_top_level": true,
     "variables": {}
