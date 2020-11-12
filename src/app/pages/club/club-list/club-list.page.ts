@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
 import { fromEvent, Observable } from 'rxjs';
@@ -9,11 +9,11 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit {
+export class ClubListPage implements OnInit, AfterViewInit {
   constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
-  private searches$ = fromEvent<Event & { target: HTMLInputElement }>(document, 'input');
   public filteredClubs: IGetClubsQuery['clubs'];
+  private searches$: Observable<any>;
 
   ngOnInit() {}
 
@@ -25,6 +25,10 @@ export class ClubListPage implements OnInit {
       this.filteredClubs = clubs;
       await loading.dismiss();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.searches$ = fromEvent<any>(document.querySelector('ion-searchbar'), 'input');
 
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
       requestAnimationFrame(() =>
