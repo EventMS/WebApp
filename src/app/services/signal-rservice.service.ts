@@ -19,6 +19,13 @@ export class SignalRServiceService {
       .catch((err) => console.log('Error while starting connection: ' + err));
   };
 
+  stopConnection = () => {
+    this.connection
+    .stop()
+    .then(() => console.log("Connection stopped for clubId: " + this.clubId))
+    .catch((err) => console.log('Error while stopping connection: ' + err));
+  }
+
   addListener(successHandler: socketHandler, failedHandler: socketHandler) {
     this.connection.on(this.clubId + '-EventCreated', (data) => successHandler(data));
     this.connection.on(this.clubId + '-EventCreationFailed', (data) => failedHandler(data));

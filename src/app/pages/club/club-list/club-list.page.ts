@@ -28,6 +28,7 @@ export class ClubListPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    //@ts-ignore
     this.searches$ = fromEvent<any>(document.querySelector('ion-searchbar'), 'input');
 
     this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {

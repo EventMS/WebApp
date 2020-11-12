@@ -76,8 +76,6 @@ export class CreateEventPage implements OnInit {
 
   ngOnInit() {
     this.initData();
-    this.websocketService.startConnection();
-    this.websocketService.addListener(this.onCreationSucceeded.bind(this), this.onCreationFailed.bind(this));
 
     this.form.get('startDate')!.valueChanges.subscribe(() => this.onDateChangedForCurrentEvent());
     this.form.get('endDate')!.valueChanges.subscribe(() => this.onDateChangedForCurrentEvent());
@@ -88,11 +86,13 @@ export class CreateEventPage implements OnInit {
   onCreationFailed(data: any) {
     this.loadingController.dismiss();
     this.presentAlert('Room is already booked for this timeslot');
+    this.websocketService.stopConnection()
   }
 
   onCreationSucceeded(data: any) {
     this.loadingController.dismiss();
     this.resetPage();
+    this.websocketService.stopConnection();
     this.router.navigate(['/club-manage/', this.clubId]);
   }
 
@@ -120,6 +120,9 @@ export class CreateEventPage implements OnInit {
       publicPrice: formData.publicPrice,
       eventPrices: this.eventPrices,
     };
+
+    this.websocketService.startConnection();
+    this.websocketService.addListener(this.onCreationSucceeded.bind(this), this.onCreationFailed.bind(this));
 
     this.presentLoading().then(() => {
       this.eventService.createEvent(request).subscribe(
