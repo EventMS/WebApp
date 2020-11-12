@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
@@ -18,12 +18,16 @@ export class VerifyModalUserPage implements OnInit, OnDestroy {
   public participants: IVerifyCodeQuery_getEvent['participants'];
   public wrongCode: string;
   private subscription: Subscription;
+  public cordovaAvailable: boolean;
 
   constructor(
     private modalController: ModalController,
+    private platform: Platform,
     private verificationService: VerificationService,
     private googleNearby: GoogleNearbyService
-  ) {}
+  ) {
+    this.cordovaAvailable = this.platform.is('cordova');
+  }
 
   ngOnInit() {
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
@@ -53,8 +57,7 @@ export class VerifyModalUserPage implements OnInit, OnDestroy {
 
   public startNearbyRead = () => {
     this.subscription = this.googleNearby.read().subscribe((code: string) => {
-      this.code = code;
-      this.onCodeSubmitted();
+      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: code.trim() } }).subscribe();
     });
   };
 

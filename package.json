@@ -15,7 +15,7 @@
         "start_ios": "ionic build && ionic cap copy && ionic cap sync && ionic cap run ios -l --external",
         "start_web": "ionic serve",
         "stripe": ".././stripe listen --forward-to localhost:5112/webhook",
-        "ngrok": ".././ngrok http 5102",
+        "ngrok": ".././ngrok http -host-header=rewrite 5102",
         "prettier": "prettier --write '**/*.{ts,scss,html}'",
         "update_graphql": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
     },
