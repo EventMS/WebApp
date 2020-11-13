@@ -1,13 +1,14 @@
+<ion-content>
 <ion-header *ngIf="(events$ | async)?.myEventParticipations.length == 0 && (events$ | async)?.myInstructorEvents.length == 0">
-  <ion-toolbar>
+  <ion-toolbar class="center-text">
     <ion-title class="auto-width">You are not connected to any events yet!</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <div *ngIf="showUpcomingEvents()">
   <ion-header>
-    <ion-toolbar>
-      <ion-title class="auto-width">My upcoming events</ion-title>
+    <ion-toolbar class="center-text">
+      <ion-label class="auto-width">My upcoming events</ion-label>
     </ion-toolbar>
   </ion-header>
   <div *ngIf="upcomingMemberEvents.length > 0">
@@ -62,8 +63,8 @@
 
 <div *ngIf="showPastEvents()">
   <ion-header>
-    <ion-toolbar>
-      <ion-title class="auto-width">My past events</ion-title>
+    <ion-toolbar class="center-text">
+      <ion-label class="auto-width">My past events</ion-label>
     </ion-toolbar>
   </ion-header>
   <ion-list>
@@ -86,3 +87,4 @@
     </ion-card>
   </ion-list>
 </div>
+</ion-content>
