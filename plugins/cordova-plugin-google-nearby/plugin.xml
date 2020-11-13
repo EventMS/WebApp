@@ -52,4 +52,16 @@
 
     <source-file src="src/android/NearbyPlugin.java" target-dir="src/org/apache/nearby/"/>
   </platform>
+        
+          <platform name="ios">
+      <config-file target="config.xml" parent="/*">
+          <feature name="CDVNearbyPlugin">
+              <param name="ios-package" value="CDVNearbyPlugin" />
+          </feature>
+      </config-file>
+      <source-file src="src/ios/CDVNearbyPlugin.swift" />
+      <config-file target="*-Info.plist" parent="NearbyApiKey">
+          <string>AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs</string>
+      </config-file>
+  </platform>
 </plugin>
