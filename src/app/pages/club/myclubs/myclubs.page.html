@@ -1,61 +1,63 @@
 <ion-header *ngIf="(roles$ | async)?.userRoles.length == 0">
-  <ion-toolbar>
-    <ion-title class="auto-width">You are not connected to any clubs yet!</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title class="auto-width">You are not connected to any clubs yet!</ion-title>
+    </ion-toolbar>
 </ion-header>
 <ion-header *ngIf="adminRoles.length > 0">
-  <ion-toolbar>
-    <ion-title class="auto-width">Clubs where im Admin</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title class="auto-width">Clubs where im Admin</ion-title>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list *ngIf="adminRoles.length > 0">
-    <ion-card *ngFor="let role of adminRoles" [routerLink]="['/club-manage/', role.clubId]" button="true">
-      <ion-card-header>
-        <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
-        <ion-card-title>{{role.club.name}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-label>{{role.club.description}}</ion-label>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-  <ion-header *ngIf="instructorRoles.length > 0">
-    <ion-toolbar>
-      <ion-title class="auto-width">Clubs where im Instructor</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-card *ngFor="let role of instructorRoles" [routerLink]="['/show-club/', role.clubId]" button="true">
-      <ion-card-header>
-        <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
-        <ion-card-title>{{role.club.name}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-label>{{role.club.description}}</ion-label>
-      </ion-card-content>
-      <ion-card-content>
-        <ion-label>Your subscription: {{userSubscription(role)}}</ion-label>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-  <ion-header *ngIf="memberRoles.length > 0">
-    <ion-toolbar>
-      <ion-title class="auto-width">Clubs where im Member</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-card *ngFor="let role of memberRoles" [routerLink]="['/show-club/', role.clubId]" button="true">
-      <ion-card-header>
-        <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
-        <ion-card-title>{{role.club.name}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-label>{{role.club.description}}</ion-label>
-      </ion-card-content>
-      <ion-card-content>
-        <ion-label>Your subscription: {{userSubscription(role)}}</ion-label>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
+    <ion-row>
+        <ion-list *ngIf="adminRoles.length > 0">
+            <ion-card *ngFor="let role of adminRoles" [routerLink]="['/club-manage/', role.clubId]" button="true">
+                <ion-card-header>
+                    <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
+                    <ion-card-title>{{role.club.name}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-label>{{role.club.description}}</ion-label>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+        <ion-header *ngIf="instructorRoles.length > 0">
+            <ion-toolbar>
+                <ion-title class="auto-width">Clubs where im Instructor</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-list>
+            <ion-card *ngFor="let role of instructorRoles" [routerLink]="['/show-club/', role.clubId]" button="true">
+                <ion-card-header>
+                    <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
+                    <ion-card-title>{{role.club.name}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-label>{{role.club.description}}</ion-label>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-label>Your subscription: {{userSubscription(role)}}</ion-label>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+        <ion-header *ngIf="memberRoles.length > 0">
+            <ion-toolbar>
+                <ion-title class="auto-width">Clubs where im Member</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-list>
+            <ion-card *ngFor="let role of memberRoles" [routerLink]="['/show-club/', role.clubId]" button="true">
+                <ion-card-header>
+                    <ion-card-subtitle>{{role.club.address}}</ion-card-subtitle>
+                    <ion-card-title>{{role.club.name}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-label>{{role.club.description}}</ion-label>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-label>Your subscription: {{userSubscription(role)}}</ion-label>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ion-row>
 </ion-content>

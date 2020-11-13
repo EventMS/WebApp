@@ -43,6 +43,7 @@ export class AuthenticationService {
   loginFromSignup(user: ICreateUserMutation['createUser']) {
     localStorage.setItem(current_user, JSON.stringify(user!));
     this.currentUserSubject.next(user);
+    this.apollo.client.clearStore();
     this.router.navigateByUrl('', { replaceUrl: true });
   }
 
@@ -68,6 +69,7 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem(current_user);
     this.currentUserSubject.next(null);
+    this.apollo.client.clearStore();
     this.router.navigate([Paths.start]);
   }
 

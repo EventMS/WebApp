@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
@@ -15,7 +15,8 @@ export class StripeElementsComponent implements AfterViewInit {
     public loadingController: LoadingController,
     private subscriptionService: SubscriptionService,
     private eventService: EventService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private changeRef: ChangeDetectorRef
   ) {
     this.stripe = Stripe(
       'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
@@ -42,7 +43,11 @@ export class StripeElementsComponent implements AfterViewInit {
     this.card.addEventListener('change', (response) => {
       if (response) {
         const { complete, error } = response;
-        if (complete) this.disabled = false;
+
+        if (complete) {
+          this.disabled = false;
+          this.changeRef.detectChanges();
+        }
 
         this.cardErrors = error?.message;
       }
@@ -144,13 +149,9 @@ export class StripeElementsComponent implements AfterViewInit {
       })
       .then((result) => {
         if (result.error) {
-          loading.dismiss();
-          this.dismissModal?.(false);
           this.cardErrors = result.error.message;
         } else {
           if (isPaymentRetry) {
-            loading.dismiss();
-            this.dismissModal?.(false);
             // Update the payment method and retry invoice payment
             // this.retryInvoiceWithNewPaymentMethod({
             //   customerId: this.authService.currentUserValue.user.id,
@@ -159,7 +160,7 @@ export class StripeElementsComponent implements AfterViewInit {
             //   priceId: priceId,
             // });
           } else {
-            if (this.subscriptionId)
+            if (this.subscriptionId) {
               //Create the subscription
               this.subscriptionService
                 .signUpForSupscription({
@@ -167,7 +168,7 @@ export class StripeElementsComponent implements AfterViewInit {
                   paymentMethodId: result?.paymentMethod?.id!,
                 })
                 .subscribe();
-            else {
+            } else {
               console.log('Single payment');
             }
           }

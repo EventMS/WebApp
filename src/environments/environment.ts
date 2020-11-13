@@ -5,7 +5,7 @@
 export const environment: { apiUrl: string; production: boolean; websocketUrl: string } = {
   apiUrl: 'http://34.120.17.251/api/',
   production: false,
-  websocketUrl: 'http://localhost:5113/',
+  websocketUrl: 'http://34.120.17.251/api/websocket/',
 };
 
 /*
