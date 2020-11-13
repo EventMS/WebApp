@@ -19,7 +19,7 @@ spec:
       namespace: eventms
     spec:
       containers:
-      - image: eventms/frontend:dev
+      - image: gcr.io/dark-balancer-294711/eventms/frontend:dev
         name: frontendservice
         imagePullPolicy: Always
         env:
