@@ -8,6 +8,7 @@
 </ion-row>
 
 <ion-content>
+    <ion-header style="padding-left:30px;" *ngIf="filteredEvents.length == 0">No events matching the searchquery</ion-header>
     <ion-list *ngFor="let event of filteredEvents">
         <ion-card>
             <ion-card-header>

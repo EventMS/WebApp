@@ -10,11 +10,13 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit, AfterViewInit {
+export class ClubListPage implements OnInit {
   constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
+  public clubs: IGetClubsQuery['clubs'];
   public filteredClubs: IGetClubsQuery['clubs'];
-  private searches$: Observable<any>;
+
+  public searchQuery: string
 
   ngOnInit() {}
 
@@ -23,26 +25,17 @@ export class ClubListPage implements OnInit, AfterViewInit {
     await loading.present();
 
     this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
+      this.clubs = clubs
       this.filteredClubs = clubs;
       await loading.dismiss();
     });
   }
 
-  ngAfterViewInit(): void {
-    //@ts-ignore
-    this.searches$ = fromEvent<any>(document.querySelector('ion-searchbar'), 'input');
-
-    this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
-      requestAnimationFrame(() =>
-        this.clubService.getAllClubs().subscribe(
-          ({ clubs }) =>
-            (this.filteredClubs = clubs!.filter((club) => {
-              if (club && club.name) return club.name.toLowerCase().includes(searchTerm.target.value.toLowerCase());
-            }))
-        )
-      );
-    });
-  }
+  public onSearch(query: string) {
+    this.filteredClubs = this.clubs.filter((club) => {
+      return club.name.toLowerCase().includes(query.toLowerCase());
+    })
+  } 
 
   private presentLoading = async () => {
     return this.loadingController.create({ message: 'Loading clubs...' });

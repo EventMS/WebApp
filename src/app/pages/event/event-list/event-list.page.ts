@@ -24,8 +24,8 @@ export class EventListPage implements OnInit {
   ngOnInit() {}
 
   public didSearch(query: string) {
-    this.filteredEvents = this.events.filter((event) => {
-      return event.name.toLowerCase().includes(query.toLowerCase());
+    this.filteredEvents = this.events!.filter((event) => {
+      return event!.name!.toLowerCase().includes(query.toLowerCase());
     })
   } 
 
