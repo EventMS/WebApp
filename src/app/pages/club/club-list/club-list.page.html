@@ -1,13 +1,11 @@
 <ion-row class="ion-justify-content-around ion-margin">
     <ion-col size="12">
-        <ion-searchbar inputmode="text" animated placeholder="Search"></ion-searchbar>
-    </ion-col>
-    <ion-col>
-        <!-- <ion-button class="searchButton" fill="solid" (click)="findLocalClubs()">Find Local Clubs</ion-button> -->
+        <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="onSearch($event)" inputmode="text" animated placeholder="Search"></ion-searchbar>
     </ion-col>
 </ion-row>
 
 <ion-content>
+    <ion-header style="padding-left:30px;" *ngIf="filteredClubs.length == 0 && clubs.length > 0">No clubs matching the searchquery</ion-header>
     <ion-list *ngFor="let club of filteredClubs">
         <ion-card>
             <ion-card-header>

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { ICreateEventClubQuery } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { EMSEvent } from 'src/app/pages/event/create-event/create-event.page';
-import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 
 @Component({
