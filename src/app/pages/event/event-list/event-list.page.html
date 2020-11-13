@@ -2,13 +2,10 @@
     <ion-col size="12">
         <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)" inputmode="text" animated placeholder="Search"></ion-searchbar>
     </ion-col>
-    <ion-col>
-        <!-- <ion-button class="searchButton" fill="solid">Find Local Clubs</ion-button> -->
-    </ion-col>
 </ion-row>
 
 <ion-content>
-    <ion-header style="padding-left:30px;" *ngIf="filteredEvents.length == 0">No events matching the searchquery</ion-header>
+    <ion-header style="padding-left:30px;" *ngIf="filteredEvents.length == 0 && events.length > 0">No events matching the searchquery</ion-header>
     <ion-list *ngFor="let event of filteredEvents">
         <ion-card>
             <ion-card-header>

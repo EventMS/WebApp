@@ -13,8 +13,8 @@ import { LoadingController } from '@ionic/angular';
 })
 export class EventListPage implements OnInit {
   public events$: Observable<ApolloQueryResult<IEventListQuery>>;
-  public events: IEventListQuery["eventsConfirmed"]
-  public filteredEvents: IEventListQuery["eventsConfirmed"]
+  public events: IEventListQuery["eventsConfirmed"] = []
+  public filteredEvents: IEventListQuery["eventsConfirmed"] = []
   public route = (eventId: string) => Paths.event_page.route(eventId);
 
   public searchQuery: string;

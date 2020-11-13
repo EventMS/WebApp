@@ -16,11 +16,14 @@
                   <ion-input formControlName="price" type="number" placeHolder="Price/month"> </ion-input>
                 </ion-item>
                 <div class="selecter" *ngIf="clubSubscriptions!.length > 0">
-                  <ion-select formControlName="subscriptionReference" placeholder="Choose existing subscription">
+                  <ion-select formControlName="subscriptionReference" placeholder="Choose an existing subscription">
                     <ion-select-option *ngFor="let sub of clubSubscriptions" [value]="sub.clubSubscriptionId">
                       {{ sub.name }}
                     </ion-select-option>
                   </ion-select>
+                  <ion-button>
+                    
+                  </ion-button>
                 </div>
               </div>
               <ion-button

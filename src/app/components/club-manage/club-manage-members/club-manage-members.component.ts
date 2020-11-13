@@ -6,9 +6,8 @@ import {
   IMembersForClubQuery_permissionsInClub_user,
   IMembersForClubQuery_permissionsInClub,
 } from 'src/graphql_interfaces';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { MemberService } from 'src/app/services/GRAPHQL/member/member.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-club-manage-members',
@@ -27,7 +26,8 @@ export class ClubManageMembersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private alertCtrl: AlertController,
-    private memberService: MemberService
+    private memberService: MemberService,
+    public platform: Platform
   ) {}
 
   searchBarChange(event: string) {

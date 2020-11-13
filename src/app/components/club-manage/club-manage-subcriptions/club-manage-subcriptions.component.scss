@@ -15,6 +15,10 @@ ion-list {
   border-radius: 15px;
 }
 
+ion-textarea {
+  width: min-content;
+}
+
 .rcorners {
   border-radius: 25px;
   background: whitesmoke;
@@ -40,10 +44,6 @@ ion-card-title {
 
 ion-card-subtitle {
   --color: white;
-}
-
-ion-item-divider {
-  margin-top: 50px;
 }
 
 .selecter {

@@ -13,8 +13,8 @@ import { LoadingController } from '@ionic/angular';
 export class ClubListPage implements OnInit {
   constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
-  public clubs: IGetClubsQuery['clubs'];
-  public filteredClubs: IGetClubsQuery['clubs'];
+  public clubs: IGetClubsQuery['clubs'] = [];
+  public filteredClubs: IGetClubsQuery['clubs'] = [];
 
   public searchQuery: string
 
@@ -32,8 +32,8 @@ export class ClubListPage implements OnInit {
   }
 
   public onSearch(query: string) {
-    this.filteredClubs = this.clubs.filter((club) => {
-      return club.name.toLowerCase().includes(query.toLowerCase());
+    this.filteredClubs = this.clubs!.filter((club) => {
+      return club!.name!.toLowerCase().includes(query.toLowerCase());
     })
   } 
 

@@ -51,11 +51,11 @@
                         <ion-toolbar>
                           <ion-buttons>
                             <ion-button (click)="onPromoteInstructor(item.user)" *ngIf="isUserMember(item)">
-                              <ion-label>Instructor</ion-label>
+                              <ion-label style="color:white;">Instructor</ion-label>
                               <ion-icon name="arrow-up-outline"></ion-icon>
                             </ion-button>
                             <ion-button (click)="onDemoteInstructor(item.user)" *ngIf="isUserInstructor(item)">
-                              <ion-label>Member</ion-label>
+                              <ion-label style="color:white;">Member</ion-label>
                               <ion-icon name="arrow-down-outline"></ion-icon>
                             </ion-button>
                             <ion-button (click)="onRemoveMember(item.user)" *ngIf="!isUserAdmin(item)">
