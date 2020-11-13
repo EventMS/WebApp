@@ -47,6 +47,7 @@
         "date-fns": "^2.16.1",
         "dayjs": "^1.9.1",
         "graphql": "^15.3.0",
+        "ionic-tooltips": "^4.0.0-beta.0",
         "ionic2-calendar": "^0.6.6",
         "jwt-decode": "^3.0.0",
         "ng-pick-datetime": "^7.0.0",

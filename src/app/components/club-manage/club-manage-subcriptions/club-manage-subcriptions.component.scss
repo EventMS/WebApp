@@ -46,8 +46,14 @@ ion-card-subtitle {
   --color: white;
 }
 
+ion-select::part(icon) {
+  display: none !important;
+}
+
 .selecter {
   background-color: white;
+  display: flex;
+  align-items: center;
 }
 
 #submit {
@@ -85,4 +91,10 @@ ion-row {
   top: 1.5rem;
   right: 1rem;
   z-index: 1;
+}
+
+ion-icon {
+  position: absolute;
+  right:30px;
+  padding-bottom:4px;
 }

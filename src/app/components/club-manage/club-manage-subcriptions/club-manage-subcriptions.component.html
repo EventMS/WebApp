@@ -1,7 +1,7 @@
 <ion-grid class="background">
   <ion-col class="ion-padding-top ion-align-self-end">
     <ion-row class="ion-justify-items-center ion-align-items-end">
-      <ion-col size-xs="11">
+      <ion-col>
         <div class="rcorners">
           <div class="ion-text-center subscription-header">
             <h2>Create New Subscription</h2>
@@ -16,14 +16,12 @@
                   <ion-input formControlName="price" type="number" placeHolder="Price/month"> </ion-input>
                 </ion-item>
                 <div class="selecter" *ngIf="clubSubscriptions!.length > 0">
-                  <ion-select formControlName="subscriptionReference" placeholder="Choose an existing subscription">
+                  <ion-select formControlName="subscriptionReference" placeholder="Choose existing subscription">
                     <ion-select-option *ngFor="let sub of clubSubscriptions" [value]="sub.clubSubscriptionId">
                       {{ sub.name }}
                     </ion-select-option>
                   </ion-select>
-                  <ion-button>
-                    
-                  </ion-button>
+                  <ion-icon mobileEvent="click" color="Dark" tooltip="When you have existing subscriptions and events, you need to select one of the subscriptions as price reference for future events in your club" name="help-outline"></ion-icon>
                 </div>
               </div>
               <ion-button
@@ -41,7 +39,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-items-center ion-align-items-end">
-      <ion-col size-lg="14">
+      <ion-col>
         <div>
           <div class="ion-text-center">
             <h1>Existing subscriptions</h1>
