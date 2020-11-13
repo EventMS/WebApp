@@ -10,8 +10,11 @@ ion-avatar {
   justify-content: center;
 }
 
-ion-toolbar {
-  --background: url(../../../assets/img/start.jpg) 0 0/100% 100% no-repeat;
+.background {
+  --color: #fff;
+  --background: none;
+  background: url(../../../../src/assets/img/start.jpg) 0 0/100% 100% no-repeat;
+  background-size: cover;
 }
 
 ion-button {
