@@ -1,0 +1,10 @@
+{
+  "cordova-plugin-google-nearby": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/EventMS/cordova-plugin-google-nearby"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

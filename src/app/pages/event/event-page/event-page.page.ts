@@ -8,6 +8,7 @@ import {
   IEventPageInfoQuery_currentUser_events,
   IEventPageQuery,
   IEventPageQuery_getEvent,
+  PresenceStatusEnum,
 } from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
@@ -29,6 +30,7 @@ export class EventPagePage implements OnInit {
   public isInstructorForEvent: boolean;
 
   private eventId: string;
+  private clubId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,7 +68,7 @@ export class EventPagePage implements OnInit {
         this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
-            this.setEventValues({ getEvent });
+            this.setEventValues(getEvent);
             this.clubInfo$.subscribe(({ currentUser }) => {
               this.isInstructorForEvent = Boolean(
                 getEvent.instructorForEvents?.find((ins) => ins?.user?.id === currentUser?.id)?.user?.id
@@ -97,20 +99,28 @@ export class EventPagePage implements OnInit {
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
     });
-    return await modal.present();
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.dismissed === true) {
+      this.eventService.getEventPageInfo(this.clubId);
+    }
   };
 
   public handleAlreadySignedUp = (event: IEventPageInfoQuery_currentUser_events | null) => {
     if (event || this.isInstructorForEvent) {
       this.alreadySignedUp = true;
     }
+    if (event?.status === PresenceStatusEnum.ATTEND) this.alreadyVerified = true;
   };
 
-  private setEventValues = ({ getEvent }) => {
+  private setEventValues = (getEvent: IEventPageQuery_getEvent) => {
     this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
     this.handlePriceForEvent(getEvent);
     this.eventName = getEvent.name!;
     this.eventId = getEvent.eventId!;
+    this.clubId = getEvent.clubId!;
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {

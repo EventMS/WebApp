@@ -6,5 +6,9 @@
     <param name="ios-package" value="NfcPlugin"/>
   </feature>
 
+  <feature name="ModusEchoSwift">
+    <param name="ios-package" value="GoogleNearby"/>
+  </feature>
+
   
 </widget>

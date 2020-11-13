@@ -10,6 +10,7 @@ export class VerifyCodeQueryService extends Query<IVerifyCodeQuery, IVerifyCodeQ
     query IVerifyCodeQuery($eventId: String!) {
       currentUser {
         id
+        name
         events {
           code
           eventId

@@ -1,90 +1,89 @@
 <ion-content>
 <ion-header *ngIf="(events$ | async)?.myEventParticipations.length == 0 && (events$ | async)?.myInstructorEvents.length == 0">
-  <ion-toolbar class="center-text">
-    <ion-title class="auto-width">You are not connected to any events yet!</ion-title>
-  </ion-toolbar>
+    <ion-toolbar class="center-text">
+        <ion-title class="auto-width">You are not connected to any events yet!</ion-title>
+    </ion-toolbar>
 </ion-header>
-
-<div *ngIf="showUpcomingEvents()">
-  <ion-header>
-    <ion-toolbar class="center-text">
-      <ion-label class="auto-width">My upcoming events</ion-label>
-    </ion-toolbar>
-  </ion-header>
-  <div *ngIf="upcomingMemberEvents.length > 0">
-    <ion-list-header>
-      <ion-label style="font-size: 16px; font-weight: 700;">You are participating in</ion-label>
-    </ion-list-header>
-    <ion-list>
-      <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of upcomingMemberEvents">
-        <ion-card-header>
-          <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content> 
-        <div style="display: flex;">
-          <div style="display: flex;">
-            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
-            <h2>{{formatDate(participation.event.startTime)}}</h2>
-          </div>
-          <div style="display: flex; padding-left:20px;">
-            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
-            <h2>{{formatDate(participation.event.endTime)}}</h2>
-          </div>
+<ion-content>
+    <div *ngIf="showUpcomingEvents()">
+        <ion-header>
+            <ion-toolbar class="center-text">
+                <ion-title class="auto-width">My upcoming events</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <div *ngIf="upcomingMemberEvents.length > 0">
+            <ion-list-header>
+                <ion-label style="font-size: 16px; font-weight: 700;">You are participating in</ion-label>
+            </ion-list-header>
+            <ion-list>
+                <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of upcomingMemberEvents">
+                    <ion-card-header>
+                        <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <div style="display: flex;">
+                            <div style="display: flex;">
+                                <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
+                                <h2>{{formatDate(participation.event.startTime)}}</h2>
+                            </div>
+                            <div style="display: flex; padding-left:20px;">
+                                <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
+                                <h2>{{formatDate(participation.event.endTime)}}</h2>
+                            </div>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
         </div>
-      </ion-card-content>
-      </ion-card>
-    </ion-list>
-  </div>
-  <div *ngIf="upcomingInstructorEvents.length > 0">
-    <ion-list>
-      <ion-list-header>
-        <ion-label style="font-size: 16px; font-weight: 700;">You are instructor for</ion-label>
-      </ion-list-header>
-      <ion-card [routerLink]="['/event-page/', event.eventId]" button="true" *ngFor="let event of upcomingInstructorEvents">
-        <ion-card-header>
-          <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content> 
-        <div style="display: flex;">
-          <div style="display: flex;">
-            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
-            <h2>{{formatDate(event.startTime)}}</h2>
-          </div>
-          <div style="display: flex; padding-left:20px;">
-            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
-            <h2>{{formatDate(event.endTime)}}</h2>
-          </div>
+        <div *ngIf="upcomingInstructorEvents.length > 0">
+            <ion-list>
+                <ion-list-header>
+                    <ion-label style="font-size: 16px; font-weight: 700;">You are instructor for</ion-label>
+                </ion-list-header>
+                <ion-card [routerLink]="['/event-page/', event.eventId]" button="true" *ngFor="let event of upcomingInstructorEvents">
+                    <ion-card-header>
+                        <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <div style="display: flex;">
+                            <div style="display: flex;">
+                                <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
+                                <h2>{{formatDate(event.startTime)}}</h2>
+                            </div>
+                            <div style="display: flex; padding-left:20px;">
+                                <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
+                                <h2>{{formatDate(event.endTime)}}</h2>
+                            </div>
+                        </div>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
         </div>
-      </ion-card-content>
-      </ion-card>
-    </ion-list>
-  </div>
-</div>
-
-<div *ngIf="showPastEvents()">
-  <ion-header>
-    <ion-toolbar class="center-text">
-      <ion-label class="auto-width">My past events</ion-label>
-    </ion-toolbar>
-  </ion-header>
-  <ion-list>
-    <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of pastMemberEvents">
-      <ion-card-header>
-        <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content> 
-      <div style="display: flex;">
-        <div style="display: flex;">
-          <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
-          <h2>{{formatDate(participation.event.startTime)}}</h2>
-        </div>
-        <div style="display: flex; padding-left:20px;">
-          <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
-          <h2>{{formatDate(participation.event.endTime)}}</h2>
-        </div>
-      </div>
-    </ion-card-content>
-    </ion-card>
-  </ion-list>
-</div>
+    </div>
+    <div *ngIf="showPastEvents()">
+        <ion-header>
+            <ion-toolbar class="center-text">
+                <ion-title class="auto-width">My past events</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-list>
+            <ion-card [routerLink]="['/event-page/', participation.eventId]" button="true" *ngFor="let participation of pastMemberEvents">
+                <ion-card-header>
+                    <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <div style="display: flex;">
+                        <div style="display: flex;">
+                            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">From:</h1>
+                            <h2>{{formatDate(participation.event.startTime)}}</h2>
+                        </div>
+                        <div style="display: flex; padding-left:20px;">
+                            <h1 style="padding-right:10px; font-size:large; font-weight: bold;">To:</h1>
+                            <h2>{{formatDate(participation.event.endTime)}}</h2>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </div>
 </ion-content>
