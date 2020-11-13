@@ -16,6 +16,6 @@ steps:
         "--location",
         "us-central1-c",
         "--cluster",
-        "=my-first-cluster-1"
+        "=my-first-cluster-1",
         "${_SERVICE_NAME}",
       ]
