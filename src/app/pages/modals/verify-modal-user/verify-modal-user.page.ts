@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
 import { ModalController, Platform, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
@@ -17,7 +18,8 @@ export class VerifyModalUserPage implements OnInit {
   public participants: IVerifyCodeQuery_getEvent['participants'];
   public wrongCode: string;
   public cordovaAvailable: boolean;
-  currentUserName: string;
+  private currentUserName: string;
+  private subscription: Subscription;
 
   constructor(
     private modalController: ModalController,
@@ -57,7 +59,8 @@ export class VerifyModalUserPage implements OnInit {
   };
 
   public startNearbyRead = () => {
-    this.googleNearby.read().subscribe(async (message: string) => {
+    if (this.subscription) this.subscription.unsubscribe();
+    this.subscription = this.googleNearby.read().subscribe(async (message: string) => {
       const messages = message.split(':');
 
       const toast = await this.toastController.create({
