@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Paths } from 'src/app/navigation/routes';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { IShowClubQuery, IShowClubQuery_clubByID_clubsubscription } from 'src/graphql_interfaces';
 import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page';
@@ -13,9 +14,10 @@ import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page'
 })
 export class ShowClubPage implements OnInit {
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private clubService: ClubService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router
   ) {}
 
   private clubId: string;
@@ -25,7 +27,7 @@ export class ShowClubPage implements OnInit {
   public currentSubscription: IShowClubQuery_clubByID_clubsubscription | null;
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
+    this.activatedRoute.params.subscribe((params) => {
       const clubId = params['clubId'] as string;
       if (clubId) {
         this.club$ = this.clubService.getClubDetails(clubId);
@@ -60,6 +62,10 @@ export class ShowClubPage implements OnInit {
       (ep) => ep?.clubSubscriptionId == this.currentSubscription?.clubSubscriptionId
     );
     return eventPrice?.price ?? 'no price for you';
+  };
+
+  public goToEvent = (id: string) => {
+    this.router.navigate(Paths.event_page.route(id));
   };
 
   public showModal = async (): Promise<void> => {

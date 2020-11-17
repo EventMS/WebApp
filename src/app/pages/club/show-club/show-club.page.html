@@ -43,9 +43,8 @@
                             <ion-grid>
                                 <ion-card>
                                     <ion-card-header>
-                                        <ion-row class="ion-justify-content-between ">
+                                        <ion-row (click)="goToEvent(event.eventId)" class="ion-justify-content-between ">
                                             <ion-text>{{event.name}}</ion-text>
-                                            <ion-text>{{getEventPrice(i)}} $</ion-text>
                                         </ion-row>
                                     </ion-card-header>
                                 </ion-card>
@@ -108,7 +107,7 @@
                 </ion-card-header>
             </ion-card>
             <ion-row class="ion-justify-content-center ">
-                <ion-list class="list " inset="true " lines="none ">
+                <ion-list class="list " inset="true " lines="none" *ngIf="club.clubsubscription.length">
                     <ion-list-header>
                         <p>Subscriptions in the club</p>
                     </ion-list-header>
@@ -122,16 +121,15 @@
                         </ion-grid>
                     </ion-item>
                 </ion-list>
-                <ion-list class="list " inset="true " lines="none ">
+                <ion-list class="list " inset="true " lines="none" *ngIf="events.length ">
                     <ion-list-header>
                         <p>Upcoming events in the club</p>
                     </ion-list-header>
                     <hr style="height: 1px; background-color: black; width: 90% " />
-                    <ion-item class="substyle ion-justify-content-evenly " *ngFor=" let sup of club.clubsubscription ">
+                    <ion-item class="substyle ion-justify-content-evenly " *ngFor="let event of  events; index as i ">
                         <ion-grid>
-                            <ion-row class="ion-justify-content-between ">
-                                <ion-text>EVENT NAME</ion-text>
-                                <ion-text>EVENT PRICE $</ion-text>
+                            <ion-row (click)="goToEvent(event.eventId)" class="ion-justify-content-between ">
+                                <ion-label>{{event.name}}</ion-label>
                             </ion-row>
                         </ion-grid>
                     </ion-item>
@@ -170,5 +168,5 @@
             </ion-col>
         </ion-grid>
     </ion-content>
-    <app-mobile-signup-component [text]=" !currentSubscription ? 'Sign up' : 'Already signed up'" [disabled]="currentSubscription || !(club$ | async)?.clubByID.clubsubscription.length" [callback]="showModal "></app-mobile-signup-component>
+    <app-mobile-signup-component [text]=" !currentSubscription ? 'Sign up' : 'Already signed up'" [color]="(currentSubscription) ? '#43B3C3': '#70ad47'" [disabled]="currentSubscription || !(club$ | async)?.clubByID.clubsubscription.length" [callback]="showModal "></app-mobile-signup-component>
 </ng-template>
