@@ -16,6 +16,9 @@ export class EventListQueryService extends Query<IEventListQuery> {
           price
           clubSubscriptionId
         }
+        club {
+          name
+        }
       }
     }
   `;

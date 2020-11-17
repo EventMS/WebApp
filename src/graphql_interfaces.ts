@@ -320,12 +320,18 @@ export interface IEventListQuery_eventsConfirmed_eventPrices {
   clubSubscriptionId: string;
 }
 
+export interface IEventListQuery_eventsConfirmed_club {
+  __typename: "Club";
+  name: string | null;
+}
+
 export interface IEventListQuery_eventsConfirmed {
   __typename: "Event";
   eventId: string;
   name: string | null;
   description: string | null;
   eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
+  club: IEventListQuery_eventsConfirmed_club | null;
 }
 
 export interface IEventListQuery {
