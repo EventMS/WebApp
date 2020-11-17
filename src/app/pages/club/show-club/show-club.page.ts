@@ -25,6 +25,7 @@ export class ShowClubPage implements OnInit {
   public isMobile = isPlatform('mobile');
   public events: IShowClubQuery['eventsForClub'];
   public currentSubscription: IShowClubQuery_clubByID_clubsubscription | null;
+  public buttonText: string;
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
@@ -45,6 +46,10 @@ export class ShowClubPage implements OnInit {
             ?.clubSubscriptionId;
           this.currentSubscription =
             clubByID.clubsubscription?.find((sub) => sub?.clubSubscriptionId === subscriptionId) ?? null;
+
+          if (!clubByID.clubsubscription?.length) this.buttonText = 'No Subscriptions available';
+          else if (this.currentSubscription) this.buttonText = 'Already signed up';
+          else this.buttonText = 'Sign up';
         }
 
         if (eventsForClub) {
