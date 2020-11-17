@@ -16,7 +16,7 @@
         "start_web": "ionic serve",
         "stripe": ".././stripe listen --forward-to http://34.120.17.251/api/webhook",
         "stripe_local": ".././stripe listen --forward-to http://localhost:5112/webhook",
-        "ngrok": ".././ngrok http://34.120.17.251/api/",
+        "ngrok": ".././ngrok http -host-header=rewrite 5102",
         "prettier": "prettier --write '**/*.{ts,scss,html}'",
         "update_graphql": "apollo client:codegen --target typescript --endpoint http://34.120.17.251/api/ --outputFlat src/graphql_interfaces.ts"
     },
