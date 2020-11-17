@@ -63,13 +63,12 @@
                 <ion-grid>
                     <ion-row class="ion-align-items-center">
                         <ion-col size="4" class="ion-text-center ion-text">
-                            <div class="boxed" [style.color]="color" [style.fontSize]>
-                                {{price}} $
+                            <div class="boxed" [style.color]="color" [style.fontSize]> {{price}}
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
-                                Sign up</ion-button>
+                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onButtonClick()" [disabled]="disabled">
+                                {{getButtonText()}}</ion-button>
                             <ng-template #alreadySignedUpButton>
                                 <ion-button size="large" class="verifyButton" [disabled]="alreadyVerified" (click)="onVerifyClicked()">
                                     {{this.isInstructorForEvent ? 'Verify users' : this.alreadyVerified ? 'Already Verified' : 'verify'}}
@@ -130,6 +129,6 @@
         </ion-card>
     </ion-content>
 
-    <app-mobile-signup-component [text]="getButtonText()" [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'" [callback]="alreadySignedUp ?  onVerifyClicked : onSignup">
+    <app-mobile-signup-component [text]="getButtonText()" [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'" [callback]="alreadySignedUp ?  onVerifyClicked : onButtonClick">
     </app-mobile-signup-component>
 </ng-template>

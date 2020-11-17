@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Paths } from 'src/app/navigation/routes';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
   IEventPageInfoQuery,
@@ -36,16 +37,20 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.initData();
   }
 
-  public onSignup = async () => {
-    if (this.price === 0) {
+  public onButtonClick = async () => {
+    if (this.price === '0 $') {
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
+      return;
+    } else if (this.price === privateEvent) {
+      this.router.navigate(Paths.show_club.route(this.clubId));
       return;
     }
 
@@ -83,7 +88,12 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    return this.isInstructorForEvent ? 'Verify users' : this.alreadySignedUp ? 'Verify' : 'Sign up';
+    console.log(this.price);
+
+    if (this.price === privateEvent) return 'Go to club';
+    else if (this.isInstructorForEvent) return 'Verify users';
+    else if (this.alreadySignedUp) return 'Verify';
+    else return 'Sign Up';
   };
 
   public modalCallback = (succes: boolean) => {
@@ -127,11 +137,15 @@ export class EventPagePage implements OnInit {
     const { userPrice: price } = getEvent;
 
     if (price !== getEvent?.publicPrice) {
-      this.price = price;
+      this.price = price + ' $';
       this.color = 'green';
     } else if (getEvent.publicPrice) {
       this.color = 'black';
-      this.price = getEvent.publicPrice;
+      this.price = getEvent.publicPrice + ' $';
+    } else {
+      this.price = privateEvent;
     }
   };
 }
+
+const privateEvent = 'Event is private';
