@@ -1,22 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CreateEventClubQueryService } from 'src/app/services/GRAPHQL/club/queries/create-event-club-query.service';
 import {
   CreateEventRequestInput,
   EventPriceRequestInput,
   ICreateEventClubQuery,
   ICreateEventClubQuery_clubByID,
-  ICreateEventClubQuery_clubByID_clubsubscription,
-  ICreateEventClubQuery_clubByID_events_locations,
-  ICreateEventClubQuery_clubByID_instructors,
-  ICreateEventClubQuery_clubByID_rooms,
 } from 'src/graphql_interfaces';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateEventMutationService } from 'src/app/services/GRAPHQL/event/mutations/create-event-mutation.service';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
+import { WebsocketService } from 'src/app/services/signal-rservice.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
@@ -52,7 +45,7 @@ export class CreateEventPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public loadingController: LoadingController,
-    private websocketService: SignalRServiceService,
+    private websocketService: WebsocketService,
     private alertController: AlertController,
     private eventService: EventService
   ) {

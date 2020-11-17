@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import * as signalR from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SignalRServiceService {
+export class WebsocketService {
   private connection: signalR.HubConnection;
 
   clubId: string;
