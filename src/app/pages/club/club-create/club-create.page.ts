@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApolloError } from '@apollo/client/core';
 import { AlertController } from '@ionic/angular';
 import { Paths } from 'src/app/navigation/routes';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
@@ -81,7 +82,10 @@ export class ClubCreatePage implements OnInit {
         (data) => {
           this.handleResponse(data.data!.createClub!.clubId);
         },
-        (error) => this.presentAlert(error)
+        (error: ApolloError) => {
+          if(error.message.includes('duplicate')) this.presentAlert(ErrorMessages.duplicateName)
+          else this.presentAlert("Something went wrong, try again later")
+        }
       );
   };
 
@@ -89,7 +93,7 @@ export class ClubCreatePage implements OnInit {
     let input = this.currentLocationInput!;
 
     if (this.locations.includes(input.value)) {
-      this.presentAlert(ErrorMessages.duplicate);
+      this.presentAlert(ErrorMessages.duplicateLocation);
       return;
     } else if (input.value === '') {
       this.presentAlert(ErrorMessages.noName);
@@ -135,8 +139,9 @@ export class ClubCreatePage implements OnInit {
 }
 
 enum ErrorMessages {
-  duplicate = "You can't input duplicate locations",
+  duplicateLocation = "You can't input duplicate locations",
   noName = 'Location must have a name',
+  duplicateName = "Club name is already in use"
 }
 
 type FormData = {
