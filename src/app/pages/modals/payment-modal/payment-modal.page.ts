@@ -29,7 +29,7 @@ export class PaymentModalPage implements OnInit {
 
   getAmount = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.price;
 
-  public dissmiss = () => {
-    this.modalController.dismiss();
+  public dissmiss = (success: boolean) => {
+    this.modalController.dismiss({ success });
   };
 }

@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MobileSignupComponent implements OnInit {
   @Input() text: string;
-  @Input() color: boolean;
+  @Input() color: string;
   @Input() disabled: boolean;
   @Input() callback: () => void;
 
