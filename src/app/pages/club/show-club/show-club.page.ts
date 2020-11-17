@@ -73,7 +73,6 @@ export class ShowClubPage implements OnInit {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    console.log(data);
 
     if (data?.success) {
       window.location.reload();

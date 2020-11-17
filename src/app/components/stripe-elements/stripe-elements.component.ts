@@ -3,7 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
 import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
-import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
+import { WebsocketService } from 'src/app/services/signal-rservice.service';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({
@@ -18,7 +18,7 @@ export class StripeElementsComponent implements AfterViewInit {
     private eventService: EventService,
     private authService: AuthenticationService,
     private changeRef: ChangeDetectorRef,
-    private webSocketService: SignalRServiceService
+    private webSocketService: WebsocketService
   ) {
     this.stripe = Stripe(
       'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
