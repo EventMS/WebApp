@@ -77,7 +77,8 @@ export class SignupPage {
         this.authenticationService.loginFromSignup(data!.createUser);
       },
       (error: ApolloError) => {
-        if (error.message.includes('input')) alert('Email is already in use');
+        console.log(error.message)
+        if (error.message.includes('Duplicate email')) alert('Email is already in use');
         else alert('Something went wrong, try again later');
       }
     );
