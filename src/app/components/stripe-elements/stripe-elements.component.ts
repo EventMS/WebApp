@@ -3,6 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
 import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
+import { SignalRServiceService } from 'src/app/services/signal-rservice.service';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({
@@ -16,7 +17,8 @@ export class StripeElementsComponent implements AfterViewInit {
     private subscriptionService: SubscriptionService,
     private eventService: EventService,
     private authService: AuthenticationService,
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+    private webSocketService: SignalRServiceService
   ) {
     this.stripe = Stripe(
       'pk_test_51Hc6ZtETjZBFbSa3sx4mvQCavZp6UgpPDqJKzSYGlh42SUE5o0l1UVotttauCQJf5VGPQcUt6lWUo8BsxYEh3DBG003csjsgvS'
@@ -138,7 +140,6 @@ export class StripeElementsComponent implements AfterViewInit {
   }) => {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
-      duration: 10000,
     });
     await loading.present();
     // Set up payment method for recurring
@@ -159,6 +160,8 @@ export class StripeElementsComponent implements AfterViewInit {
             //   invoiceId: invoiceId,
             //   priceId: priceId,
             // });
+            loading.dismiss();
+            this.dismissModal?.(true);
           } else {
             if (this.subscriptionId) {
               //Create the subscription
@@ -167,14 +170,17 @@ export class StripeElementsComponent implements AfterViewInit {
                   clubSubscriptionId: this.subscriptionId,
                   paymentMethodId: result?.paymentMethod?.id!,
                 })
-                .subscribe();
-            } else {
-              console.log('Single payment');
+                .subscribe(() => {
+                  this.webSocketService.startConnection();
+                  this.webSocketService.addClubSubscriptionListener(() => {
+                    loading.dismiss();
+                    this.dismissModal?.(true);
+                    this.webSocketService.stopConnection();
+                  });
+                });
             }
           }
         }
-        loading.dismiss();
-        this.dismissModal?.(true);
       });
   };
 }

@@ -59,7 +59,7 @@
                 <ion-row class="ion-justify-content-end ">
                     <ion-button *ngIf="currentSubscription else isNotMember " size="large " style="width: 60%" [disabled]="true">Already signed up</ion-button>
                     <ng-template #isNotMember>
-                        <ion-button size="large " class="signUpButton " (click)="showModal() ">Sign up</ion-button>
+                        <ion-button size="large " class="signUpButton " (click)="showModal()" [disabled]="!club.clubsubscription.length">Sign up</ion-button>
                     </ng-template>
                 </ion-row>
                 <div class="textContainer ">
@@ -170,5 +170,5 @@
             </ion-col>
         </ion-grid>
     </ion-content>
-    <app-mobile-signup-component [text]=" !currentSubscription ? 'Sign up' : 'Already signed up'" [disabled]="currentSubscription" [callback]="showModal "></app-mobile-signup-component>
+    <app-mobile-signup-component [text]=" !currentSubscription ? 'Sign up' : 'Already signed up'" [disabled]="currentSubscription || !(club$ | async)?.clubByID.clubsubscription.length" [callback]="showModal "></app-mobile-signup-component>
 </ng-template>

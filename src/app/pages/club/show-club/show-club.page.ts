@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
-import { ShowClubQueryService } from 'src/app/services/GRAPHQL/club/queries/show-club-query.service';
 import { IShowClubQuery, IShowClubQuery_clubByID_clubsubscription } from 'src/graphql_interfaces';
 import { PaymentModalPage } from '../../modals/payment-modal/payment-modal.page';
 
@@ -70,6 +69,14 @@ export class ShowClubPage implements OnInit {
         clubId: this.clubId,
       },
     });
-    return await modal.present();
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
+
+    if (data?.success) {
+      window.location.reload();
+    }
   };
 }
