@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
-import { fromEvent, Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { LoadingController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
 
 @Component({
   selector: 'app-club-list',
@@ -16,7 +15,8 @@ export class ClubListPage implements OnInit {
   public clubs: IGetClubsQuery['clubs'] = [];
   public filteredClubs: IGetClubsQuery['clubs'] = [];
 
-  public searchQuery: string
+  public route = (clubId: string) => Paths.show_club.route(clubId);
+  public searchQuery: string;
 
   ngOnInit() {}
 
@@ -25,7 +25,7 @@ export class ClubListPage implements OnInit {
     await loading.present();
 
     this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
-      this.clubs = clubs
+      this.clubs = clubs;
       this.filteredClubs = clubs;
       await loading.dismiss();
     });
@@ -34,8 +34,8 @@ export class ClubListPage implements OnInit {
   public onSearch(query: string) {
     this.filteredClubs = this.clubs!.filter((club) => {
       return club!.name!.toLowerCase().includes(query.toLowerCase());
-    })
-  } 
+    });
+  }
 
   private presentLoading = async () => {
     return this.loadingController.create({ message: 'Loading clubs...' });
