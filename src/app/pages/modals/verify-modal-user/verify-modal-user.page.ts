@@ -22,7 +22,7 @@ export class VerifyModalUserPage implements OnInit {
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
 
   private currentUserName: string;
-  private subscription: Subscription;
+  private subscription: Subscription | undefined;
 
   constructor(
     private modalController: ModalController,
