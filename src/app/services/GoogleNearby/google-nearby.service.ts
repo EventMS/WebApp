@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GoogleNearby } from '@ionic-native/google-nearby/ngx';
 import { Platform } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Plugins } from '@capacitor/core';
@@ -11,7 +10,7 @@ const { GoogleNearbyMessages } = Plugins;
   providedIn: 'root',
 })
 export class GoogleNearbyService {
-  constructor(private googleNearby: GoogleNearby, private platform: Platform) {
+  constructor(private platform: Platform) {
     GoogleNearbyMessages.initialize({}).then((data) => console.log(data));
   }
 
@@ -28,6 +27,6 @@ export class GoogleNearbyService {
     };
     if (this.platform.is('cordova'))
       GoogleNearbyMessages.publish({ message: messageObject }).then((data) => console.log(data));
-    //await this.googleNearby.publish(message);
+    // await this.googleNearby.publish(message);
   };
 }

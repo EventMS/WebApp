@@ -10,10 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs" />
-
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name="io.ionic.starter.MainActivity"
@@ -47,7 +43,7 @@
     </application>
 
     <!-- Permissions -->
- 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera, Photos, input file -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
