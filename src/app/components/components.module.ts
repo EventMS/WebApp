@@ -19,6 +19,7 @@ import { StripeElementsComponent } from './stripe-elements/stripe-elements.compo
 import { ClubManageMembersComponent } from './club-manage/club-manage-members/club-manage-members.component';
 import { MobileSignupComponent } from './buttons/mobile-signup/mobile-signup.component';
 import { TooltipsModule } from 'ionic-tooltips';
+import { UserlistComponent } from './lists/userlist/userlist.component';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +51,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     EventCalendarComponent,
     StripeElementsComponent,
     MobileSignupComponent,
+    UserlistComponent,
   ],
   exports: [
     HeaderBarComponent,
@@ -60,6 +62,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     ClubManageEventsComponent,
     EventCalendarComponent,
     MobileSignupComponent,
+    UserlistComponent,
   ],
   imports: [
     CommonModule,

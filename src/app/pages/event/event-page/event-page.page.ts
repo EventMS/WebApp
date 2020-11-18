@@ -30,8 +30,8 @@ export class EventPagePage implements OnInit {
   public isMobile = isPlatform('mobile');
   public alreadyVerified: boolean;
   public isInstructorForEvent: boolean;
+  public eventId: string;
 
-  private eventId: string;
   private clubId: string;
   private startTime: any;
 
@@ -51,7 +51,7 @@ export class EventPagePage implements OnInit {
     if (this.price === '0 $') {
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
       return;
-    } else if (this.price === privateEvent) {
+    } else if (this.price === buttonText.PRIVATE_EVENT) {
       this.router.navigate(Paths.show_club.route(this.clubId));
       return;
     }
@@ -90,11 +90,11 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    if (dayjs(this.startTime).isBefore(dayjs())) return 'Event has passed';
-    else if (this.price === privateEvent) return 'Go to club';
-    else if (this.isInstructorForEvent) return 'Verify users';
-    else if (this.alreadySignedUp) return 'Verify';
-    else return 'Sign Up';
+    if (dayjs(this.startTime).isBefore(dayjs())) return buttonText.PASSED;
+    else if (this.price === buttonText.PRIVATE_EVENT) return buttonText.PRIVATE_EVENT;
+    else if (this.isInstructorForEvent) return buttonText.INSTRUCTOR;
+    else if (this.alreadySignedUp) return buttonText.SIGNED_UP;
+    else return buttonText.CAN_SIGN_UP;
   };
 
   public modalCallback = (succes: boolean) => {
@@ -146,9 +146,15 @@ export class EventPagePage implements OnInit {
       this.color = 'black';
       this.price = getEvent.publicPrice + ' $';
     } else {
-      this.price = privateEvent;
+      this.price = buttonText.PRIVATE_EVENT;
     }
   };
 }
 
-const privateEvent = 'Event is private';
+const buttonText = {
+  PRIVATE_EVENT: 'Event is private',
+  PASSED: 'Event has passed',
+  INSTRUCTOR: ' Verify users',
+  SIGNED_UP: 'Verify',
+  CAN_SIGN_UP: 'Sign up',
+};

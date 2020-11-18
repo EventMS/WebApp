@@ -445,6 +445,40 @@ export interface IEventPageQueryVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: IEventUserListQuery
+// ====================================================
+
+export interface IEventUserListQuery_getEvent_participants_user {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  id: string | null;
+}
+
+export interface IEventUserListQuery_getEvent_participants {
+  __typename: "EventVerification";
+  user: IEventUserListQuery_getEvent_participants_user | null;
+}
+
+export interface IEventUserListQuery_getEvent {
+  __typename: "Event";
+  eventId: string;
+  participants: (IEventUserListQuery_getEvent_participants | null)[] | null;
+}
+
+export interface IEventUserListQuery {
+  getEvent: IEventUserListQuery_getEvent | null;
+}
+
+export interface IEventUserListQueryVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: IMyEventsQuery
 // ====================================================
 
