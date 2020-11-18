@@ -330,6 +330,8 @@ export interface IEventListQuery_eventsConfirmed {
   eventId: string;
   name: string | null;
   description: string | null;
+  startTime: any;
+  endTime: any;
   eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
   club: IEventListQuery_eventsConfirmed_club | null;
 }

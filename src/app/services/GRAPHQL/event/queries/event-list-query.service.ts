@@ -12,6 +12,8 @@ export class EventListQueryService extends Query<IEventListQuery> {
         eventId
         name
         description
+        startTime
+        endTime
         eventPrices {
           price
           clubSubscriptionId

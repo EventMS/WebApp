@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
+import dayjs from 'dayjs';
 import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
@@ -32,6 +33,7 @@ export class EventPagePage implements OnInit {
 
   private eventId: string;
   private clubId: string;
+  private startTime: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -88,9 +90,8 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    console.log(this.price);
-
-    if (this.price === privateEvent) return 'Go to club';
+    if (dayjs(this.startTime).isBefore(dayjs())) return 'Event has passed';
+    else if (this.price === privateEvent) return 'Go to club';
     else if (this.isInstructorForEvent) return 'Verify users';
     else if (this.alreadySignedUp) return 'Verify';
     else return 'Sign Up';
@@ -131,6 +132,8 @@ export class EventPagePage implements OnInit {
     this.eventName = getEvent.name!;
     this.eventId = getEvent.eventId!;
     this.clubId = getEvent.clubId!;
+    this.startTime = getEvent.startTime;
+    if (dayjs(this.startTime).isBefore(dayjs())) this.disabled = true;
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
