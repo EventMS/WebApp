@@ -49,6 +49,7 @@ export class EventPagePage implements OnInit {
 
   public onButtonClick = async () => {
     if (this.price === '0 $') {
+      console.log('signup');
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
       return;
     } else if (this.price === privateEvent) {

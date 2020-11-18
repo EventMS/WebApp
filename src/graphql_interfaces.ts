@@ -314,30 +314,30 @@ export interface ISignUpForEventMutationServiceVariables {
 // GraphQL query operation: IEventListQuery
 // ====================================================
 
-export interface IEventListQuery_eventsConfirmed_eventPrices {
+export interface IEventListQuery_futureEvents_eventPrices {
   __typename: "EventPrice";
   price: number;
   clubSubscriptionId: string;
 }
 
-export interface IEventListQuery_eventsConfirmed_club {
+export interface IEventListQuery_futureEvents_club {
   __typename: "Club";
   name: string | null;
 }
 
-export interface IEventListQuery_eventsConfirmed {
+export interface IEventListQuery_futureEvents {
   __typename: "Event";
   eventId: string;
   name: string | null;
   description: string | null;
   startTime: any;
   endTime: any;
-  eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
-  club: IEventListQuery_eventsConfirmed_club | null;
+  eventPrices: (IEventListQuery_futureEvents_eventPrices | null)[] | null;
+  club: IEventListQuery_futureEvents_club | null;
 }
 
 export interface IEventListQuery {
-  eventsConfirmed: (IEventListQuery_eventsConfirmed | null)[] | null;
+  futureEvents: (IEventListQuery_futureEvents | null)[] | null;
 }
 
 /* tslint:disable */

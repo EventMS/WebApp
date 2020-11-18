@@ -18,7 +18,8 @@
         "stripe_local": ".././stripe listen --forward-to http://localhost:5112/webhook",
         "ngrok": ".././ngrok http -host-header=rewrite 5102",
         "prettier": "prettier --write '**/*.{ts,scss,html}'",
-        "update_graphql": "apollo client:codegen --target typescript --endpoint http://34.120.17.251/api/ --outputFlat src/graphql_interfaces.ts"
+        "update_graphql": "apollo client:codegen --target typescript --endpoint http://34.120.17.251/api/ --outputFlat src/graphql_interfaces.ts",
+        "update_graphql_localhost": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
     },
     "private": true,
     "dependencies": {
