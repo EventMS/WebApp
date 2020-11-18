@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
-
+import { App, AppState } from '@capacitor/core';
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -35,6 +35,7 @@ export class VerifyModalUserPage implements OnInit {
   }
 
   ngOnInit() {
+    App.addListener('appStateChange', this.nearbyListener);
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
       if (getEvent && currentUser) {
         this.participants = this.filteredParicipants = getEvent.participants;
@@ -48,6 +49,10 @@ export class VerifyModalUserPage implements OnInit {
         }
       }
     });
+  }
+
+  ionViewWillLeave() {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   public didSearch(query: string) {
@@ -69,16 +74,18 @@ export class VerifyModalUserPage implements OnInit {
 
   public startNearbyRead = () => {
     if (this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.googleNearby.read()?.subscribe(async (message: string) => {
-      const messages = message.split(':');
+    this.subscription = this.googleNearby.read()?.subscribe(this.messageRecieved);
+  };
 
-      const toast = await this.toastController.create({
-        message: 'Verifiyng code from ' + messages[1],
-        duration: 3000,
-      });
-      await toast.present();
-      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
+  private messageRecieved = async (message: string) => {
+    const messages = message.split(':');
+
+    const toast = await this.toastController.create({
+      message: 'Verifiyng code from ' + messages[1],
+      duration: 3000,
     });
+    await toast.present();
+    this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
   };
 
   public startNearbyBroadcast = async () => {
@@ -88,5 +95,11 @@ export class VerifyModalUserPage implements OnInit {
     await this.modalController.dismiss({
       dismissed: true,
     });
+  };
+
+  private nearbyListener = (state: AppState) => {
+    if (state.isActive) {
+      this.startNearbyRead();
+    }
   };
 }
