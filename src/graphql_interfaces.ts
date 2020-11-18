@@ -314,22 +314,30 @@ export interface ISignUpForEventMutationServiceVariables {
 // GraphQL query operation: IEventListQuery
 // ====================================================
 
-export interface IEventListQuery_eventsConfirmed_eventPrices {
+export interface IEventListQuery_futureEvents_eventPrices {
   __typename: "EventPrice";
   price: number;
   clubSubscriptionId: string;
 }
 
-export interface IEventListQuery_eventsConfirmed {
+export interface IEventListQuery_futureEvents_club {
+  __typename: "Club";
+  name: string | null;
+}
+
+export interface IEventListQuery_futureEvents {
   __typename: "Event";
   eventId: string;
   name: string | null;
   description: string | null;
-  eventPrices: (IEventListQuery_eventsConfirmed_eventPrices | null)[] | null;
+  startTime: any;
+  endTime: any;
+  eventPrices: (IEventListQuery_futureEvents_eventPrices | null)[] | null;
+  club: IEventListQuery_futureEvents_club | null;
 }
 
 export interface IEventListQuery {
-  eventsConfirmed: (IEventListQuery_eventsConfirmed | null)[] | null;
+  futureEvents: (IEventListQuery_futureEvents | null)[] | null;
 }
 
 /* tslint:disable */
@@ -428,6 +436,40 @@ export interface IEventPageQuery {
 }
 
 export interface IEventPageQueryVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: IEventUserListQuery
+// ====================================================
+
+export interface IEventUserListQuery_getEvent_participants_user {
+  __typename: "identity_ApplicationUser";
+  name: string | null;
+  id: string | null;
+}
+
+export interface IEventUserListQuery_getEvent_participants {
+  __typename: "EventVerification";
+  user: IEventUserListQuery_getEvent_participants_user | null;
+}
+
+export interface IEventUserListQuery_getEvent {
+  __typename: "Event";
+  eventId: string;
+  participants: (IEventUserListQuery_getEvent_participants | null)[] | null;
+}
+
+export interface IEventUserListQuery {
+  getEvent: IEventUserListQuery_getEvent | null;
+}
+
+export interface IEventUserListQueryVariables {
   eventId: string;
 }
 

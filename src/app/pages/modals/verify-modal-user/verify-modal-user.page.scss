@@ -1,12 +1,22 @@
 .codeStyle {
-  font-size: xx-large;
-  font-weight: bold;
+    font-size: xx-large;
+    font-weight: bold;
 }
 
 .spinner {
-  --color: #43b3c3;
+    --color: #43b3c3;
 }
 
 ion-grid {
-  margin-top: 1rem;
+    margin-top: 1rem;
+}
+
+.instructorList {
+    width: 90%;
+    margin-right: 1rem;
+}
+
+.instructorGrid {
+    height: 80%;
+    width: 100%;
 }

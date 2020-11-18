@@ -13,11 +13,21 @@ import { LoadingController } from '@ionic/angular';
 })
 export class EventListPage implements OnInit {
   public events$: Observable<ApolloQueryResult<IEventListQuery>>;
+  public events: IEventListQuery['futureEvents'] = [];
+  public filteredEvents: IEventListQuery['futureEvents'] = [];
   public route = (eventId: string) => Paths.event_page.route(eventId);
+
+  public searchQuery: string;
 
   constructor(public eventService: EventService, private loadingController: LoadingController) {}
 
   ngOnInit() {}
+
+  public didSearch(query: string) {
+    this.filteredEvents = this.events!.filter((event) => {
+      return event!.name!.toLowerCase().includes(query.toLowerCase());
+    });
+  }
 
   async ionViewWillEnter() {
     const loading = await this.presentLoading();
@@ -27,7 +37,7 @@ export class EventListPage implements OnInit {
 
     this.events$.subscribe(async (next) => {
       await loading.dismiss();
-      return next.data.eventsConfirmed;
+      this.events = this.filteredEvents = next.data.futureEvents;
     });
   }
 

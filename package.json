@@ -15,9 +15,11 @@
         "start_ios": "ionic build && ionic cap copy && ionic cap sync && ionic cap run ios -l --external",
         "start_web": "ionic serve",
         "stripe": ".././stripe listen --forward-to http://34.120.17.251/api/webhook",
-        "ngrok": ".././ngrok http://34.120.17.251/api/",
+        "stripe_local": ".././stripe listen --forward-to http://localhost:5112/webhook",
+        "ngrok": ".././ngrok http -host-header=rewrite 5102",
         "prettier": "prettier --write '**/*.{ts,scss,html}'",
-        "update_graphql": "apollo client:codegen --target typescript --endpoint http://34.120.17.251/api/ --outputFlat src/graphql_interfaces.ts"
+        "update_graphql": "apollo client:codegen --target typescript --endpoint http://34.120.17.251/api/ --outputFlat src/graphql_interfaces.ts",
+        "update_graphql_localhost": "apollo client:codegen --target typescript --endpoint http://localhost:5102/ --outputFlat src/graphql_interfaces.ts"
     },
     "private": true,
     "dependencies": {
@@ -48,6 +50,7 @@
         "date-fns": "^2.16.1",
         "dayjs": "^1.9.1",
         "graphql": "^15.3.0",
+        "ionic-tooltips": "^4.0.0-beta.0",
         "ionic2-calendar": "^0.6.6",
         "jwt-decode": "^3.0.0",
         "ng-pick-datetime": "^7.0.0",

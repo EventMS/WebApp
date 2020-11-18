@@ -13,11 +13,11 @@ export const Paths = {
   my_events: 'my-events',
   show_club: {
     path: 'show-club/:clubId',
-    route: (param: string) => ['show-club/', param],
+    route: (param: string) => ['/show-club/', param],
   },
   club_manage: {
     path: 'club-manage/:clubId',
-    route: (param: string) => ['club-manage/', param],
+    route: (param: string) => ['/club-manage/', param],
   },
   event_page: {
     path: 'event-page/:eventId',
@@ -25,7 +25,7 @@ export const Paths = {
   },
   event_create: {
     path: 'event-create/:clubId',
-    route: (param: string) => ['event-create/', param],
+    route: (param: string) => ['/event-create/', param],
   },
 };
 

@@ -13,7 +13,8 @@
             <ion-col size="5">
                 <ion-card>
                     <ion-card-header>
-                        <ion-card-title>From {{event.startTime | date}} To {{event.endTime | date}}</ion-card-title>
+                        <ion-card-title>Start: {{event.startTime | date: 'short'}}</ion-card-title>
+                        <ion-card-title>End: {{event.endTime | date:'short'}}</ion-card-title>
                         <ion-card-subtitle>Club: {{clubInfo.name}}</ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content *ngFor="let instructor of event.instructorForEvents">
@@ -58,23 +59,20 @@
                         </ion-grid>
                     </ion-card-content>
                 </ion-card>
+                <div>
+                    <app-userlist [eventId]="eventId"></app-userlist>
+                </div>
             </ion-col>
             <ion-col size="5" offset="2">
                 <ion-grid>
                     <ion-row class="ion-align-items-center">
                         <ion-col size="4" class="ion-text-center ion-text">
-                            <div class="boxed" [style.color]="color" [style.fontSize]>
-                                {{price}} $
+                            <div class="boxed" [style.color]="color" [style.fontSize]> {{price}}
                             </div>
                         </ion-col>
                         <ion-col size="4" offset="4">
-                            <ion-button *ngIf="!alreadySignedUp else alreadySignedUpButton" size="large" class="signUpButton" (click)="onSignup()" [disabled]="disabled">
-                                Sign up</ion-button>
-                            <ng-template #alreadySignedUpButton>
-                                <ion-button size="large" class="verifyButton" [disabled]="alreadyVerified" (click)="onVerifyClicked()">
-                                    {{this.isInstructorForEvent ? 'Verify users' : this.alreadyVerified ? 'Already Verified' : 'verify'}}
-                                </ion-button>
-                            </ng-template>
+                            <ion-button size="large" [disabled]="disabled" [style.--background]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'" (click)="alreadySignedUp ?  onVerifyClicked() : onButtonClick()">{{getButtonText()}}</ion-button>
+
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -97,7 +95,7 @@
         <ion-card *ngIf="(clubInfo$ | async)?.clubByID as clubInfo ">
             <ion-card-header>
                 <ion-card-title> {{event.name}} </ion-card-title>
-                <ion-card-subtitle> From {{event.startTime | date}} To {{event.endTime | date}} </ion-card-subtitle>
+                <ion-card-subtitle> From {{event.startTime | date:'short'}} To {{event.endTime | date:'short'}} </ion-card-subtitle>
                 <ion-card-subtitle> {{price}} $ </ion-card-subtitle>
                 <ion-card-subtitle> Club: {{clubInfo.name}} </ion-card-subtitle>
                 <ion-card-subtitle *ngFor="let instructor of event.instructorForEvents ">
@@ -130,6 +128,6 @@
         </ion-card>
     </ion-content>
 
-    <app-mobile-signup-component [text]="getButtonText()" [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'" [callback]="alreadySignedUp ?  onVerifyClicked : onSignup">
+    <app-mobile-signup-component [text]="getButtonText()" [disabled]="disabled" [color]="(alreadySignedUp || isInstructorForEvent) ? '#43B3C3': '#70ad47'" [callback]="alreadySignedUp ?  onVerifyClicked : onButtonClick">
     </app-mobile-signup-component>
 </ng-template>

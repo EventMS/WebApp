@@ -26,30 +26,15 @@
     </ion-grid>
 
     <ng-template #instructor>
-        <div *ngIf="participants else noParticiants">
-            <ion-grid style="height: 60%; width: 100%;">
-                <ion-text class="ion-text-center">
-                    <h1>
-                        Scanning for codes
-                    </h1>
-                </ion-text>
-                <ion-row class="ion-justify-content-center ion-margin-top">
-                    <ion-spinner class="spinner"></ion-spinner>
-                </ion-row>
-                <ion-row class="ion-justify-content-center">
-                    <ion-list>
-                        <ion-item *ngFor="let participant of participants">
-                            <ion-row class="ion-justify-content-between" style="width: 200px;">
-                                <ion-text>{{participant.user.name}}</ion-text>
-                                <ion-icon *ngIf="participant.status === 'SIGNEDUP' else Attending" name="close-circle" color="danger"></ion-icon>
-                                <ng-template #Attending>
-                                    <ion-icon name="checkmark-circle" color="primary"></ion-icon>
-                                </ng-template>
-                            </ion-row>
-                        </ion-item>
-                    </ion-list>
-                </ion-row>
-            </ion-grid>
+        <ion-grid class="instructorGrid" *ngIf="participants?.length else noParticiants">
+            <ion-text class="ion-text-center">
+                <h1>
+                    Scanning for codes
+                </h1>
+            </ion-text>
+            <ion-row class="ion-justify-content-center ion-margin-top">
+                <ion-spinner class="spinner"></ion-spinner>
+            </ion-row>
             <ion-text class="ion-text-center">
                 <h3>
                     Or type in the code here
@@ -69,7 +54,22 @@
                     <p>{{wrongCode}}</p>
                 </ion-text>
             </ion-grid>
-        </div>
+            <ion-row class="ion-justify-content-center">
+                <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)"></ion-searchbar>
+                <ion-list class="instructorList">
+                    <ion-item *ngFor="let participant of filteredParicipants">
+                        <ion-row class="ion-justify-content-between" style="width: 100%;">
+                            <ion-text>{{participant.user.name}}</ion-text>
+                            <ion-icon *ngIf="participant.status === 'SIGNEDUP' else Attending" name="close-circle" color="danger"></ion-icon>
+                            <ng-template #Attending>
+                                <ion-icon name="checkmark-circle" color="primary"></ion-icon>
+                            </ng-template>
+                        </ion-row>
+                    </ion-item>
+                </ion-list>
+            </ion-row>
+        </ion-grid>
+
         <ng-template #noParticiants>
             <ion-grid style="height: 80%;">
                 <ion-text class="ion-text-center" style="align-self:center">

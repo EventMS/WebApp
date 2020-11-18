@@ -8,13 +8,18 @@ import { IEventListQuery } from 'src/graphql_interfaces';
 export class EventListQueryService extends Query<IEventListQuery> {
   document = gql`
     query IEventListQuery {
-      eventsConfirmed {
+      futureEvents {
         eventId
         name
         description
+        startTime
+        endTime
         eventPrices {
           price
           clubSubscriptionId
+        }
+        club {
+          name
         }
       }
     }

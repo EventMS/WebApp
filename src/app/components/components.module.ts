@@ -18,6 +18,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StripeElementsComponent } from './stripe-elements/stripe-elements.component';
 import { ClubManageMembersComponent } from './club-manage/club-manage-members/club-manage-members.component';
 import { MobileSignupComponent } from './buttons/mobile-signup/mobile-signup.component';
+import { TooltipsModule } from 'ionic-tooltips';
+import { UserlistComponent } from './lists/userlist/userlist.component';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -48,6 +51,7 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     EventCalendarComponent,
     StripeElementsComponent,
     MobileSignupComponent,
+    UserlistComponent,
   ],
   exports: [
     HeaderBarComponent,
@@ -58,12 +62,14 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     ClubManageEventsComponent,
     EventCalendarComponent,
     MobileSignupComponent,
+    UserlistComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    TooltipsModule,
     CalendarModule.forRoot(
       {
         provide: DateAdapter,

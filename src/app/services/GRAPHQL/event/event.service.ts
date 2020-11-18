@@ -5,6 +5,7 @@ import {
   IEventListQuery,
   IEventPageInfoQuery,
   IEventPageQuery,
+  IEventUserListQueryVariables,
 } from 'src/graphql_interfaces';
 import { Observable } from 'rxjs';
 import { CreateEventClubQueryService } from '../club/queries/create-event-club-query.service';
@@ -17,6 +18,7 @@ import { EventPageInfoQueryService } from './queries/event-page-info-query.servi
 import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
 import { SignUpForEventMutationService } from './mutations/single-payment-mutation.service';
 import { MyEventsQueryService } from './queries/my-events-query.service';
+import { EventUserListQueryService } from './queries/event-user-list-query.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +32,8 @@ export class EventService {
     private eventPageInfoQuery: EventPageInfoQueryService,
     private freeSignupMutation: FreeSignUpMutationService,
     private signUpForEventMutation: SignUpForEventMutationService,
-    private myEventsQuery: MyEventsQueryService
+    private myEventsQuery: MyEventsQueryService,
+    private eventUserListQuery: EventUserListQueryService
   ) {}
 
   // Mutations
@@ -113,4 +116,8 @@ export class EventService {
   getMyEvents() {
     return this.myEventsQuery.watch().valueChanges.pipe(map(({ data }) => data));
   }
+
+  getEventParticipants = ({ eventId }: IEventUserListQueryVariables) => {
+    return this.eventUserListQuery.watch({ eventId }).valueChanges.pipe(map(({ data }) => data));
+  };
 }

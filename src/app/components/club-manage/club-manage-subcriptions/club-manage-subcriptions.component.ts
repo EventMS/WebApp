@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CreateSubscriptionMutationService } from 'src/app/services/GRAPHQL/subscriptions/mutations/create-subscription-mutation.service';
-import { ClubSubscriptionsQueryService } from 'src/app/services/GRAPHQL/subscriptions/queries/club-subscriptions-query.service';
 import { CreateClubSubscriptionRequestInput, ISubscriptionsForClubQuery } from 'src/graphql_interfaces';
 import { AlertController } from '@ionic/angular';
 import { CreateSubscriptionFormBuilder } from './subscription-formbuilder';
@@ -46,6 +43,11 @@ export class ClubManageSubcriptionsComponent implements OnInit {
     this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId);
     this.clubSubscriptions$.subscribe((data) => {
       this.clubSubscriptions = data;
+      
+      if(this.clubSubscriptions!.length > 0) {
+        this.form.get('subscriptionReference')!.setValidators(Validators.required);
+      }
+
       this.form.reset();
     });
   }

@@ -1,19 +1,22 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { IGetClubsQuery } from 'src/graphql_interfaces';
-import { fromEvent, Observable } from 'rxjs';
 import { ClubService } from 'src/app/services/GRAPHQL/club/club.service';
 import { LoadingController } from '@ionic/angular';
+import { Paths } from 'src/app/navigation/routes';
+
 @Component({
   selector: 'app-club-list',
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit, AfterViewInit {
+export class ClubListPage implements OnInit {
   constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
-  public filteredClubs: IGetClubsQuery['clubs'];
-  private searches$: Observable<any>;
+  public clubs: IGetClubsQuery['clubs'] = [];
+  public filteredClubs: IGetClubsQuery['clubs'] = [];
+
+  public route = (clubId: string) => Paths.show_club.route(clubId);
+  public searchQuery: string;
 
   ngOnInit() {}
 
@@ -22,32 +25,18 @@ export class ClubListPage implements OnInit, AfterViewInit {
     await loading.present();
 
     this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
-      this.filteredClubs = clubs;
+      this.clubs = this.filteredClubs = clubs;
       await loading.dismiss();
     });
   }
 
-  ngAfterViewInit(): void {
-    //@ts-ignore
-    this.searches$ = fromEvent<any>(document.querySelector('ion-searchbar'), 'input');
-
-    this.searches$.pipe(debounceTime(300), distinctUntilChanged()).subscribe((searchTerm) => {
-      requestAnimationFrame(() =>
-        this.clubService.getAllClubs().subscribe(
-          ({ clubs }) =>
-            (this.filteredClubs = clubs!.filter((club) => {
-              if (club && club.name) return club.name.toLowerCase().includes(searchTerm.target.value.toLowerCase());
-            }))
-        )
-      );
+  public onSearch(query: string) {
+    this.filteredClubs = this.clubs!.filter((club) => {
+      return club!.name!.toLowerCase().includes(query.toLowerCase());
     });
   }
 
   private presentLoading = async () => {
     return this.loadingController.create({ message: 'Loading clubs...' });
-  };
-
-  public findLocalClubs = () => {
-    console.log(this.filteredClubs);
   };
 }

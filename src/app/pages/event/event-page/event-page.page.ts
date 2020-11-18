@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
+import dayjs from 'dayjs';
 import { Observable } from 'rxjs';
+import { Paths } from 'src/app/navigation/routes';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
   IEventPageInfoQuery,
@@ -28,24 +30,29 @@ export class EventPagePage implements OnInit {
   public isMobile = isPlatform('mobile');
   public alreadyVerified: boolean;
   public isInstructorForEvent: boolean;
+  public eventId: string;
 
-  private eventId: string;
   private clubId: string;
+  private startTime: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet
+    private routerOutlet: IonRouterOutlet,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.initData();
   }
 
-  public onSignup = async () => {
-    if (this.price === 0) {
+  public onButtonClick = async () => {
+    if (this.price === '0 $') {
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
+      return;
+    } else if (this.price === buttonText.PRIVATE_EVENT) {
+      this.router.navigate(Paths.show_club.route(this.clubId));
       return;
     }
 
@@ -83,7 +90,11 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    return this.isInstructorForEvent ? 'Verify users' : this.alreadySignedUp ? 'Verify' : 'Sign up';
+    if (dayjs(this.startTime).isBefore(dayjs())) return buttonText.PASSED;
+    else if (this.price === buttonText.PRIVATE_EVENT) return buttonText.PRIVATE_EVENT;
+    else if (this.isInstructorForEvent) return buttonText.INSTRUCTOR;
+    else if (this.alreadySignedUp) return buttonText.SIGNED_UP;
+    else return buttonText.CAN_SIGN_UP;
   };
 
   public modalCallback = (succes: boolean) => {
@@ -121,17 +132,29 @@ export class EventPagePage implements OnInit {
     this.eventName = getEvent.name!;
     this.eventId = getEvent.eventId!;
     this.clubId = getEvent.clubId!;
+    this.startTime = getEvent.startTime;
+    if (dayjs(this.startTime).isBefore(dayjs())) this.disabled = true;
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
     const { userPrice: price } = getEvent;
 
     if (price !== getEvent?.publicPrice) {
-      this.price = price;
+      this.price = price + ' $';
       this.color = 'green';
     } else if (getEvent.publicPrice) {
       this.color = 'black';
-      this.price = getEvent.publicPrice;
+      this.price = getEvent.publicPrice + ' $';
+    } else {
+      this.price = buttonText.PRIVATE_EVENT;
     }
   };
 }
+
+const buttonText = {
+  PRIVATE_EVENT: 'Event is private',
+  PASSED: 'Event has passed',
+  INSTRUCTOR: ' Verify users',
+  SIGNED_UP: 'Verify',
+  CAN_SIGN_UP: 'Sign up',
+};

@@ -66,7 +66,7 @@ public class NearbyPlugin extends CordovaPlugin {
             this.publish_callback = callbackContext;
                 this.publish(message);
             return true;
-        }else if (action.equals("unPublish")) {
+        }else if (action.equals("unpublish")) {
             this.unpublish_callback = callbackContext;
             this.unPublish();
             return true;

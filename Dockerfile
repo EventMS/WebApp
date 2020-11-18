@@ -2,6 +2,8 @@ FROM node:13-alpine as build
 WORKDIR /app
 COPY package*.json /app/
 RUN npm install -g ionic
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 RUN npm install
 COPY ./ /app/
 RUN npm run-script build-prod

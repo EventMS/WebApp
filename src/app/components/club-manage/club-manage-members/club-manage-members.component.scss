@@ -1,7 +1,12 @@
 ion-list {
   background-color: transparent;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
+}
+
+ion-list-header {
+  width: auto;
+  text-align: center;
 }
 
 .container {
@@ -13,7 +18,7 @@ ion-card {
   --background: #3880ff;
   display: flex;
   align-items: center;
-  height: 80px;
+  min-height: 80px;
   border-radius: 20px;
 }
 
@@ -25,8 +30,8 @@ ion-toolbar {
   --background: transparent;
 }
 
-ion-label {
-  color: white;
+.list-titles {
+  --color: black !important;
 }
 
 ion-icon {
@@ -63,5 +68,5 @@ img {
 }
 
 .top-padding {
-  padding-top: 40px;
+  padding-top: 30px;
 }
