@@ -18,6 +18,9 @@ export class VerifyModalUserPage implements OnInit {
   public participants: IVerifyCodeQuery_getEvent['participants'];
   public wrongCode: string;
   public cordovaAvailable: boolean;
+  public searchQuery: string;
+  public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
+
   private currentUserName: string;
   private subscription: Subscription;
 
@@ -34,7 +37,7 @@ export class VerifyModalUserPage implements OnInit {
   ngOnInit() {
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
       if (getEvent && currentUser) {
-        this.participants = getEvent.participants;
+        this.participants = this.filteredParicipants = getEvent.participants;
         this.currentUserName = currentUser.name!;
         if (!this.isInstructor)
           this.code =
@@ -44,6 +47,12 @@ export class VerifyModalUserPage implements OnInit {
           this.startNearbyRead();
         }
       }
+    });
+  }
+
+  public didSearch(query: string) {
+    this.filteredParicipants = this.participants!.filter((data) => {
+      return data!.user!.name!.toLowerCase().includes(query.toLowerCase());
     });
   }
 
@@ -67,9 +76,7 @@ export class VerifyModalUserPage implements OnInit {
         message: 'Verifiyng code from ' + messages[1],
         duration: 3000,
       });
-
       await toast.present();
-
       this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
     });
   };

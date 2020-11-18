@@ -37,8 +37,7 @@ export class EventListPage implements OnInit {
 
     this.events$.subscribe(async (next) => {
       await loading.dismiss();
-      this.events = next.data.futureEvents;
-      this.filteredEvents = next.data.futureEvents;
+      this.events = this.filteredEvents = next.data.futureEvents;
     });
   }
 
