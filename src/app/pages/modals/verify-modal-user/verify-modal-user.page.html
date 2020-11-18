@@ -26,7 +26,7 @@
     </ion-grid>
 
     <ng-template #instructor>
-        <ion-grid style="height: 80%; width: 100%;" *ngIf="participants.length else noParticiants">
+        <ion-grid class="instructorGrid" *ngIf="participants?.length else noParticiants">
             <ion-text class="ion-text-center">
                 <h1>
                     Scanning for codes
@@ -56,9 +56,9 @@
             </ion-grid>
             <ion-row class="ion-justify-content-center">
                 <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)"></ion-searchbar>
-                <ion-list>
+                <ion-list class="instructorList">
                     <ion-item *ngFor="let participant of filteredParicipants">
-                        <ion-row class="ion-justify-content-between" style="width: 200px;">
+                        <ion-row class="ion-justify-content-between" style="width: 100%;">
                             <ion-text>{{participant.user.name}}</ion-text>
                             <ion-icon *ngIf="participant.status === 'SIGNEDUP' else Attending" name="close-circle" color="danger"></ion-icon>
                             <ng-template #Attending>

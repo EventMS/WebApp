@@ -69,7 +69,7 @@ export class VerifyModalUserPage implements OnInit {
 
   public startNearbyRead = () => {
     if (this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.googleNearby.read().subscribe(async (message: string) => {
+    this.subscription = this.googleNearby.read()?.subscribe(async (message: string) => {
       const messages = message.split(':');
 
       const toast = await this.toastController.create({

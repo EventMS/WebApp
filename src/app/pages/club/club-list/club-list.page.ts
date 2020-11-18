@@ -25,8 +25,7 @@ export class ClubListPage implements OnInit {
     await loading.present();
 
     this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
-      this.clubs = clubs;
-      this.filteredClubs = clubs;
+      this.clubs = this.filteredClubs = clubs;
       await loading.dismiss();
     });
   }
@@ -39,9 +38,5 @@ export class ClubListPage implements OnInit {
 
   private presentLoading = async () => {
     return this.loadingController.create({ message: 'Loading clubs...' });
-  };
-
-  public findLocalClubs = () => {
-    console.log(this.filteredClubs);
   };
 }
