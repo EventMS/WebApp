@@ -57,7 +57,6 @@
             <ion-col size="4 ">
                 <ion-row class="ion-justify-content-end ">
                     <ion-button size="large " style="width: 60%" [style.--background]="(currentSubscription) ? '#43B3C3': '#70ad47'" [disabled]="currentSubscription || !(club$ | async)?.clubByID.clubsubscription.length" (click)="showModal()">{{buttonText}}</ion-button>
-
                 </ion-row>
                 <div class="textContainer ">
                     <ion-col class="ion-text-end ">
