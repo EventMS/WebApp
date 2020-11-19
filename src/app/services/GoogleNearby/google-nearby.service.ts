@@ -14,19 +14,26 @@ export class GoogleNearbyService {
     GoogleNearbyMessages.initialize({}).then((data) => console.log(data));
   }
 
-  public read = (): Observable<any> | undefined => {
-    if (this.platform.is('cordova')) GoogleNearbyMessages.subscribe({});
-    // return this.googleNearby.subscribe();
-    return undefined;
+  public subscribe = async (callback: (data: { message: Message }) => {}) => {
+    if (this.platform.is('capacitor')) await GoogleNearbyMessages.subscribe({});
+    //@ts-ignore
+    return GoogleNearbyMessages.addListener('onFound', callback);
   };
 
-  public broadcast = async (message: string) => {
+  /**
+   * unsubscribe
+   */
+  public async unsubscribe() {
+    await GoogleNearbyMessages.unsubscribe({});
+  }
+
+  public publish = async (message: string) => {
     const messageObject: Message = {
       content: btoa(message),
       type: 'DEFAULT',
     };
-    if (this.platform.is('cordova'))
-      GoogleNearbyMessages.publish({ message: messageObject }).then((data) => console.log(data));
+    if (this.platform.is('capacitor'))
+      await GoogleNearbyMessages.publish({ message: messageObject, options: { strategy: { ttlSeconds: 30 } } });
     // await this.googleNearby.publish(message);
   };
 }

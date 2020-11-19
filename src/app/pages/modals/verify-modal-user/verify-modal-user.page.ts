@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
-import { App, AppState } from '@capacitor/core';
+import { App, AppState, PluginListenerHandle } from '@capacitor/core';
+import { Message } from 'capacitor-google-nearby-messages';
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -22,7 +23,8 @@ export class VerifyModalUserPage implements OnInit {
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
 
   private currentUserName: string;
-  private subscription: Subscription | undefined;
+  private handler: PluginListenerHandle;
+  alreadyReadCodes: string[];
 
   constructor(
     private modalController: ModalController,
@@ -32,9 +34,11 @@ export class VerifyModalUserPage implements OnInit {
     private toastController: ToastController
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
+    this.alreadyReadCodes = [];
   }
 
   ngOnInit() {
+    this.removeSubscriptions();
     App.addListener('appStateChange', this.nearbyListener);
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
       if (getEvent && currentUser) {
@@ -51,8 +55,13 @@ export class VerifyModalUserPage implements OnInit {
     });
   }
 
+  private removeSubscriptions = async () => {
+    await this.googleNearby.unsubscribe();
+    if (this.handler) this.handler.remove();
+  };
+
   ionViewWillLeave() {
-    if (this.subscription) this.subscription.unsubscribe();
+    this.removeSubscriptions();
   }
 
   public didSearch(query: string) {
@@ -72,24 +81,45 @@ export class VerifyModalUserPage implements OnInit {
     );
   };
 
-  public startNearbyRead = () => {
-    if (this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.googleNearby.read()?.subscribe(this.messageRecieved);
+  public startNearbyRead = async () => {
+    this.removeSubscriptions();
+    this.handler = await this.googleNearby.subscribe(this.messageRecieved);
   };
 
-  private messageRecieved = async (message: string) => {
-    const messages = message.split(':');
+  private messageRecieved = async (data: { message: Message }) => {
+    const { content } = data.message;
+    if (content) {
+      const messages = atob(content).split(':');
+      const toast = await this.toastController.create({
+        message: 'Verifiyng code from ' + messages[1],
+        duration: 3000,
+      });
+      await toast.present();
+      if (!this.alreadyReadCodes.includes(messages[0]))
+        this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe(
+          () => {
+            this.alreadyReadCodes.push(messages[0]);
+          },
+          async (e: ApolloError) => {
+            if (e.message.toLowerCase().includes('eventverificationid')) {
+              toast.dismiss();
+              this.presentAlreadyVerifiedToast();
+            }
+          }
+        );
+    }
+  };
 
-    const toast = await this.toastController.create({
-      message: 'Verifiyng code from ' + messages[1],
-      duration: 3000,
+  private presentAlreadyVerifiedToast = async () => {
+    const errorToast = await this.toastController.create({
+      message: 'Code has already been verified',
+      duration: 2000,
     });
-    await toast.present();
-    this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
+    await errorToast.present();
   };
 
   public startNearbyBroadcast = async () => {
-    this.googleNearby.broadcast(this.code + ':' + this.currentUserName);
+    this.googleNearby.publish(this.code + ':' + this.currentUserName);
     const toast = await this.toastController.create({ message: 'Verifiyng', duration: 5000 });
     await toast.present();
     await this.modalController.dismiss({

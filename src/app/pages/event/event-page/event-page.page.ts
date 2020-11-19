@@ -90,7 +90,7 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    if (dayjs(this.startTime).isBefore(dayjs())) return buttonText.PASSED;
+    if (this.startTime < Date.now()) return buttonText.PASSED;
     else if (this.price === buttonText.PRIVATE_EVENT) return buttonText.PRIVATE_EVENT;
     else if (this.isInstructorForEvent) return buttonText.INSTRUCTOR;
     else if (this.alreadySignedUp) return buttonText.SIGNED_UP;
@@ -133,18 +133,21 @@ export class EventPagePage implements OnInit {
     this.eventId = getEvent.eventId!;
     this.clubId = getEvent.clubId!;
     this.startTime = getEvent.startTime;
-    if (dayjs(this.startTime).isBefore(dayjs())) this.disabled = true;
+    if (this.startTime < Date.now()) this.disabled = true;
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
-    const { userPrice: price } = getEvent;
+    const { userPrice, publicPrice } = getEvent;
 
-    if (price !== getEvent?.publicPrice) {
-      this.price = price + ' $';
+    if (userPrice !== publicPrice) {
+      this.price = userPrice + ' $';
       this.color = 'green';
-    } else if (getEvent.publicPrice) {
+    } else if (publicPrice) {
       this.color = 'black';
-      this.price = getEvent.publicPrice + ' $';
+      this.price = publicPrice + ' $';
+    } else if (!userPrice && !publicPrice) {
+      this.price = '0 $';
+      this.color = 'green';
     } else {
       this.price = buttonText.PRIVATE_EVENT;
     }
