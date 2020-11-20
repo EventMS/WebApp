@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PermissionType, Plugins } from '@capacitor/core';
 import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
-import dayjs from 'dayjs';
+import { Message } from 'capacitor-google-nearby-messages';
 import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
@@ -14,6 +15,9 @@ import {
 } from 'src/graphql_interfaces';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
+
+const { Permissions, GoogleNearbyMessages } = Plugins;
+
 @Component({
   selector: 'app-event-page',
   templateUrl: './event-page.page.html',
@@ -26,7 +30,7 @@ export class EventPagePage implements OnInit {
   public color = 'black';
   public eventName: string;
   public disabled: boolean;
-  public alreadySignedUp: boolean = false;
+  public alreadySignedUp = false;
   public isMobile = isPlatform('mobile');
   public alreadyVerified: boolean;
   public isInstructorForEvent: boolean;
@@ -39,11 +43,12 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet,
     private router: Router
-  ) {}
+  ) {
+    GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.initData();
   }
 
@@ -70,7 +75,7 @@ export class EventPagePage implements OnInit {
 
   private initData = () => {
     this.activatedRoute.params.subscribe((params) => {
-      const eventId = params['eventId'] as string;
+      const eventId = params.eventId as string;
       if (eventId) {
         this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
@@ -90,11 +95,17 @@ export class EventPagePage implements OnInit {
   };
 
   getButtonText = () => {
-    if (this.startTime < Date.now()) return buttonText.PASSED;
-    else if (this.price === buttonText.PRIVATE_EVENT) return buttonText.PRIVATE_EVENT;
-    else if (this.isInstructorForEvent) return buttonText.INSTRUCTOR;
-    else if (this.alreadySignedUp) return buttonText.SIGNED_UP;
-    else return buttonText.CAN_SIGN_UP;
+    if (this.startTime < Date.now()) {
+      return buttonText.PASSED;
+    } else if (this.price === buttonText.PRIVATE_EVENT) {
+      return buttonText.PRIVATE_EVENT;
+    } else if (this.isInstructorForEvent) {
+      return buttonText.INSTRUCTOR;
+    } else if (this.alreadySignedUp) {
+      return buttonText.SIGNED_UP;
+    } else {
+      return buttonText.CAN_SIGN_UP;
+    }
   };
 
   public modalCallback = (succes: boolean) => {
@@ -121,7 +132,9 @@ export class EventPagePage implements OnInit {
     if (event || this.isInstructorForEvent) {
       this.alreadySignedUp = true;
     }
-    if (event?.status === PresenceStatusEnum.ATTEND) this.alreadyVerified = true;
+    if (event?.status === PresenceStatusEnum.ATTEND) {
+      this.alreadyVerified = true;
+    }
   };
 
   private setEventValues = (getEvent: IEventPageQuery_getEvent) => {
@@ -131,7 +144,9 @@ export class EventPagePage implements OnInit {
     this.eventId = getEvent.eventId!;
     this.clubId = getEvent.clubId!;
     this.startTime = getEvent.startTime;
-    if (this.startTime < Date.now()) this.disabled = true;
+    if (this.startTime < Date.now()) {
+      this.disabled = true;
+    }
   };
 
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {

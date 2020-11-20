@@ -1,14 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
 import { ModalController, Platform, ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
 import { App, AppState, PluginListenerHandle, Plugins } from '@capacitor/core';
 import { Message } from 'capacitor-google-nearby-messages';
-
-const { GoogleNearbyMessages } = Plugins;
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -37,7 +34,6 @@ export class VerifyModalUserPage implements OnInit {
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
     this.alreadyReadCodes = [];
-    GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
   }
 
   ngOnInit() {
@@ -47,11 +43,11 @@ export class VerifyModalUserPage implements OnInit {
       if (getEvent && currentUser) {
         this.participants = this.filteredParicipants = getEvent.participants;
         this.currentUserName = currentUser.name!;
-        if (!this.isInstructor)
+        if (!this.isInstructor) {
           this.code =
-            currentUser.events?.find((data) => data?.eventId == this.eventId)?.code ??
+            currentUser.events?.find((data) => data?.eventId === this.eventId)?.code ??
             'code not generated yet, try again later';
-        else {
+        } else {
           this.startNearbyRead();
         }
       }
@@ -60,7 +56,9 @@ export class VerifyModalUserPage implements OnInit {
 
   private removeSubscriptions = async () => {
     await this.googleNearby.unsubscribe();
-    if (this.handler) this.handler.remove();
+    if (this.handler) {
+      this.handler.remove();
+    }
   };
 
   ionViewWillLeave() {
@@ -87,7 +85,6 @@ export class VerifyModalUserPage implements OnInit {
   public startNearbyRead = async () => {
     this.removeSubscriptions();
     this.handler = await this.googleNearby.subscribe(this.messageRecieved);
-    console.log(this.handler);
   };
 
   private messageRecieved = async (data: { message: Message }) => {
@@ -99,7 +96,7 @@ export class VerifyModalUserPage implements OnInit {
         duration: 3000,
       });
       await toast.present();
-      if (!this.alreadyReadCodes.includes(messages[0]))
+      if (!this.alreadyReadCodes.includes(messages[0])) {
         this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe(
           () => {
             this.alreadyReadCodes.push(messages[0]);
@@ -111,6 +108,7 @@ export class VerifyModalUserPage implements OnInit {
             }
           }
         );
+      }
     }
   };
 
