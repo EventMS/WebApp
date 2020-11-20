@@ -1,83 +1,75 @@
 <ion-content>
-    <ion-grid *ngIf="!isInstructor else instructor">
-        <ion-row class="ion-margin">
-            <ion-col>
-                <ion-row class="ion-justify-content-center">
-                    <ion-text>
-                        <h1>
-                            Verification Code
-                        </h1>
-                    </ion-text>
-                </ion-row>
-                <ion-row class="ion-justify-content-center">
-                    <ion-text>
-                        <h1 class="codeStyle">
-                            {{code}}
-                        </h1>
-                    </ion-text>
-                </ion-row>
-                <ion-row *ngIf="cordovaAvailable" class="ion-justify-content-center">
-                    <ion-text>
-                        <ion-button color="primary" (click)="startNearbyBroadcast()">Verify </ion-button>
-                    </ion-text>
-                </ion-row>
-            </ion-col>
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Verification code</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid *ngIf="!isInstructor else instructor">
+    <ion-row class="ion-justify-content-center">
+      <ion-text>
+        <h1 class="codeStyle">{{code}}</h1>
+      </ion-text>
+    </ion-row>
+    <ion-row *ngIf="cordovaAvailable" class="ion-justify-content-center">
+      <ion-text>
+        <ion-button color="primary" (click)="startNearbyBroadcast()">Verify </ion-button>
+      </ion-text>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #instructor>
+    <ion-grid class="instructorGrid" *ngIf="participants?.length else noParticiants">
+      <ion-text class="ion-text-center">
+        <h1>Scanning for codes</h1>
+      </ion-text>
+      <ion-row class="ion-justify-content-center ion-margin-top">
+        <ion-spinner class="spinner"></ion-spinner>
+      </ion-row>
+      <ion-text class="ion-text-center">
+        <h3>Or type in the code here</h3>
+      </ion-text>
+      <ion-grid>
+        <ion-row>
+          <ion-col offset="4" size="2">
+            <ion-input [(ngModel)]="code " inputmode="number " min="4 " required placeholder="1234 "> </ion-input>
+          </ion-col>
+          <ion-col>
+            <ion-button [disabled]="code?.length < 4 " (click)="onCodeSubmitted() ">Submit</ion-button>
+          </ion-col>
         </ion-row>
+        <ion-text *ngIf="wrongCode" class="ion-text-center" color="danger ">
+          <p>{{wrongCode}}</p>
+        </ion-text>
+      </ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)"></ion-searchbar>
+        <ion-list class="instructorList">
+          <ion-item *ngFor="let participant of filteredParicipants">
+            <ion-row class="ion-justify-content-between" style="width: 100%">
+              <ion-text>{{participant.user.name}}</ion-text>
+              <ion-icon
+                *ngIf="participant.status === 'SIGNEDUP' else Attending"
+                name="close-circle"
+                color="danger"
+              ></ion-icon>
+              <ng-template #Attending>
+                <ion-icon name="checkmark-circle" color="primary"></ion-icon>
+              </ng-template>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+      </ion-row>
     </ion-grid>
 
-    <ng-template #instructor>
-        <ion-grid class="instructorGrid" *ngIf="participants?.length else noParticiants">
-            <ion-text class="ion-text-center">
-                <h1>
-                    Scanning for codes
-                </h1>
-            </ion-text>
-            <ion-row class="ion-justify-content-center ion-margin-top">
-                <ion-spinner class="spinner"></ion-spinner>
-            </ion-row>
-            <ion-text class="ion-text-center">
-                <h3>
-                    Or type in the code here
-                </h3>
-            </ion-text>
-            <ion-grid>
-                <ion-row>
-                    <ion-col offset="4" size="2">
-                        <ion-input [(ngModel)]="code " inputmode="number " min="4 " required placeholder="1234 ">
-                        </ion-input>
-                    </ion-col>
-                    <ion-col>
-                        <ion-button [disabled]="code?.length < 4 " (click)="onCodeSubmitted() ">Submit</ion-button>
-                    </ion-col>
-                </ion-row>
-                <ion-text *ngIf="wrongCode" class="ion-text-center " color="danger ">
-                    <p>{{wrongCode}}</p>
-                </ion-text>
-            </ion-grid>
-            <ion-row class="ion-justify-content-center">
-                <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)"></ion-searchbar>
-                <ion-list class="instructorList">
-                    <ion-item *ngFor="let participant of filteredParicipants">
-                        <ion-row class="ion-justify-content-between" style="width: 100%;">
-                            <ion-text>{{participant.user.name}}</ion-text>
-                            <ion-icon *ngIf="participant.status === 'SIGNEDUP' else Attending" name="close-circle" color="danger"></ion-icon>
-                            <ng-template #Attending>
-                                <ion-icon name="checkmark-circle" color="primary"></ion-icon>
-                            </ng-template>
-                        </ion-row>
-                    </ion-item>
-                </ion-list>
-            </ion-row>
-        </ion-grid>
-
-        <ng-template #noParticiants>
-            <ion-grid style="height: 80%;">
-                <ion-text class="ion-text-center" style="align-self:center">
-                    <h1>
-                        No one is signed up yet
-                    </h1>
-                </ion-text>
-            </ion-grid>
-        </ng-template>
+    <ng-template #noParticiants>
+      <ion-grid style="height: 80%">
+        <ion-text class="ion-text-center" style="align-self: center">
+          <h1>No one is signed up yet</h1>
+        </ion-text>
+      </ion-grid>
     </ng-template>
+  </ng-template>
 </ion-content>

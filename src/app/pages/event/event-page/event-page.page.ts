@@ -107,8 +107,6 @@ export class EventPagePage implements OnInit {
     const modal = await this.modalController.create({
       component: VerifyModalUserPage,
       componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
     });
 
     await modal.present();

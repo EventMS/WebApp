@@ -10,13 +10,13 @@ const { GoogleNearbyMessages } = Plugins;
   providedIn: 'root',
 })
 export class GoogleNearbyService {
-  constructor(private platform: Platform) {
-    GoogleNearbyMessages.initialize({}).then((data) => console.log(data));
-  }
+  constructor(private platform: Platform) {}
 
   public subscribe = async (callback: (data: { message: Message }) => {}) => {
-    if (this.platform.is('capacitor')) await GoogleNearbyMessages.subscribe({});
-    //@ts-ignore
+    if (this.platform.is('capacitor')) {
+      await GoogleNearbyMessages.subscribe({}).then(() => console.log('subscribed'));
+    }
+    // @ts-ignore
     return GoogleNearbyMessages.addListener('onFound', callback);
   };
 
@@ -32,8 +32,9 @@ export class GoogleNearbyService {
       content: btoa(message),
       type: 'DEFAULT',
     };
-    if (this.platform.is('capacitor'))
+    if (this.platform.is('capacitor')) {
       await GoogleNearbyMessages.publish({ message: messageObject, options: { strategy: { ttlSeconds: 30 } } });
+    }
     // await this.googleNearby.publish(message);
   };
 }

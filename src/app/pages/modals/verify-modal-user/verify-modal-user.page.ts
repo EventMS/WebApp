@@ -5,8 +5,10 @@ import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
-import { App, AppState, PluginListenerHandle } from '@capacitor/core';
+import { App, AppState, PluginListenerHandle, Plugins } from '@capacitor/core';
 import { Message } from 'capacitor-google-nearby-messages';
+
+const { GoogleNearbyMessages } = Plugins;
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -35,6 +37,7 @@ export class VerifyModalUserPage implements OnInit {
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
     this.alreadyReadCodes = [];
+    GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
   }
 
   ngOnInit() {
@@ -84,6 +87,7 @@ export class VerifyModalUserPage implements OnInit {
   public startNearbyRead = async () => {
     this.removeSubscriptions();
     this.handler = await this.googleNearby.subscribe(this.messageRecieved);
+    console.log(this.handler);
   };
 
   private messageRecieved = async (data: { message: Message }) => {
@@ -108,6 +112,10 @@ export class VerifyModalUserPage implements OnInit {
           }
         );
     }
+  };
+
+  public dismissModal = async () => {
+    await this.modalController.dismiss();
   };
 
   private presentAlreadyVerifiedToast = async () => {
