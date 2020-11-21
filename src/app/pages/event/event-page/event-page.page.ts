@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionType, Plugins } from '@capacitor/core';
-import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
-import { Message } from 'capacitor-google-nearby-messages';
+import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
+import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
   IEventPageInfoQuery,
@@ -13,10 +13,11 @@ import {
   IEventPageQuery_getEvent,
   PresenceStatusEnum,
 } from 'src/graphql_interfaces';
+import waait from 'waait';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
 
-const { Permissions, GoogleNearbyMessages } = Plugins;
+const { Permissions } = Plugins;
 
 @Component({
   selector: 'app-event-page',
@@ -43,16 +44,15 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private router: Router
-  ) {
-    GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
-  }
+    private router: Router,
+    private googleNearby: GoogleNearbyService
+  ) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.initData();
   }
 
-  public onButtonClick = async () => {
+  public onButtonClick = async (): Promise<void> => {
     if (this.price === '0 $') {
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
       return;
@@ -73,15 +73,15 @@ export class EventPagePage implements OnInit {
     return await modal.present();
   };
 
-  private initData = () => {
-    this.activatedRoute.params.subscribe((params) => {
+  private initData = (): void => {
+    this.activatedRoute.params.subscribe((params): void => {
       const eventId = params.eventId as string;
       if (eventId) {
         this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.setEventValues(getEvent);
-            this.clubInfo$.subscribe(({ currentUser }) => {
+            this.clubInfo$.subscribe(({ currentUser }): void => {
               this.isInstructorForEvent = Boolean(
                 getEvent.instructorForEvents?.find((ins) => ins?.user?.id === currentUser?.id)?.user?.id
               );
@@ -94,7 +94,7 @@ export class EventPagePage implements OnInit {
     });
   };
 
-  getButtonText = () => {
+  getButtonText = (): string => {
     if (this.startTime < Date.now()) {
       return buttonText.PASSED;
     } else if (this.price === buttonText.PRIVATE_EVENT) {
@@ -108,27 +108,13 @@ export class EventPagePage implements OnInit {
     }
   };
 
-  public modalCallback = (succes: boolean) => {
+  public modalCallback = (succes: boolean): void => {
     if (succes) {
       this.alreadySignedUp = true;
     }
   };
 
-  public onVerifyClicked = async () => {
-    const modal = await this.modalController.create({
-      component: VerifyModalUserPage,
-      componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
-    });
-
-    await modal.present();
-
-    const { data } = await modal.onDidDismiss();
-    if (data?.dismissed === true) {
-      this.eventService.getEventPageInfo(this.clubId);
-    }
-  };
-
-  public handleAlreadySignedUp = (event: IEventPageInfoQuery_currentUser_events | null) => {
+  public handleAlreadySignedUp = (event: IEventPageInfoQuery_currentUser_events | null): void => {
     if (event || this.isInstructorForEvent) {
       this.alreadySignedUp = true;
     }
@@ -137,7 +123,7 @@ export class EventPagePage implements OnInit {
     }
   };
 
-  private setEventValues = (getEvent: IEventPageQuery_getEvent) => {
+  private setEventValues = (getEvent: IEventPageQuery_getEvent): void => {
     this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
     this.handlePriceForEvent(getEvent);
     this.eventName = getEvent.name!;
@@ -149,7 +135,7 @@ export class EventPagePage implements OnInit {
     }
   };
 
-  private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
+  private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent): void => {
     const { userPrice, publicPrice } = getEvent;
 
     if (userPrice !== publicPrice) {
@@ -163,6 +149,19 @@ export class EventPagePage implements OnInit {
       this.color = 'green';
     } else {
       this.price = buttonText.PRIVATE_EVENT;
+    }
+  };
+
+  public onVerifyClicked = async (): Promise<void> => {
+    const modal = await this.modalController.create({
+      component: VerifyModalUserPage,
+      componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.dismissed === true) {
+      this.eventService.getEventPageInfo(this.clubId);
     }
   };
 }
