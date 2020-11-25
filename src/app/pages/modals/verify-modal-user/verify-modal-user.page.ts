@@ -4,7 +4,6 @@ import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent, PresenceStatusEnum } from 'src/graphql_interfaces';
-import { AppState, PluginListenerHandle } from '@capacitor/core';
 import { Message, UUID } from 'capacitor-google-nearby-messages';
 import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 @Component({
@@ -22,8 +21,6 @@ export class VerifyModalUserPage implements OnInit {
   public searchQuery: string;
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
   private uuid: UUID | undefined;
-  private currentUserName: string;
-  // private alreadyReadCodes: string[];
 
   constructor(
     private modalController: ModalController,
@@ -34,7 +31,6 @@ export class VerifyModalUserPage implements OnInit {
     private authService: AuthenticationService
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
-    // this.alreadyReadCodes = [];
   }
 
   async ngOnInit() {
@@ -48,7 +44,6 @@ export class VerifyModalUserPage implements OnInit {
       .subscribe(async ({ currentUser, getEvent }) => {
         if (getEvent && currentUser) {
           this.participants = this.filteredParicipants = getEvent.participants;
-          this.currentUserName = currentUser.name!;
           if (!this.isInstructor) {
             this.code =
               currentUser.events?.find((data) => data?.eventId === this.eventId)?.code ??
