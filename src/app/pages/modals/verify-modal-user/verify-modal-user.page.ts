@@ -5,7 +5,7 @@ import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
 import { AppState, PluginListenerHandle } from '@capacitor/core';
-import { Message } from 'capacitor-google-nearby-messages';
+import { Message, UUID } from 'capacitor-google-nearby-messages';
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -20,10 +20,10 @@ export class VerifyModalUserPage implements OnInit {
   public cordovaAvailable: boolean;
   public searchQuery: string;
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
-
+  private uuid: UUID | undefined;
   private currentUserName: string;
   private handler: PluginListenerHandle;
-  alreadyReadCodes: string[];
+  // private alreadyReadCodes: string[];
 
   constructor(
     private modalController: ModalController,
@@ -33,11 +33,11 @@ export class VerifyModalUserPage implements OnInit {
     private toastController: ToastController
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
-    this.alreadyReadCodes = [];
+    // this.alreadyReadCodes = [];
   }
 
-  ngOnInit() {
-    this.googleNearby.init();
+  async ngOnInit() {
+    await this.googleNearby.init();
     this.verificationService
       .getVerificationCodes({ eventId: this.eventId })
       .subscribe(async ({ currentUser, getEvent }) => {
@@ -56,7 +56,7 @@ export class VerifyModalUserPage implements OnInit {
   }
 
   private removeSubscriptions = async () => {
-    this.googleNearby.clean();
+    this.googleNearby.clean(this.uuid);
     if (this.handler) {
       this.handler.remove();
     }
@@ -84,32 +84,39 @@ export class VerifyModalUserPage implements OnInit {
   };
 
   public startNearbyRead = async () => {
-    this.handler = await this.googleNearby.subscribe(this.messageRecieved);
+    await this.googleNearby.subscribe(this.messageRecieved);
   };
 
   private messageRecieved = async (data: { message: Message }) => {
-    const { content } = data.message;
+    const { content, type } = data.message;
+
+    if (type === 'INIT') {
+      return;
+    }
 
     if (content) {
       const messages = atob(content).split(':');
+      console.log(JSON.stringify(messages));
+
       const toast = await this.toastController.create({
         message: 'Verifiyng code from ' + messages[1],
         duration: 3000,
       });
+
       await toast.present();
-      if (!this.alreadyReadCodes.includes(messages[0])) {
-        this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe(
-          () => {
-            this.alreadyReadCodes.push(messages[0]);
-          },
-          async (e: ApolloError) => {
-            if (e.message.toLowerCase().includes('eventverificationid')) {
-              toast.dismiss();
-              this.presentAlreadyVerifiedToast();
-            }
-          }
-        );
-      }
+      // if (!this.alreadyReadCodes.includes(messages[0])) {
+      //   this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe(
+      //     () => {
+      //       this.alreadyReadCodes.push(messages[0]);
+      //     },
+      //     async (e: ApolloError) => {
+      //       if (e.message.toLowerCase().includes('eventverificationid')) {
+      //         toast.dismiss();
+      //         this.presentAlreadyVerifiedToast();
+      //       }
+      //     }
+      //   );
+      // }
     }
   };
 
@@ -126,17 +133,11 @@ export class VerifyModalUserPage implements OnInit {
   };
 
   public startNearbyBroadcast = async () => {
-    await this.googleNearby.publish(this.code + ':' + this.currentUserName);
+    this.uuid = await this.googleNearby.publish(this.code + ':' + this.currentUserName);
     const toast = await this.toastController.create({ message: 'Verifiyng', duration: 5000 });
     await toast.present();
     await this.modalController.dismiss({
       dismissed: true,
     });
-  };
-
-  private nearbyListener = (state: AppState) => {
-    if (state.isActive) {
-      this.startNearbyRead();
-    }
   };
 }

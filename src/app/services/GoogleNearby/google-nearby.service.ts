@@ -19,30 +19,41 @@ export class GoogleNearbyService {
     return GoogleNearbyMessages.addListener('onFound', callback);
   };
 
-  public init = () => {
-    GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
+  public init = async () => {
+    await GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
   };
 
-  /**
-   * unsubscribe
-   */
+  public initPermissions = async () => {
+    this.init();
+    if (this.platform.is('capacitor')) {
+      const messageObject: Message = {
+        content: btoa('init'),
+        type: 'INIT',
+      };
+      await GoogleNearbyMessages.publish({
+        message: messageObject,
+        options: { strategy: { ttlSeconds: 8 } },
+      });
+    }
+  };
+
+  // /**
+  //  * unsubscribe
+  //  */
   public clean = async (uuid?: UUID) => {
-    const { isSubscribing, isPublishing } = await GoogleNearbyMessages.status();
+    const { isSubscribing } = await GoogleNearbyMessages.status();
     if (isSubscribing) {
       await GoogleNearbyMessages.unsubscribe({});
     }
-    if (isPublishing && uuid) {
-      await GoogleNearbyMessages.unpublish({ uuid });
-    }
   };
 
-  public publish = async (message: string): Promise<void> => {
+  public publish = async (message: string): Promise<UUID | undefined> => {
     const messageObject: Message = {
-      content: btoa(message),
+      content: btoa(message + ':' + Math.random()),
       type: 'DEFAULT',
     };
     if (this.platform.is('capacitor')) {
-      await GoogleNearbyMessages.publish({ message: messageObject, options: { strategy: { ttlSeconds: 30 } } });
+      return await GoogleNearbyMessages.publish({ message: messageObject, options: { strategy: { ttlSeconds: 30 } } });
     }
   };
 }
