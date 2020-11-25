@@ -1,17 +1,18 @@
 <ion-card>
-    <ion-card-content>
-        <form (submit)="handleForm($event)">
-            <div *ngIf="cardErrors" style="color: red">
-                {{ cardErrors }}
-            </div>
-            <div #cardElement>
-                <!-- A Stripe Element will be inserted here. -->
-            </div>
+  <ion-card-content>
+    <form (submit)="handleForm($event)">
+      <div *ngIf="cardErrors" style="color: red">
+        {{ cardErrors }}
+      </div>
+      <div #cardElement>
+        <!-- A Stripe Element will be inserted here. -->
+      </div>
 
-            <ion-row class="ion-justify-content-center ion-margin">
-                <ion-button type="submit" [disabled]="!amount || disabled" class="ion-padding">{{ getButtonText() }}
-                </ion-button>
-            </ion-row>
-        </form>
-    </ion-card-content>
+      <ion-row class="ion-justify-content-center ion-margin">
+        <ion-button type="submit" [disabled]="!amount || disabled" class="ion-padding"
+          >{{ getButtonText() }}
+        </ion-button>
+      </ion-row>
+    </form>
+  </ion-card-content>
 </ion-card>

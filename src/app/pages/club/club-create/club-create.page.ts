@@ -83,8 +83,8 @@ export class ClubCreatePage implements OnInit {
           this.handleResponse(data.data!.createClub!.clubId);
         },
         (error: ApolloError) => {
-          if(error.message.includes('duplicate')) this.presentAlert(ErrorMessages.duplicateName)
-          else this.presentAlert("Something went wrong, try again later")
+          if (error.message.includes('duplicate')) this.presentAlert(ErrorMessages.duplicateName);
+          else this.presentAlert('Something went wrong, try again later');
         }
       );
   };
@@ -141,7 +141,7 @@ export class ClubCreatePage implements OnInit {
 enum ErrorMessages {
   duplicateLocation = "You can't input duplicate locations",
   noName = 'Location must have a name',
-  duplicateName = "Club name is already in use"
+  duplicateName = 'Club name is already in use',
 }
 
 type FormData = {

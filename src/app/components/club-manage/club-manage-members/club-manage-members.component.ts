@@ -17,8 +17,8 @@ import { MemberService } from 'src/app/services/GRAPHQL/member/member.service';
 export class ClubManageMembersComponent implements OnInit {
   members$: Observable<IMembersForClubQuery>;
   admin: IMembersForClubQuery_permissionsInClub | null | undefined;
-  members: IMembersForClubQuery["permissionsInClub"]=[]
-  filteredMembers: IMembersForClubQuery["permissionsInClub"]=[]
+  members: IMembersForClubQuery['permissionsInClub'] = [];
+  filteredMembers: IMembersForClubQuery['permissionsInClub'] = [];
   searchQuery: string;
 
   private clubId: string;
@@ -32,9 +32,12 @@ export class ClubManageMembersComponent implements OnInit {
 
   searchBarChange(event: string) {
     this.filteredMembers = this.members!.filter((permission) => {
-      if(permission!.userRole! == "Admin") { return false }
-      else { return permission!.user!.name!.toLocaleLowerCase().includes(event.toLocaleLowerCase())};
-    })
+      if (permission!.userRole! == 'Admin') {
+        return false;
+      } else {
+        return permission!.user!.name!.toLocaleLowerCase().includes(event.toLocaleLowerCase());
+      }
+    });
   }
 
   ngOnInit() {
@@ -53,11 +56,11 @@ export class ClubManageMembersComponent implements OnInit {
     this.members$ = this.memberService.getMembers(this.clubId);
     this.members$.subscribe((members) => {
       this.admin = members!.permissionsInClub!.find((member) => {
-        return member!.userRole == "Admin";
-      })
-      this.members = members.permissionsInClub
-      this.filteredMembers = members.permissionsInClub
-    })
+        return member!.userRole == 'Admin';
+      });
+      this.members = members.permissionsInClub;
+      this.filteredMembers = members.permissionsInClub;
+    });
   }
 
   async onRemoveMember(member: IMembersForClubQuery_permissionsInClub_user) {

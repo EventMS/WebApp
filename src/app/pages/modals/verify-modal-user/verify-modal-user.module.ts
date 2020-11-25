@@ -9,12 +9,7 @@ import { VerifyModalUserPageRoutingModule } from './verify-modal-user-routing.mo
 import { VerifyModalUserPage } from './verify-modal-user.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    VerifyModalUserPageRoutingModule
-  ],
-  declarations: [VerifyModalUserPage]
+  imports: [CommonModule, FormsModule, IonicModule, VerifyModalUserPageRoutingModule],
+  declarations: [VerifyModalUserPage],
 })
 export class VerifyModalUserPageModule {}

@@ -50,9 +50,18 @@
 
       <div class="example-sidenav-content">
         <!-- Erstat labels med komponenter, når vi har lavet dem -->
-        <app-club-manage-members *ngIf="sidebarContent==SidebarContent.members" class="member-content"></app-club-manage-members>
-        <app-club-manage-events class="event-content" *ngIf="sidebarContent==SidebarContent.events"></app-club-manage-events>
-        <app-club-manage-subcriptions class="sub-content" *ngIf="sidebarContent==SidebarContent.subscriptions"></app-club-manage-subcriptions>
+        <app-club-manage-members
+          *ngIf="sidebarContent==SidebarContent.members"
+          class="member-content"
+        ></app-club-manage-members>
+        <app-club-manage-events
+          class="event-content"
+          *ngIf="sidebarContent==SidebarContent.events"
+        ></app-club-manage-events>
+        <app-club-manage-subcriptions
+          class="sub-content"
+          *ngIf="sidebarContent==SidebarContent.subscriptions"
+        ></app-club-manage-subcriptions>
       </div>
     </ion-content>
   </mat-drawer-container>

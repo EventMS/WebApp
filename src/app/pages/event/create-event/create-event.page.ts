@@ -79,7 +79,7 @@ export class CreateEventPage implements OnInit {
   onCreationFailed(data: any) {
     this.loadingController.dismiss();
     this.presentAlert('Room is already booked for this timeslot');
-    this.websocketService.stopConnection()
+    this.websocketService.stopConnection();
   }
 
   onCreationSucceeded(data: any) {

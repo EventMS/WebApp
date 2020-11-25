@@ -32,7 +32,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   tappedTitle() {
-    this.router.navigate([Paths.dashboard])  
+    this.router.navigate([Paths.dashboard]);
   }
 
   tappedFindClubs() {

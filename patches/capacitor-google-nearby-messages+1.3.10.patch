@@ -1,3 +1,74 @@
+diff --git a/node_modules/capacitor-google-nearby-messages/CapacitorGoogleNearbyMessages.podspec b/node_modules/capacitor-google-nearby-messages/CapacitorGoogleNearbyMessages.podspec
+index 1aa6f1c..7f02e57 100644
+--- a/node_modules/capacitor-google-nearby-messages/CapacitorGoogleNearbyMessages.podspec
++++ b/node_modules/capacitor-google-nearby-messages/CapacitorGoogleNearbyMessages.podspec
+@@ -1,19 +1,15 @@
+-require 'json'
+ 
+-package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
+-
+-Pod::Spec.new do |s|
+-  s.name = 'CapacitorGoogleNearbyMessages'
+-  s.version = package['version']
+-  s.summary = package['description']
+-  s.license = package['license']
+-  s.homepage = package['repository']['url']
+-  s.author = package['author']
+-  s.source = { :git => package['repository']['url'], :tag => s.version.to_s }
+-  s.source_files = 'ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}'
+-  s.ios.deployment_target  = '11.0'
+-  s.static_framework = true
+-  s.dependency 'Capacitor'
+-  s.dependency 'NearbyMessages'
+-  s.swift_version = '5.1'
+-end
++  Pod::Spec.new do |s|
++    s.name = 'CapacitorGoogleNearbyMessages'
++    s.version = '1.3.10'
++    s.summary = 'Plugin to leverage the Google Nearby Messages API for communication with nearby devices.'
++    s.license = 'MIT'
++    s.homepage = 'https://github.com/trancee/capacitor-google-nearby-messages.git'
++    s.author = 'Philipp Grosswiler'
++    s.source = { :git => 'https://github.com/trancee/capacitor-google-nearby-messages.git', :tag => s.version.to_s }
++    s.source_files = 'ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}'
++    s.ios.deployment_target  = '11.0'
++    s.static_framework = true
++    s.dependency 'Capacitor'
++    s.dependency 'NearbyMessages'
++  end
+diff --git a/node_modules/capacitor-google-nearby-messages/android/build.gradle b/node_modules/capacitor-google-nearby-messages/android/build.gradle
+index 6bae06c..6ad4b84 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/build.gradle
++++ b/node_modules/capacitor-google-nearby-messages/android/build.gradle
+@@ -1,7 +1,7 @@
+ ext {
+-    junitVersion =  project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13.1'
+-    androidxJunitVersion =  project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.2'
+-    androidxEspressoCoreVersion =  project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.3.0'
++    junitVersion = project.hasProperty('junitVersion') ? rootProject.ext.junitVersion : '4.13'
++    androidxJunitVersion =  project.hasProperty('androidxJunitVersion') ? rootProject.ext.androidxJunitVersion : '1.1.1'
++    androidxEspressoCoreVersion =  project.hasProperty('androidxEspressoCoreVersion') ? rootProject.ext.androidxEspressoCoreVersion : '3.2.0'
+ 
+     googlePlayServicesNearbyVersion = project.hasProperty('googlePlayServicesNearbyVersion') ? rootProject.ext.googlePlayServicesNearbyVersion : '17.0.0'
+ }
+@@ -12,7 +12,7 @@ buildscript {
+         jcenter()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:4.1.1'
++        classpath 'com.android.tools.build:gradle:4.0.1'
+     }
+ }
+ 
+@@ -52,7 +52,7 @@ repositories {
+ dependencies {
+     implementation fileTree(dir: 'libs', include: ['*.jar'])
+     implementation project(':capacitor-android')
+-    implementation 'androidx.appcompat:appcompat:1.2.0'
++    implementation 'androidx.appcompat:appcompat:1.1.0'
+     testImplementation "junit:junit:$junitVersion"
+     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/.transforms/63d70f904b28ca7d22b5113950d6a380.bin b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/63d70f904b28ca7d22b5113950d6a380.bin
 new file mode 100644
 index 0000000..0d259dd
@@ -7,8 +78,18 @@ index 0000000..0d259dd
 +o/classes
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/.transforms/63d70f904b28ca7d22b5113950d6a380/classes/classes.dex b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/63d70f904b28ca7d22b5113950d6a380/classes/classes.dex
 new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba.bin b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba/classes/classes.dex b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba/classes/classes.dex
+new file mode 100644
 index 0000000..5428b74
-Binary files /dev/null and b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/63d70f904b28ca7d22b5113950d6a380/classes/classes.dex differ
+Binary files /dev/null and b/node_modules/capacitor-google-nearby-messages/android/build/.transforms/6bc055c9e354b9479b5e6f300a56c1ba/classes/classes.dex differ
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/generated/source/buildConfig/debug/com/getcapacitor/plugin/googlenearbymessages/BuildConfig.java b/node_modules/capacitor-google-nearby-messages/android/build/generated/source/buildConfig/debug/com/getcapacitor/plugin/googlenearbymessages/BuildConfig.java
 new file mode 100644
 index 0000000..4bbd164
@@ -3520,50 +3601,49 @@ index 0000000..d34d9b6
 +int xml standalone_badge_gravity_top_start 0x0
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/debug-mergeNativeLibs/merge-state b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/debug-mergeNativeLibs/merge-state
 new file mode 100644
-index 0000000..33a8d65
-Binary files /dev/null and b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/debug-mergeNativeLibs/merge-state differ
+index 0000000..e69de29
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..931a865
+index 0000000..da9be07
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/jniLibs"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/jniLibs"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..84b2e2e
+index 0000000..eff657b
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/shaders"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/shaders"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 new file mode 100644
-index 0000000..a31117b
+index 0000000..c584b67
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/assets"/><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/assets"/></dataSet></merger>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/assets"/><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/build/intermediates/shader_assets/debug/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/assets"/></dataSet></merger>
 \ No newline at end of file
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 new file mode 100644
-index 0000000..38a1bb5
+index 0000000..50aa34f
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
 @@ -0,0 +1 @@
-+#Thu Nov 19 08:49:57 CET 2020
++#Wed Nov 25 11:09:02 CET 2020
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..ca22653
+index 0000000..d77bb9b
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/incremental/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/res"/><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/rs/debug"/><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/res"/><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/rs/debug"/><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/res"/></dataSet><mergedItems/></merger>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/res"/><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/rs/debug"/><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/res"/><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/rs/debug"/><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/debug/res"/></dataSet><mergedItems/></merger>
 \ No newline at end of file
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/javac/debug/classes/com/getcapacitor/plugin/Constants.class b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/javac/debug/classes/com/getcapacitor/plugin/Constants.class
 new file mode 100644
@@ -3639,7 +3719,7 @@ index 0000000..78ac5b8
 +local
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 new file mode 100644
-index 0000000..816edb8
+index 0000000..abe7aa0
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/intermediates/manifest_merge_blame_file/debug/manifest-merger-blame-debug-report.txt
 @@ -0,0 +1,23 @@
@@ -3651,18 +3731,18 @@ index 0000000..816edb8
 +6
 +7    <uses-sdk
 +8        android:minSdkVersion="21"
-+8-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++8-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +9        android:targetSdkVersion="29" />
-+9-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++9-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +10
 +11    <application>
-+11-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:5:5-9:19
++11-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:5:5-9:19
 +12        <service
-+12-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:6:9-8:44
++12-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:6:9-8:44
 +13            android:name="com.getcapacitor.plugin.KillService"
-+13-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:7:13-63
++13-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:7:13-63
 +14            android:stopWithTask="false" />
-+14-->/home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:8:13-41
++14-->/Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:8:13-41
 +15    </application>
 +16
 +17</manifest>
@@ -6323,65 +6403,272 @@ index 0000000..da6dc55
 +xml standalone_badge_gravity_top_start
 diff --git a/node_modules/capacitor-google-nearby-messages/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/capacitor-google-nearby-messages/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
-index 0000000..ad00c33
+index 0000000..b65a13a
 --- /dev/null
 +++ b/node_modules/capacitor-google-nearby-messages/android/build/outputs/logs/manifest-merger-debug-report.txt
 @@ -0,0 +1,45 @@
 +-- Merging decision tree log ---
 +manifest
-+ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
 +	package
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:3:5-59
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:3:5-59
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +	android:versionName
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +	android:versionCode
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:1-11:12
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +	xmlns:android
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:11-69
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:2:11-69
 +application
-+ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:5:5-9:19
++ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:5:5-9:19
 +service#com.getcapacitor.plugin.KillService
-+ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:6:9-8:44
++ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:6:9-8:44
 +	android:stopWithTask
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:8:13-41
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:8:13-41
 +	android:name
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:7:13-63
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml:7:13-63
 +uses-sdk
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +	android:targetSdkVersion
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
 +	android:minSdkVersion
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		ADDED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
-+		INJECTED from /home/simon/source/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		ADDED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/simonwessmannbrok/Documents/GitHub/WebApp/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.jar b/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.jar
+index 5c2d1cf..13372ae 100644
+Binary files a/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.jar and b/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.jar differ
+diff --git a/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.properties b/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.properties
+index 851fb10..3e24cd7 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.properties
++++ b/node_modules/capacitor-google-nearby-messages/android/gradle/wrapper/gradle-wrapper.properties
+@@ -1,6 +1,6 @@
+-#Fri Nov 20 11:06:22 ICT 2020
++#Fri Aug 28 14:40:09 WIB 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.7.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.6.1-all.zip
+diff --git a/node_modules/capacitor-google-nearby-messages/android/src/androidTest/java/com/getcapacitor/android/ExampleInstrumentedTest.java b/node_modules/capacitor-google-nearby-messages/android/src/androidTest/java/com/getcapacitor/android/ExampleInstrumentedTest.java
+index 58020e1..64f8373 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/src/androidTest/java/com/getcapacitor/android/ExampleInstrumentedTest.java
++++ b/node_modules/capacitor-google-nearby-messages/android/src/androidTest/java/com/getcapacitor/android/ExampleInstrumentedTest.java
+@@ -1,13 +1,15 @@
+ package com.getcapacitor.android;
+ 
+-import static org.junit.Assert.*;
+-
+ import android.content.Context;
+-import androidx.test.ext.junit.runners.AndroidJUnit4;
++
+ import androidx.test.platform.app.InstrumentationRegistry;
++import androidx.test.ext.junit.runners.AndroidJUnit4;
++
+ import org.junit.Test;
+ import org.junit.runner.RunWith;
+ 
++import static org.junit.Assert.*;
++
+ /**
+  * Instrumented test, which will execute on an Android device.
+  *
+@@ -15,7 +17,6 @@ import org.junit.runner.RunWith;
+  */
+ @RunWith(AndroidJUnit4.class)
+ public class ExampleInstrumentedTest {
+-
+     @Test
+     public void useAppContext() throws Exception {
+         // Context of the app under test.
+diff --git a/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml b/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
+index b6613cf..59722a8 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
++++ b/node_modules/capacitor-google-nearby-messages/android/src/main/AndroidManifest.xml
+@@ -1,10 +1,11 @@
+-
+-  <manifest xmlns:android="http://schemas.android.com/apk/res/android"
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     package="com.getcapacitor.plugin.googlenearbymessages">
+ 
+     <application>
+-      <service
+-        android:name="com.getcapacitor.plugin.KillService"
+-        android:stopWithTask="false" />
++        <service
++            android:name="com.getcapacitor.plugin.KillService"
++            android:stopWithTask="false" />
+     </application>
+-  </manifest>
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/capacitor-google-nearby-messages/android/src/main/java/com/getcapacitor/plugin/GoogleNearbyMessages.java b/node_modules/capacitor-google-nearby-messages/android/src/main/java/com/getcapacitor/plugin/GoogleNearbyMessages.java
+index 034c02b..be07f2f 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/src/main/java/com/getcapacitor/plugin/GoogleNearbyMessages.java
++++ b/node_modules/capacitor-google-nearby-messages/android/src/main/java/com/getcapacitor/plugin/GoogleNearbyMessages.java
+@@ -4,7 +4,6 @@ import android.app.Activity;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
+-import android.os.Build;
+ import android.util.Base64;
+ import android.util.Log;
+ 
+@@ -34,10 +33,10 @@ import com.google.android.gms.nearby.messages.SubscribeCallback;
+ import com.google.android.gms.nearby.messages.SubscribeOptions;
+ import com.google.android.gms.tasks.Task;
+ 
++import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.UUID;
+-import java.util.concurrent.ConcurrentHashMap;
+ 
+ interface Constants {
+     int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+@@ -65,7 +64,7 @@ public class GoogleNearbyMessages extends Plugin {
+ 
+     private MessagesClient mMessagesClient;
+     private MessageListener mMessageListener;
+-    private Map<UUID, MessageOptions> mMessages = new ConcurrentHashMap<>();
++    private Map<UUID, MessageOptions> mMessages = new HashMap<>();
+ 
+     private StatusCallback mStatusCallback;
+ 
+@@ -112,17 +111,7 @@ public class GoogleNearbyMessages extends Plugin {
+     protected void handleOnStart() {
+ //        Log.i(getLogTag(), "Starting.");
+ 
+-        Intent intent = new Intent(getActivity(), KillService.class);
+-
+-        try {
+-            getActivity().startService(intent);
+-        } catch (IllegalStateException ex) {
+-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+-                getActivity().startForegroundService(intent);
+-            } else {
+-                getActivity().startService(intent);
+-            }
+-        }
++        getActivity().startService(new Intent(getActivity(), KillService.class));
+     }
+ 
+     @Override
+diff --git a/node_modules/capacitor-google-nearby-messages/android/src/test/java/com/getcapacitor/ExampleUnitTest.java b/node_modules/capacitor-google-nearby-messages/android/src/test/java/com/getcapacitor/ExampleUnitTest.java
+index a0fed0c..06806a7 100644
+--- a/node_modules/capacitor-google-nearby-messages/android/src/test/java/com/getcapacitor/ExampleUnitTest.java
++++ b/node_modules/capacitor-google-nearby-messages/android/src/test/java/com/getcapacitor/ExampleUnitTest.java
+@@ -1,16 +1,15 @@
+ package com.getcapacitor;
+ 
+-import static org.junit.Assert.*;
+-
+ import org.junit.Test;
+ 
++import static org.junit.Assert.*;
++
+ /**
+  * Example local unit test, which will execute on the development machine (host).
+  *
+  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+  */
+ public class ExampleUnitTest {
+-
+     @Test
+     public void addition_isCorrect() throws Exception {
+         assertEquals(4, 2 + 2);
 diff --git a/node_modules/capacitor-google-nearby-messages/dist/esm/definitions.d.ts b/node_modules/capacitor-google-nearby-messages/dist/esm/definitions.d.ts
-index ac9bb7e..a8fed8d 100644
+index ac9bb7e..be16fa4 100644
 --- a/node_modules/capacitor-google-nearby-messages/dist/esm/definitions.d.ts
 +++ b/node_modules/capacitor-google-nearby-messages/dist/esm/definitions.d.ts
-@@ -94,7 +94,7 @@ export interface GoogleNearbyMessagesPlugin {
+@@ -93,8 +93,8 @@ export interface GoogleNearbyMessagesPlugin {
+     addListener(eventName: 'onPermissionChanged', listenerFunc: (permissionGranted: boolean) => void): PluginListenerHandle;
      addListener(eventName: 'onBleSignalChanged', listenerFunc: (message: Message, bleSignal: BleSignal) => void): PluginListenerHandle;
      addListener(eventName: 'onDistanceChanged', listenerFunc: (message: Message, distance: Distance) => void): PluginListenerHandle;
-     addListener(eventName: 'onFound', listenerFunc: (message: Message) => void): PluginListenerHandle;
+-    addListener(eventName: 'onFound', listenerFunc: (message: Message) => void): PluginListenerHandle;
 -    addListener(eventName: 'onLost', listenerFunc: (message: Message) => void): PluginListenerHandle;
++    addListener(eventName: 'onFound', listenerFunc: (data: {message: Message}) => void): PluginListenerHandle;
 +    addListener(eventName: 'onLost', listenerFunc: (data: {message: Message}) => void): PluginListenerHandle;
      addListener(eventName: 'onPublishExpired', listenerFunc: (uuid: UUID) => void): PluginListenerHandle;
      addListener(eventName: 'onSubscribeExpired', listenerFunc: (uuid: UUID) => void): PluginListenerHandle;
  }
+diff --git a/node_modules/capacitor-google-nearby-messages/dist/esm/web.js b/node_modules/capacitor-google-nearby-messages/dist/esm/web.js
+index 2c6d617..490e8e1 100644
+--- a/node_modules/capacitor-google-nearby-messages/dist/esm/web.js
++++ b/node_modules/capacitor-google-nearby-messages/dist/esm/web.js
+@@ -12,7 +12,7 @@ export class GoogleNearbyMessagesWeb extends WebPlugin {
+     constructor() {
+         super({
+             name: 'GoogleNearbyMessages',
+-            platforms: ['web'],
++            platforms: ['web']
+         });
+     }
+     initialize(options) {
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSBeaconStrategy.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSBeaconStrategy.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSError.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSError.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessage.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessage.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessageManager.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessageManager.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessages.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSMessages.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSOperationStatus.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSOperationStatus.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSPermission.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSPermission.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSPublicationParams.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSPublicationParams.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSStrategy.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSStrategy.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSSubscriptionParams.h b/node_modules/capacitor-google-nearby-messages/ios/Plugin/GNSSubscriptionParams.h
+old mode 100644
+new mode 100755
+diff --git a/node_modules/capacitor-google-nearby-messages/ios/PluginTests/PluginTests.swift b/node_modules/capacitor-google-nearby-messages/ios/PluginTests/PluginTests.swift
+index 4e02599..00f036e 100644
+--- a/node_modules/capacitor-google-nearby-messages/ios/PluginTests/PluginTests.swift
++++ b/node_modules/capacitor-google-nearby-messages/ios/PluginTests/PluginTests.swift
+@@ -23,10 +23,10 @@ class PluginTests: XCTestCase {
+         
+         let call = CAPPluginCall(callbackId: "test", options: [
+             "value": value
+-        ], success: { (result, _) in
++        ], success: { (result, call) in
+             let resultValue = result!.data["value"] as? String
+             XCTAssertEqual(value, resultValue)
+-        }, error: { (_) in
++        }, error: { (err) in
+             XCTFail("Error shouldn't have been called")
+         })
+         

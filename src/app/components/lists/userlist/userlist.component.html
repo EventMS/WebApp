@@ -1,10 +1,10 @@
 <ion-card>
-    <ion-item-divider style="color: black;">Participants</ion-item-divider>
-    <ion-list *ngFor="let participant of (participants$ | async)?.getEvent?.participants">
-        <ion-item button>
-            <ion-label>
-                {{participant.user.name}}
-            </ion-label>
-        </ion-item>
-    </ion-list>
+  <ion-item-divider style="color: black">Participants</ion-item-divider>
+  <ion-list *ngFor="let participant of (participants$ | async)?.getEvent?.participants">
+    <ion-item button>
+      <ion-label>
+        {{ participant.user.name }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-card>

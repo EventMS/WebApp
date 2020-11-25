@@ -43,8 +43,8 @@ export class ClubManageSubcriptionsComponent implements OnInit {
     this.clubSubscriptions$ = this.subscriptionService.getSubscriptions(this.clubId);
     this.clubSubscriptions$.subscribe((data) => {
       this.clubSubscriptions = data;
-      
-      if(this.clubSubscriptions!.length > 0) {
+
+      if (this.clubSubscriptions!.length > 0) {
         this.form.get('subscriptionReference')!.setValidators(Validators.required);
       }
 

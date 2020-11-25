@@ -19,10 +19,9 @@ export class ClubManagePage implements OnInit {
   SidebarContent: typeof SideBarContent = SideBarContent;
   clubName: string;
 
-  items = ["members", "subscriptions", "events",]
+  items = ['members', 'subscriptions', 'events'];
 
-  constructor(private route: ActivatedRoute,
-     public platform: Platform) {
+  constructor(private route: ActivatedRoute, public platform: Platform) {
     this.route.params.subscribe((params) => {
       this.clubName = params['clubId'];
     });

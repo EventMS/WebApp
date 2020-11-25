@@ -6,8 +6,8 @@ import { VerifyModalUserPage } from './verify-modal-user.page';
 const routes: Routes = [
   {
     path: '',
-    component: VerifyModalUserPage
-  }
+    component: VerifyModalUserPage,
+  },
 ];
 
 @NgModule({

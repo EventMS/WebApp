@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface ICreateClubMutation_createClub {
-  __typename: "Club";
+  __typename: 'Club';
   clubId: string;
 }
 
@@ -30,7 +30,7 @@ export interface ICreateClubMutationVariables {
 // ====================================================
 
 export interface IGetClubsQuery_clubs {
-  __typename: "Club";
+  __typename: 'Club';
   clubId: string;
   accountNumber: string | null;
   address: string | null;
@@ -55,36 +55,36 @@ export interface IGetClubsQuery {
 // ====================================================
 
 export interface ICreateEventClubQuery_clubByID_rooms {
-  __typename: "Room";
+  __typename: 'Room';
   roomId: string;
   name: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_instructors_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   name: string | null;
   id: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_instructors {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   userId: string;
   user: ICreateEventClubQuery_clubByID_instructors_user | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_clubsubscription {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   clubSubscriptionId: string;
   name: string | null;
 }
 
 export interface ICreateEventClubQuery_clubByID_events_locations {
-  __typename: "RoomEvent";
+  __typename: 'RoomEvent';
   roomId: string;
 }
 
 export interface ICreateEventClubQuery_clubByID_events {
-  __typename: "Event";
+  __typename: 'Event';
   locations: (ICreateEventClubQuery_clubByID_events_locations | null)[] | null;
   name: string | null;
   startTime: any;
@@ -93,7 +93,7 @@ export interface ICreateEventClubQuery_clubByID_events {
 }
 
 export interface ICreateEventClubQuery_clubByID {
-  __typename: "Club";
+  __typename: 'Club';
   rooms: (ICreateEventClubQuery_clubByID_rooms | null)[] | null;
   instructors: (ICreateEventClubQuery_clubByID_instructors | null)[] | null;
   clubsubscription: (ICreateEventClubQuery_clubByID_clubsubscription | null)[] | null;
@@ -118,13 +118,13 @@ export interface ICreateEventClubQueryVariables {
 // ====================================================
 
 export interface IMyClubsListQuery_userRoles_club_clubsubscription {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   clubSubscriptionId: string;
   name: string | null;
 }
 
 export interface IMyClubsListQuery_userRoles_club {
-  __typename: "Club";
+  __typename: 'Club';
   name: string | null;
   clubId: string;
   description: string | null;
@@ -133,7 +133,7 @@ export interface IMyClubsListQuery_userRoles_club {
 }
 
 export interface IMyClubsListQuery_userRoles {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   userRole: string | null;
   clubId: string;
   clubSubscriptionId: string | null;
@@ -154,7 +154,7 @@ export interface IMyClubsListQuery {
 // ====================================================
 
 export interface IMyClubsQuery_myAdminClubs {
-  __typename: "Club";
+  __typename: 'Club';
   name: string | null;
   clubId: string;
 }
@@ -173,7 +173,7 @@ export interface IMyClubsQuery {
 // ====================================================
 
 export interface IShowClubQuery_clubByID_clubsubscription {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   name: string | null;
   price: number;
   clubSubscriptionId: string;
@@ -181,13 +181,13 @@ export interface IShowClubQuery_clubByID_clubsubscription {
 }
 
 export interface IShowClubQuery_clubByID_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   email: string | null;
 }
 
 export interface IShowClubQuery_clubByID {
-  __typename: "Club";
+  __typename: 'Club';
   address: string | null;
   accountNumber: string | null;
   adminId: string;
@@ -201,13 +201,13 @@ export interface IShowClubQuery_clubByID {
 }
 
 export interface IShowClubQuery_eventsForClub_eventPrices {
-  __typename: "EventPrice";
+  __typename: 'EventPrice';
   price: number;
   clubSubscriptionId: string;
 }
 
 export interface IShowClubQuery_eventsForClub {
-  __typename: "Event";
+  __typename: 'Event';
   description: string | null;
   eventId: string;
   name: string | null;
@@ -215,13 +215,13 @@ export interface IShowClubQuery_eventsForClub {
 }
 
 export interface IShowClubQuery_currentUser_permissions {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   clubSubscriptionId: string | null;
   clubId: string;
 }
 
 export interface IShowClubQuery_currentUser {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   name: string | null;
   permissions: (IShowClubQuery_currentUser_permissions | null)[] | null;
@@ -247,7 +247,7 @@ export interface IShowClubQueryVariables {
 // ====================================================
 
 export interface ICreateEventMutation_createEvent {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   name: string | null;
 }
@@ -270,7 +270,7 @@ export interface ICreateEventMutationVariables {
 // ====================================================
 
 export interface IFreeSignUpMutation_signUpForFreeEvent {
-  __typename: "payment_Event";
+  __typename: 'payment_Event';
   eventId: string;
 }
 
@@ -292,7 +292,7 @@ export interface IFreeSignUpMutationVariables {
 // ====================================================
 
 export interface ISignUpForEventMutationService_signUpForEvent {
-  __typename: "PaymentIntentResponse";
+  __typename: 'PaymentIntentResponse';
   price: number;
   clientSecret: string | null;
 }
@@ -315,18 +315,18 @@ export interface ISignUpForEventMutationServiceVariables {
 // ====================================================
 
 export interface IEventListQuery_futureEvents_eventPrices {
-  __typename: "EventPrice";
+  __typename: 'EventPrice';
   price: number;
   clubSubscriptionId: string;
 }
 
 export interface IEventListQuery_futureEvents_club {
-  __typename: "Club";
+  __typename: 'Club';
   name: string | null;
 }
 
 export interface IEventListQuery_futureEvents {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   name: string | null;
   description: string | null;
@@ -350,19 +350,19 @@ export interface IEventListQuery {
 // ====================================================
 
 export interface IEventPageInfoQuery_currentUser_events {
-  __typename: "EventVerification";
+  __typename: 'EventVerification';
   eventId: string;
   status: PresenceStatusEnum;
 }
 
 export interface IEventPageInfoQuery_currentUser {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   events: (IEventPageInfoQuery_currentUser_events | null)[] | null;
 }
 
 export interface IEventPageInfoQuery_clubByID_clubsubscription {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   name: string | null;
   price: number;
   clubSubscriptionId: string;
@@ -370,7 +370,7 @@ export interface IEventPageInfoQuery_clubByID_clubsubscription {
 }
 
 export interface IEventPageInfoQuery_clubByID {
-  __typename: "Club";
+  __typename: 'Club';
   clubId: string;
   name: string | null;
   address: string | null;
@@ -396,29 +396,29 @@ export interface IEventPageInfoQueryVariables {
 // ====================================================
 
 export interface IEventPageQuery_getEvent_locations_room {
-  __typename: "Room";
+  __typename: 'Room';
   name: string | null;
   roomId: string;
 }
 
 export interface IEventPageQuery_getEvent_locations {
-  __typename: "RoomEvent";
+  __typename: 'RoomEvent';
   room: IEventPageQuery_getEvent_locations_room;
 }
 
 export interface IEventPageQuery_getEvent_instructorForEvents_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   name: string | null;
 }
 
 export interface IEventPageQuery_getEvent_instructorForEvents {
-  __typename: "InstructorForEvent";
+  __typename: 'InstructorForEvent';
   user: IEventPageQuery_getEvent_instructorForEvents_user | null;
 }
 
 export interface IEventPageQuery_getEvent {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   clubId: string;
   name: string | null;
@@ -449,18 +449,18 @@ export interface IEventPageQueryVariables {
 // ====================================================
 
 export interface IEventUserListQuery_getEvent_participants_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   name: string | null;
   id: string | null;
 }
 
 export interface IEventUserListQuery_getEvent_participants {
-  __typename: "EventVerification";
+  __typename: 'EventVerification';
   user: IEventUserListQuery_getEvent_participants_user | null;
 }
 
 export interface IEventUserListQuery_getEvent {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   participants: (IEventUserListQuery_getEvent_participants | null)[] | null;
 }
@@ -483,21 +483,21 @@ export interface IEventUserListQueryVariables {
 // ====================================================
 
 export interface IMyEventsQuery_myEventParticipations_event {
-  __typename: "Event";
+  __typename: 'Event';
   name: string | null;
   startTime: any;
   endTime: any;
 }
 
 export interface IMyEventsQuery_myEventParticipations {
-  __typename: "EventParticipant";
+  __typename: 'EventParticipant';
   eventParticipantId: string;
   eventId: string;
   event: IMyEventsQuery_myEventParticipations_event | null;
 }
 
 export interface IMyEventsQuery_myInstructorEvents {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   name: string | null;
   startTime: any;
@@ -519,7 +519,7 @@ export interface IMyEventsQuery {
 // ====================================================
 
 export interface IAddInstructorMutation_addInstructor {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   userId: string;
 }
 
@@ -542,7 +542,7 @@ export interface IAddInstructorMutationVariables {
 // ====================================================
 
 export interface IRemoveInstructorMutation_removeInstructor {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   userId: string;
 }
 
@@ -565,13 +565,13 @@ export interface IRemoveInstructorMutationVariables {
 // ====================================================
 
 export interface IMembersForClubQuery_permissionsInClub_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   name: string | null;
   id: string | null;
 }
 
 export interface IMembersForClubQuery_permissionsInClub {
-  __typename: "permission_Role";
+  __typename: 'permission_Role';
   user: IMembersForClubQuery_permissionsInClub_user | null;
   userRole: string | null;
 }
@@ -594,7 +594,7 @@ export interface IMembersForClubQueryVariables {
 // ====================================================
 
 export interface ICreateSubscriptionMutation_createClubSubscription {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   price: number;
   name: string | null;
 }
@@ -617,7 +617,7 @@ export interface ICreateSubscriptionMutationVariables {
 // ====================================================
 
 export interface ICreateClubMemberMutation_createClubMember {
-  __typename: "ClubMember";
+  __typename: 'ClubMember';
   clubId: string;
   clubSubscriptionId: string;
 }
@@ -640,7 +640,7 @@ export interface ICreateClubMemberMutationVariables {
 // ====================================================
 
 export interface ISignUpForSubscriptionMutation_signUpForSubscription {
-  __typename: "payment_ClubSubscription";
+  __typename: 'payment_ClubSubscription';
   clubSubscriptionId: string;
 }
 
@@ -662,7 +662,7 @@ export interface ISignUpForSubscriptionMutationVariables {
 // ====================================================
 
 export interface ISubscriptionsForClubQuery_subscriptionsForClub {
-  __typename: "ClubSubscription";
+  __typename: 'ClubSubscription';
   name: string | null;
   price: number;
   clubSubscriptionId: string;
@@ -686,14 +686,14 @@ export interface ISubscriptionsForClubQueryVariables {
 // ====================================================
 
 export interface ICreateUserMutation_createUser_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   email: string | null;
   id: string | null;
   name: string | null;
 }
 
 export interface ICreateUserMutation_createUser {
-  __typename: "identity_Response";
+  __typename: 'identity_Response';
   token: string | null;
   user: ICreateUserMutation_createUser_user | null;
 }
@@ -716,14 +716,14 @@ export interface ICreateUserMutationVariables {
 // ====================================================
 
 export interface ILoginUserMutation_loginUser_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   email: string | null;
   id: string | null;
   name: string | null;
 }
 
 export interface ILoginUserMutation_loginUser {
-  __typename: "identity_Response";
+  __typename: 'identity_Response';
   token: string | null;
   user: ILoginUserMutation_loginUser_user | null;
 }
@@ -746,7 +746,7 @@ export interface ILoginUserMutationVariables {
 // ====================================================
 
 export interface IVerifyCodeMutation_verifyCode {
-  __typename: "EventVerification";
+  __typename: 'EventVerification';
   status: PresenceStatusEnum;
   userId: string;
 }
@@ -769,32 +769,32 @@ export interface IVerifyCodeMutationVariables {
 // ====================================================
 
 export interface IVerifyCodeQuery_currentUser_events {
-  __typename: "EventVerification";
+  __typename: 'EventVerification';
   code: string | null;
   eventId: string;
 }
 
 export interface IVerifyCodeQuery_currentUser {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   name: string | null;
   events: (IVerifyCodeQuery_currentUser_events | null)[] | null;
 }
 
 export interface IVerifyCodeQuery_getEvent_participants_user {
-  __typename: "identity_ApplicationUser";
+  __typename: 'identity_ApplicationUser';
   id: string | null;
   name: string | null;
 }
 
 export interface IVerifyCodeQuery_getEvent_participants {
-  __typename: "EventVerification";
+  __typename: 'EventVerification';
   user: IVerifyCodeQuery_getEvent_participants_user | null;
   status: PresenceStatusEnum;
 }
 
 export interface IVerifyCodeQuery_getEvent {
-  __typename: "Event";
+  __typename: 'Event';
   eventId: string;
   participants: (IVerifyCodeQuery_getEvent_participants | null)[] | null;
 }
@@ -818,9 +818,9 @@ export interface IVerifyCodeQueryVariables {
 //==============================================================
 
 export enum PresenceStatusEnum {
-  ATTEND = "ATTEND",
-  DIDNOTATTEND = "DIDNOTATTEND",
-  SIGNEDUP = "SIGNEDUP",
+  ATTEND = 'ATTEND',
+  DIDNOTATTEND = 'DIDNOTATTEND',
+  SIGNEDUP = 'SIGNEDUP',
 }
 
 export interface CreateClubMemberRequestInput {

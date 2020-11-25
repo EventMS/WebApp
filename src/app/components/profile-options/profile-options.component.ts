@@ -14,7 +14,7 @@ import { IMyClubsQuery } from 'src/graphql_interfaces';
   styleUrls: ['./profile-options.component.scss'],
 })
 export class ProfileOptionsComponent implements OnInit {
-  clubs$: Observable<IMyClubsQuery["myAdminClubs"]>;
+  clubs$: Observable<IMyClubsQuery['myAdminClubs']>;
 
   constructor(
     private router: Router,
@@ -44,9 +44,6 @@ export class ProfileOptionsComponent implements OnInit {
   }
 
   private getClubs() {
-    this.clubs$ = this.clubQueryService
-    .watch({})
-    .valueChanges
-    .pipe(map(({ data }) => data.myAdminClubs));
+    this.clubs$ = this.clubQueryService.watch({}).valueChanges.pipe(map(({ data }) => data.myAdminClubs));
   }
 }

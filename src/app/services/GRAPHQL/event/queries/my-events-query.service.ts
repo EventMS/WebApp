@@ -3,21 +3,21 @@ import { gql, Query } from 'apollo-angular';
 import { IMyEventsQuery } from 'src/graphql_interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MyEventsQueryService extends Query<IMyEventsQuery> {
   document = gql`
     query IMyEventsQuery {
-      myEventParticipations{
+      myEventParticipations {
         eventParticipantId
         eventId
-        event{
+        event {
           name
           startTime
           endTime
         }
       }
-      myInstructorEvents{
+      myInstructorEvents {
         eventId
         name
         startTime

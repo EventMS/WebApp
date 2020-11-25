@@ -20,57 +20,63 @@
       </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col class="center">
-          <ion-list>
-            <ion-list-header>
-              <ion-label class="list-titles">Club members</ion-label>
-            </ion-list-header>
-            <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="searchBarChange($event)" inputmode="text" animated placeholder="Search"></ion-searchbar>
-            <div *ngFor="let item of filteredMembers">
-              <ion-card *ngIf="!isUserAdmin(item)">
-                <ion-avatar>
-                  <img
-                    src="https://www.iconfinder.com/data/icons/mixed-communication-and-ui-pack-1/48/general_pack_NEW_glyph_profile-512.png"
-                  />
-                </ion-avatar>
-                <ion-grid>
-                  <ion-row>
-                    <ion-col>
-                      <ion-card-header>
-                        <ion-card-title>{{ item.user.name }}</ion-card-title>
-                      </ion-card-header>
-                    </ion-col>
-                    <ion-col>
-                      <ion-card-header>
-                        <ion-card-title *ngIf="isUserMember(item)">Member</ion-card-title>
-                        <ion-card-title *ngIf="isUserInstructor(item)">Instructor</ion-card-title>
-                      </ion-card-header>
-                    </ion-col>
-                    <ion-col>
-                      <ion-card-content>
-                        <ion-toolbar>
-                          <ion-buttons>
-                            <ion-button (click)="onPromoteInstructor(item.user)" *ngIf="isUserMember(item)">
-                              <ion-label style="color:white;">Instructor</ion-label>
-                              <ion-icon name="arrow-up-outline"></ion-icon>
-                            </ion-button>
-                            <ion-button (click)="onDemoteInstructor(item.user)" *ngIf="isUserInstructor(item)">
-                              <ion-label style="color:white;">Member</ion-label>
-                              <ion-icon name="arrow-down-outline"></ion-icon>
-                            </ion-button>
-                            <ion-button (click)="onRemoveMember(item.user)" *ngIf="!isUserAdmin(item)">
-                              <ion-icon name="trash-outline"></ion-icon>
-                            </ion-button>
-                          </ion-buttons>
-                        </ion-toolbar>
-                      </ion-card-content>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </ion-card>
-            </div>
-          </ion-list>
-        </ion-col>
-      </ion-row>
+      <ion-col class="center">
+        <ion-list>
+          <ion-list-header>
+            <ion-label class="list-titles">Club members</ion-label>
+          </ion-list-header>
+          <ion-searchbar
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="searchBarChange($event)"
+            inputmode="text"
+            animated
+            placeholder="Search"
+          ></ion-searchbar>
+          <div *ngFor="let item of filteredMembers">
+            <ion-card *ngIf="!isUserAdmin(item)">
+              <ion-avatar>
+                <img
+                  src="https://www.iconfinder.com/data/icons/mixed-communication-and-ui-pack-1/48/general_pack_NEW_glyph_profile-512.png"
+                />
+              </ion-avatar>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-card-header>
+                      <ion-card-title>{{ item.user.name }}</ion-card-title>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card-header>
+                      <ion-card-title *ngIf="isUserMember(item)">Member</ion-card-title>
+                      <ion-card-title *ngIf="isUserInstructor(item)">Instructor</ion-card-title>
+                    </ion-card-header>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card-content>
+                      <ion-toolbar>
+                        <ion-buttons>
+                          <ion-button (click)="onPromoteInstructor(item.user)" *ngIf="isUserMember(item)">
+                            <ion-label style="color: white">Instructor</ion-label>
+                            <ion-icon name="arrow-up-outline"></ion-icon>
+                          </ion-button>
+                          <ion-button (click)="onDemoteInstructor(item.user)" *ngIf="isUserInstructor(item)">
+                            <ion-label style="color: white">Member</ion-label>
+                            <ion-icon name="arrow-down-outline"></ion-icon>
+                          </ion-button>
+                          <ion-button (click)="onRemoveMember(item.user)" *ngIf="!isUserAdmin(item)">
+                            <ion-icon name="trash-outline"></ion-icon>
+                          </ion-button>
+                        </ion-buttons>
+                      </ion-toolbar>
+                    </ion-card-content>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </div>
