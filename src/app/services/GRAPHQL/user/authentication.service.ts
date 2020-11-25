@@ -15,7 +15,7 @@ import { Apollo } from 'apollo-angular';
 import { Paths } from 'src/app/navigation/routes';
 import { CreateUserMutationService } from './mutations/createUserMutation.service';
 
-const current_user = 'current_user';
+const currentUser = 'current_user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -27,7 +27,7 @@ export class AuthenticationService {
     private apollo: Apollo,
     private createUserMutationService: CreateUserMutationService
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(current_user)!));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(currentUser)!));
   }
 
   public get currentUserValue(): User | null {
@@ -36,12 +36,12 @@ export class AuthenticationService {
 
   createUser(request: CreateUserRequestInput) {
     return this.createUserMutationService.mutate({
-      request: request,
+      request,
     });
   }
 
   loginFromSignup(user: ICreateUserMutation['createUser']) {
-    localStorage.setItem(current_user, JSON.stringify(user!));
+    localStorage.setItem(currentUser, JSON.stringify(user!));
     this.currentUserSubject.next(user);
     this.apollo.client.clearStore();
     this.router.navigateByUrl('', { replaceUrl: true });
@@ -52,14 +52,17 @@ export class AuthenticationService {
       this.loginMutationService.mutate({ request: { email: data.email, password: data.password } }).subscribe(
         ({ data }) => {
           const { loginUser } = data!;
-          localStorage.setItem(current_user, JSON.stringify(loginUser));
+          localStorage.setItem(currentUser, JSON.stringify(loginUser));
           this.currentUserSubject.next(loginUser);
           this.apollo.client.clearStore();
           this.router.navigateByUrl('', { replaceUrl: true });
         },
         (error: ApolloError) => {
-          if (error.message.includes('credentials')) alert('Wrong username or password');
-          else alert('something went wrong, please try again later');
+          if (error.message.includes('credentials')) {
+            alert('Wrong username or password');
+          } else {
+            alert(error.message);
+          }
         }
       );
     }
@@ -67,7 +70,7 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem(current_user);
+    localStorage.removeItem(currentUser);
     this.currentUserSubject.next(null);
     this.apollo.client.clearStore();
     this.router.navigate([Paths.start]);
@@ -78,12 +81,14 @@ export class AuthenticationService {
   }
 
   private getExpiration() {
-    const token = localStorage.getItem(current_user);
+    const token = localStorage.getItem(currentUser);
 
     if (token) {
       const decodedToken: { email: string; id: string; nbf: number; exp: number; iat: number } = jwt_decode(token);
       return dayjs.unix(decodedToken.exp);
-    } else return dayjs().add(-1, 'day');
+    } else {
+      return dayjs().add(-1, 'day');
+    }
   }
 }
 

@@ -2,12 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-//const url = 'http://649b504b03ce.ngrok.io';
-//const url =  'http://34.120.17.251/api/';
-const url = 'http://localhost:5102/';
+const url = 'http://cfcd7fcb331a.ngrok.io/';
+// const url = 'http://34.120.17.251/api/';
+// const url = 'http://localhost:5102/';
 
-const websocket = 'http://localhost:5113/';
-//const websocket = 'http://34.120.17.251/api/websocket/';
+// const websocket = 'http://localhost:5112/';
+const websocket = 'http://34.120.17.251/api/websocket/';
 
 export const environment: { apiUrl: string; production: boolean; websocketUrl: string } = {
   apiUrl: url,
