@@ -13,10 +13,10 @@ export class GoogleNearbyService {
 
   public subscribe = async (callback: (data: { message: Message }) => {}) => {
     if (this.platform.is('capacitor')) {
+      GoogleNearbyMessages.addListener('onFound', callback);
+
       await GoogleNearbyMessages.subscribe({});
     }
-    // @ts-ignore
-    return GoogleNearbyMessages.addListener('onFound', callback);
   };
 
   public init = async () => {
@@ -24,7 +24,6 @@ export class GoogleNearbyService {
   };
 
   public initPermissions = async () => {
-    this.init();
     if (this.platform.is('capacitor')) {
       const messageObject: Message = {
         content: btoa('init'),
@@ -48,12 +47,17 @@ export class GoogleNearbyService {
   };
 
   public publish = async (message: string): Promise<UUID | undefined> => {
-    const messageObject: Message = {
-      content: btoa(message + ':' + Math.random()),
-      type: 'DEFAULT',
-    };
-    if (this.platform.is('capacitor')) {
-      return await GoogleNearbyMessages.publish({ message: messageObject, options: { strategy: { ttlSeconds: 30 } } });
+    if (message) {
+      const messageObject: Message = {
+        content: btoa(message + ':' + (Math.random() * 1000 + 1)),
+        type: 'DEFAULT',
+      };
+      if (this.platform.is('capacitor') && messageObject.content !== undefined) {
+        return await GoogleNearbyMessages.publish({
+          message: messageObject,
+          options: { strategy: { ttlSeconds: 30 } },
+        });
+      }
     }
   };
 }

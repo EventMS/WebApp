@@ -25,6 +25,7 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      await this.googleNearby.init();
       if ((await Permissions.query({ name: PermissionType.Microphone })).state === 'prompt') {
         await this.googleNearby.initPermissions();
       }
