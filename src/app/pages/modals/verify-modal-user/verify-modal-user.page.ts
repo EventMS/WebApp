@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApolloError } from '@apollo/client/core';
 import { ModalController, Platform, ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
-import { IVerifyCodeQuery_getEvent } from 'src/graphql_interfaces';
-
+import { IVerifyCodeQuery_getEvent, PresenceStatusEnum } from 'src/graphql_interfaces';
+import { Message, UUID } from 'capacitor-google-nearby-messages';
+import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 @Component({
   selector: 'app-verify-modal-user',
   templateUrl: './verify-modal-user.page.html',
@@ -20,34 +20,45 @@ export class VerifyModalUserPage implements OnInit {
   public cordovaAvailable: boolean;
   public searchQuery: string;
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
-
-  private currentUserName: string;
-  private subscription: Subscription | undefined;
+  private uuid: UUID | undefined;
 
   constructor(
     private modalController: ModalController,
     private platform: Platform,
     private verificationService: VerificationService,
     private googleNearby: GoogleNearbyService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private authService: AuthenticationService
   ) {
     this.cordovaAvailable = this.platform.is('cordova');
   }
 
-  ngOnInit() {
-    this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(({ currentUser, getEvent }) => {
-      if (getEvent && currentUser) {
-        this.participants = this.filteredParicipants = getEvent.participants;
-        this.currentUserName = currentUser.name!;
-        if (!this.isInstructor)
-          this.code =
-            currentUser.events?.find((data) => data?.eventId == this.eventId)?.code ??
-            'code not generated yet, try again later';
-        else {
-          this.startNearbyRead();
+  async ngOnInit() {
+    if (this.isInstructor) {
+      await this.removeSubscriptions();
+      await this.startNearbyRead();
+    }
+
+    this.verificationService
+      .getVerificationCodes({ eventId: this.eventId })
+      .subscribe(async ({ currentUser, getEvent }) => {
+        if (getEvent && currentUser) {
+          this.participants = this.filteredParicipants = getEvent.participants;
+          if (!this.isInstructor) {
+            this.code =
+              currentUser.events?.find((data) => data?.eventId === this.eventId)?.code ??
+              'code not generated yet, try again later';
+          }
         }
-      }
-    });
+      });
+  }
+
+  private removeSubscriptions = async () => {
+    this.googleNearby.clean(this.uuid);
+  };
+
+  async ionViewWillLeave() {
+    await this.removeSubscriptions();
   }
 
   public didSearch(query: string) {
@@ -67,22 +78,46 @@ export class VerifyModalUserPage implements OnInit {
     );
   };
 
-  public startNearbyRead = () => {
-    if (this.subscription) this.subscription.unsubscribe();
-    this.subscription = this.googleNearby.read()?.subscribe(async (message: string) => {
-      const messages = message.split(':');
+  public startNearbyRead = async () => {
+    await this.googleNearby.subscribe(this.messageRecieved);
+  };
+
+  private messageRecieved = async (data: { message: Message }) => {
+    const { content, type } = data.message;
+
+    if (type === 'INIT') {
+      return;
+    }
+
+    if (content && type === 'DEFAULT') {
+      const messages = atob(content).split(':');
+
+      if (this.participants?.find((part) => part?.user?.name === messages[1])?.status === PresenceStatusEnum.ATTEND) {
+        return;
+      }
 
       const toast = await this.toastController.create({
         message: 'Verifiyng code from ' + messages[1],
         duration: 3000,
       });
+
       await toast.present();
-      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe();
+
+      this.verificationService.verifyCode({ request: { eventId: this.eventId, code: messages[0].trim() } }).subscribe(
+        () => {},
+        async (e: ApolloError) => {}
+      );
+    }
+  };
+
+  public dismissModal = async () => {
+    await this.modalController?.dismiss({
+      dismissed: true,
     });
   };
 
   public startNearbyBroadcast = async () => {
-    this.googleNearby.broadcast(this.code + ':' + this.currentUserName);
+    this.uuid = await this.googleNearby.publish(this.code + ':' + this.authService.currentUserValue?.user?.name);
     const toast = await this.toastController.create({ message: 'Verifiyng', duration: 5000 });
     await toast.present();
     await this.modalController.dismiss({

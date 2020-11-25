@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonRouterOutlet, isPlatform, ModalController } from '@ionic/angular';
-import dayjs from 'dayjs';
+import { PermissionType, Plugins } from '@capacitor/core';
+import { isPlatform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Paths } from 'src/app/navigation/routes';
+import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import {
   IEventPageInfoQuery,
@@ -12,8 +13,12 @@ import {
   IEventPageQuery_getEvent,
   PresenceStatusEnum,
 } from 'src/graphql_interfaces';
+import waait from 'waait';
 import { EventPaymentModalPage } from '../../modals/event-payment-modal/event-payment-modal.page';
 import { VerifyModalUserPage } from '../../modals/verify-modal-user/verify-modal-user.page';
+
+const { Permissions } = Plugins;
+
 @Component({
   selector: 'app-event-page',
   templateUrl: './event-page.page.html',
@@ -26,7 +31,7 @@ export class EventPagePage implements OnInit {
   public color = 'black';
   public eventName: string;
   public disabled: boolean;
-  public alreadySignedUp: boolean = false;
+  public alreadySignedUp = false;
   public isMobile = isPlatform('mobile');
   public alreadyVerified: boolean;
   public isInstructorForEvent: boolean;
@@ -39,15 +44,15 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private routerOutlet: IonRouterOutlet,
-    private router: Router
+    private router: Router,
+    private googleNearby: GoogleNearbyService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.initData();
   }
 
-  public onButtonClick = async () => {
+  public onButtonClick = async (): Promise<void> => {
     if (this.price === '0 $') {
       this.eventService.signUpForFreeEvent(this.eventId).subscribe(() => (this.alreadySignedUp = true));
       return;
@@ -68,15 +73,15 @@ export class EventPagePage implements OnInit {
     return await modal.present();
   };
 
-  private initData = () => {
-    this.activatedRoute.params.subscribe((params) => {
-      const eventId = params['eventId'] as string;
+  private initData = (): void => {
+    this.activatedRoute.params.subscribe((params): void => {
+      const eventId = params.eventId as string;
       if (eventId) {
         this.event$ = this.eventService.getEventDetails(eventId);
         this.event$.subscribe(({ getEvent }) => {
           if (getEvent) {
             this.setEventValues(getEvent);
-            this.clubInfo$.subscribe(({ currentUser }) => {
+            this.clubInfo$.subscribe(({ currentUser }): void => {
               this.isInstructorForEvent = Boolean(
                 getEvent.instructorForEvents?.find((ins) => ins?.user?.id === currentUser?.id)?.user?.id
               );
@@ -89,64 +94,74 @@ export class EventPagePage implements OnInit {
     });
   };
 
-  getButtonText = () => {
-    if (dayjs(this.startTime).isBefore(dayjs())) return buttonText.PASSED;
-    else if (this.price === buttonText.PRIVATE_EVENT) return buttonText.PRIVATE_EVENT;
-    else if (this.isInstructorForEvent) return buttonText.INSTRUCTOR;
-    else if (this.alreadySignedUp) return buttonText.SIGNED_UP;
-    else return buttonText.CAN_SIGN_UP;
+  getButtonText = (): string => {
+    if (this.startTime < Date.now()) {
+      return buttonText.PASSED;
+    } else if (this.price === buttonText.PRIVATE_EVENT) {
+      return buttonText.PRIVATE_EVENT;
+    } else if (this.isInstructorForEvent) {
+      return buttonText.INSTRUCTOR;
+    } else if (this.alreadySignedUp) {
+      return buttonText.SIGNED_UP;
+    } else {
+      return buttonText.CAN_SIGN_UP;
+    }
   };
 
-  public modalCallback = (succes: boolean) => {
+  public modalCallback = (succes: boolean): void => {
     if (succes) {
       this.alreadySignedUp = true;
     }
   };
 
-  public onVerifyClicked = async () => {
-    const modal = await this.modalController.create({
-      component: VerifyModalUserPage,
-      componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
-    });
-
-    await modal.present();
-
-    const { data } = await modal.onDidDismiss();
-    if (data?.dismissed === true) {
-      this.eventService.getEventPageInfo(this.clubId);
-    }
-  };
-
-  public handleAlreadySignedUp = (event: IEventPageInfoQuery_currentUser_events | null) => {
+  public handleAlreadySignedUp = (event: IEventPageInfoQuery_currentUser_events | null): void => {
     if (event || this.isInstructorForEvent) {
       this.alreadySignedUp = true;
     }
-    if (event?.status === PresenceStatusEnum.ATTEND) this.alreadyVerified = true;
+    if (event?.status === PresenceStatusEnum.ATTEND) {
+      this.alreadyVerified = true;
+    }
   };
 
-  private setEventValues = (getEvent: IEventPageQuery_getEvent) => {
+  private setEventValues = (getEvent: IEventPageQuery_getEvent): void => {
     this.clubInfo$ = this.eventService.getEventPageInfo(getEvent.clubId);
     this.handlePriceForEvent(getEvent);
     this.eventName = getEvent.name!;
     this.eventId = getEvent.eventId!;
     this.clubId = getEvent.clubId!;
     this.startTime = getEvent.startTime;
-    if (dayjs(this.startTime).isBefore(dayjs())) this.disabled = true;
+    if (this.startTime < Date.now()) {
+      this.disabled = true;
+    }
   };
 
-  private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent) => {
-    const { userPrice: price } = getEvent;
+  private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent): void => {
+    const { userPrice, publicPrice } = getEvent;
 
-    if (price !== getEvent?.publicPrice) {
-      this.price = price + ' $';
+    if (userPrice !== publicPrice) {
+      this.price = userPrice + ' $';
       this.color = 'green';
-    } else if (getEvent.publicPrice) {
+    } else if (publicPrice) {
       this.color = 'black';
-      this.price = getEvent.publicPrice + ' $';
+      this.price = publicPrice + ' $';
+    } else if (!userPrice && !publicPrice) {
+      this.price = '0 $';
+      this.color = 'green';
     } else {
       this.price = buttonText.PRIVATE_EVENT;
+    }
+  };
+
+  public onVerifyClicked = async (): Promise<void> => {
+    const modal = await this.modalController.create({
+      component: VerifyModalUserPage,
+      componentProps: { eventId: this.eventId, isInstructor: this.isInstructorForEvent },
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.dismissed === true) {
+      this.eventService.getEventPageInfo(this.clubId);
     }
   };
 }

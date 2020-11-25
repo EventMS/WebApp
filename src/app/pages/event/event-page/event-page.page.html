@@ -96,7 +96,7 @@
             <ion-card-header>
                 <ion-card-title> {{event.name}} </ion-card-title>
                 <ion-card-subtitle> From {{event.startTime | date:'short'}} To {{event.endTime | date:'short'}} </ion-card-subtitle>
-                <ion-card-subtitle> {{price}} $ </ion-card-subtitle>
+                <ion-card-subtitle> {{price}} </ion-card-subtitle>
                 <ion-card-subtitle> Club: {{clubInfo.name}} </ion-card-subtitle>
                 <ion-card-subtitle *ngFor="let instructor of event.instructorForEvents ">
                     {{instructor.user.name}}
