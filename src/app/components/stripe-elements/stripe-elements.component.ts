@@ -3,7 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
 import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
-import { WebsocketService } from 'src/app/services/signal-rservice.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 declare var Stripe: stripe.StripeStatic;
 
 @Component({

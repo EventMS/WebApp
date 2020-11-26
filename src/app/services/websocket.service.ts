@@ -15,7 +15,6 @@ export class WebsocketService {
 
   startConnection = () => {
     this.connection = new signalR.HubConnectionBuilder().withUrl(environment.websocketUrl + 'event').build();
-    console.log(this.auth.currentUserValue?.user?.id);
 
     this.connection
       .start()

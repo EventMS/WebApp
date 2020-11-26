@@ -9,7 +9,7 @@ import {
 } from 'src/graphql_interfaces';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
-import { WebsocketService } from 'src/app/services/signal-rservice.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
@@ -184,13 +184,13 @@ export class CreateEventPage implements OnInit {
   }
 
   onPublicChanged() {
-    if(!this.publicChecked!.value) {
-      this.form.get('publicPrice')!.setValidators(Validators.required)
+    if (!this.publicChecked!.value) {
+      this.form.get('publicPrice')!.setValidators(Validators.required);
     } else {
-      this.form.get('publicPrice')!.setValidators(null)
+      this.form.get('publicPrice')!.setValidators(null);
       this.form.get('publicPrice')!.setValue(null);
-    } 
-    this.form.get('publicPrice')!.updateValueAndValidity()
+    }
+    this.form.get('publicPrice')!.updateValueAndValidity();
   }
 
   get publicChecked() {
@@ -218,8 +218,8 @@ export class CreateEventPage implements OnInit {
       }
 
       data.clubsubscription!.forEach((sub) => {
-        this.form.addControl(sub!.name!, new FormControl('',Validators.required))
-      })
+        this.form.addControl(sub!.name!, new FormControl('', Validators.required));
+      });
 
       this.events = this.createEvents(data);
       this.filterEvents();
