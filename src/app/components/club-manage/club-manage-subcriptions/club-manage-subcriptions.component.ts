@@ -46,6 +46,7 @@ export class ClubManageSubcriptionsComponent implements OnInit {
 
       if (this.clubSubscriptions!.length > 0) {
         this.form.get('subscriptionReference')!.setValidators(Validators.required);
+        this.form.updateValueAndValidity()
       }
 
       this.form.reset();

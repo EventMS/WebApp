@@ -68,6 +68,7 @@
                 </ion-item-divider>
                 <ion-item *ngFor="let sub of (club$ |async)?.clubsubscription">
                   <ion-input
+                    formControlName="{{sub.name}}"
                     type="number"
                     placeholder="Input price for: {{sub.name}}"
                     (input)="onPriceSubmit($event.target.value, sub.clubSubscriptionId)"
@@ -75,7 +76,7 @@
                 </ion-item>
                 <ion-item>
                   <ion-label>Public event</ion-label>
-                  <ion-checkbox formControlName="publicChecked"></ion-checkbox>
+                  <ion-checkbox (click)="onPublicChanged()" formControlName="publicChecked"></ion-checkbox>
                 </ion-item>
                 <ion-item [hidden]="!publicChecked!.value">
                   <ion-input type="number" placeholder="Input public price" formControlName="publicPrice"></ion-input>
