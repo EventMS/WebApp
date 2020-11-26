@@ -34,8 +34,9 @@ export class WebsocketService {
     this.connection.on(this.clubId + '-EventCreationFailed', (data) => failedHandler(data));
   }
 
-  addClubSubscriptionListener(successHandler: socketHandler) {
+  addClubSubscriptionListener(successHandler: socketHandler, failedHandler?: socketHandler) {
     this.connection.on(this.auth.currentUserValue?.user?.id + '-ClubSignup', (data) => successHandler(data));
+    this.connection.on(this.auth.currentUserValue?.user?.id + '-ClubSignupFailed', (data) => failedHandler?.(data));
   }
 }
 
