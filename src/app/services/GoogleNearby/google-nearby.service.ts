@@ -20,7 +20,9 @@ export class GoogleNearbyService {
   };
 
   public init = async () => {
-    await GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
+    if(this.platform.is('capacitor')){
+      await GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
+    }
   };
 
   public initPermissions = async () => {
@@ -40,9 +42,11 @@ export class GoogleNearbyService {
   //  * unsubscribe
   //  */
   public clean = async (uuid?: UUID) => {
-    const { isSubscribing } = await GoogleNearbyMessages.status();
-    if (isSubscribing) {
-      await GoogleNearbyMessages.unsubscribe({});
+    if (this.platform.is('capacitor')) {
+      const { isSubscribing } = await GoogleNearbyMessages.status();
+      if (isSubscribing) {
+        await GoogleNearbyMessages.unsubscribe({});
+      }
     }
   };
 
