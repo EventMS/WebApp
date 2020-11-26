@@ -3,7 +3,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GoogleNearbyService } from './services/GoogleNearby/google-nearby.service';
-import { PermissionType, Plugins, PermissionResult } from '@capacitor/core';
+import { PermissionType, Plugins } from '@capacitor/core';
 
 const { Permissions } = Plugins;
 @Component({
@@ -25,9 +25,11 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      await this.googleNearby.init();
-      if ((await Permissions.query({ name: PermissionType.Microphone })).state === 'prompt') {
-        await this.googleNearby.initPermissions();
+      if (this.platform.is('capacitor')) {
+        await this.googleNearby.init();
+        if ((await Permissions.query({ name: PermissionType.Microphone })).state === 'prompt') {
+          await this.googleNearby.initPermissions();
+        }
       }
     });
   }
