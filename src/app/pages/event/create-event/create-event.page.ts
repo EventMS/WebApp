@@ -184,11 +184,11 @@ export class CreateEventPage implements OnInit {
   }
 
   onPublicChanged() {
-    if(!this.publicChecked.value) {
+    if(!this.publicChecked!.value) {
       this.form.get('publicPrice')!.setValidators(Validators.required)
     } else {
       this.form.get('publicPrice')!.setValidators(null)
-      this.form.get('publicPrice').setValue(null);
+      this.form.get('publicPrice')!.setValue(null);
     } 
     this.form.get('publicPrice')!.updateValueAndValidity()
   }
@@ -217,8 +217,8 @@ export class CreateEventPage implements OnInit {
         return;
       }
 
-      data.clubsubscription.forEach((sub) => {
-        this.form.addControl(sub.name, new FormControl('',Validators.required))
+      data.clubsubscription!.forEach((sub) => {
+        this.form.addControl(sub!.name!, new FormControl('',Validators.required))
       })
 
       this.events = this.createEvents(data);
