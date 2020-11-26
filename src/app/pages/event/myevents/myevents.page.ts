@@ -46,7 +46,7 @@ export class MyeventsPage implements OnInit {
     return date < this.today;
   }
 
-  private getDate(dateString): Date {
+  private getDate(dateString: string): Date {
     const date = new Date(dateString);
     return new Date(dateString);
   }
