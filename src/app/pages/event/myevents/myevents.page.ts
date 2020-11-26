@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { Observable } from 'rxjs';
 import { IMyEventsQuery } from 'src/graphql_interfaces';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-myevents',
@@ -16,9 +17,13 @@ export class MyeventsPage implements OnInit {
   pastMemberEvents: IMyEventsQuery['myEventParticipations'] = [];
   upcomingInstructorEvents: IMyEventsQuery['myInstructorEvents'] = [];
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService,
+    private loadingController: LoadingController) {}
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.getData();
   }
 
@@ -51,9 +56,13 @@ export class MyeventsPage implements OnInit {
     return new Date(dateString);
   }
 
-  private getData() {
+  private async getData() {
+    const loading = await this.presentLoading();
+    await loading.present();
+
     this.events$ = this.eventService.getMyEvents();
-    this.events$.subscribe((events) => {
+    this.events$.subscribe(async (events) => {
+      await loading.dismiss();
       this.upcomingMemberEvents = events.myEventParticipations!.filter((ev) => !this.isPast(ev!.event!.endTime));
       this.pastMemberEvents = events.myEventParticipations!.filter((ev) => this.isPast(ev!.event!.endTime));
       this.upcomingInstructorEvents = events.myInstructorEvents!.filter((ev) => !this.isPast(ev!.endTime));
@@ -77,4 +86,8 @@ export class MyeventsPage implements OnInit {
     if (date1 < date2) return -1;
     else return 0;
   }
+
+  private presentLoading = async () => {
+    return this.loadingController.create({ message: 'Loading events...' });
+  };
 }
