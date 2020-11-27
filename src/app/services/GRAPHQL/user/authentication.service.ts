@@ -34,6 +34,10 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public isUserLoggedIn = () => {
+    return this.currentUserValue !== null && this.isTokenValid();
+  };
+
   createUser(request: CreateUserRequestInput) {
     return this.createUserMutationService.mutate({
       request,
@@ -76,7 +80,7 @@ export class AuthenticationService {
     this.router.navigate([Paths.start]);
   }
 
-  public isTokenValid() {
+  private isTokenValid() {
     return dayjs().isBefore(this.getExpiration());
   }
 
