@@ -82,11 +82,12 @@ export class CreateEventPage implements OnInit {
     this.websocketService.stopConnection();
   }
 
-  onCreationSucceeded(data: any) {
-    this.loadingController.dismiss();
-    this.resetPage();
+  async onCreationSucceeded(data: any) {
+    await this.loadingController.dismiss();
     this.websocketService.stopConnection();
-    this.router.navigate(['/club-manage/', this.clubId]);
+    this.eventService.createEventClubInfo(this.clubId).subscribe(() => {
+      this.router.navigate(['/club-manage/', this.clubId]);
+    })
   }
 
   onPriceSubmit(price: string, subId: string) {
@@ -311,8 +312,14 @@ export class CreateEventPage implements OnInit {
   }
 
   private resetPage() {
-    this.form.reset();
+    this.form.patchValue({
+      publicChecked: false,
+      publicPrice: null,
+      description: "",
+    });
     this.chosenRoomIds = [];
+    this.chosenInstrIds = [];
+    this.eventPrices = [];
     this.filterEvents();
   }
 }

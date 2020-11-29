@@ -10,12 +10,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add auth header with jwt if user is logged in and request is to api url
-    this.setHeader(request);
-
+    request = this.setHeader(request);
     return next.handle(request);
   }
 
-  private setHeader = (request: HttpRequest<any>) => {
+  private setHeader(request: HttpRequest<any>): HttpRequest<any> {
     const currentUser = this.authenticationService.currentUserValue;
     const isLoggedIn = this.authenticationService.isUserLoggedIn();
     const isApiUrl = request.url.startsWith(environment.apiUrl);
@@ -27,5 +26,7 @@ export class JwtInterceptor implements HttpInterceptor {
         },
       });
     }
+
+    return request
   };
 }

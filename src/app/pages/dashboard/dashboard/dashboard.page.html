@@ -1,5 +1,74 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-header
+    *ngIf="(instructorEventsToday.length == 0) && (participantEventsToday.length == 0)"
+  >
+    <ion-toolbar class="center-text">
+      <ion-title class="auto-width">No events today!</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div *ngIf="participantEventsToday.length > 0 || instructorEventsToday.length > 0">
+      <ion-header>
+        <ion-toolbar class="center-text">
+          <ion-title class="auto-width">Your events today</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <div *ngIf="participantEventsToday.length > 0">
+        <ion-list-header>
+          <ion-label style="font-size: 16px; font-weight: 700">You are participating in</ion-label>
+        </ion-list-header>
+        <ion-list>
+          <ion-card
+            [routerLink]="['/event-page/', participation.eventId]"
+            button="true"
+            *ngFor="let participation of participantEventsToday"
+          >
+            <ion-card-header>
+              <ion-card-title>{{participation.event.name.toUpperCase()}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div style="display: flex">
+                <div style="display: flex">
+                  <h1 style="padding-right: 10px; font-size: large; font-weight: bold">From:</h1>
+                  <h2>{{formatDate(participation.event.startTime)}}</h2>
+                </div>
+                <div style="display: flex; padding-left: 20px">
+                  <h1 style="padding-right: 10px; font-size: large; font-weight: bold">To:</h1>
+                  <h2>{{formatDate(participation.event.endTime)}}</h2>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </div>
+      <div *ngIf="instructorEventsToday.length > 0">
+        <ion-list>
+          <ion-list-header>
+            <ion-label style="font-size: 16px; font-weight: 700">You are instructor for</ion-label>
+          </ion-list-header>
+          <ion-card
+            [routerLink]="['/event-page/', event.eventId]"
+            button="true"
+            *ngFor="let event of instructorEventsToday"
+          >
+            <ion-card-header>
+              <ion-card-title>{{event.name.toUpperCase()}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div style="display: flex">
+                <div style="display: flex">
+                  <h1 style="padding-right: 10px; font-size: large; font-weight: bold">From:</h1>
+                  <h2>{{formatDate(event.startTime)}}</h2>
+                </div>
+                <div style="display: flex; padding-left: 20px">
+                  <h1 style="padding-right: 10px; font-size: large; font-weight: bold">To:</h1>
+                  <h2>{{formatDate(event.endTime)}}</h2>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</ion-content>
