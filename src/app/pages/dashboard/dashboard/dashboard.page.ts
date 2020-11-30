@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
-import { Observable } from 'rxjs'
-import { IMyEventsQuery, IMyEventsQuery_myEventParticipations, IMyEventsQuery_myInstructorEvents } from 'src/graphql_interfaces';
+import { Observable } from 'rxjs';
+import {
+  IMyEventsQuery,
+  IMyEventsQuery_myEventParticipations,
+  IMyEventsQuery_myInstructorEvents,
+} from 'src/graphql_interfaces';
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -10,11 +14,10 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
   private today: Date = new Date();
-  events$: Observable<IMyEventsQuery>
-  instructorEventsToday: IMyEventsQuery_myInstructorEvents[] = []
-  participantEventsToday: IMyEventsQuery_myEventParticipations[] = []
+  events$: Observable<IMyEventsQuery>;
+  instructorEventsToday: IMyEventsQuery['myInstructorEvents'] = [];
+  participantEventsToday: IMyEventsQuery['myEventParticipations'] = [];
 
   constructor(private eventService: EventService, private loadingController: LoadingController) {}
 
@@ -25,10 +28,10 @@ export class DashboardPage implements OnInit {
     await loading.present();
     this.events$ = this.eventService.getMyEvents();
     this.events$.subscribe(async (data) => {
-      await loading.dismiss()
-      this.instructorEventsToday = data.myInstructorEvents!.filter((ev) => this.isToday(ev!.startTime))
-      this.participantEventsToday = data.myEventParticipations!.filter((ev)=> this.isToday(ev!.event.startTime))
-    })
+      await loading.dismiss();
+      this.instructorEventsToday = data.myInstructorEvents!.filter((ev) => this.isToday(ev!.startTime));
+      this.participantEventsToday = data.myEventParticipations!.filter((ev) => this.isToday(ev!.event!.startTime));
+    });
   }
 
   formatDate(date: string): string {
