@@ -13,8 +13,8 @@ export class PaymentModalPage implements OnInit {
   @Input() clubId: string;
 
   public clubSubscriptions: ISubscriptionsForClubQuery['subscriptionsForClub'];
-  public clubsubscriptionId: string;
-  clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
+  public clubSubscriptionId: string;
+  public clubSubscriptions$: Observable<ISubscriptionsForClubQuery['subscriptionsForClub']>;
 
   constructor(private modalController: ModalController, private subscriptionService: SubscriptionService) {}
 
@@ -25,9 +25,11 @@ export class PaymentModalPage implements OnInit {
     });
   }
 
-  getName = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.name;
+  public getName = () =>
+    this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubSubscriptionId)?.name;
 
-  getAmount = () => this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubsubscriptionId)?.price;
+  public getAmount = () =>
+    this.clubSubscriptions?.find((sub) => sub!.clubSubscriptionId == this.clubSubscriptionId)?.price;
 
   public dissmiss = (success: boolean) => {
     this.modalController.dismiss({ success });

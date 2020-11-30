@@ -56,21 +56,21 @@ export class StripeElementsComponent implements AfterViewInit {
     });
   }
 
-  getButtonText = () =>
+  public getButtonText = () =>
     this.amount && this.description
       ? `Buy ${this.description} for $ ${this.amount}.00`
       : 'Please choose a subscription';
 
   // Listen for form submission, process the form with Stripe,
   // and get the
-  async handleForm(e: { preventDefault: () => void }) {
+  public handleForm(e: MouseEvent) {
     e.preventDefault();
 
     if (this.subscriptionId) this.handleSubscription();
     else if (this.eventId) this.handleSinglePayment();
   }
 
-  handleSinglePayment = () => {
+  private handleSinglePayment = () => {
     this.eventService.signUpForEvent(this.eventId).subscribe(async ({ data }) => {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
@@ -110,7 +110,7 @@ export class StripeElementsComponent implements AfterViewInit {
     });
   };
 
-  handleSubscription = async () => {
+  private handleSubscription = async () => {
     // If a previous payment was attempted, get the latest invoice
     const latestInvoicePaymentIntentStatus = localStorage.getItem('latestInvoicePaymentIntentStatus');
 
@@ -118,19 +118,19 @@ export class StripeElementsComponent implements AfterViewInit {
       const invoiceId = localStorage.getItem('latestInvoiceId');
       const isPaymentRetry = true;
       // create new payment method & retry payment on invoice with new payment method
-      await this.createPaymentMethod({
+      await this.createPayment({
         card: this.card,
         isPaymentRetry,
         //invoiceId: invoiceId!,
       });
     } else {
       // create new payment method & create subscription
-      await this.createPaymentMethod({ card: this.card });
+      await this.createPayment({ card: this.card });
     }
     // Send the token to your server.
   };
 
-  createPaymentMethod = async ({
+  private createPayment = async ({
     card,
     isPaymentRetry = false,
   }: //invoiceId = undefined,

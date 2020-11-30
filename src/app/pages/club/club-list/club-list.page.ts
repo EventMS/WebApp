@@ -9,7 +9,7 @@ import { Paths } from 'src/app/navigation/routes';
   templateUrl: './club-list.page.html',
   styleUrls: ['./club-list.page.scss'],
 })
-export class ClubListPage implements OnInit {
+export class ClubListPage {
   constructor(private clubService: ClubService, private loadingController: LoadingController) {}
 
   public clubs: IGetClubsQuery['clubs'] = [];
@@ -18,10 +18,12 @@ export class ClubListPage implements OnInit {
   public route = (clubId: string) => Paths.show_club.route(clubId);
   public searchQuery: string;
 
-  ngOnInit() {}
-
   async ionViewWillEnter() {
-    const loading = await this.presentLoading();
+    const loading = await this.loadingController.create({
+      message: 'Loading clubs...',
+      duration: 10000,
+      backdropDismiss: true,
+    });
     await loading.present();
 
     this.clubService.getAllClubs().subscribe(async ({ clubs }) => {
@@ -35,8 +37,4 @@ export class ClubListPage implements OnInit {
       return club!.name!.toLowerCase().includes(query.toLowerCase());
     });
   }
-
-  private presentLoading = async () => {
-    return this.loadingController.create({ message: 'Loading clubs...', duration: 10000, backdropDismiss: true });
-  };
 }
