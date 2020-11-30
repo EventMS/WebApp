@@ -1,12 +1,10 @@
 <ion-content>
-  <ion-header>
+  <ion-header translucent>
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="dissmiss()">
-          <ion-icon name="arrow-back-outline"></ion-icon>
-        </ion-button>
+      <ion-title>Verification code</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dissmiss()">Close</ion-button>
       </ion-buttons>
-      <ion-title>Choose Subscription</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-list class="ion-margin">
@@ -23,10 +21,6 @@
 </ion-content>
 
 <div style="position: fixed; bottom: 0px; width: 100%">
-  <app-stripe-elements
-    [dismissModal]="dissmiss"
-    [subscriptionId]="clubsubscriptionId"
-    [amount]="getAmount()"
-    [description]="getName()"
-  ></app-stripe-elements>
+  <app-stripe-elements [dismissModal]="dissmiss" [subscriptionId]="clubsubscriptionId" [amount]="getAmount()"
+    [description]="getName()"></app-stripe-elements>
 </div>

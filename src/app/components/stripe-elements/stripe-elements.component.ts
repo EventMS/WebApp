@@ -75,6 +75,7 @@ export class StripeElementsComponent implements AfterViewInit {
       const loading = await this.loadingController.create({
         message: 'Please wait...',
         duration: 10000,
+        backdropDismiss: true,
       });
       await loading.present();
 

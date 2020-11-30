@@ -37,6 +37,6 @@ export class ClubListPage implements OnInit {
   }
 
   private presentLoading = async () => {
-    return this.loadingController.create({ message: 'Loading clubs...' });
+    return this.loadingController.create({ message: 'Loading clubs...', duration: 10000, backdropDismiss: true });
   };
 }
