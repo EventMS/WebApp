@@ -44,8 +44,7 @@ export class EventPagePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private modalController: ModalController,
-    private router: Router,
-    private googleNearby: GoogleNearbyService
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -98,7 +97,7 @@ export class EventPagePage implements OnInit {
     if (this.startTime < Date.now()) {
       return buttonText.PASSED;
     } else if (this.price === buttonText.PRIVATE_EVENT) {
-      return buttonText.PRIVATE_EVENT;
+      return buttonText.GO_TO_CLUB;
     } else if (this.isInstructorForEvent) {
       return buttonText.INSTRUCTOR;
     } else if (this.alreadySignedUp) {
@@ -138,7 +137,9 @@ export class EventPagePage implements OnInit {
   private handlePriceForEvent = (getEvent: IEventPageQuery_getEvent): void => {
     const { userPrice, publicPrice } = getEvent;
 
-    if (userPrice !== publicPrice) {
+    if (userPrice === null) {
+      this.price = buttonText.PRIVATE_EVENT;
+    } else if (userPrice !== publicPrice) {
       this.price = userPrice + ' $';
       this.color = 'green';
     } else if (publicPrice) {
@@ -147,8 +148,6 @@ export class EventPagePage implements OnInit {
     } else if (!userPrice && !publicPrice) {
       this.price = '0 $';
       this.color = 'green';
-    } else {
-      this.price = buttonText.PRIVATE_EVENT;
     }
   };
 
@@ -167,6 +166,7 @@ export class EventPagePage implements OnInit {
 }
 
 const buttonText = {
+  GO_TO_CLUB: 'Go to club page',
   PRIVATE_EVENT: 'Event is private',
   PASSED: 'Event has passed',
   INSTRUCTOR: ' Verify users',
