@@ -55,6 +55,8 @@ export class CreateEventPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
+      duration: 10000,
+      backdropDismiss: true,
     });
     await loading.present();
   }
@@ -87,7 +89,7 @@ export class CreateEventPage implements OnInit {
     this.websocketService.stopConnection();
     this.eventService.createEventClubInfo(this.clubId).subscribe(() => {
       this.router.navigate(['/club-manage/', this.clubId]);
-    })
+    });
   }
 
   onPriceSubmit(price: string, subId: string) {
@@ -315,7 +317,7 @@ export class CreateEventPage implements OnInit {
     this.form.patchValue({
       publicChecked: false,
       publicPrice: null,
-      description: "",
+      description: '',
     });
     this.chosenRoomIds = [];
     this.chosenInstrIds = [];

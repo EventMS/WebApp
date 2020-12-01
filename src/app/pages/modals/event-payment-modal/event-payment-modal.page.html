@@ -1,4 +1,12 @@
 <ion-content>
+  <ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Verification code</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal(false)">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <ion-grid class="ion-margin">
     <ion-row class="ion-justify-content-center">
       <h1>{{description}}</h1>

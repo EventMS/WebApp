@@ -17,11 +17,9 @@ export class MyeventsPage implements OnInit {
   pastMemberEvents: IMyEventsQuery['myEventParticipations'] = [];
   upcomingInstructorEvents: IMyEventsQuery['myInstructorEvents'] = [];
 
-  constructor(private eventService: EventService,
-    private loadingController: LoadingController) {}
+  constructor(private eventService: EventService, private loadingController: LoadingController) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.getData();
@@ -88,6 +86,6 @@ export class MyeventsPage implements OnInit {
   }
 
   private presentLoading = async () => {
-    return this.loadingController.create({ message: 'Loading events...' });
+    return this.loadingController.create({ message: 'Loading events...', duration: 10000, backdropDismiss: true });
   };
 }

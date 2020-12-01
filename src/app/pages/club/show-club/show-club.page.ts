@@ -62,7 +62,7 @@ export class ShowClubPage implements OnInit {
     );
   };
 
-  getEventPrice = (i: number) => {
+  public getEventPrice = (i: number) => {
     const eventPrice = this.events?.[i]?.eventPrices?.find(
       (ep) => ep?.clubSubscriptionId == this.currentSubscription?.clubSubscriptionId
     );
