@@ -41,7 +41,7 @@ export class EventService {
   createEvent(request: CreateEventRequestInput) {
     return this.createEventMutation.mutate(
       {
-        request: request,
+        request,
       },
       { refetchQueries: [{ query: this.createEventClubQuery.document }] }
     );
@@ -50,7 +50,7 @@ export class EventService {
   signUpForFreeEvent(eventId: string) {
     return this.freeSignupMutation.mutate(
       {
-        eventId: eventId,
+        eventId,
       },
       {
         refetchQueries: [{ query: this.myEventsQuery.document }],
@@ -61,7 +61,7 @@ export class EventService {
   signUpForEvent(eventId: string) {
     return this.signUpForEventMutation.mutate(
       {
-        eventId: eventId,
+        eventId,
       },
       {
         refetchQueries: [{ query: this.myEventsQuery.document }],
@@ -75,7 +75,7 @@ export class EventService {
     return this.createEventClubQuery
       .watch(
         {
-          clubId: clubId,
+          clubId,
         },
         { fetchPolicy: 'cache-and-network' }
       )
@@ -89,7 +89,7 @@ export class EventService {
   getEventDetails(eventId: string): Observable<IEventPageQuery> {
     return this.eventDetailsQuery
       .watch({
-        eventId: eventId,
+        eventId,
       })
       .valueChanges.pipe(map(({ data }) => data));
   }
@@ -100,17 +100,6 @@ export class EventService {
         clubByID: clubId,
       })
       .valueChanges.pipe(map(({ data }) => data));
-  }
-
-  refetchEventPageInfo(clubId: string) {
-    return this.eventPageInfoQuery
-      .watch(
-        {
-          clubByID: clubId,
-        },
-        { fetchPolicy: 'network-only' }
-      )
-      .refetch({ clubByID: clubId });
   }
 
   getMyEvents() {

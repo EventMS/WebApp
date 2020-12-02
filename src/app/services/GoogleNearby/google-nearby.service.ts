@@ -11,16 +11,16 @@ const { GoogleNearbyMessages } = Plugins;
 export class GoogleNearbyService {
   constructor(private platform: Platform) {}
 
-  public subscribe = async (callback: (data: { message: Message }) => {}) => {
+  public subscribe = async (messageRecievedCallback: (data: { message: Message }) => {}) => {
     if (this.platform.is('capacitor')) {
-      GoogleNearbyMessages.addListener('onFound', callback);
+      GoogleNearbyMessages.addListener('onFound', messageRecievedCallback);
 
       await GoogleNearbyMessages.subscribe({});
     }
   };
 
   public init = async () => {
-    if(this.platform.is('capacitor')){
+    if (this.platform.is('capacitor')) {
       await GoogleNearbyMessages.initialize({ apiKey: 'AIzaSyBof-EFFsnyZnSLGYF0p1xbu5MfCVUoOUs' });
     }
   };
@@ -41,7 +41,7 @@ export class GoogleNearbyService {
   // /**
   //  * unsubscribe
   //  */
-  public clean = async (uuid?: UUID) => {
+  public clean = async () => {
     if (this.platform.is('capacitor')) {
       const { isSubscribing } = await GoogleNearbyMessages.status();
       if (isSubscribing) {
@@ -50,14 +50,14 @@ export class GoogleNearbyService {
     }
   };
 
-  public publish = async (message: string): Promise<UUID | undefined> => {
+  public publish = async (message: string): Promise<void> => {
     if (message) {
       const messageObject: Message = {
         content: btoa(message + ':' + (Math.random() * 1000 + 1)),
         type: 'DEFAULT',
       };
       if (this.platform.is('capacitor') && messageObject.content !== undefined) {
-        return await GoogleNearbyMessages.publish({
+        await GoogleNearbyMessages.publish({
           message: messageObject,
           options: { strategy: { ttlSeconds: 30 } },
         });

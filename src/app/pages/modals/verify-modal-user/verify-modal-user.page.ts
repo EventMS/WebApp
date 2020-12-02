@@ -20,7 +20,6 @@ export class VerifyModalUserPage implements OnInit {
   public cordovaAvailable: boolean;
   public searchQuery: string;
   public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
-  private uuid: UUID | undefined;
 
   constructor(
     private modalController: ModalController,
@@ -35,13 +34,12 @@ export class VerifyModalUserPage implements OnInit {
 
   async ngOnInit() {
     if (this.isInstructor) {
-      await this.removeSubscriptions();
-      await this.startNearbyRead();
+      await this.googleNearby.clean();
+      await this.googleNearby.subscribe(this.messageRecievedCallback);
     }
 
-    this.verificationService
-      .getVerificationCodes({ eventId: this.eventId })
-      .subscribe(async ({ currentUser, getEvent }) => {
+    this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(
+      async ({ currentUser, getEvent }) => {
         if (getEvent && currentUser) {
           this.participants = this.filteredParicipants = getEvent.participants;
           if (!this.isInstructor) {
@@ -50,15 +48,15 @@ export class VerifyModalUserPage implements OnInit {
               'code not generated yet, try again later';
           }
         }
-      });
+      },
+      (error: ApolloError) => {
+        alert(error.message);
+      }
+    );
   }
 
-  private removeSubscriptions = async () => {
-    this.googleNearby.clean(this.uuid);
-  };
-
   async ionViewWillLeave() {
-    await this.removeSubscriptions();
+    await this.googleNearby.clean();
   }
 
   public didSearch(query: string) {
@@ -78,11 +76,7 @@ export class VerifyModalUserPage implements OnInit {
     );
   };
 
-  public startNearbyRead = async () => {
-    await this.googleNearby.subscribe(this.messageRecieved);
-  };
-
-  private messageRecieved = async (data: { message: Message }) => {
+  private messageRecievedCallback = async (data: { message: Message }) => {
     const { content, type } = data.message;
 
     if (type === 'INIT') {
@@ -117,7 +111,7 @@ export class VerifyModalUserPage implements OnInit {
   };
 
   public startNearbyBroadcast = async () => {
-    this.uuid = await this.googleNearby.publish(this.code + ':' + this.authService.currentUserValue?.user?.name);
+    await this.googleNearby.publish(this.code + ':' + this.authService.currentUserValue?.user?.name);
     const toast = await this.toastController.create({ message: 'Verifiyng', duration: 5000 });
     await toast.present();
     await this.modalController.dismiss({

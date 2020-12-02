@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ApolloError } from '@apollo/client/core';
 import { LoadingController } from '@ionic/angular';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
 import { SubscriptionService } from 'src/app/services/GRAPHQL/subscriptions/subscription.service';
@@ -37,7 +38,7 @@ export class StripeElementsComponent implements AfterViewInit {
   public stripe: stripe.Stripe; // : stripe.Stripe;
   public card: stripe.elements.Element;
   public cardErrors: string | undefined;
-  public disabled: boolean = true;
+  public disabled = true;
 
   ngAfterViewInit() {
     this.card.mount(this.cardElement.nativeElement);
@@ -66,48 +67,55 @@ export class StripeElementsComponent implements AfterViewInit {
   public handleForm(e: MouseEvent) {
     e.preventDefault();
 
-    if (this.subscriptionId) this.handleSubscription();
-    else if (this.eventId) this.handleSinglePayment();
+    if (this.subscriptionId) {
+      this.handleSubscription();
+    } else if (this.eventId) {
+      this.handleSinglePayment();
+    }
   }
 
   private handleSinglePayment = () => {
-    this.eventService.signUpForEvent(this.eventId).subscribe(async ({ data }) => {
-      const loading = await this.loadingController.create({
-        message: 'Please wait...',
-        duration: 10000,
-        backdropDismiss: true,
-      });
-      await loading.present();
-
-      if (data?.signUpForEvent?.clientSecret) {
-        const result = await this.stripe.confirmCardPayment(data.signUpForEvent.clientSecret, {
-          payment_method: {
-            card: this.card,
-            billing_details: {
-              name: this.authService!.currentUserValue!.user!.name!,
-            },
-          },
+    this.eventService.signUpForEvent(this.eventId).subscribe(
+      async ({ data }) => {
+        const loading = await this.loadingController.create({
+          message: 'Please wait...',
+          duration: 10000,
+          backdropDismiss: true,
         });
-        if (result.error) {
-          // Show error to your customer (e.g., insufficient funds)
-          loading.dismiss();
-          this.dismissModal?.(false);
-          console.log(result.error.message);
-        } else {
-          // The payment has been processed!
-          if (result?.paymentIntent?.status === 'succeeded') {
-            console.log('success');
-            // Show a success message to your customer
-            // There's a risk of the customer closing the window before callback
-            // execution. Set up a webhook or plugin to listen for the
-            // payment_intent.succeeded event that handles any business critical
-            // post-payment actions.
+        await loading.present();
+
+        if (data?.signUpForEvent?.clientSecret) {
+          const result = await this.stripe.confirmCardPayment(data.signUpForEvent.clientSecret, {
+            payment_method: {
+              card: this.card,
+              billing_details: {
+                name: this.authService!.currentUserValue!.user!.name!,
+              },
+            },
+          });
+          if (result.error) {
+            // Show error to your customer (e.g., insufficient funds)
+            loading.dismiss();
+            this.dismissModal?.(false);
+          } else {
+            // The payment has been processed!
+            if (result?.paymentIntent?.status === 'succeeded') {
+              console.log('success');
+              // Show a success message to your customer
+              // There's a risk of the customer closing the window before callback
+              // execution. Set up a webhook or plugin to listen for the
+              // payment_intent.succeeded event that handles any business critical
+              // post-payment actions.
+              loading.dismiss();
+              this.dismissModal?.(true);
+            }
           }
         }
-        loading.dismiss();
-        this.dismissModal?.(true);
+      },
+      (error: ApolloError) => {
+        alert(error.message);
       }
-    });
+    );
   };
 
   private handleSubscription = async () => {
@@ -121,7 +129,7 @@ export class StripeElementsComponent implements AfterViewInit {
       await this.createPayment({
         card: this.card,
         isPaymentRetry,
-        //invoiceId: invoiceId!,
+        // invoiceId: invoiceId!,
       });
     } else {
       // create new payment method & create subscription
@@ -133,11 +141,11 @@ export class StripeElementsComponent implements AfterViewInit {
   private createPayment = async ({
     card,
     isPaymentRetry = false,
-  }: //invoiceId = undefined,
+  }: // invoiceId = undefined,
   {
     card: stripe.elements.Element;
     isPaymentRetry?: boolean;
-    //invoiceId?: string;
+    // invoiceId?: string;
   }) => {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
@@ -147,7 +155,7 @@ export class StripeElementsComponent implements AfterViewInit {
     await this.stripe
       .createPaymentMethod({
         type: 'card',
-        card: card,
+        card,
       })
       .then((result) => {
         if (result.error) {
@@ -165,7 +173,7 @@ export class StripeElementsComponent implements AfterViewInit {
             this.dismissModal?.(true);
           } else {
             if (this.subscriptionId) {
-              //Create the subscription
+              // Create the subscription
               this.subscriptionService
                 .signUpForSupscription({
                   clubSubscriptionId: this.subscriptionId,

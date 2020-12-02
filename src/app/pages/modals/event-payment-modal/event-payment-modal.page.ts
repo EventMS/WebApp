@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './event-payment-modal.page.html',
   styleUrls: ['./event-payment-modal.page.scss'],
 })
-export class EventPaymentModalPage implements OnInit {
+export class EventPaymentModalPage {
   @Input() price: number;
   @Input() description: number;
   @Input() eventId: string;
@@ -18,6 +18,4 @@ export class EventPaymentModalPage implements OnInit {
     this.callback(success);
     this.modalController.dismiss();
   };
-
-  ngOnInit() {}
 }
