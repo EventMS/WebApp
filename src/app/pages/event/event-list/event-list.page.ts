@@ -12,14 +12,12 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./event-list.page.scss'],
 })
 export class EventListPage implements OnInit {
-  public events$: Observable<ApolloQueryResult<IEventListQuery>>;
+  constructor(public eventService: EventService, private loadingController: LoadingController) {}
+  public events$: Observable<IEventListQuery>;
   public events: IEventListQuery['futureEvents'] = [];
   public filteredEvents: IEventListQuery['futureEvents'] = [];
-  public route = (eventId: string) => Paths.event_page.route(eventId);
-
   public searchQuery: string;
-
-  constructor(public eventService: EventService, private loadingController: LoadingController) {}
+  public route = (eventId: string) => Paths.event_page.route(eventId);
 
   ngOnInit() {}
 
@@ -37,7 +35,7 @@ export class EventListPage implements OnInit {
 
     this.events$.subscribe(async (next) => {
       await loading.dismiss();
-      this.events = this.filteredEvents = next.data.futureEvents;
+      this.events = this.filteredEvents = next.futureEvents;
     });
   }
 

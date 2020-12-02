@@ -12,7 +12,6 @@ import { CreateEventClubQueryService } from '../club/queries/create-event-club-q
 import { map } from 'rxjs/operators';
 import { CreateEventMutationService } from './mutations/create-event-mutation.service';
 import { EventListQueryService } from './queries/event-list-query.service';
-import { ApolloQueryResult } from '@apollo/client/core';
 import { EventPageQueryService } from './queries/event-page.service';
 import { EventPageInfoQueryService } from './queries/event-page-info-query.service';
 import { FreeSignUpMutationService } from './mutations/free-sign-up-mutation.service';
@@ -82,8 +81,10 @@ export class EventService {
       .valueChanges.pipe(map((result) => result.data.clubByID));
   }
 
-  getAllEvents(): Observable<ApolloQueryResult<IEventListQuery>> {
-    return this.eventListQuery.fetch({}, { fetchPolicy: 'network-only' });
+  getAllEvents(): Observable<IEventListQuery> {
+    return this.eventListQuery
+      .watch({}, { fetchPolicy: 'network-only' })
+      .valueChanges.pipe(map((result) => result.data));
   }
 
   getEventDetails(eventId: string): Observable<IEventPageQuery> {

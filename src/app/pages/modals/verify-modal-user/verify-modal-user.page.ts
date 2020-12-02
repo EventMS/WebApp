@@ -19,7 +19,7 @@ export class VerifyModalUserPage implements OnInit {
   public wrongCode: string;
   public cordovaAvailable: boolean;
   public searchQuery: string;
-  public filteredParicipants: IVerifyCodeQuery_getEvent['participants'];
+  public filteredParticipants: IVerifyCodeQuery_getEvent['participants'];
 
   constructor(
     private modalController: ModalController,
@@ -41,7 +41,7 @@ export class VerifyModalUserPage implements OnInit {
     this.verificationService.getVerificationCodes({ eventId: this.eventId }).subscribe(
       async ({ currentUser, getEvent }) => {
         if (getEvent && currentUser) {
-          this.participants = this.filteredParicipants = getEvent.participants;
+          this.participants = this.filteredParticipants = getEvent.participants;
           if (!this.isInstructor) {
             this.code =
               currentUser.events?.find((data) => data?.eventId === this.eventId)?.code ??
@@ -60,7 +60,7 @@ export class VerifyModalUserPage implements OnInit {
   }
 
   public didSearch(query: string) {
-    this.filteredParicipants = this.participants!.filter((data) => {
+    this.filteredParticipants = this.participants!.filter((data) => {
       return data!.user!.name!.toLowerCase().includes(query.toLowerCase());
     });
   }
