@@ -47,7 +47,7 @@
       <ion-row class="ion-justify-content-center">
         <ion-searchbar [(ngModel)]="searchQuery" (ngModelChange)="didSearch($event)"></ion-searchbar>
         <ion-list class="instructorList">
-          <ion-item *ngFor="let participant of filteredParicipants">
+          <ion-item *ngFor="let participant of filteredParticipants">
             <ion-row class="ion-justify-content-between" style="width: 100%">
               <ion-text>{{participant.user.name}}</ion-text>
               <ion-icon

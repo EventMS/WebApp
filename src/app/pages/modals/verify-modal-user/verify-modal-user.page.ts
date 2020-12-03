@@ -4,7 +4,7 @@ import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { GoogleNearbyService } from 'src/app/services/GoogleNearby/google-nearby.service';
 import { VerificationService } from 'src/app/services/GRAPHQL/verification/verification.service';
 import { IVerifyCodeQuery_getEvent, PresenceStatusEnum } from 'src/graphql_interfaces';
-import { Message, UUID } from 'capacitor-google-nearby-messages';
+import { Message } from 'capacitor-google-nearby-messages';
 import { AuthenticationService } from 'src/app/services/GRAPHQL/user/authentication.service';
 @Component({
   selector: 'app-verify-modal-user',

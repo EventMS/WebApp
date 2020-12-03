@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
-import { Message, UUID } from 'capacitor-google-nearby-messages';
+import { Message } from 'capacitor-google-nearby-messages';
 
 const { GoogleNearbyMessages } = Plugins;
 

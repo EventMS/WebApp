@@ -74,16 +74,15 @@ export class StripeElementsComponent implements AfterViewInit {
     }
   }
 
-  private handleSinglePayment = () => {
+  private handleSinglePayment = async () => {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 10000,
+      backdropDismiss: true,
+    });
+    await loading.present();
     this.eventService.signUpForEvent(this.eventId).subscribe(
       async ({ data }) => {
-        const loading = await this.loadingController.create({
-          message: 'Please wait...',
-          duration: 10000,
-          backdropDismiss: true,
-        });
-        await loading.present();
-
         if (data?.signUpForEvent?.clientSecret) {
           const result = await this.stripe.confirmCardPayment(data.signUpForEvent.clientSecret, {
             payment_method: {
@@ -182,12 +181,12 @@ export class StripeElementsComponent implements AfterViewInit {
                 .subscribe(() => {
                   this.webSocketService.startConnection();
                   this.webSocketService.addClubSubscriptionListener(() => {
-                    loading.dismiss();
-                    this.dismissModal?.(true);
                     this.webSocketService.stopConnection();
                   });
                 });
             }
+            loading.dismiss();
+            this.dismissModal?.(true);
           }
         }
       });
