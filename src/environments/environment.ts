@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const url = 'http://3e803278eb5a.ngrok.io/';
+const url = 'http://d17732312ead.ngrok.io';
 // const url = 'http://34.120.17.251/api/';
 
 //const url = 'http://localhost:5102/';
