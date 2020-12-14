@@ -68,8 +68,6 @@ export class AuthenticationService {
 
           if (error.message.includes('credentials')) {
             alert('Wrong username or password');
-          } else {
-            alert(error.message);
           }
         }
       );

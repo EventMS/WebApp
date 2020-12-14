@@ -13,6 +13,7 @@ import { WebsocketService } from 'src/app/services/websocket.service';
 import { CalendarEvent } from 'angular-calendar';
 import { DateRangeEvent } from 'src/app/components/event-calendar/event-calendar.component';
 import { EventService } from 'src/app/services/GRAPHQL/event/event.service';
+import { Paths } from 'src/app/navigation/routes';
 
 export interface EMSEvent extends CalendarEvent {
   locationIds: string[];
@@ -85,11 +86,10 @@ export class CreateEventPage implements OnInit {
   }
 
   async onCreationSucceeded(data: any) {
-    await this.loadingController.dismiss();
     this.websocketService.stopConnection();
-    this.eventService.createEventClubInfo(this.clubId).subscribe(() => {
-      this.router.navigate(['/club-manage/', this.clubId]);
-    });
+    await this.loadingController.dismiss();
+    this.eventService.createEventClubInfo(this.clubId).subscribe(() => {});
+    this.router.navigate(Paths.club_manage.route(this.clubId));
   }
 
   onPriceSubmit(price: string, subId: string) {

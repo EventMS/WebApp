@@ -86,14 +86,12 @@ export class EventPagePage implements OnInit {
                   this.handleAlreadySignedUp(event);
                 },
                 (error: ApolloError) => {
-                  alert(error.message);
+                  //alert(error.message);
                 }
               );
             }
           },
-          (error: ApolloError) => {
-            alert(error.message);
-          }
+          (error: ApolloError) => {}
         );
       }
     });

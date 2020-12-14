@@ -49,9 +49,7 @@ export class VerifyModalUserPage implements OnInit {
           }
         }
       },
-      (error: ApolloError) => {
-        alert(error.message);
-      }
+      (error: ApolloError) => {}
     );
   }
 

@@ -168,8 +168,6 @@ export class StripeElementsComponent implements AfterViewInit {
             //   invoiceId: invoiceId,
             //   priceId: priceId,
             // });
-            loading.dismiss();
-            this.dismissModal?.(true);
           } else {
             if (this.subscriptionId) {
               // Create the subscription
@@ -183,10 +181,13 @@ export class StripeElementsComponent implements AfterViewInit {
                   this.webSocketService.addClubSubscriptionListener(() => {
                     this.webSocketService.stopConnection();
                   });
+                  loading.dismiss();
+                  this.dismissModal?.(true);
                 });
+            } else {
+              loading.dismiss();
+              this.dismissModal?.(false);
             }
-            loading.dismiss();
-            this.dismissModal?.(true);
           }
         }
       });
