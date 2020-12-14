@@ -17,6 +17,10 @@ import { CreateUserMutationService } from './mutations/createUserMutation.servic
 
 const currentUser = 'current_user';
 
+/**
+ * With inspiration from
+ * https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example#authentication-service-ts
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User | null>;

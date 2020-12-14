@@ -4,6 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '../services/GRAPHQL/user/authentication.service';
 
+/**
+ * With inspiration from
+ * https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example#authentication-service-ts
+ */
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}

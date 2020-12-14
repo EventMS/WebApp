@@ -3,6 +3,10 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Paths } from '../navigation/routes';
 import { AuthenticationService } from '../services/GRAPHQL/user/authentication.service';
 
+/**
+ * With inspiration from
+ * https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example#authentication-service-ts
+ */
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authenticationService: AuthenticationService) {}

@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/GRAPHQL/user/authentication.service';
 import { environment } from 'src/environments/environment';
 
+/**
+ * With inspiration from
+ * https://jasonwatmore.com/post/2019/08/06/angular-8-role-based-authorization-tutorial-with-example#authentication-service-ts
+ */
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
@@ -27,6 +31,6 @@ export class JwtInterceptor implements HttpInterceptor {
       });
     }
 
-    return request
-  };
+    return request;
+  }
 }
